@@ -1,0 +1,5 @@
+# Git LFS tracked file types
+*.ttf filter=lfs diff=lfs merge=lfs -text
+*.TTF filter=lfs diff=lfs merge=lfs -text
+*.ico filter=lfs diff=lfs merge=lfs -text
+*.ICO filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,565 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>qml;cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>qrc;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\control">
+      <UniqueIdentifier>{e5cf4eb3-0dbc-4554-ab9d-63d8bbe4ccdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui">
+      <UniqueIdentifier>{d7fcbeff-d8b8-4c5f-a687-8a43b7d2e202}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\control\proto">
+      <UniqueIdentifier>{8925f994-b2df-4c9b-ad6f-055f117d6b90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utils">
+      <UniqueIdentifier>{a6ab8af5-616d-49bd-9492-0995c209712b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\control\controllers">
+      <UniqueIdentifier>{56b21283-d8c5-4294-8494-61eb59d7bd0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui\common">
+      <UniqueIdentifier>{eea4858a-d561-41c9-9e9d-2bad0171dc3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui\trains">
+      <UniqueIdentifier>{c158041e-84b7-4252-a29b-9cddc041d767}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\control">
+      <UniqueIdentifier>{cee73f8c-3a74-412e-bb4a-cfeb35ae50cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\control\controllers">
+      <UniqueIdentifier>{70670ea3-9c11-4446-a1ce-d8aa66964f3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui\actuators">
+      <UniqueIdentifier>{8c9e51e9-a3e6-40c5-b801-6ce1574a4f85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui\config">
+      <UniqueIdentifier>{7facf991-6a26-405d-ae72-dbe3f71bd84c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\layout">
+      <UniqueIdentifier>{6c64972f-8e72-4f01-80b7-8fd4e7dcd8a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui\routes">
+      <UniqueIdentifier>{7bd8744e-31bc-4a7f-8a02-8e3ff0138165}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui\sensors">
+      <UniqueIdentifier>{fd85090a-c29c-4e06-aa0e-6f3009a0e406}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\fonts">
+      <UniqueIdentifier>{25a39658-4977-4adf-8616-feb3b49e9e42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\fonts\DSEG7-Classic">
+      <UniqueIdentifier>{07ab8700-b154-4410-9395-bba6c70749fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons">
+      <UniqueIdentifier>{41522a5e-839c-40ef-ad78-7cdb2971c59d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\misc">
+      <UniqueIdentifier>{c6ed85e7-d7b8-4a57-b698-34bb71662f96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\functions">
+      <UniqueIdentifier>{d23e8cf5-be8c-4add-ad92-9ec1736d5664}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\switches">
+      <UniqueIdentifier>{7f62e966-316d-4b5a-b68a-2f76e78bdcc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\control\proto">
+      <UniqueIdentifier>{c8b3a86c-4664-461d-a859-96b1f3a5b487}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{4ad7bc45-6589-47a9-bcdb-acc482568388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui">
+      <UniqueIdentifier>{780739c4-aa53-4002-9b25-e29fa386d0b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\trains">
+      <UniqueIdentifier>{356558d8-9efb-4328-aa7a-918004462cdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\actuators">
+      <UniqueIdentifier>{7ad6a4e0-1a2e-4d1f-a889-5eb8e883e0af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\common">
+      <UniqueIdentifier>{0eadfca5-c2a3-463a-b00e-79bd5964bd71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\config">
+      <UniqueIdentifier>{6bd1794a-d823-470e-ac68-c6973ae9c76c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\layout">
+      <UniqueIdentifier>{ee1ebd11-2161-4538-91d1-1d572f0696a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\text">
+      <UniqueIdentifier>{ff2c86b4-d540-4086-878d-7ed683e80954}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\routes">
+      <UniqueIdentifier>{27861a2f-175a-4d0a-b776-f9ed73664dda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\sensors">
+      <UniqueIdentifier>{cce3f107-16b8-47dd-a160-d0bfb15db664}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\app">
+      <UniqueIdentifier>{6f765961-96db-45e1-88bd-4dca06bd253f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\cpp\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClCompile Include="..\src\cpp\stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <QtMoc Include="..\src\cpp\ui\common\shortcutlineedit.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\layout\base.hpp">
+      <Filter>Header Files\layout</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\layout\locomotive.hpp">
+      <Filter>Header Files\layout</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\config\helpgroup.hpp">
+      <Filter>Header Files\ui\config</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\mainwidget.hpp">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\controllerinfo.hpp">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\config\controllergroup.hpp">
+      <Filter>Header Files\ui\config</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\config\configpanel.hpp">
+      <Filter>Header Files\ui\config</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\sensors\sensorstate.hpp">
+      <Filter>Header Files\ui\sensors</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\common\toggleswitch.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\trains\lococontrolpanel.hpp">
+      <Filter>Header Files\ui\trains</Filter>
+    </QtMoc>
+    <ClCompile Include="..\src\cpp\ui\mainwindow.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\cpp\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\control\controllers\base.cpp">
+      <Filter>Source Files\control\controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\control\protocols\ecos.cpp">
+      <Filter>Source Files\control\proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\utils\pinger.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\control\controllers\worker.cpp">
+      <Filter>Source Files\control\controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\utils\os.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\control\protocols\base.cpp">
+      <Filter>Source Files\control\proto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\control\controllers\marklincs1.cpp">
+      <Filter>Source Files\control\controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\mainwidget.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\controllerinfo.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\actuators\actuatorbutton.cpp">
+      <Filter>Source Files\ui\actuators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\actuators\actuatorpanel.cpp">
+      <Filter>Source Files\ui\actuators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\autogrid.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\config\dialog.cpp">
+      <Filter>Source Files\ui\config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\sensors\sensorbar.cpp">
+      <Filter>Source Files\ui\sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\trains\dualcontrol.cpp">
+      <Filter>Source Files\ui\trains</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\shortcutlineedit.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\ipfield.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\layout\locomotive.cpp">
+      <Filter>Source Files\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\layout\actuator.cpp">
+      <Filter>Source Files\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\layout\route.cpp">
+      <Filter>Source Files\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\config\controllergroup.cpp">
+      <Filter>Source Files\ui\config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\config\configpanel.cpp">
+      <Filter>Source Files\ui\config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\actuators\actuatorgroup.cpp">
+      <Filter>Source Files\ui\actuators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\config\helpgroup.cpp">
+      <Filter>Source Files\ui\config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\icontoggle.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\optionaldropdown.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\sensors\sensorpanel.cpp">
+      <Filter>Source Files\ui\sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\sensors\sensorstate.cpp">
+      <Filter>Source Files\ui\sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\routes\routepanel.cpp">
+      <Filter>Source Files\ui\routes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\stringdialog.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\routes\routegroup.cpp">
+      <Filter>Source Files\ui\routes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\hexvalidator.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\config\credits.cpp">
+      <Filter>Source Files\ui\config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\hovericon.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\config\notifygroup.cpp">
+      <Filter>Source Files\ui\config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\toggleswitch.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\trains\functionpanel.cpp">
+      <Filter>Source Files\ui\trains</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\trains\lococontrolpanel.cpp">
+      <Filter>Source Files\ui\trains</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\trains\speedcontrol.cpp">
+      <Filter>Source Files\ui\trains</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\cpp\control\protocols\base.hpp">
+      <Filter>Header Files\control\proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\control\protocols\ecos.hpp">
+      <Filter>Header Files\control\proto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\utils\device.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\control\controllers\worker.hpp">
+      <Filter>Header Files\control\controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\control\controllers\marklincs1.hpp">
+      <Filter>Header Files\control\controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\utils\string.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\utils\algorithm.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\utils\os.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\utils\pinger.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\utils\log.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\icontoggle.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\trains\dualcontrol.hpp">
+      <Filter>Header Files\ui\trains</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\autogrid.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\utils\math.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\layout\actuator.hpp">
+      <Filter>Header Files\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\actuators\actuatorpanel.hpp">
+      <Filter>Header Files\ui\actuators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\actuators\actuatorbutton.hpp">
+      <Filter>Header Files\ui\actuators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\config\dialog.hpp">
+      <Filter>Header Files\ui\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\hexvalidator.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\sensors\sensorbar.hpp">
+      <Filter>Header Files\ui\sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\sensors\sensorpanel.hpp">
+      <Filter>Header Files\ui\sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\routes\routepanel.hpp">
+      <Filter>Header Files\ui\routes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\layout\route.hpp">
+      <Filter>Header Files\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\common.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\utils\pp.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\res\version.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\ipfield.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\utils.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\control\controllers\base.hpp">
+      <Filter>Header Files\control\controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\actuators\actuatorgroup.hpp">
+      <Filter>Header Files\ui\actuators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\seperator.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\stringdialog.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\routes\routegroup.hpp">
+      <Filter>Header Files\ui\routes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\config\credits.hpp">
+      <Filter>Header Files\ui\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\hovericon.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\config\notifygroup.hpp">
+      <Filter>Header Files\ui\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\trains\functionpanel.hpp">
+      <Filter>Header Files\ui\trains</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\trains\speedcontrol.hpp">
+      <Filter>Header Files\ui\trains</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="..\src\cpp\ui\common\optionaldropdown.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\mainwindow.hpp">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\res\HyraxRail.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\res\fonts\DSEG7-Classic\DSEG7Classic-Bold.ttf">
+      <Filter>Resource Files\fonts\DSEG7-Classic</Filter>
+    </Font>
+    <Font Include="..\res\fonts\DSEG7-Classic\DSEG7Classic-BoldItalic.ttf">
+      <Filter>Resource Files\fonts\DSEG7-Classic</Filter>
+    </Font>
+    <Font Include="..\res\fonts\DSEG7-Classic\DSEG7Classic-LightItalic.ttf">
+      <Filter>Resource Files\fonts\DSEG7-Classic</Filter>
+    </Font>
+    <Font Include="..\res\fonts\DSEG7-Classic\DSEG7Classic-Regular.ttf">
+      <Filter>Resource Files\fonts\DSEG7-Classic</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\icons\misc\cell-signal-full.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\cell-signal-high.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\cell-signal-low.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\cell-signal-medium.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\cell-signal-x.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\circle-play.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\gear.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\path.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\prohibit-inset.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\split.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\stop.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\train.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\train-track.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\functions\chart-line-up.svg">
+      <Filter>Resource Files\icons\functions</Filter>
+    </None>
+    <None Include="..\res\icons\functions\engine.svg">
+      <Filter>Resource Files\icons\functions</Filter>
+    </None>
+    <None Include="..\res\icons\functions\headlights.svg">
+      <Filter>Resource Files\icons\functions</Filter>
+    </None>
+    <None Include="..\res\icons\functions\lightbulb.svg">
+      <Filter>Resource Files\icons\functions</Filter>
+    </None>
+    <None Include="..\res\icons\functions\megaphone.svg">
+      <Filter>Resource Files\icons\functions</Filter>
+    </None>
+    <None Include="..\res\icons\functions\plugs-connected.svg">
+      <Filter>Resource Files\icons\functions</Filter>
+    </None>
+    <None Include="..\res\icons\functions\radical.svg">
+      <Filter>Resource Files\icons\functions</Filter>
+    </None>
+    <None Include="..\res\icons\functions\snail.svg">
+      <Filter>Resource Files\icons\functions</Filter>
+    </None>
+    <None Include="..\res\icons\functions\speaker-high.svg">
+      <Filter>Resource Files\icons\functions</Filter>
+    </None>
+    <None Include="..\res\icons\functions\tire.svg">
+      <Filter>Resource Files\icons\functions</Filter>
+    </None>
+    <None Include="..\res\icons\switches\left-track-left.svg">
+      <Filter>Resource Files\icons\switches</Filter>
+    </None>
+    <None Include="..\res\icons\switches\left-track-straight.svg">
+      <Filter>Resource Files\icons\switches</Filter>
+    </None>
+    <None Include="..\res\icons\switches\right-track-right.svg">
+      <Filter>Resource Files\icons\switches</Filter>
+    </None>
+    <None Include="..\res\icons\switches\right-track-straight.svg">
+      <Filter>Resource Files\icons\switches</Filter>
+    </None>
+    <None Include="..\res\icons\misc\trash.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\plus.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\README.md">
+      <Filter>Resource Files\text</Filter>
+    </None>
+    <None Include="..\res\icons\misc\cell-signal-grey.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\plugs-connected.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\unplug.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\dot.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\empty-dot.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\app\conductor-hyrax.svg">
+      <Filter>Resource Files\icons\app</Filter>
+    </None>
+    <None Include="..\res\icons\app\conductor-hyrax-mini.svg">
+      <Filter>Resource Files\icons\app</Filter>
+    </None>
+    <None Include="..\LICENSE">
+      <Filter>Resource Files\text</Filter>
+    </None>
+    <None Include="..\res\text\LICENSE_LUCIDE">
+      <Filter>Resource Files\text</Filter>
+    </None>
+    <None Include="..\res\text\LICENSE_PHOSPHOR">
+      <Filter>Resource Files\text</Filter>
+    </None>
+    <None Include="..\res\icons\misc\arrow-left.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\misc\binary.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\res\version.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\res\icons\app\conductor-hyrax.ico">
+      <Filter>Resource Files\icons\app</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\res\text\DSEG-LICENSE.txt">
+      <Filter>Resource Files\text</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

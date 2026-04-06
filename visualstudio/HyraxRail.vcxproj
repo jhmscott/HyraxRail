@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0ED23473-B2F8-4C1C-A4A5-641C5E79AF9E}</ProjectGuid>
+    <Keyword>QtVS_v304</Keyword>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0</WindowsTargetPlatformVersion>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+    <ProjectName>HyraxRail</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
+    <QtInstall>6.10.1</QtInstall>
+    <QtModules>core;gui;network;widgets;serialport;</QtModules>
+    <QtBuildConfig>debug</QtBuildConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
+    <QtInstall>6.10.1</QtInstall>
+    <QtModules>core;gui;network;widgets;serialport;</QtModules>
+    <QtBuildConfig>release</QtBuildConfig>
+    <QtDeploy>true</QtDeploy>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <OutDir>$(SolutionDir)..\runtime\</OutDir>
+    <IntDir>$(ProjectDir)intermediate\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutDir>$(SolutionDir)..\runtime\</OutDir>
+    <IntDir>$(ProjectDir)intermediate\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UseStandardPreprocessor>true</UseStandardPreprocessor>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\src\cpp;$(ProjectDir)..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <QtMoc>
+      <QtMocFileName>%(RelativeDir)moc_%(Filename).cpp</QtMocFileName>
+    </QtMoc>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UseStandardPreprocessor>true</UseStandardPreprocessor>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\src\cpp;$(ProjectDir)..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <QtMoc>
+      <QtMocFileName>%(RelativeDir)moc_%(Filename).cpp</QtMocFileName>
+    </QtMoc>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <QtMoc>
+      <PrependInclude>stdafx.h;%(PrependInclude)</PrependInclude>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <QtMoc>
+      <PrependInclude>stdafx.h;%(PrependInclude)</PrependInclude>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\cpp\control\controllers\base.cpp" />
+    <ClCompile Include="..\src\cpp\control\controllers\marklincs1.cpp" />
+    <ClCompile Include="..\src\cpp\control\protocols\base.cpp" />
+    <ClCompile Include="..\src\cpp\layout\actuator.cpp" />
+    <ClCompile Include="..\src\cpp\layout\locomotive.cpp" />
+    <ClCompile Include="..\src\cpp\layout\route.cpp" />
+    <ClCompile Include="..\src\cpp\ui\actuators\actuatorbutton.cpp" />
+    <ClCompile Include="..\src\cpp\ui\actuators\actuatorgroup.cpp" />
+    <ClCompile Include="..\src\cpp\ui\actuators\actuatorpanel.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\autogrid.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\hexvalidator.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\hovericon.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\icontoggle.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\ipfield.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\optionaldropdown.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\shortcutlineedit.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\stringdialog.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\toggleswitch.cpp" />
+    <ClCompile Include="..\src\cpp\ui\config\credits.cpp" />
+    <ClCompile Include="..\src\cpp\ui\config\helpgroup.cpp" />
+    <ClCompile Include="..\src\cpp\ui\config\configpanel.cpp" />
+    <ClCompile Include="..\src\cpp\ui\config\controllergroup.cpp" />
+    <ClCompile Include="..\src\cpp\ui\config\dialog.cpp" />
+    <ClCompile Include="..\src\cpp\ui\config\notifygroup.cpp" />
+    <ClCompile Include="..\src\cpp\ui\controllerinfo.cpp" />
+    <ClCompile Include="..\src\cpp\ui\mainwidget.cpp" />
+    <ClCompile Include="..\src\cpp\ui\mainwindow.cpp" />
+    <ClCompile Include="..\src\cpp\ui\routes\routegroup.cpp" />
+    <ClCompile Include="..\src\cpp\ui\routes\routepanel.cpp" />
+    <ClCompile Include="..\src\cpp\ui\sensors\sensorbar.cpp" />
+    <ClCompile Include="..\src\cpp\ui\sensors\sensorpanel.cpp" />
+    <ClCompile Include="..\src\cpp\ui\sensors\sensorstate.cpp" />
+    <ClCompile Include="..\src\cpp\ui\trains\dualcontrol.cpp" />
+    <ClCompile Include="..\src\cpp\ui\trains\functionpanel.cpp" />
+    <ClCompile Include="..\src\cpp\ui\trains\lococontrolpanel.cpp" />
+    <ClCompile Include="..\src\cpp\ui\trains\speedcontrol.cpp" />
+    <ClCompile Include="..\src\cpp\utils\os.cpp" />
+    <ClCompile Include="..\src\cpp\utils\pinger.cpp" />
+    <ClInclude Include="..\res\version.h" />
+    <ClInclude Include="..\src\cpp\control\controllers\base.hpp" />
+    <ClInclude Include="..\src\cpp\control\controllers\marklincs1.hpp" />
+    <ClInclude Include="..\src\cpp\layout\actuator.hpp" />
+    <QtMoc Include="..\src\cpp\layout\base.hpp" />
+    <QtMoc Include="..\src\cpp\layout\locomotive.hpp" />
+    <ClInclude Include="..\src\cpp\layout\route.hpp" />
+    <ClInclude Include="..\src\cpp\ui\actuators\actuatorbutton.hpp" />
+    <ClInclude Include="..\src\cpp\ui\actuators\actuatorgroup.hpp" />
+    <ClInclude Include="..\src\cpp\ui\actuators\actuatorpanel.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\autogrid.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\hexvalidator.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\hovericon.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\icontoggle.hpp" />
+    <QtMoc Include="..\src\cpp\ui\common\optionaldropdown.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\ipfield.hpp" />
+    <QtMoc Include="..\src\cpp\ui\common\shortcutlineedit.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\seperator.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\stringdialog.hpp" />
+    <QtMoc Include="..\src\cpp\ui\common\toggleswitch.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\utils.hpp" />
+    <QtMoc Include="..\src\cpp\ui\config\helpgroup.hpp" />
+    <QtMoc Include="..\src\cpp\ui\config\configpanel.hpp" />
+    <QtMoc Include="..\src\cpp\ui\config\controllergroup.hpp" />
+    <ClInclude Include="..\src\cpp\ui\config\credits.hpp" />
+    <ClInclude Include="..\src\cpp\ui\config\dialog.hpp" />
+    <QtMoc Include="..\src\cpp\ui\controllerinfo.hpp" />
+    <ClInclude Include="..\src\cpp\ui\config\notifygroup.hpp" />
+    <QtMoc Include="..\src\cpp\ui\mainwidget.hpp" />
+    <QtMoc Include="..\src\cpp\ui\mainwindow.hpp" />
+    <ClInclude Include="..\src\cpp\ui\routes\routegroup.hpp" />
+    <ClInclude Include="..\src\cpp\ui\routes\routepanel.hpp" />
+    <ClInclude Include="..\src\cpp\ui\sensors\sensorbar.hpp" />
+    <ClInclude Include="..\src\cpp\ui\sensors\sensorpanel.hpp" />
+    <QtMoc Include="..\src\cpp\ui\sensors\sensorstate.hpp" />
+    <ClInclude Include="..\src\cpp\ui\trains\dualcontrol.hpp" />
+    <ClInclude Include="..\src\cpp\ui\trains\functionpanel.hpp" />
+    <QtMoc Include="..\src\cpp\ui\trains\lococontrolpanel.hpp" />
+    <ClInclude Include="..\src\cpp\ui\trains\speedcontrol.hpp" />
+    <ClInclude Include="..\src\cpp\utils\algorithm.hpp" />
+    <ClInclude Include="..\src\cpp\utils\device.hpp" />
+    <ClInclude Include="..\src\cpp\utils\log.hpp" />
+    <ClInclude Include="..\src\cpp\utils\math.hpp" />
+    <ClInclude Include="..\src\cpp\utils\os.hpp" />
+    <ClInclude Include="..\src\cpp\utils\pinger.hpp" />
+    <ClInclude Include="..\src\cpp\utils\pp.hpp" />
+    <ClInclude Include="..\src\cpp\utils\string.hpp" />
+    <ClCompile Include="..\src\cpp\control\controllers\worker.cpp" />
+    <ClCompile Include="..\src\cpp\control\protocols\ecos.cpp" />
+    <ClCompile Include="..\src\cpp\main.cpp" />
+    <ClInclude Include="..\src\cpp\common.hpp" />
+    <ClInclude Include="..\src\cpp\control\controllers\worker.hpp" />
+    <ClInclude Include="..\src\cpp\control\protocols\base.hpp" />
+    <ClInclude Include="..\src\cpp\control\protocols\ecos.hpp" />
+    <ClInclude Include="..\src\cpp\stdafx.h" />
+    <ClCompile Include="..\src\cpp\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\res\HyraxRail.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\res\fonts\DSEG7-Classic\DSEG7Classic-Bold.ttf" />
+    <Font Include="..\res\fonts\DSEG7-Classic\DSEG7Classic-BoldItalic.ttf" />
+    <Font Include="..\res\fonts\DSEG7-Classic\DSEG7Classic-LightItalic.ttf" />
+    <Font Include="..\res\fonts\DSEG7-Classic\DSEG7Classic-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\LICENSE" />
+    <None Include="..\README.md" />
+    <None Include="..\res\icons\app\conductor-hyrax-mini.svg" />
+    <None Include="..\res\icons\app\conductor-hyrax.svg" />
+    <None Include="..\res\icons\functions\chart-line-up.svg" />
+    <None Include="..\res\icons\functions\engine.svg" />
+    <None Include="..\res\icons\functions\headlights.svg" />
+    <None Include="..\res\icons\functions\lightbulb.svg" />
+    <None Include="..\res\icons\functions\megaphone.svg" />
+    <None Include="..\res\icons\functions\plugs-connected.svg" />
+    <None Include="..\res\icons\functions\radical.svg" />
+    <None Include="..\res\icons\functions\snail.svg" />
+    <None Include="..\res\icons\functions\speaker-high.svg" />
+    <None Include="..\res\icons\functions\tire.svg" />
+    <None Include="..\res\icons\misc\arrow-left.svg" />
+    <None Include="..\res\icons\misc\binary.svg" />
+    <None Include="..\res\icons\misc\cell-signal-full.svg" />
+    <None Include="..\res\icons\misc\cell-signal-grey.svg" />
+    <None Include="..\res\icons\misc\cell-signal-high.svg" />
+    <None Include="..\res\icons\misc\cell-signal-low.svg" />
+    <None Include="..\res\icons\misc\cell-signal-medium.svg" />
+    <None Include="..\res\icons\misc\cell-signal-x.svg" />
+    <None Include="..\res\icons\misc\circle-play.svg" />
+    <None Include="..\res\icons\misc\dot.svg" />
+    <None Include="..\res\icons\misc\empty-dot.svg" />
+    <None Include="..\res\icons\misc\gear.svg" />
+    <None Include="..\res\icons\misc\path.svg" />
+    <None Include="..\res\icons\misc\plugs-connected.svg" />
+    <None Include="..\res\icons\misc\plus.svg" />
+    <None Include="..\res\icons\misc\prohibit-inset.svg" />
+    <None Include="..\res\icons\misc\split.svg" />
+    <None Include="..\res\icons\misc\stop.svg" />
+    <None Include="..\res\icons\misc\train-track.svg" />
+    <None Include="..\res\icons\misc\train.svg" />
+    <None Include="..\res\icons\misc\trash.svg" />
+    <None Include="..\res\icons\misc\unplug.svg" />
+    <None Include="..\res\icons\switches\left-track-left.svg" />
+    <None Include="..\res\icons\switches\left-track-straight.svg" />
+    <None Include="..\res\icons\switches\right-track-right.svg" />
+    <None Include="..\res\icons\switches\right-track-straight.svg" />
+    <None Include="..\res\text\LICENSE_LUCIDE" />
+    <None Include="..\res\text\LICENSE_PHOSPHOR" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\res\version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\res\icons\app\conductor-hyrax.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\res\text\DSEG-LICENSE.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

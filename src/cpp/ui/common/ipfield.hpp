@@ -1,0 +1,57 @@
+/**
+ * @file        common/ipfield.hpp
+ * @brief       IP address entry widget, supporting both IPv4 and IPv6
+ * @author      Justin Scott
+ * @date        2026-02-06
+ *
+ * @copyright   Copyright (c) 2026 Justin Scott
+ */
+
+#pragma once
+
+#include <QHostAddress>
+#include <QWidget>
+
+#include <ui/common/hexvalidator.hpp>
+
+
+
+
+namespace ui::common
+{
+class ShortcutLineEdit;
+
+class IpField : public QWidget
+    {
+public:
+    IpField (QChar delimeter, size_t numOctets, bool hex, QWidget* parent);
+
+    QHostAddress getValue () const;
+
+    void setValue (const QHostAddress& addr);
+
+protected:
+    std::vector<ShortcutLineEdit*>  m_fields;
+    bool                            m_hex;
+    QChar                           m_delimiter;
+
+    void next (int idx);
+
+    void back (int idx);
+    };
+
+
+class IpV4Field : public IpField
+    {
+public:
+    explicit IpV4Field (QWidget* parent) :
+        IpField ('.', 4, false, parent)
+        {}
+    };
+
+class IpV6Field : public IpField
+    {
+public:
+    explicit IpV6Field (QWidget* parent);
+    };
+}
