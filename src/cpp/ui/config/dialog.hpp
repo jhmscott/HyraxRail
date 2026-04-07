@@ -15,13 +15,13 @@
 
 #include <control/controllers/base.hpp>
 
+#include <ui/config/deviceinfo.hpp>
 #include <ui/common/optionaldropdown.hpp>
 #include <ui/common/ipfield.hpp>
 
 namespace ui::config
 {
 
-class DeviceInfoWidget;
 
 class Dialog : public QDialog
     {
@@ -38,12 +38,18 @@ private:
     DeviceInfoWidget*           m_active;
     QLineEdit*                  m_name;
     QFormLayout*                m_layout;
+    QPushButton*                m_ok;
 
     void setTransportProto (int idx);
 
     void setNetworkMode ();
 
     void setComMode ();
+
+    bool hasAcceptableInput () const;
+
+    void inputChanged () { m_ok->setEnabled (hasAcceptableInput ()); }
+
     };
 
 }

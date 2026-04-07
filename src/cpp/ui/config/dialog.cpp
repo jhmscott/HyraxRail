@@ -12,167 +12,10 @@
 
 
 #include <QDialogButtonBox>
+#include <QValidator>
 
 namespace ui::config
 {
-
-class DeviceInfoWidget : public QWidget
-    {
-public:
-    explicit DeviceInfoWidget (QWidget* parent) :
-        QWidget (parent)
-        {}
-
-    virtual utils::device::deviceInfo::info_t getInfo () const = 0;
-
-    virtual void setInfo (utils::device::deviceInfo::info_t&) = 0;
-    };
-
-
-class NetworkDeviceInfoWidget : public DeviceInfoWidget
-    {
-public:
-    NetworkDeviceInfoWidget (QWidget* parent, utils::device::portNumber_t port) :
-        DeviceInfoWidget (parent)
-        {
-        m_layout = new QFormLayout{ this };
-
-        m_network       = new QComboBox{ this };
-        m_addressV4     = new common::IpV4Field{ this };
-        m_addressV6     = new common::IpV6Field{ this };
-        m_port          = new QLineEdit{ this };
-
-        m_network->addItem ("IPv4", QVariant::fromValue (QHostAddress::IPv4Protocol));
-        m_network->addItem ("IPv6", QVariant::fromValue (QHostAddress::IPv6Protocol));
-
-        m_layout->addRow ("Network Protocol",   m_network);
-        m_layout->addRow ("Address",            m_addressV4);
-        m_layout->addRow ("Address",            m_addressV6);
-        m_layout->addRow ("Port",               m_port);
-
-        m_port->setValidator (new QIntValidator{ 1, 65535 });
-
-        if (control::ProtocolMetaClassBase::NO_DEFAULT_PORT != port)
-            {
-            m_port->setText (QString::number (port));
-            }
-
-        NetworkDeviceInfoWidget::networkProtoChanged (0);
-
-        connect (m_network,
-                &QComboBox::currentIndexChanged,
-                 this,
-                &NetworkDeviceInfoWidget::networkProtoChanged);
-
-        setLayout (m_layout);
-        }
-
-    virtual void setInfo (utils::device::deviceInfo::info_t& info) override
-        {
-        const utils::device::socketInfo& socket =
-            std::get<utils::device::socketInfo> (info);
-
-        common::setComboBoxIndexByUserData (*m_network, socket.addr.protocol ());
-
-        if (QHostAddress::IPv4Protocol == socket.addr.protocol ())
-            {
-            m_addressV4->setValue (socket.addr);
-            NetworkDeviceInfoWidget::networkProtoChanged (0);
-            }
-        else // (QHostAddress::IPv6Protocol == socket.addr.protocol ())
-            {
-            m_addressV6->setValue (socket.addr);
-            NetworkDeviceInfoWidget::networkProtoChanged (1);
-            }
-
-        m_port->setText (QString::number (socket.port));
-        }
-
-    virtual utils::device::deviceInfo::info_t getInfo () const override
-        {
-        utils::device::socketInfo info;
-
-        info.addr = m_activeIp->getValue ();
-        info.port = m_port->text ().toInt ();
-
-        return info;
-        }
-
-private:
-    common::IpField*    m_activeIp = NULL;
-    common::IpV4Field*  m_addressV4;
-    common::IpV6Field*  m_addressV6;
-    QLineEdit*          m_port;
-    QComboBox*          m_network;
-    QFormLayout*        m_layout;
-
-    void networkProtoChanged (int idx)
-        {
-        if (0 == idx)
-            {
-            m_layout->setRowVisible (m_addressV4, true);
-            m_layout->setRowVisible (m_addressV6, false);
-            m_activeIp = m_addressV4;
-            }
-        else
-            {
-            m_layout->setRowVisible (m_addressV4, false);
-            m_layout->setRowVisible (m_addressV6, true);
-            m_activeIp = m_addressV6;
-            }
-        }
-    };
-
-class ComPortInfoWidget : public DeviceInfoWidget
-    {
-public:
-    explicit ComPortInfoWidget (QWidget* parent) :
-        DeviceInfoWidget (parent)
-        {
-        m_layout        = new QFormLayout{ this };
-
-        m_comport       = new QComboBox{ this };
-        m_baud          = new QComboBox{ this };
-
-        for (auto& comPort : QSerialPortInfo::availablePorts ())
-            {
-            m_comport->addItem (comPort.portName (),
-                                QVariant::fromValue (std::move (comPort)));
-            }
-
-        for (int baud : QSerialPortInfo::standardBaudRates ())
-            {
-            m_baud->addItem (QString::number (baud),
-                             QVariant::fromValue (baud));
-            }
-
-        m_layout->addRow ("Baud Rate", m_baud);
-        m_layout->addRow ("COM Port", m_comport);
-        }
-
-
-    virtual void setInfo (utils::device::deviceInfo::info_t& info) override
-        {
-        const utils::device::serialInfo& com = std::get<utils::device::serialInfo> (info);
-
-        common::setComboBoxIndexByText (*m_comport, com.port.portName ());
-        common::setComboBoxIndexByUserData (*m_baud, com.baud);
-        }
-
-    virtual utils::device::deviceInfo::info_t getInfo () const override
-        {
-        utils::device::serialInfo info;
-
-        info.baud = m_baud->currentData ().toInt ();
-        info.port = m_comport->currentData ().value<QSerialPortInfo> ();
-
-        return info;
-        }
-private:
-    QComboBox*      m_comport;
-    QComboBox*      m_baud;
-    QFormLayout*    m_layout;
-    };
 
 Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
     QDialog (parent)
@@ -194,7 +37,7 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
         port = controller->getMetaClass ().protocols[0]->defaultPort;
         }
 
-    m_layout = new QFormLayout;
+    m_layout = new QFormLayout{ this };
 
     setWindowTitle ("Controller Settings");
     setWindowIcon (QIcon{ ":/icons/misc/gear.svg" });
@@ -207,6 +50,11 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
     m_com           = new ComPortInfoWidget{ this } ;
 
     m_name          = new QLineEdit{ this };
+
+    // Require non-empty string
+    m_name->setValidator (
+        new QRegularExpressionValidator{
+                QRegularExpression{ R"(^(?!\s*$).+)" }, this });
 
     for (auto controller : controllers)
         {
@@ -260,6 +108,12 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
     layout->addWidget (m_network);
     layout->addWidget (buttons, 0, Qt::AlignHCenter);
 
+
+    m_ok = buttons->button (QDialogButtonBox::Ok);
+
+    // Set the initial state of the OK button
+    inputChanged ();
+
     connect (buttons,
             &QDialogButtonBox::accepted,
              this,
@@ -269,6 +123,21 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
             &QDialogButtonBox::rejected,
              this,
             &QDialog::reject);
+
+    connect (m_network,
+            &DeviceInfoWidget::inputChanged,
+             this,
+            &Dialog::inputChanged);
+
+    connect (m_com,
+            &DeviceInfoWidget::inputChanged,
+             this,
+            &Dialog::inputChanged);
+
+    connect (m_name,
+            &QLineEdit::textChanged,
+             this,
+            &Dialog::inputChanged);
 
     setLayout (layout);
     }
@@ -303,6 +172,8 @@ void Dialog::setTransportProto (int idx)
         {
         setNetworkMode ();
         }
+
+    emit inputChanged ();
     }
 
 void Dialog::setNetworkMode ()
@@ -319,5 +190,10 @@ void Dialog::setComMode ()
     m_active = m_com;
     }
 
+bool Dialog::hasAcceptableInput() const
+    {
+    return m_active->hasAcceptableInput () &&
+           m_name->hasAcceptableInput ();
+    }
 
 }

@@ -278,6 +278,9 @@
     <ClCompile Include="..\src\cpp\ui\trains\speedcontrol.cpp">
       <Filter>Source Files\ui\trains</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\config\deviceinfo.cpp">
+      <Filter>Source Files\ui\config</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\control\protocols\base.hpp">
@@ -358,9 +361,6 @@
     <ClInclude Include="..\res\version.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\common\ipfield.hpp">
-      <Filter>Header Files\ui\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\cpp\ui\common\utils.hpp">
       <Filter>Header Files\ui\common</Filter>
     </ClInclude>
@@ -401,6 +401,12 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\mainwindow.hpp">
       <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\common\ipfield.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\config\deviceinfo.hpp">
+      <Filter>Header Files\ui\common</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

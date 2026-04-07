@@ -73,6 +73,11 @@ IpField::IpField (QChar delimeter, size_t numOctets, bool hex, QWidget* parent) 
                      this,
                      std::bind (&IpField::back, this, ii));
             }
+
+        connect (m_fields[ii],
+                &QLineEdit::textChanged,
+                 this,
+                &IpField::inputChanged);
         }
 
     setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);

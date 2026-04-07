@@ -168,6 +168,7 @@
     <ClCompile Include="..\src\cpp\ui\common\stringdialog.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\toggleswitch.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\credits.cpp" />
+    <ClCompile Include="..\src\cpp\ui\config\deviceinfo.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\helpgroup.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\configpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\controllergroup.cpp" />
@@ -202,7 +203,7 @@
     <ClInclude Include="..\src\cpp\ui\common\hovericon.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\icontoggle.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\optionaldropdown.hpp" />
-    <ClInclude Include="..\src\cpp\ui\common\ipfield.hpp" />
+    <QtMoc Include="..\src\cpp\ui\common\ipfield.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\shortcutlineedit.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\pointedwidget.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\seperator.hpp" />
@@ -213,6 +214,7 @@
     <QtMoc Include="..\src\cpp\ui\config\configpanel.hpp" />
     <QtMoc Include="..\src\cpp\ui\config\controllergroup.hpp" />
     <ClInclude Include="..\src\cpp\ui\config\credits.hpp" />
+    <QtMoc Include="..\src\cpp\ui\config\deviceinfo.hpp" />
     <ClInclude Include="..\src\cpp\ui\config\dialog.hpp" />
     <QtMoc Include="..\src\cpp\ui\controllerinfo.hpp" />
     <ClInclude Include="..\src\cpp\ui\config\notifygroup.hpp" />

@@ -13,16 +13,16 @@
 #include <QWidget>
 
 #include <ui/common/hexvalidator.hpp>
-
+#include <ui/common/shortcutlineedit.hpp>
 
 
 
 namespace ui::common
 {
-class ShortcutLineEdit;
 
 class IpField : public QWidget
     {
+    Q_OBJECT
 public:
     IpField (QChar delimeter, size_t numOctets, bool hex, QWidget* parent);
 
@@ -30,6 +30,16 @@ public:
 
     void setValue (const QHostAddress& addr);
 
+    bool hasAcceptableInput () const
+        {
+        return std::all_of (m_fields.begin (),
+                            m_fields.end (),
+                            [] (ShortcutLineEdit* edit) -> bool
+                            { return edit->hasAcceptableInput (); });
+        }
+
+signals:
+    void inputChanged ();
 protected:
     std::vector<ShortcutLineEdit*>  m_fields;
     bool                            m_hex;
