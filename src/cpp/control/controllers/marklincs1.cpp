@@ -270,11 +270,11 @@ void MarklinCS1::setActuator (size_t id, bool val)
                          ARG (ECoSProtocol::ARG_STATE, val));
     }
 
-void MarklinCS1::setRoute (size_t id, bool val)
+void MarklinCS1::setRoute (size_t id)
     {
     issueDynamicCommand (ECoSProtocol::set,
                          id,
-                         ARG (ECoSProtocol::ARG_STATE, val));
+                         ARG (ECoSProtocol::ARG_STATE, true));
     }
 
 template<class T>
@@ -404,8 +404,7 @@ std::vector<T> MarklinCS1::getSwitchingItems () const
             {
             actuators.emplace_back (const_cast<MarklinCS1*> (this),
                                     *names[ii].lines[0].arg->val,
-                                    static_cast<size_t> (reply.lines[ii].id),
-                                    "1" == states[ii].lines[0].arg->val);
+                                    static_cast<size_t> (reply.lines[ii].id));
             }
         }
 

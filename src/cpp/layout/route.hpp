@@ -25,14 +25,11 @@ class Route : public ComponentDerived<RouteController>
 public:
     Route (RouteController*     controller,
            const std::string&   name,
-           size_t               id,
-           bool                 state);
+           size_t               id);
 
     std::string getName () const { return m_name; }
 
-    void set (bool val);
-
-    bool get () const { return m_state; }
+    void set ();
 
     void request ();
 
@@ -48,7 +45,7 @@ class RouteController : public ControllerBase<Route>
     {
     friend class Route;
 public:
-    virtual void setRoute (size_t id, bool val) = 0;
+    virtual void setRoute (size_t id) = 0;
 
     virtual void requestRouteControl (size_t id) = 0;
 

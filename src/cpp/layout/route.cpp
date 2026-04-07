@@ -14,18 +14,15 @@ namespace layout
 {
 Route::Route (RouteController*      controller,
               const std::string&    name,
-              size_t                id,
-              bool                  state) :
+              size_t                id) :
     ComponentDerived<RouteController> (controller, id),
-    m_name (name),
-    m_state (state)
+    m_name (name)
     {}
 
 
-void Route::set (bool val)
+void Route::set ()
     {
-    m_controller->setRoute (m_id, val);
-    m_state = val;
+    m_controller->setRoute (m_id);
     }
 
 void Route::request () { m_controller->requestRouteControl (m_id); }

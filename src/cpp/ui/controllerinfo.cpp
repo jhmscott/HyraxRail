@@ -33,7 +33,7 @@ ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* pa
 
     m_settings = new common::PointedButton{ QIcon{ ":/icons/misc/gear.svg" }, "", this };
 
-    m_connectionIcon = new common::PointedButton{ "", this };
+    m_connectionIcon = new QPushButton{ "", this };
     m_stop = new common::IconToggle{ QIcon{ ":/icons/misc/circle-play.svg"},
                                      QIcon{ ":/icons/misc/prohibit-inset.svg"},
                                      true,

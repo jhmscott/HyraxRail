@@ -17,7 +17,11 @@ public:
 protected:
     virtual void enterEvent (QEnterEvent* event) override
         {
-        Widget::setCursor (Qt::PointingHandCursor);
+        if (Widget::isEnabled ())
+            {
+            Widget::setCursor (Qt::PointingHandCursor);
+            }
+
         Widget::enterEvent (event);
         }
     };

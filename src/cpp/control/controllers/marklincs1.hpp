@@ -64,9 +64,9 @@ private:
 
     virtual std::vector<layout::funcInfo> getFunctions (size_t id) const override;
 
-    virtual void setActuator (size_t id, bool val);
+    virtual void setActuator (size_t id, bool val) override;
 
-    virtual void setRoute (size_t id, bool val);
+    virtual void setRoute (size_t id) override;
 
     };
 

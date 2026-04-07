@@ -22,23 +22,36 @@ namespace ui::routes
 class RouteButton : public QWidget
     {
 public:
-    RouteButton (const QString& name, QWidget* parent) :
-        QWidget (parent)
+    RouteButton (const layout::Route& route, QWidget* parent) :
+        QWidget (parent),
+        m_route (new layout::Route{ route })
         {
         QVBoxLayout* layout = new QVBoxLayout{ this };
         QPushButton* button = new common::PointedButton{ QIcon{ ":/icons/misc/path.svg" }, "", this };
+
+        m_route->request ();
 
         button->setFixedSize (50, 50);
         button->setIconSize (QSize{ 30, 30 });
         button->setStyleSheet ("QPushButton:pressed { background-color: royalblue; }");
 
         layout->addWidget (button);
-        layout->addWidget (new QLabel{ name, this }, 0, Qt::AlignHCenter);
+        layout->addWidget (new QLabel{ m_route->getName ().c_str (), this}, 0, Qt::AlignHCenter);
 
         setContentsMargins (0, 20, 0, 0);
 
+        connect (button,
+                 &QPushButton::released,
+                  m_route,
+                 &layout::Route::set);
+
         setLayout (layout);
         }
+
+    ~RouteButton () { delete m_route; }
+private:
+    layout::Route* m_route;
+
     };
 
 RouteGroup::RouteGroup (control::ControllerBase& controller, QWidget* parent) :
@@ -52,7 +65,7 @@ RouteGroup::RouteGroup (control::ControllerBase& controller, QWidget* parent) :
 
     for (const layout::Route& route : routes)
         {
-        layout->addWidget (new RouteButton{ route.getName ().c_str (), this});
+        layout->addWidget (new RouteButton{ route, this});
         }
 
     layout->setAlignment (Qt::AlignTop | Qt::AlignLeft);
