@@ -12,10 +12,12 @@
 #include <QAbstractButton>
 #include <QPropertyAnimation>
 
+#include <ui/common/pointedwidget.hpp>
+
 namespace ui::common
 {
 
-class ToggleSwitch : public QAbstractButton
+class ToggleSwitch : public PointedWidget<QAbstractButton>
     {
     Q_OBJECT
 
@@ -25,15 +27,20 @@ public:
 
     QSize sizeHint () const override;
 
-    int offset() const { return m_x; }
+    int offset () const { return m_x; }
 
-    void setOffset(int o) { m_x = o; update(); }
+    void setOffset (int o) { m_x = o; update(); }
+
+    bool getSwitch () { return m_switch; }
+
+    void setSwitch (bool state) { m_switch = state; update (); }
+
+signals:
+    void switched (bool state);
 protected:
     void paintEvent (QPaintEvent*) override;
 
     void mouseReleaseEvent (QMouseEvent*) override;
-
-    void enterEvent (QEnterEvent* event) override;
 
 private:
     bool    m_switch;

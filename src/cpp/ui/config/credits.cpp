@@ -9,6 +9,7 @@
  */
 
 #include <ui/common/hovericon.hpp>
+#include <ui/common/pointedwidget.hpp>
 #include <ui/common/seperator.hpp>
 #include <ui/common/utils.hpp>
 
@@ -74,7 +75,7 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
 
     for (int ii = 0; ii < NUM_SW_LICENSES; ++ii)
         {
-        QPushButton* btn = new QPushButton{ softwareName[ii], this };
+        QPushButton* btn = new common::PointedButton{ softwareName[ii], this };
 
         btn->setFont (font);
         btn->setSizePolicy (QSizePolicy::Maximum,

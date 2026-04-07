@@ -18,7 +18,7 @@
 namespace ui::common
 {
 HoverIcon::HoverIcon (const QIcon& icon, const QColor& hoverColor, style style, QWidget* parent) :
-    QPushButton (icon, "", parent),
+    PointedButton (icon, "", parent),
     m_hoverColor (hoverColor),
     m_style (style)
     {
@@ -69,10 +69,5 @@ void HoverIcon::paintEvent (QPaintEvent* event)
         }
 
     QPushButton::paintEvent (event);
-    }
-void HoverIcon::enterEvent (QEnterEvent* event)
-    {
-    setCursor (Qt::PointingHandCursor);
-    QAbstractButton::enterEvent (event);
     }
 }

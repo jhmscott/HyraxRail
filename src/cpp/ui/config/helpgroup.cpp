@@ -7,6 +7,7 @@
  * @copyright   Copyright (c) 2026 Justin Scott
  */
 
+#include <ui/common/pointedwidget.hpp>
 #include <ui/common/seperator.hpp>
 #include <ui/common/utils.hpp>
 
@@ -136,11 +137,11 @@ HelpGroup::HelpGroup (QWidget* parent) :
     {
     QVBoxLayout* layout     = new QVBoxLayout{ this };
 
-    QPushButton* help       = new QPushButton{ "View Help",             this };
-    QPushButton* aboutBtn   = new QPushButton{ "About Hyrax Rail",      this };
-    QPushButton* aboutQtBtn = new QPushButton{ "About Qt",              this };
-    QPushButton* licBtn     = new QPushButton{ "License Info",          this };
-    QPushButton* creditsBtn = new QPushButton{ escape (CreditsDialog::TITLE), this};
+    QPushButton* help       = new common::PointedButton{ "View Help",             this };
+    QPushButton* aboutBtn   = new common::PointedButton{ "About Hyrax Rail",      this };
+    QPushButton* aboutQtBtn = new common::PointedButton{ "About Qt",              this };
+    QPushButton* licBtn     = new common::PointedButton{ "License Info",          this };
+    QPushButton* creditsBtn = new common::PointedButton{ escape (CreditsDialog::TITLE), this};
 
     styleButton (*help);
     styleButton (*aboutBtn);

@@ -153,6 +153,9 @@
     <ClCompile Include="..\src\cpp\ui\mainwindow.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
+    <ClInclude Include="..\src\cpp\ui\common\pointedwidget.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cpp\main.cpp">

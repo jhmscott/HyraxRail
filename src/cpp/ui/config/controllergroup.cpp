@@ -8,6 +8,7 @@
  */
 
 #include <ui/common/hovericon.hpp>
+#include <ui/common/pointedwidget.hpp>
 #include <ui/common/seperator.hpp>
 
 #include <ui/config/controllergroup.hpp>
@@ -36,7 +37,7 @@ ControllerGroup::ControllerGroup (const std::vector<control::ControllerBase*>&  
         }
 
     QHBoxLayout* addController  = new QHBoxLayout{ this };
-    QPushButton* plusIcon       = new QPushButton{ QIcon{ ":/icons/misc/plus.svg" }, "", this};
+    QPushButton* plusIcon       = new common::PointedButton{ QIcon{ ":/icons/misc/plus.svg" }, "", this};
     QLabel*      plusLabel      = new QLabel{ "New Controller", this };
     QFont        font           = QApplication::font ();
 

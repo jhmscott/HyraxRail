@@ -204,6 +204,7 @@
     <QtMoc Include="..\src\cpp\ui\common\optionaldropdown.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\ipfield.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\shortcutlineedit.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\pointedwidget.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\seperator.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\stringdialog.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\toggleswitch.hpp" />

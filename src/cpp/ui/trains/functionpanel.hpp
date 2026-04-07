@@ -18,7 +18,7 @@
 
 #include <common.hpp>
 
-namespace ui
+namespace ui::trains
 {
 
 class FunctionButton;

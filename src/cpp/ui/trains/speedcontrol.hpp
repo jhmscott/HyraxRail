@@ -16,7 +16,7 @@
 #include <QSlider>
 #include <QWidget>
 
-namespace ui
+namespace ui::trains
 {
 
 class SpeedControlWidget : public QWidget

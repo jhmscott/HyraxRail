@@ -11,12 +11,15 @@
 
 #pragma once
 
+#include <ui/common/pointedwidget.hpp>
+
+
 #include <QPushButton>
 
 namespace ui::common
 {
 
-class HoverIcon : public QPushButton
+class HoverIcon : public PointedButton
     {
 public:
     enum class style
@@ -30,7 +33,6 @@ public:
 protected:
     virtual void paintEvent (QPaintEvent* event) override;
 
-    virtual void enterEvent (QEnterEvent* event) override;
 private:
     QColor  m_hoverColor;
     style   m_style;

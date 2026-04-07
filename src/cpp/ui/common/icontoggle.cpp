@@ -18,7 +18,7 @@ IconToggle::IconToggle (const QIcon&    active,
                         const QIcon&    disabled,
                         bool            frameless,
                         QWidget*        parent) :
-    QPushButton (disabled, "", parent),
+    PointedButton (disabled, "", parent),
     m_active (active),
     m_disabled (disabled)
     {
@@ -53,11 +53,6 @@ void IconToggle::setTooltips (const QString& active, const QString disabled)
     setToolTip (isChecked () ? active : disabled);
     }
 
-void IconToggle::enterEvent (QEnterEvent* event)
-    {
-    setCursor (Qt::PointingHandCursor);
-    QAbstractButton::enterEvent (event);
-    }
 
 void IconToggle::onToggle ()
     {

@@ -13,6 +13,7 @@
 #include <QMessageBox>
 #include <QTimer>
 
+#include <ui/common/pointedwidget.hpp>
 #include <ui/controllerinfo.hpp>
 #include <ui/config/dialog.hpp>
 
@@ -30,9 +31,9 @@ ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* pa
 
     QPushButton* deleteBtn;
 
-    m_settings = new QPushButton{ QIcon{ ":/icons/misc/gear.svg" }, "", this };
+    m_settings = new common::PointedButton{ QIcon{ ":/icons/misc/gear.svg" }, "", this };
 
-    m_connectionIcon = new QPushButton{ "", this };
+    m_connectionIcon = new common::PointedButton{ "", this };
     m_stop = new common::IconToggle{ QIcon{ ":/icons/misc/circle-play.svg"},
                                      QIcon{ ":/icons/misc/prohibit-inset.svg"},
                                      true,
@@ -63,7 +64,7 @@ ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* pa
 
     if (includeDelete)
         {
-        deleteBtn = new QPushButton{ QIcon{ ":/icons/misc/trash.svg" }, "", this };
+        deleteBtn = new common::PointedButton{ QIcon{ ":/icons/misc/trash.svg" }, "", this };
         deleteBtn->setIconSize (QSize{ ICON_SIZE, ICON_SIZE });
 
         common::makeFrameless (*deleteBtn);

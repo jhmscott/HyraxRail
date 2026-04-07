@@ -11,10 +11,12 @@
 
 #include <QPushButton>
 
+#include <ui/common/pointedwidget.hpp>
+
 namespace ui::common
 {
 
-class IconToggle : public QPushButton
+class IconToggle : public PointedButton
     {
 public:
     IconToggle (const QIcon&    active,
@@ -26,9 +28,6 @@ public:
 
     void setTooltips (const QString& active, const QString disabled);
 
-protected:
-
-    void enterEvent (QEnterEvent* event) override;
 
 private:
     QIcon   m_active;

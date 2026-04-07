@@ -10,18 +10,19 @@
 
 #include <ui/trains/functionpanel.hpp>
 #include <ui/common/autogrid.hpp>
+#include <ui/common/pointedwidget.hpp>
 
 #include <QApplication>
 #include <QPainter>
 #include <QStyleOption>
 
-namespace ui
+namespace ui::trains
 {
-class FunctionButton : public QPushButton
+class FunctionButton : public common::PointedButton
     {
 public:
     FunctionButton (uint8_t id, QWidget* parent) :
-        QPushButton (QString::number (id), parent)
+        common::PointedButton (QString::number (id), parent)
         {}
 
     void setInstanceNum (int instanceNum) { m_instanceNum = instanceNum; }

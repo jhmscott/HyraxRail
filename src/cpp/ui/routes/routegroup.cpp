@@ -8,12 +8,13 @@
  */
 
 
-#include <ui/common/autogrid.hpp>
-#include <ui/routes/routegroup.hpp>
-
 #include <QBoxLayout>
 #include <QLabel>
 #include <QPushButton>
+
+#include <ui/common/autogrid.hpp>
+#include <ui/common/pointedwidget.hpp>
+#include <ui/routes/routegroup.hpp>
 
 namespace ui::routes
 {
@@ -25,7 +26,7 @@ public:
         QWidget (parent)
         {
         QVBoxLayout* layout = new QVBoxLayout{ this };
-        QPushButton* button = new QPushButton{ QIcon{ ":/icons/misc/path.svg" }, "", this };
+        QPushButton* button = new common::PointedButton{ QIcon{ ":/icons/misc/path.svg" }, "", this };
 
         button->setFixedSize (50, 50);
         button->setIconSize (QSize{ 30, 30 });

@@ -12,8 +12,9 @@
 #include <ui/trains/lococontrolpanel.hpp>
 
 
-namespace ui
+namespace ui::trains
 {
+
 LocoControlPanel::LocoControlPanel (const control::controllerList& controllers, vAlignment align, QWidget* parent) :
     QWidget (parent)
     {

@@ -17,7 +17,7 @@
 
 #include <QComboBox>
 
-namespace ui
+namespace ui::trains
 {
 
 class LocoControlPanel : public QWidget

@@ -7,7 +7,6 @@
  * @copyright   Copyright (c) 2026 Justin Scott
  */
 
-#include <ui/trains/speedcontrol.hpp>
 
 #include <QApplication>
 #include <QPainter>
@@ -17,7 +16,11 @@
 #include <QPushButton>
 #include <QStyle>
 
-namespace ui
+#include <ui/common/pointedwidget.hpp>
+#include <ui/common/utils.hpp>
+#include <ui/trains/speedcontrol.hpp>
+
+namespace ui::trains
 {
 
 class CenteredSlider : public QSlider
@@ -168,7 +171,7 @@ SpeedControlWidget::SpeedControlWidget (QWidget* parent) :
     {
     QVBoxLayout* layout = new QVBoxLayout{ this };
 
-    m_stop = new QPushButton
+    m_stop = new common::PointedButton
                     {
                     QIcon{ ":/icons/misc/stop.svg" },
                     "",
@@ -176,7 +179,7 @@ SpeedControlWidget::SpeedControlWidget (QWidget* parent) :
                     };
 
     m_stop->setIconSize (QSize{ 50, 50 });
-    m_stop->setStyleSheet ("QPushButton { border: none; background: transparent; }");
+    common::makeFrameless (*m_stop);
 
     m_slider    = new CenteredSlider{ Qt::Vertical, this };
     m_label     = new QLabel{ "00", this};
