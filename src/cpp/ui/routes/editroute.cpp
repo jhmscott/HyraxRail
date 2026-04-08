@@ -27,10 +27,10 @@ EditRouteDialog::EditRouteDialog (control::ControllerBase& controller, QWidget* 
     common::FormDialog (parent)
     {
     QVBoxLayout*            layout      = new QVBoxLayout{ this };
-    QHBoxLayout*            nameLayout  = new QHBoxLayout{ this };
+    QHBoxLayout*            nameLayout  = new QHBoxLayout{ };
     common::AutoGridLayout* btnLayout   = new common::AutoGridLayout{ common::AutoGridLayout::expand::ROW_FIRST,
                                                                       4,
-                                                                      this };
+                                                                      NULL };
     auto                    actuators   = controller.getActuators ();
 
     m_buttonList.reserve (actuators.size ());
