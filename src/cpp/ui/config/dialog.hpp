@@ -16,6 +16,7 @@
 #include <control/controllers/base.hpp>
 
 #include <ui/config/deviceinfo.hpp>
+#include <ui/common/formdialog.hpp>
 #include <ui/common/optionaldropdown.hpp>
 #include <ui/common/ipfield.hpp>
 
@@ -23,7 +24,7 @@ namespace ui::config
 {
 
 
-class Dialog : public QDialog
+class Dialog : public common::FormDialog
     {
 public:
     Dialog (QWidget* parent, control::ControllerBase* controller = NULL);
@@ -38,7 +39,6 @@ private:
     DeviceInfoWidget*           m_active;
     QLineEdit*                  m_name;
     QFormLayout*                m_layout;
-    QPushButton*                m_ok;
 
     void setTransportProto (int idx);
 
@@ -46,9 +46,7 @@ private:
 
     void setComMode ();
 
-    bool hasAcceptableInput () const;
-
-    void inputChanged () { m_ok->setEnabled (hasAcceptableInput ()); }
+    virtual bool hasAcceptableInput () const override;
 
     };
 

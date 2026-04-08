@@ -1,3 +1,12 @@
+/**
+ * @file        common/pointedwidget.hpp
+ * @brief       Adds a pointed cursor when you mouse over the widget
+ * @author      Justin Scott
+ * @date        2026-04-07
+ *
+ * @copyright   Copyright (c) 2026 Justin Scott
+ */
+
 #pragma once
 
 #include <QPushButton>
@@ -8,7 +17,7 @@
 namespace ui::common
 {
 template<class Widget>
-class PointedWidget: public Widget
+class PointedWidget : public Widget
     {
     static_assert (std::is_base_of_v<QWidget, Widget>,"Must inherit form a QWidget type");
 public:

@@ -28,6 +28,7 @@ public:
 private:
     control::ControllerBase* m_controller;
 
+    void addRoute ();
     };
 
 }

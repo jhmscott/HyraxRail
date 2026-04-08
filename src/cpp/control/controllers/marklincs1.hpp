@@ -38,6 +38,9 @@ public:
 
     virtual std::vector<layout::Route> getRoutes () const override;
 
+    virtual void createRoute (const std::string&                name,
+                              const std::vector<routeMember>&   actuators) override;
+
     virtual void eStop (bool stop) override;
 
     virtual bool isEStopped () override;

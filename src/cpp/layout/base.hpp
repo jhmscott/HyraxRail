@@ -105,6 +105,8 @@ public:
                other.m_id           == m_id;
         }
 
+    size_t getId () const { return m_id; }
+
 protected:
     Controller* m_controller;
     size_t      m_id = 0;

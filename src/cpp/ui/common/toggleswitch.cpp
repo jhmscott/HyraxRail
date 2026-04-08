@@ -40,7 +40,7 @@ void ToggleSwitch::paintEvent (QPaintEvent*)
     QPainter p (this);
 
     p.setPen (Qt::NoPen);
-    p.setRenderHint (QPainter::Antialiasing,true);
+    p.setRenderHint (QPainter::Antialiasing, true);
 
     if (isEnabled ())
         {
@@ -68,9 +68,9 @@ void ToggleSwitch::paintEvent (QPaintEvent*)
         p.setBrush (Qt::black);
         p.setOpacity (0.12);
         p.drawRoundedRect (QRect{ m_margin,
-                                   m_margin,
-                                   width ()  - 2 * m_margin,
-                                   height () - 2 * m_margin },
+                                  m_margin,
+                                  width ()  - 2 * m_margin,
+                                  height () - 2 * m_margin },
                            8.0,
                            8.0);
 
@@ -87,13 +87,15 @@ void ToggleSwitch::mouseReleaseEvent (QMouseEvent* event)
     {
     if (event->button () & Qt::LeftButton)
         {
+        int w = width ();
+
         m_switch = m_switch ? false : true;
         m_thumb  = m_switch ? m_brush : QBrush{ "#d5d5d5" };
 
         if (m_switch)
             {
             m_anim->setStartValue (m_height / 2);
-            m_anim->setEndValue (width () - m_height);
+            m_anim->setEndValue (w - m_height);
             }
         else
             {

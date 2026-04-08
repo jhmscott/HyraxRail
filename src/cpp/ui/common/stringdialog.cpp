@@ -18,28 +18,13 @@
 namespace ui::common
 {
 StringDialog::StringDialog (QWidget* parent) :
-    QDialog (parent),
+    FormDialog (parent),
     m_edit (new QLineEdit{ this })
     {
     QVBoxLayout*        layout  = new QVBoxLayout{ this };
-    QDialogButtonBox*   buttons = new QDialogButtonBox{ QDialogButtonBox::Ok |
-                                                        QDialogButtonBox::Cancel,
-                                                        this };
 
     layout->addWidget (m_edit);
-    layout->addWidget (buttons);
-
-    m_ok = buttons->button (QDialogButtonBox::Ok);
-
-    connect (buttons,
-            &QDialogButtonBox::accepted,
-             this,
-            &QDialog::accept);
-
-    connect (buttons,
-            &QDialogButtonBox::rejected,
-             this,
-            &QDialog::reject);
+    layout->addWidget (m_buttons);
 
     setLayout (layout);
     }
@@ -59,7 +44,7 @@ void StringDialog::setValidator (QValidator* validator)
         disconnect (m_edit,
                    &QLineEdit::textChanged,
                     this,
-                   &StringDialog::validityChanged);
+                   &FormDialog::inputChanged);
         }
     else
         {
@@ -68,14 +53,10 @@ void StringDialog::setValidator (QValidator* validator)
         connect (m_edit,
                 &QLineEdit::textChanged,
                  this,
-                &StringDialog::validityChanged);
+                &FormDialog::inputChanged);
         }
 
-    validityChanged (m_edit->text ());
+    inputChanged ();
     }
 
-void StringDialog::validityChanged (const QString& text)
-    {
-    m_ok->setEnabled (m_edit->hasAcceptableInput ());
-    }
 }

@@ -13,8 +13,12 @@
 #include <QPushButton>
 
 #include <ui/common/autogrid.hpp>
+#include <ui/common/seperator.hpp>
 #include <ui/common/pointedwidget.hpp>
+#include <ui/common/utils.hpp>
+#include <ui/routes/editroute.hpp>
 #include <ui/routes/routegroup.hpp>
+
 
 namespace ui::routes
 {
@@ -58,21 +62,50 @@ RouteGroup::RouteGroup (control::ControllerBase& controller, QWidget* parent) :
     QGroupBox (controller.getFriendlyName ().c_str (), parent),
     m_controller (&controller)
     {
-    common::AutoGridLayout* layout =
+    QVBoxLayout*            layout      = new QVBoxLayout{ this };
+    QHBoxLayout*            addLayout   = new QHBoxLayout{ this };
+    common::AutoGridLayout* gridLayout  =
         new common::AutoGridLayout{ common::AutoGridLayout::expand::ROW_FIRST, 5, this };
 
     auto routes = m_controller->getRoutes ();
 
     for (const layout::Route& route : routes)
         {
-        layout->addWidget (new RouteButton{ route, this});
+        gridLayout->addWidget (new RouteButton{ route, this});
         }
 
-    layout->setAlignment (Qt::AlignTop | Qt::AlignLeft);
+    gridLayout->setAlignment (Qt::AlignTop | Qt::AlignLeft);
+
+    common::PointedButton* addBtn = new common::PointedButton{ QIcon{ ":/icons/misc/plus.svg" }, "", this };
+
+    common::makeFrameless (*addBtn);
+
+    addLayout->addWidget (addBtn, 0, Qt::AlignLeft);
+    addLayout->addWidget (new QLabel{ "Add Route", this }, 0, Qt::AlignLeft);
+    addLayout->setAlignment (Qt::AlignLeft);
+
+    layout->addItem (gridLayout);
+    layout->addWidget (new common::Separator{ this });
+    layout->addLayout (addLayout);
 
     setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Maximum);
 
+    connect (addBtn,
+            &QPushButton::released,
+             this,
+            &RouteGroup::addRoute);
+
     setLayout (layout);
+    }
+
+void RouteGroup::addRoute ()
+    {
+    EditRouteDialog dlg{ *m_controller, this };
+
+    if (QDialog::Accepted == dlg.exec ())
+        {
+        m_controller->createRoute (dlg.getName (), dlg.getActuators ());
+        }
     }
 
 

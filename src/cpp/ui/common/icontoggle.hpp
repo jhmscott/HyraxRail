@@ -36,7 +36,7 @@ private:
     QString m_activeTip;
     QString m_disabledTip;
 
-    bool    m_hasTooltips;
+    bool    m_hasTooltips = false;
 
     void onToggle ();
     };

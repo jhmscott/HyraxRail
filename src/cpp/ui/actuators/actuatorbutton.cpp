@@ -15,9 +15,10 @@
 
 namespace ui::actuators
 {
-ActuatorButton::ActuatorButton (const layout::Actuator& actuator, QWidget* parent) :
+ActuatorButton::ActuatorButton (const layout::Actuator& actuator, QWidget* parent, bool dummy) :
     QWidget (parent),
-    m_actuator (actuator)
+    m_actuator (actuator),
+    m_dummy (dummy)
     {
     static const std::pair<QIcon, QIcon> icons[] =
         {
@@ -35,7 +36,7 @@ ActuatorButton::ActuatorButton (const layout::Actuator& actuator, QWidget* paren
 
     QVBoxLayout* layout = new QVBoxLayout{ this };
 
-    common::IconToggle* button = new common::IconToggle
+    m_button = new common::IconToggle
         {
         icon.first,
         icon.second,
@@ -43,27 +44,38 @@ ActuatorButton::ActuatorButton (const layout::Actuator& actuator, QWidget* paren
         parent
         };
 
-    button->setChecked (actuator.get ());
+    m_button->setChecked (actuator.get ());
 
     QLabel* label = new QLabel{ actuator.getName ().c_str (), this };
 
-    button->setFixedSize (50, 50);
-    button->setIconSize (QSize{ 30, 30 });
+    m_button->setFixedSize (50, 50);
+    m_button->setIconSize (QSize{ 30, 30 });
 
     label->setAlignment (Qt::AlignTop);
 
-    layout->addWidget (button);
+    layout->addWidget (m_button);
     layout->addWidget (label, 0, Qt::AlignHCenter);
 
     setContentsMargins (0, 20, 0, 0);
 
-    connect (button,
-             &QPushButton::toggled,
+    connect (m_button,
+            &QPushButton::toggled,
              this,
-             &ActuatorButton::onToggle);
+            &ActuatorButton::onToggle);
 
     setLayout (layout);
 
-    m_actuator.request ();
+    if (not dummy)
+        {
+        m_actuator.request ();
+        }
+    }
+
+void ActuatorButton::onToggle (bool state)
+    {
+    if (not m_dummy)
+        {
+        m_actuator.set (state);
+        }
     }
 }

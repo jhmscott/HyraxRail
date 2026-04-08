@@ -23,7 +23,7 @@ class ToggleSwitch : public PointedWidget<QAbstractButton>
 
     Q_PROPERTY (int offset READ offset WRITE setOffset);
 public:
-    ToggleSwitch (QWidget* parent = nullptr);
+    ToggleSwitch (QWidget* parent = NULL);
 
     QSize sizeHint () const override;
 

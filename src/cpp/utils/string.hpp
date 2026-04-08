@@ -16,6 +16,8 @@ namespace utils::str
 {
 using namespace std::string_view_literals;
 
+inline constexpr const char* const NON_EMPTY_REGEX = R"(^(?!\s*$).+)";
+
 inline std::vector<std::string> tokenize (std::string_view haystack, const std::string& needle)
     {
     std::vector<std::string> res;

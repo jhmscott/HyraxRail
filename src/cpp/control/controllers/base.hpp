@@ -27,6 +27,12 @@
 
 namespace control
 {
+struct routeMember
+    {
+    layout::Actuator    actuator;
+    bool                state;
+    };
+
 using protocolMetaList = std::vector<const ProtocolMetaClassBase*>;
 
 namespace internal
@@ -90,6 +96,9 @@ public:
     virtual std::vector<layout::Actuator> getActuators () const = 0;
 
     virtual std::vector<layout::Route> getRoutes () const = 0;
+
+    virtual void createRoute (const std::string&                name,
+                              const std::vector<routeMember>&   actuators) = 0;
 
     ConnectionWorkerThread::health getConnctionHealth () const
         { return m_thread.getConnectionHealth (); }

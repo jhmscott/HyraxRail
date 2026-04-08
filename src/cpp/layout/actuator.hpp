@@ -51,6 +51,7 @@ public:
     void request ();
 
     void release ();
+
 private:
     std::string         m_name;
     actuatorIcon        m_icon;

@@ -64,6 +64,7 @@ public:
         CMD_DELETE,
         CMD_REQUEST,
         CMD_RELEASE,
+        CMD_LINK,
 
         NUM_CMD         // delimiter only
         };
@@ -101,6 +102,7 @@ public:
         ARG_FORCE,
         ARG_FUNC,
         ARG_FUNCSYMBOL,
+        ARG_ID,
 
         ARG_NAME1,
         ARG_NAME2,
@@ -155,9 +157,9 @@ public:
             type (type)
             {}
 
-        arg (argType type, std::string val) :
+        arg (argType type, const std::string& val) :
             type (type),
-            val (std::move (val))
+            val (val)
             {}
 
         arg (argType type, const range& range) :
@@ -285,6 +287,34 @@ public:
     reply release (Args&&... args)
         {
         return release (id, std::forward<Args> (args)...);
+        }
+
+    template<class... Args>
+    reply create (dynamicId id, Args&&... args)
+        {
+        return makeRequest (CMD_CREATE,
+                            id,
+                            { std::forward<Args> (args)... });
+        }
+
+    template<staticId id, class... Args>
+    reply create (Args&&... args)
+        {
+        return create (id, std::forward<Args> (args)...);
+        }
+
+    template<class... Args>
+    reply link (dynamicId id, Args&&... args)
+        {
+        return makeRequest (CMD_LINK,
+                            id,
+                            { std::forward<Args> (args)... });
+        }
+
+    template<staticId id, class... Args>
+    reply link (Args&&... args)
+        {
+        return link (id, std::forward<Args> (args)...);
         }
 private:
     void issueCommand (cmd cmd, dynamicId id, std::initializer_list<arg> args);

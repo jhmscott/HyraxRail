@@ -154,6 +154,7 @@
     <ClCompile Include="..\src\cpp\ui\actuators\actuatorgroup.cpp" />
     <ClCompile Include="..\src\cpp\ui\actuators\actuatorpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\autogrid.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\formdialog.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\hexvalidator.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\hovericon.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\icontoggle.cpp" />
@@ -177,6 +178,13 @@
     <ClCompile Include="..\src\cpp\ui\controllerinfo.cpp" />
     <ClCompile Include="..\src\cpp\ui\mainwidget.cpp" />
     <ClCompile Include="..\src\cpp\ui\mainwindow.cpp" />
+    <ClCompile Include="..\src\cpp\ui\routes\editroute.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\routes\includebutton.cpp" />
     <ClCompile Include="..\src\cpp\ui\routes\routegroup.cpp" />
     <ClCompile Include="..\src\cpp\ui\routes\routepanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\sensors\sensorbar.cpp" />
@@ -199,6 +207,7 @@
     <ClInclude Include="..\src\cpp\ui\actuators\actuatorgroup.hpp" />
     <ClInclude Include="..\src\cpp\ui\actuators\actuatorpanel.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\autogrid.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\formdialog.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\hexvalidator.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\hovericon.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\icontoggle.hpp" />
@@ -220,6 +229,8 @@
     <ClInclude Include="..\src\cpp\ui\config\notifygroup.hpp" />
     <QtMoc Include="..\src\cpp\ui\mainwidget.hpp" />
     <QtMoc Include="..\src\cpp\ui\mainwindow.hpp" />
+    <ClInclude Include="..\src\cpp\ui\routes\editroute.hpp" />
+    <QtMoc Include="..\src\cpp\ui\routes\includebutton.hpp" />
     <ClInclude Include="..\src\cpp\ui\routes\routegroup.hpp" />
     <ClInclude Include="..\src\cpp\ui\routes\routepanel.hpp" />
     <ClInclude Include="..\src\cpp\ui\sensors\sensorbar.hpp" />

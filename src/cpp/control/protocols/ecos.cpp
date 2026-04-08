@@ -54,6 +54,7 @@ static constexpr const char* const ARG_STRINGS[] =
     "force",
     "func",
     "funcsymbol",
+    "id",
     "name1",
     "name2",
     "name3"
@@ -151,7 +152,8 @@ void ECoSProtocol::issueCommand (cmd cmd, dynamicId id, std::initializer_list<ar
         "create",
         "delete",
         "request",
-        "release"
+        "release",
+        "link"
         };
 
     std::stringstream ss;

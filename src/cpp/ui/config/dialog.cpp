@@ -10,6 +10,7 @@
 
 #include <ui/config/dialog.hpp>
 
+#include <utils/string.hpp>
 
 #include <QDialogButtonBox>
 #include <QValidator>
@@ -18,14 +19,11 @@ namespace ui::config
 {
 
 Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
-    QDialog (parent)
+    common::FormDialog (parent)
     {
     auto controllers = control::getControllers ();
 
     QVBoxLayout*        layout  = new QVBoxLayout{ this };
-    QDialogButtonBox*   buttons = new QDialogButtonBox{ QDialogButtonBox::Ok |
-                                                        QDialogButtonBox::Cancel,
-                                                        this };
     utils::device::portNumber_t port;
 
     if (NULL == controller)
@@ -54,7 +52,7 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
     // Require non-empty string
     m_name->setValidator (
         new QRegularExpressionValidator{
-                QRegularExpression{ R"(^(?!\s*$).+)" }, this });
+                QRegularExpression{ utils::str::NON_EMPTY_REGEX }, this });
 
     for (auto controller : controllers)
         {
@@ -106,23 +104,12 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
     layout->addLayout (m_layout);
     layout->addWidget (m_com);
     layout->addWidget (m_network);
-    layout->addWidget (buttons, 0, Qt::AlignHCenter);
+    layout->addWidget (m_buttons, 0, Qt::AlignHCenter);
 
 
-    m_ok = buttons->button (QDialogButtonBox::Ok);
 
     // Set the initial state of the OK button
     inputChanged ();
-
-    connect (buttons,
-            &QDialogButtonBox::accepted,
-             this,
-            &QDialog::accept);
-
-    connect (buttons,
-            &QDialogButtonBox::rejected,
-             this,
-            &QDialog::reject);
 
     connect (m_network,
             &DeviceInfoWidget::inputChanged,
@@ -173,7 +160,7 @@ void Dialog::setTransportProto (int idx)
         setNetworkMode ();
         }
 
-    emit inputChanged ();
+    inputChanged ();
     }
 
 void Dialog::setNetworkMode ()

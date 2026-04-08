@@ -88,6 +88,43 @@ std::vector<layout::Route> MarklinCS1::getRoutes () const
     return getSwitchingItems<layout::Route> ();
     }
 
+void MarklinCS1::createRoute (const std::string& name, const std::vector<routeMember>& actuators)
+    {
+    issueStaticCommand (ECoSProtocol::create,
+                        ECoSProtocol::ID_SWITCHING_ITEMS,
+                        ECoSProtocol::ARG_ROUTE);
+
+    auto future = issueStaticCommand (ECoSProtocol::create,
+                                      ECoSProtocol::ID_SWITCHING_ITEMS,
+                                      ECoSProtocol::ARG_APPEND);
+
+    auto res = future.get ();
+
+    if (ECoSProtocol::REPLY_OK == res.status)
+        {
+        ECoSProtocol::dynamicId routeId = atoi (res.lines[0].arg->val->c_str ());
+
+        requestRouteControl (routeId);
+
+        issueDynamicCommand (ECoSProtocol::set,
+                             routeId,
+                             ARG (ECoSProtocol::ARG_NAME1, "\"" + name + "\""));
+
+        for (auto& [actuator, state] : actuators)
+            {
+            ECoSProtocol::dynamicId actId = static_cast<ECoSProtocol::dynamicId> (actuator.getId ());
+
+            issueDynamicCommand (ECoSProtocol::link,
+                                 routeId,
+                                 ARG (ECoSProtocol::ARG_ID, actId),
+                                 ARG (ECoSProtocol::ARG_STATE, state));
+
+            }
+
+        releaseRouteControl (routeId);
+        }
+    }
+
 
 void MarklinCS1::eStop (bool stop)
     {

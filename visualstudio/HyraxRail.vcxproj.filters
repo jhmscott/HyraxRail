@@ -156,6 +156,12 @@
     <ClInclude Include="..\src\cpp\ui\common\pointedwidget.hpp">
       <Filter>Header Files\ui\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\routes\editroute.hpp">
+      <Filter>Header Files\ui\routes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\formdialog.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cpp\main.cpp">
@@ -280,6 +286,15 @@
     </ClCompile>
     <ClCompile Include="..\src\cpp\ui\config\deviceinfo.cpp">
       <Filter>Source Files\ui\config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\routes\editroute.cpp">
+      <Filter>Source Files\ui\routes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\formdialog.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\routes\includebutton.cpp">
+      <Filter>Source Files\ui\routes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -407,6 +422,9 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\config\deviceinfo.hpp">
       <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\routes\includebutton.hpp">
+      <Filter>Header Files\ui\routes</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

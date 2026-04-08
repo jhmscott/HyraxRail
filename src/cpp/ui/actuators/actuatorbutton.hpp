@@ -18,19 +18,15 @@ namespace ui::actuators
 class ActuatorButton : public QWidget
     {
 public:
-    ActuatorButton (const layout::Actuator& actuator, QWidget* parent);
+    ActuatorButton (const layout::Actuator& actuator, QWidget* parent, bool dummy = false);
 
-    ~ActuatorButton ()
-        {
-        // m_actuator.release ();
-        }
+    bool getState () { return m_button->isChecked (); }
 
 private:
-    layout::Actuator m_actuator;
+    layout::Actuator    m_actuator;
+    common::IconToggle* m_button;
+    bool                m_dummy;
 
-    void onToggle (bool state)
-        {
-        m_actuator.set (state);
-        }
+    void onToggle (bool state);
     };
 }

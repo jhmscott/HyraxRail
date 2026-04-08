@@ -9,13 +9,15 @@
 
 #pragma once
 
+#include <ui/common/formdialog.hpp>
+
 #include <QDialog>
 #include <QLineEdit>
 
 namespace ui::common
 {
 
-class StringDialog : public QDialog
+class StringDialog : public FormDialog
     {
 public:
     StringDialog (QWidget* parent);
@@ -30,8 +32,7 @@ public:
 private:
     QLineEdit*  m_edit;
     QValidator* m_validator = NULL;
-    QPushButton*m_ok;
 
-    void validityChanged (const QString& text);
+    virtual bool hasAcceptableInput () const override { return m_edit->hasAcceptableInput (); }
     };
 }
