@@ -15,7 +15,9 @@
 
 namespace control
 {
-static std::map<std::string, ControllerMetaClassBase*> controllerTypes;
+static std::map<std::string, ControllerMetaClassBase*> controllerTypes; ///< Supported controller types
+                                                                        ///  populated automatically by metaclass
+                                                                        ///  global constructors
 
 
 
@@ -85,4 +87,4 @@ ControllerBase::ControllerBase (const std::string&              friendlyName,
     {
     }
 
-}
+} // namespace control

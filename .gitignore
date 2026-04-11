@@ -46,3 +46,6 @@ visualstudio/intermediate/
 
 # Output files
 runtime/
+
+# MacOS DS Store file
+.DS_Store
