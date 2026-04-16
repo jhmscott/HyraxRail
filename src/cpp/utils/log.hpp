@@ -25,9 +25,12 @@
 
 #ifdef Q_OS_WIN
 
+// Internal macro logic, do not use directly
 #define __logWinInternal(level, func, ...) \
     (level() << #func "(" << utils::log::internal::passOptionalParameter (__VA_ARGS__) << \
     ") failed: " << utils::log::internal::getLastErrorAsString () << "(" << GetLastError () << ")")
+
+// Log the last windows error code (GetLastError())
 
 #define logWinDebug(func, ...)      (__logWinInternal (qDebug,      func, __VA_ARGS__))
 #define logWinInfo(func, ...)       (__logWinInternal (qInfo,       func, __VA_ARGS__))
@@ -42,7 +45,15 @@ namespace utils::log
 
 namespace internal
 {
+
 #ifdef Q_OS_WIN
+
+///////////////////////////////////////////////////////////////////////////////
+/// Get the string error message for the GetLastError() value
+///
+/// @return     String error message for GetLastError ()
+///
+///////////////////////////////////////////////////////////////////////////////
 inline std::string getLastErrorAsString ()
     {        //Get the error message ID, if any.
     DWORD errorMessageID = GetLastError ();
@@ -79,15 +90,31 @@ inline std::string getLastErrorAsString ()
 #endif // Q_OS_WIN
 
 
+///////////////////////////////////////////////////////////////////////////////
+/// Returns an empty string. Used to format the error message if no parameter is passed
+///
+/// @return     Empty string
+///
+///////////////////////////////////////////////////////////////////////////////
 inline const char* passOptionalParameter ()
     {
     return "";
     }
 
+///////////////////////////////////////////////////////////////////////////////
+///  Pass a value for formatting
+///
+/// @tparam     T             Value type
+///
+/// @param[in]  val         Value to pass
+///
+/// @return     val, unchanged
+///////////////////////////////////////////////////////////////////////////////
 template<class T>
 T passOptionalParameter (T val)
     {
     return val;
     }
-}
-}
+} // namespace internal
+
+} // namespace utils::log

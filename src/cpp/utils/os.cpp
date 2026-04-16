@@ -28,6 +28,18 @@
 namespace utils::os
 {
 
+// local helper functions
+
+///////////////////////////////////////////////////////////////////////////////
+/// Convert a UTF-8 encoded char string to a UTF-16 encoded wide char string
+///
+/// @tparam     N                       Size of output string, including NUL
+///
+/// @param[in]  string            UTF-8 string
+/// @param[out] sWstring        UTF-16 string
+///
+/// @return     true if the string could be converted
+///////////////////////////////////////////////////////////////////////////////
 template<size_t N>
 static bool utf8ToWString (std::string_view string, wchar_t (&wString)[N])
     {
@@ -45,7 +57,7 @@ static bool utf8ToWString (std::string_view string, wchar_t (&wString)[N])
     return bytes > 0;
     }
 
-
+// Exported functions
 
 void setThreadName (std::string_view name, std::thread::native_handle_type handle)
     {

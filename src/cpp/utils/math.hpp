@@ -15,6 +15,18 @@
 namespace utils::math
 {
 
+
+///////////////////////////////////////////////////////////////////////////////
+/// Perform a division operation and round upt the result
+///
+/// @tparam     T                   Numeric type
+///
+/// @param[in]  dividend    Dividend/numerator
+/// @param[in]  divider      Divider/denomenator
+///
+/// @return     Division result
+///
+///////////////////////////////////////////////////////////////////////////////
 template<class T>
 T divCeil (const T& dividend, const identityType<T>& divider)
     {
@@ -22,10 +34,10 @@ T divCeil (const T& dividend, const identityType<T>& divider)
         {
         return (dividend + divider - 1) / divider;
         }
-    else
+    else // std::is_floating_point_v<T>
         {
         return std::ceil (dividend / divider);
         }
     }
 
-}
+    } // namespace utils::math

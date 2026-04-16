@@ -9,7 +9,31 @@
 
 #pragma once
 
+
+///////////////////////////////////////////////////////////////////////////////
+/// Get the number of variadic macro acrgument
+///
+/// @param[in]  ...         Variadic arguments
+///
+/// @return     Number of arguments
+///
+///////////////////////////////////////////////////////////////////////////////
 #define UTILPP_VA_NUM_ARGS(...) _UTILPP_NARG_ (__VA_ARGS__ __VA_OPT__ (,) _UTILPP_RSEQ())
+
+///////////////////////////////////////////////////////////////////////////////
+/// Concatenate two tokens
+///
+/// @param[in]  arg1            First token
+/// @param[in]  arg2            Second token
+///
+/// @return     Conactenation of two tokens
+/// 
+///////////////////////////////////////////////////////////////////////////////
+#define UTILPP_CONCAT(arg1, arg2)           __UTILPP_CONCAT_IMPL (arg1, arg2)
+
+
+// Macro implementation details, don't use
+
 #define _UTILPP_NARG_(...)      _UTILPP_SEQ (__VA_ARGS__)
 
 #define _UTILPP_SEQ( \
@@ -42,4 +66,3 @@
     9,8,7,6,5,4,3,2,1,0
 
 #define __UTILPP_CONCAT_IMPL(arg1, arg2)    arg1 ## arg2
-#define UTILPP_CONCAT(arg1, arg2)           __UTILPP_CONCAT_IMPL (arg1, arg2)
