@@ -7,6 +7,9 @@ Hyrax Rail is a cross platform model train controller app, based on QT 6, using 
  * Zero config : Pull as many settings from the controller as possible to make use plug and play
  * Extendable : It should be possible to add new models of controller without changing the UI code
 
+[![Qt](https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=white)](https://www.qt.io)
+[![Apache 2.0 License](https://img.shields.io/badge/license-Apache%20License%202.0-blue)](https://www.apache.org/licenses/LICENSE-2.0)
+
 ## Architecture
 
 ```
