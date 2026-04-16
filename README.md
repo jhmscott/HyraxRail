@@ -1,3 +1,5 @@
+<img src="./res/icons/app/conductor-hyrax-mini.svg" align=left height="64" width="64" style="float:left;" alt="Hyrax Conductor">
+
 # HyraxRail
 
 Hyrax Rail is a cross platform model train controller app, based on QT 6, using QWidgets. The main principles of it's design are as follows:
