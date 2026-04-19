@@ -19,8 +19,15 @@
 
 #include <QDebug>
 
-
-
+///////////////////////////////////////////////////////////////////////////////
+/// Main application entry point
+///
+/// @param[in]  argc            Argument count
+/// @param[in]  argv            Array of argument values (size is argc)
+///
+/// @return     Process exit code
+///
+///////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
     {
     utils::os::setThreadName ("Main Thread");
