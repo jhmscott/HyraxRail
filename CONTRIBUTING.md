@@ -23,13 +23,13 @@ As the coding standard requires trimming of trailing whitespace, the following p
 |----------------------|--------------|-----------------|
 | Visual Studio(2017)  | [Trailing Whitespace Visualizer](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.TrailingWhitespaceVisualizer) | [Mads Kristensen](https://github.com/madskristensen) |
 | Visual Studio(2022/2026)  | [Trailing Whitespace Visualizer](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.TrailingWhitespace64) | [Mads Kristensen](https://github.com/madskristensen) |
-| VS Code              | [](https://marketplace.visualstudio.com/items?itemName=jkiviluoto.tws) | [Janne Kiviluoto](https://github.com/jannek) |
+| VS Code              | [Trailing Spaces](https://marketplace.visualstudio.com/items?itemName=shardulm94.trailing-spaces) | [Shardul Mahadik](https://github.com/shardulm94) |
 
 ### Coding Style (C++)
 
 All c++ code should use the [Whitesmith](https://en.wikipedia.org/wiki/Indentation_style#Whitesmiths) brace style.
 
-````
+```
 if (condition)
     {
     doSomething ();
