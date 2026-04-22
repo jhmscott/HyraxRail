@@ -9,11 +9,13 @@
 
 #pragma once
 
-#include <ui/common/autogrid.hpp>
+#include <control/controllers/base.hpp>
+#include <control/controllers/manager.hpp>
 
 #include <ui/actuators/actuatorbutton.hpp>
 
-#include <control/controllers/base.hpp>
+#include <ui/common/autogrid.hpp>
+
 
 #include <QGroupBox>
 #include <QWidget>
@@ -23,12 +25,14 @@ namespace ui::actuators
 class ActuatorPanel : public QWidget
     {
 public:
-    ActuatorPanel (const control::controllerList& controllers, QWidget* parent);
+    ActuatorPanel (control::ControllerManager* controllers, QWidget* parent);
 
+private:
+    control::ControllerManager* m_controllers;
+
+private slots:
     void remove (const control::ControllerBase& controller);
 
     void add (control::ControllerBase& controller);
-private:
-    control::controllerList m_controllers;
     };
 }

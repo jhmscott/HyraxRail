@@ -296,6 +296,9 @@
     <ClCompile Include="..\src\cpp\ui\routes\includebutton.cpp">
       <Filter>Source Files\ui\routes</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cpp\control\controllers\manager.cpp">
+      <Filter>Source Files\control\controllers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\control\protocols\base.hpp">
@@ -425,6 +428,9 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\routes\includebutton.hpp">
       <Filter>Header Files\ui\routes</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\control\controllers\manager.hpp">
+      <Filter>Header Files\control\controllers</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

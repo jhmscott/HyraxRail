@@ -110,7 +110,7 @@ public:
     virtual std::unique_ptr<ControllerBase> create (const std::string&                  friendlyName,
                                                     const std::string&                  protocol,
                                                     const utils::device::deviceInfo&    info) const = 0;
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Find the a protocol by name
     ///
@@ -133,12 +133,10 @@ template<class T>
 class ControllerMetaClass : public ControllerMetaClassBase
     {
 public:
-    static_assert(std::is_base_v<T, ControllerBase>, "Meta class must be used with a controller class");
-        
     // use base class constructor
     using ControllerMetaClassBase::ControllerMetaClassBase;
 
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Create an instance of this controller type
     ///
@@ -154,6 +152,8 @@ public:
                                                     const std::string&                  protocol,
                                                     const utils::device::deviceInfo&    info) const override
         {
+        static_assert (std::is_base_of_v<ControllerBase, T>, "Meta class must be used with a controller class");
+
         return std::make_unique<T> (friendlyName, findProtocol (protocol).create (info));
         }
     };
@@ -172,7 +172,7 @@ class ControllerBase :
     public layout::RouteController
     {
 public:
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
@@ -199,7 +199,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual std::vector<layout::Actuator> getActuators () const = 0;
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the routes configured for this controller. A route is a group of actuators and associated state that
     /// can be triggered
@@ -208,7 +208,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual std::vector<layout::Route> getRoutes () const = 0;
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Create a route on  the controller
     ///
@@ -244,7 +244,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual bool isEStopped () = 0;
-   
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the meta class instance for this controller's type
     ///
@@ -254,7 +254,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual const ControllerMetaClassBase& getMetaClass () const = 0;
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the meta class of the protocol used by this controller
     ///
@@ -270,7 +270,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     utils::device::deviceInfo getDeviceInfo () const { return m_thread.getDeviceInfo (); }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the friendly/UI name of this controller instance
     ///
@@ -284,11 +284,7 @@ protected:
 private:
     const std::string m_friendlyName;           ///< Name used in UI
     };
-
-// List of controllers, for the owner of the controllers
-using controllerOwnerList   = std::vector<std::unique_ptr<ControllerBase>>;
-// List of controllers, for non-owning clients
-using controllerList        = std::vector<ControllerBase*>;
+;
 
 // Information for creating a controller
 struct createControllerInfo
@@ -300,39 +296,20 @@ struct createControllerInfo
     };
 
 
-
 ///////////////////////////////////////////////////////////////////////////////
 /// Create a controller
-///
-/// @param[in]  name                       Controller type name
-/// @param[in]  friendlyName     Controller instance friendly name
-/// @param[in]  protocol              Protocol type name
-/// @param[in]  info                      Communication device info
-///
-///////////////////////////////////////////////////////////////////////////////
-std::unique_ptr<ControllerBase> createController (const std::string&                name,
-                                                  const std::string&                friendlyName,
-                                                  const std::string&                protocol,
-                                                  const utils::device::deviceInfo&  info);
-
-
-///////////////////////////////////////////////////////////////////////////////
-/// Create a controller, struct version
 ///
 /// @param[in]  info        Creation info
 ///
 ///////////////////////////////////////////////////////////////////////////////
-inline std::unique_ptr<ControllerBase> createController (const createControllerInfo& info)
-    {
-    return createController (info.name, info.friendlyName, info.protocol, info.device);
-    }
+std::unique_ptr<ControllerBase> createController (const createControllerInfo& info);
 
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Get a list of supported controllers
 ///
 /// @return     List of controllers
-/// 
+///
 ///////////////////////////////////////////////////////////////////////////////
 const std::vector<const ControllerMetaClassBase*> getControllers ();
 

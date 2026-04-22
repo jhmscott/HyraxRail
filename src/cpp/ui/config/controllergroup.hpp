@@ -10,6 +10,7 @@
 #pragma once
 
 #include <control/controllers/base.hpp>
+#include <control/controllers/manager.hpp>
 
 #include <QGroupBox>
 #include <QWidget>
@@ -20,24 +21,19 @@ class ControllerGroup : public QGroupBox
     {
     Q_OBJECT
 public:
-    ControllerGroup (const std::vector<control::ControllerBase*>&   controllers,
-                     QWidget*                                       parent);
-
-
-    void addControllerInfo (control::ControllerBase& controller);
-
-signals:
-    void controllerDeleted (control::ControllerBase& controller);
-
-    void controllerAdded (const control::createControllerInfo& controller);
+    ControllerGroup (control::ControllerManager*    controllers,
+                     QWidget*                       parent);
 
 private:
-    std::vector<control::ControllerBase*>   m_controllers;
-    bool                                    m_hasAddController = false;
+    control::ControllerManager* m_controllers;
+    bool                        m_hasAddController = false;
+
     void addController ();
 
-    void onControllerDeleted (control::ControllerBase& controller);
+private slots:
+    void onControllerDeleted (const control::ControllerBase& controller);
 
+    void addControllerInfo (control::ControllerBase& controller);
     };
 
 }

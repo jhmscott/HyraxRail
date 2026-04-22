@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cpp\control\controllers\base.cpp" />
+    <ClCompile Include="..\src\cpp\control\controllers\manager.cpp" />
     <ClCompile Include="..\src\cpp\control\controllers\marklincs1.cpp" />
     <ClCompile Include="..\src\cpp\control\protocols\base.cpp" />
     <ClCompile Include="..\src\cpp\layout\actuator.cpp" />
@@ -198,6 +199,7 @@
     <ClCompile Include="..\src\cpp\utils\pinger.cpp" />
     <ClInclude Include="..\res\version.h" />
     <ClInclude Include="..\src\cpp\control\controllers\base.hpp" />
+    <QtMoc Include="..\src\cpp\control\controllers\manager.hpp" />
     <ClInclude Include="..\src\cpp\control\controllers\marklincs1.hpp" />
     <ClInclude Include="..\src\cpp\layout\actuator.hpp" />
     <QtMoc Include="..\src\cpp\layout\base.hpp" />

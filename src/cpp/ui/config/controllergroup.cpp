@@ -22,8 +22,8 @@
 namespace ui::config
 {
 
-ControllerGroup::ControllerGroup (const std::vector<control::ControllerBase*>&  controllers,
-                                  QWidget*                                      parent) :
+ControllerGroup::ControllerGroup (control::ControllerManager* controllers,
+                                  QWidget*                   parent) :
     QGroupBox ("Controllers", parent),
     m_controllers (controllers)
     {
@@ -31,9 +31,9 @@ ControllerGroup::ControllerGroup (const std::vector<control::ControllerBase*>&  
 
     setLayout (layout);
 
-    for (control::ControllerBase* controller : controllers)
+    for (control::ControllerBase& controller : *controllers)
         {
-        addControllerInfo (*controller);
+        addControllerInfo (controller);
         }
 
     QHBoxLayout* addController  = new QHBoxLayout{ this };
@@ -62,6 +62,11 @@ ControllerGroup::ControllerGroup (const std::vector<control::ControllerBase*>&  
             &QPushButton::released,
              this,
             &ControllerGroup::addController);
+
+    connect (m_controllers,
+            &control::ControllerManager::controllerAdded,
+             this,
+            &ControllerGroup::addControllerInfo);
 
     setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Maximum);
     }
@@ -98,12 +103,12 @@ void ControllerGroup::addController ()
 
     if (QDialog::Accepted == dlg.exec ())
         {
-        emit controllerAdded (dlg.createController ());
+        m_controllers->append (dlg.createController ());
         }
     }
 
 
-void ControllerGroup::onControllerDeleted (control::ControllerBase& controller)
+void ControllerGroup::onControllerDeleted (const control::ControllerBase& controller)
     {
     ControllerInfo* info    = static_cast<ControllerInfo*> (sender ());
     int             idx     = layout ()->indexOf (info);
@@ -112,6 +117,6 @@ void ControllerGroup::onControllerDeleted (control::ControllerBase& controller)
     common::removeWidgetFromLayout (*layout (), idx + 1);
     common::removeWidgetFromLayout (*layout (), idx);
 
-    emit controllerDeleted (controller);
+    m_controllers->remove (controller);
     }
 }

@@ -16,7 +16,7 @@
 
 namespace ui::config
 {
-ConfigPanel::ConfigPanel (const std::vector<control::ControllerBase*>& controllers, QWidget* parent)
+ConfigPanel::ConfigPanel (control::ControllerManager* controllers, QWidget* parent)
     {
     QVBoxLayout*        layout          = new QVBoxLayout{ this };
 
@@ -27,16 +27,6 @@ ConfigPanel::ConfigPanel (const std::vector<control::ControllerBase*>& controlle
     layout->addWidget (new HelpGroup{ this });
 
     layout->setAlignment (Qt::AlignTop);
-
-    connect (m_controllers,
-            &ControllerGroup::controllerDeleted,
-             this,
-            &ConfigPanel::controllerDeleted);
-
-    connect (m_controllers,
-            &ControllerGroup::controllerAdded,
-             this,
-            &ConfigPanel::controllerAdded);
 
     setLayout (layout);
     }

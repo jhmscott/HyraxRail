@@ -15,22 +15,22 @@
 namespace ui::trains
 {
 
-LocoControlPanel::LocoControlPanel (const control::controllerList& controllers, vAlignment align, QWidget* parent) :
+LocoControlPanel::LocoControlPanel (control::ControllerManager* controllers, vAlignment align, QWidget* parent) :
     QWidget (parent)
     {
     QVBoxLayout* mainLayout = new QVBoxLayout{ this };
     QHBoxLayout* controlLayout = new QHBoxLayout{ this };
 
-    m_controllerInfo = new ControllerInfo (controllers.size () > 0 ? controllers[0] : NULL, this, false);
+    m_controllerInfo = new ControllerInfo (controllers->size () > 0 ? &((*controllers)[0]) : NULL, this, false);
 
     m_locos = new QComboBox{ this };
 
-    for (control::ControllerBase* controller : controllers)
+    for (control::ControllerBase& controller : *controllers)
         {
-        add (*controller);
+        add (controller);
         }
 
-    if (controllers.size () > 0)
+    if (controllers->size () > 0)
         {
         m_locos->setCurrentIndex (0);
 
@@ -39,9 +39,14 @@ LocoControlPanel::LocoControlPanel (const control::controllerList& controllers, 
         }
 
     connect (m_locos,
-             &QComboBox::currentIndexChanged,
+            &QComboBox::currentIndexChanged,
              this,
-             &LocoControlPanel::onLocoChange);
+            &LocoControlPanel::onLocoChange);
+
+    connect (controllers,
+            &control::ControllerManager::controllerAdded,
+             this,
+            &LocoControlPanel::add);
 
     m_speed = new SpeedControlWidget{ this };
     m_speed->setLocomotive (m_currentLoco);

@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include <control/controllers/marklincs1.hpp>
+#include <control/controllers/manager.hpp>
 
 #include <ui/trains/speedcontrol.hpp>
 #include <ui/trains/functionpanel.hpp>
@@ -24,15 +24,17 @@ class LocoControlPanel : public QWidget
     {
     Q_OBJECT
 public:
-    explicit LocoControlPanel (const control::controllerList& controllers, vAlignment align, QWidget* parent);
+    explicit LocoControlPanel (control::ControllerManager* controllers, vAlignment align, QWidget* parent);
 
-    void add (control::ControllerBase& controller);
 private:
     layout::Locomotive      m_currentLoco;
     SpeedControlWidget*     m_speed;
     FunctionPanel*          m_functions;
     QComboBox*              m_locos;
     ControllerInfo*         m_controllerInfo;
+
+private slots:
+    void add (control::ControllerBase& controller);
 
     void onLocoChange (int idx);
 

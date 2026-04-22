@@ -18,43 +18,45 @@
 
 namespace ui::actuators
 {
-ActuatorPanel::ActuatorPanel (const control::controllerList& controllers, QWidget* parent) :
+ActuatorPanel::ActuatorPanel (control::ControllerManager* controllers, QWidget* parent) :
     QWidget (parent),
     m_controllers (controllers)
     {
     QVBoxLayout* layout = new QVBoxLayout{ this };
 
-    for (control::ControllerBase* controller : m_controllers)
+    for (control::ControllerBase& controller : *m_controllers)
         {
-        layout->addWidget (new ActuatorGroup{ *controller, this });
+        layout->addWidget (new ActuatorGroup{ controller, this });
         }
 
     layout->setAlignment (Qt::AlignTop);
+
+    connect (m_controllers,
+            &control::ControllerManager::controllerAdded,
+             this,
+            &ActuatorPanel::add);
+
+    connect (m_controllers,
+            &control::ControllerManager::controllerDeleted,
+             this,
+            &ActuatorPanel::remove);
 
     setLayout (layout);
     }
 
 void ActuatorPanel::remove (const control::ControllerBase& controller)
     {
-    auto it = std::find (m_controllers.begin (),
-                         m_controllers.end (),
-                        &controller);
+    ptrdiff_t idx = m_controllers->indexOf (controller);
 
-    if (m_controllers.end () != it)
+    if (idx >= 0)
         {
-        common::removeWidgetFromLayout (*layout (),
-                                        std::distance (m_controllers.begin (),
-                                                       it));
+        common::removeWidgetFromLayout (*layout (), idx);
         }
-
-    utils::algorithm::erase (m_controllers, &controller);
     }
 
 void ActuatorPanel::add (control::ControllerBase& controller)
     {
     QVBoxLayout* myLayout = static_cast<QVBoxLayout*> (layout ());
-
-    m_controllers.push_back (&controller);
 
     myLayout->addWidget (new ActuatorGroup{ controller, this });
     }

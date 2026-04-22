@@ -48,18 +48,15 @@ const ProtocolMetaClassBase& ControllerMetaClassBase::findProtocol (const std::s
 
 
 
-std::unique_ptr<ControllerBase> createController (const std::string&                name,
-                                                  const std::string&                friendlyName,
-                                                  const std::string&                protocol,
-                                                  const utils::device::deviceInfo&  info)
+std::unique_ptr<ControllerBase> createController (const createControllerInfo& info)
     {
     std::unique_ptr<ControllerBase> controller = NULL;
 
-    auto it = controllerTypes.find (name);
+    auto it = controllerTypes.find (info.name);
 
     if (controllerTypes.end () != it)
         {
-        controller = it->second->create (friendlyName, protocol, info);
+        controller = it->second->create (info.friendlyName, info.protocol, info.device);
         }
 
     return controller;

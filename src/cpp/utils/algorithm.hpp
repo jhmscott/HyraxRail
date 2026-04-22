@@ -120,7 +120,7 @@ void eraseByPtr (std::vector<std::unique_ptr<T>>& vec, const T* ptr)
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<class T>
-auto findByPtr (std::vector<const std::unique_ptr<T>>& vec, const T* ptr)
+auto findByPtr (const std::vector<const std::unique_ptr<T>>& vec, const T* ptr)
     {
     return std::find_if (vec.begin (),
                          vec.end (),
@@ -139,7 +139,7 @@ auto findByPtr (std::vector<const std::unique_ptr<T>>& vec, const T* ptr)
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<class T>
-auto findByPtr (std::vector<std::unique_ptr<T>>& vec, const T* ptr)
+auto findByPtr (const std::vector<std::unique_ptr<T>>& vec, const T* ptr)
     {
     return std::find_if (vec.begin (),
                          vec.end (),

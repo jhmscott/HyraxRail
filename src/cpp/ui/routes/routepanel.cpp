@@ -20,42 +20,45 @@
 namespace ui::routes
 {
 
-RoutePanel::RoutePanel (control::controllerList& controllers, QWidget* parent) :
+RoutePanel::RoutePanel (control::ControllerManager* controllers, QWidget* parent) :
     QWidget (parent),
     m_controllers (controllers)
     {
     QVBoxLayout* layout = new QVBoxLayout{ this };
 
-    for (control::ControllerBase* controller : controllers)
+    for (control::ControllerBase& controller : *controllers)
         {
-        layout->addWidget (new RouteGroup{ *controller, this });
+        layout->addWidget (new RouteGroup{ controller, this });
         }
 
     layout->setAlignment (Qt::AlignTop);
+
+    connect (m_controllers,
+            &control::ControllerManager::controllerAdded,
+             this,
+            &RoutePanel::add);
+
+    connect (m_controllers,
+            &control::ControllerManager::controllerDeleted,
+             this,
+            &RoutePanel::remove);
+
     setLayout (layout);
     }
 
 void RoutePanel::remove (const control::ControllerBase& controller)
     {
-    auto it = std::find (m_controllers.begin (),
-                         m_controllers.end (),
-                         &controller);
+    ptrdiff_t idx = m_controllers->indexOf (controller);
 
-    if (m_controllers.end () != it)
+    if (idx >= 0)
         {
-        common::removeWidgetFromLayout (*layout (),
-                                        std::distance (m_controllers.begin (),
-                                                       it));
+        common::removeWidgetFromLayout (*layout (), idx);
         }
-
-    utils::algorithm::erase (m_controllers, &controller);
     }
 
 void RoutePanel::add (control::ControllerBase& controller)
     {
     QVBoxLayout* myLayout = static_cast<QVBoxLayout*> (layout ());
-
-    m_controllers.push_back (&controller);
 
     myLayout->addWidget (new RouteGroup{ controller, this });
     }

@@ -9,12 +9,14 @@
 
 #pragma once
 
+#include <control/controllers/base.hpp>
+#include <control/controllers/manager.hpp>
+
+#include <ui/common/autogrid.hpp>
+
 #include <QPushButton>
 #include <QWidget>
 
-#include <control/controllers/base.hpp>
-
-#include <ui/common/autogrid.hpp>
 
 namespace ui::routes
 {
@@ -22,14 +24,17 @@ namespace ui::routes
 class RoutePanel : public QWidget
     {
 public:
-    RoutePanel (control::controllerList& controllers, QWidget* parent);
+    RoutePanel (control::ControllerManager* controllers, QWidget* parent);
+
+
+private:
+    control::ControllerManager* m_controllers;
+
+private slots:
 
     void remove (const control::ControllerBase& controller);
 
     void add (control::ControllerBase& controller);
-
-private:
-    control::controllerList m_controllers;
 
     };
 

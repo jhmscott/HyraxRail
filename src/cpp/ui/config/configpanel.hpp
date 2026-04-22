@@ -11,6 +11,7 @@
 #pragma once
 
 #include <control/controllers/base.hpp>
+#include <control/controllers/manager.hpp>
 
 #include <ui/config/controllergroup.hpp>
 
@@ -23,15 +24,8 @@ class ConfigPanel : public QWidget
     {
     Q_OBJECT
 public:
-    ConfigPanel (const std::vector<control::ControllerBase*>& controllers, QWidget* parent);
+    ConfigPanel (control::ControllerManager* controllers, QWidget* parent);
 
-    void addController (control::ControllerBase& controller)
-        { m_controllers->addControllerInfo (controller); }
-
-signals:
-    void controllerDeleted (control::ControllerBase& controller);
-
-    void controllerAdded (const control::createControllerInfo& controller);
 private:
     ControllerGroup* m_controllers;
     };

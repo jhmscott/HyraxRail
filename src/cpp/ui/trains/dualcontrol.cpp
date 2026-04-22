@@ -15,7 +15,7 @@
 
 namespace ui::trains
 {
-DualControlWidget::DualControlWidget (const control::controllerList& controllers, QWidget* parent) :
+DualControlWidget::DualControlWidget (control::ControllerManager* controllers, QWidget* parent) :
     QWidget (parent)
     {
     QHBoxLayout* layout = new QHBoxLayout{ this };
@@ -31,11 +31,6 @@ DualControlWidget::DualControlWidget (const control::controllerList& controllers
     setLayout (layout);
     }
 
-void DualControlWidget::add (control::ControllerBase& controller)
-    {
-    m_left->add (controller);
-    m_right->add (controller);
-    }
 
 void DualControlWidget::resizeEvent (QResizeEvent* event)
     {
