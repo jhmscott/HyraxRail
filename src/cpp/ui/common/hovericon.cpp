@@ -17,13 +17,19 @@
 
 namespace ui::common
 {
+
+namespace constants
+{
+constexpr uint MAX_OPACITY          = 128;  ///< Final opacity value
+constexpr uint ANIMATION_DURATION   = 250;  ///< In milseconds
+}
+
 HoverIcon::HoverIcon (const QIcon& icon, const QColor& hoverColor, style style, QWidget* parent) :
     PointedButton (icon, "", parent),
+    m_anim (new QPropertyAnimation{ this, "opacity", this }),
     m_hoverColor (hoverColor),
     m_style (style)
     {
-    m_hoverColor.setAlphaF (0.25);
-
     common::makeFrameless (*this);
     }
 
@@ -33,10 +39,13 @@ void HoverIcon::paintEvent (QPaintEvent* event)
 
     initStyleOption (&styles);
 
-    if ((QStyle::State_MouseOver & styles.state) > 0)
+    if (m_opacity > 0)
         {
         int         diameter = qMin (height (), width ());
         QPainter    painter{ this };
+        QColor      color = m_hoverColor;
+
+        color.setAlpha (m_opacity);
 
         painter.setRenderHint (QPainter::Antialiasing, true);
 
@@ -44,7 +53,7 @@ void HoverIcon::paintEvent (QPaintEvent* event)
                            height () / 2);
 
         painter.setPen (Qt::NoPen);
-        painter.setBrush (QBrush{ m_hoverColor });
+        painter.setBrush (QBrush{ color });
         QRect rect
             {
             -diameter / 2,
@@ -68,6 +77,32 @@ void HoverIcon::paintEvent (QPaintEvent* event)
 
         }
 
-    QPushButton::paintEvent (event);
+    PointedButton::paintEvent (event);
+    }
+
+void HoverIcon::enterEvent (QEnterEvent* event)
+    {
+    PointedButton::enterEvent (event);
+
+    m_anim->setStartValue (m_opacity);
+    m_anim->setEndValue (constants::MAX_OPACITY);
+
+    m_anim->setDuration (constants::ANIMATION_DURATION *
+                        (constants::MAX_OPACITY - m_opacity) /
+                         constants::MAX_OPACITY);
+    m_anim->start ();
+    }
+
+
+void HoverIcon::leaveEvent (QEvent* event)
+    {
+    PointedButton::leaveEvent (event);
+
+    m_anim->setStartValue (m_opacity);
+    m_anim->setEndValue (0);
+
+    m_anim->setDuration (constants::ANIMATION_DURATION * m_opacity /
+                         constants::MAX_OPACITY);
+    m_anim->start ();
     }
 }

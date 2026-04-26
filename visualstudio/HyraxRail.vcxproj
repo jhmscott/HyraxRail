@@ -186,6 +186,7 @@
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
     <ClCompile Include="..\src\cpp\ui\routes\includebutton.cpp" />
+    <ClCompile Include="..\src\cpp\ui\routes\routebutton.cpp" />
     <ClCompile Include="..\src\cpp\ui\routes\routegroup.cpp" />
     <ClCompile Include="..\src\cpp\ui\routes\routepanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\sensors\sensorbar.cpp" />
@@ -211,7 +212,7 @@
     <ClInclude Include="..\src\cpp\ui\common\autogrid.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\formdialog.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\hexvalidator.hpp" />
-    <ClInclude Include="..\src\cpp\ui\common\hovericon.hpp" />
+    <QtMoc Include="..\src\cpp\ui\common\hovericon.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\icontoggle.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\optionaldropdown.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\ipfield.hpp" />
@@ -233,6 +234,7 @@
     <QtMoc Include="..\src\cpp\ui\mainwindow.hpp" />
     <ClInclude Include="..\src\cpp\ui\routes\editroute.hpp" />
     <QtMoc Include="..\src\cpp\ui\routes\includebutton.hpp" />
+    <QtMoc Include="..\src\cpp\ui\routes\routebutton.hpp" />
     <ClInclude Include="..\src\cpp\ui\routes\routegroup.hpp" />
     <ClInclude Include="..\src\cpp\ui\routes\routepanel.hpp" />
     <ClInclude Include="..\src\cpp\ui\sensors\sensorbar.hpp" />
@@ -303,6 +305,7 @@
     <None Include="..\res\icons\misc\plugs-connected.svg" />
     <None Include="..\res\icons\misc\plus.svg" />
     <None Include="..\res\icons\misc\prohibit-inset.svg" />
+    <None Include="..\res\icons\misc\question.svg" />
     <None Include="..\res\icons\misc\split.svg" />
     <None Include="..\res\icons\misc\stop.svg" />
     <None Include="..\res\icons\misc\train-track.svg" />
@@ -313,6 +316,9 @@
     <None Include="..\res\icons\switches\left-track-straight.svg" />
     <None Include="..\res\icons\switches\right-track-right.svg" />
     <None Include="..\res\icons\switches\right-track-straight.svg" />
+    <None Include="..\res\icons\trains\dcc.svg" />
+    <None Include="..\res\icons\trains\mfx.svg" />
+    <None Include="..\res\icons\trains\mm.svg" />
     <None Include="..\res\text\LICENSE_LUCIDE" />
     <None Include="..\res\text\LICENSE_PHOSPHOR" />
   </ItemGroup>

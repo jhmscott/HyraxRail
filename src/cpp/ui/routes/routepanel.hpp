@@ -15,25 +15,47 @@
 #include <ui/common/autogrid.hpp>
 
 #include <QPushButton>
+#include <QScrollArea>
 #include <QWidget>
 
 
 namespace ui::routes
 {
 
+//////////////////////////////////////////////////////////////////////////////
+/// Tab containing route information
+///
+//////////////////////////////////////////////////////////////////////////////
 class RoutePanel : public QWidget
     {
 public:
+    //////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  controllers     List of controllers
+    /// @param[in]  parent          Parent widget
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     RoutePanel (control::ControllerManager* controllers, QWidget* parent);
 
-
 private:
-    control::ControllerManager* m_controllers;
+    control::ControllerManager* m_controllers;  ///< List of controllers
 
 private slots:
-
+    //////////////////////////////////////////////////////////////////////////////
+    /// Remove a controller from this panel
+    ///
+    /// @param[in]  controller      Controller to remove
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     void remove (const control::ControllerBase& controller);
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Add a controller to this panel
+    ///
+    /// @param[in]  controller      Controller to add
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     void add (control::ControllerBase& controller);
 
     };

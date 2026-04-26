@@ -26,7 +26,8 @@
 
 
 #define issueDynamicCommand(func, id, ...)  (m_thread.enqueue (&func<GET_ARG_FOR_TYPES (__VA_ARGS__)>,       \
-                                                               static_cast<ECoSProtocol::dynamicId> (id),    \
+                                                               static_cast<ECoSProtocol::dynamicId> (id)     \
+                                                               __VA_OPT__(,)                                 \
                                                                __VA_ARGS__))
 
 #define issueStaticCommand(func, id, ...)   (m_thread.enqueue (&func<id __VA_OPT__ (,) \
@@ -40,6 +41,34 @@ using namespace std::chrono_literals;
 
 namespace control
 {
+
+//////////////////////////////////////////////////////////////////////////////
+/// Extract the icon information from a reply
+///
+/// @param[in]  reply       Result of get(ARG_SYMBOL) request
+///
+/// @return     Contained icon
+///
+//////////////////////////////////////////////////////////////////////////////
+static layout::actuatorIcon getActuatorIcon (const ECoSProtocol::reply& reply)
+    {
+    static const std::map<int, layout::actuatorIcon> iconTable =
+        {
+            { 23, layout::ICON_TURNOUT_LEFT  },
+            { 24, layout::ICON_TURNOUT_RIGHT }
+        };
+
+    layout::actuatorIcon    icon = layout::NO_ICON;
+    auto                    it = iconTable.find (atoi (reply.lines[0].arg->val->c_str ()));
+
+    if (iconTable.end () != it)
+        {
+        icon = it->second;
+        }
+
+    return icon;
+    }
+
 MarklinCS1::MarklinCS1 (const std::string& friendlyName, std::unique_ptr<ProtocolBase>&& proto) :
     ControllerBase (friendlyName, std::move (proto))
     {
@@ -68,8 +97,39 @@ std::vector<layout::Locomotive> MarklinCS1::getLocomotives () const
                             std::back_inserter (locos),
                             [this] (const control::ECoSProtocol::replyLine& line)
                             {
+                            static const std::map<std::string, layout::trackProtocol> protocols
+                                {
+                                    // Märklin Digital
+                                    { "MFX",    layout::TRACK_PROTO_MFX },
+
+                                    // NMRA DCC (Digital Command Control)
+                                    { "DCC14",  layout::TRACK_PROTO_DCC },
+                                    { "DCC28",  layout::TRACK_PROTO_DCC },
+                                    { "DCC128", layout::TRACK_PROTO_DCC },
+
+                                    // Märklin-Motorola
+                                    { "MM14",   layout::TRACK_PROTO_MM  },
+                                    { "MM27",   layout::TRACK_PROTO_MM  },
+                                    { "MM28",   layout::TRACK_PROTO_MM  },
+                                };
+
+
+                            auto future     = issueDynamicCommand (ECoSProtocol::get,
+                                                                   line.id,
+                                                                   ECoSProtocol::ARG_PROTOCOL);
+                            auto protoReply = future.get ();
+                            auto it         = protocols.find (protoReply.lines[0].arg->val.value ());
+
+                            layout::trackProtocol proto = layout::TRACK_PROTO_UNKNOWN;
+
+                            if (protocols.end () != it)
+                                {
+                                proto = it->second;
+                                }
+
                             return layout::Locomotive{ const_cast<MarklinCS1*> (this),
                                                        line.arg->val.value (),
+                                                       proto,
                                                        line.id, };
                             });
             }
@@ -88,8 +148,10 @@ std::vector<layout::Route> MarklinCS1::getRoutes () const
     return getSwitchingItems<layout::Route> ();
     }
 
-void MarklinCS1::createRoute (const std::string& name, const std::vector<routeMember>& actuators)
+layout::Route MarklinCS1::createRoute (const std::string& name, const layout::routeList& actuators)
     {
+    ECoSProtocol::dynamicId routeId = 0;
+
     issueStaticCommand (ECoSProtocol::create,
                         ECoSProtocol::ID_SWITCHING_ITEMS,
                         ECoSProtocol::ARG_ROUTE);
@@ -102,27 +164,17 @@ void MarklinCS1::createRoute (const std::string& name, const std::vector<routeMe
 
     if (ECoSProtocol::REPLY_OK == res.status)
         {
-        ECoSProtocol::dynamicId routeId = atoi (res.lines[0].arg->val->c_str ());
+        routeId = atoi (res.lines[0].arg->val->c_str ());
 
         requestRouteControl (routeId);
 
-        issueDynamicCommand (ECoSProtocol::set,
-                             routeId,
-                             ARG (ECoSProtocol::ARG_NAME1, "\"" + name + "\""));
-
-        for (auto& [actuator, state] : actuators)
-            {
-            ECoSProtocol::dynamicId actId = static_cast<ECoSProtocol::dynamicId> (actuator.getId ());
-
-            issueDynamicCommand (ECoSProtocol::link,
-                                 routeId,
-                                 ARG (ECoSProtocol::ARG_ID, actId),
-                                 ARG (ECoSProtocol::ARG_STATE, state));
-
-            }
+        setRouteName    (routeId, name);
+        setRouteMembers (routeId, actuators);
 
         releaseRouteControl (routeId);
         }
+
+    return layout::Route{ this, name, actuators, routeId };
     }
 
 
@@ -161,6 +213,33 @@ bool MarklinCS1::isEStopped ()
 
 
     return eStop;
+    }
+
+
+layout::Actuator MarklinCS1::getActuatorSingle (size_t id) const
+    {
+    auto nameFuture     = issueDynamicCommand (ECoSProtocol::get,
+                                               id,
+                                               ECoSProtocol::ARG_NAME1);
+    auto stateFuture    = issueDynamicCommand (ECoSProtocol::get,
+                                               id,
+                                               ECoSProtocol::ARG_STATE);
+    auto symFuture      = issueDynamicCommand (ECoSProtocol::get,
+                                               id,
+                                               ECoSProtocol::ARG_SYMBOL);
+    auto name   = nameFuture.get ();
+    auto state  = stateFuture.get ();
+    auto sym    = symFuture.get ();
+
+
+    return layout::Actuator
+        {
+        const_cast<MarklinCS1*> (this),
+        *name.lines[0].arg->val,
+        getActuatorIcon (sym),
+        id,
+        "1" == state.lines[0].arg->val
+        };
     }
 
 void MarklinCS1::setSpeed (size_t id, int8_t speed)
@@ -314,6 +393,31 @@ void MarklinCS1::setRoute (size_t id)
                          ARG (ECoSProtocol::ARG_STATE, true));
     }
 
+void MarklinCS1::removeRoute (size_t id)
+    {
+    issueDynamicCommand (ECoSProtocol::deleteId, id);
+    }
+
+void MarklinCS1::setRouteName (size_t id, const std::string& name)
+    {
+    issueDynamicCommand (ECoSProtocol::set,
+                         id,
+                         ARG (ECoSProtocol::ARG_NAME1, "\"" + name + "\""));
+    }
+
+void MarklinCS1::setRouteMembers (size_t id, const layout::routeList & members)
+    {
+    for (auto& [actuator, state] : members)
+        {
+        ECoSProtocol::dynamicId actId = static_cast<ECoSProtocol::dynamicId> (actuator.getId ());
+
+        issueDynamicCommand (ECoSProtocol::link,
+                             id,
+                             ARG (ECoSProtocol::ARG_ID,     actId),
+                             ARG (ECoSProtocol::ARG_STATE,  state));
+        }
+    }
+
 template<class T>
 std::vector<T> MarklinCS1::getSwitchingItems () const
     {
@@ -413,35 +517,42 @@ std::vector<T> MarklinCS1::getSwitchingItems () const
 
     actuators.reserve (reply.lines.size ());
 
-    static const std::map<int, layout::actuatorIcon> iconTable =
-        {
-            { 23, layout::ICON_TURNOUT_LEFT  },
-            { 24, layout::ICON_TURNOUT_RIGHT }
-        };
 
     for (size_t ii = 0; ii < reply.lines.size (); ++ii)
         {
         if constexpr (std::is_same_v<T, layout::Actuator>)
             {
-            layout::actuatorIcon    icon = layout::NO_ICON;
-            auto                    it = iconTable.find (atoi (icons[ii].lines[0].arg->val->c_str ()));
-
-            if (iconTable.end () != it)
-                {
-                icon = it->second;
-                }
-
             actuators.emplace_back (const_cast<MarklinCS1*> (this),
                                     *names[ii].lines[0].arg->val,
-                                    icon,
+                                    getActuatorIcon (icons[ii]),
                                     static_cast<size_t> (reply.lines[ii].id),
                                     "1" == states[ii].lines[0].arg->val);
             }
         else
             {
+            size_t  routeId         = static_cast<size_t> (reply.lines[ii].id);
+            auto    memberFutures   = issueDynamicCommand (ECoSProtocol::queryObjects,
+                                                           routeId);
+            auto    members         = memberFutures.get ();
+            layout::routeList routeList;
+
+            routeList.reserve (members.lines.size ());
+
+            std::transform (members.lines.begin (),
+                            members.lines.end (),
+                            std::back_inserter (routeList),
+                            [this] (const ECoSProtocol::replyLine& line) -> layout::routeMember
+                            {
+                            layout::Actuator    actuator = getActuatorSingle (line.id);
+                            bool                state    = actuator.get ();
+
+                            return { std::move (actuator), state };
+                            });
+
             actuators.emplace_back (const_cast<MarklinCS1*> (this),
                                     *names[ii].lines[0].arg->val,
-                                    static_cast<size_t> (reply.lines[ii].id));
+                                    routeList,
+                                    routeId);
             }
         }
 

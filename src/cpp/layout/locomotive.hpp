@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file        layout/locomotive.hpp
  * @brief       Provides an interface for controlling a locomotive
  * @author      Justin Scott
@@ -54,6 +54,17 @@ struct funcInfo
     bool        state;              ///< Current state
     };
 
+// Protocol to communicate between the controller and loco
+enum trackProtocol
+    {
+    TRACK_PROTO_DCC,    ///< NMRA DCC, Digital Command Control
+    TRACK_PROTO_MFX,    ///< Märklin Digital
+    TRACK_PROTO_MM,     ///< Märklin-Motorola
+    TRACK_PROTO_UNKNOWN,///< Unknown protocol
+
+    NUM_TRACK_PROTO     ///< Delimiter only
+    };
+
 // forward declare
 class LocomotiveController;
 
@@ -66,21 +77,22 @@ class Locomotive : public ComponentDerived<LocomotiveController>
     {
     Q_OBJECT
 public:
-    // Default constructor. TODO: is still needed?
-    Locomotive () = default;
-        
+    using ComponentDerived<LocomotiveController>::ComponentDerived;
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
-    /// @param[in]  controller          Controller controlling this locomotive
-    /// @param[in]  name                        Friendly name
-    /// @param[in]  id                            Unique ID
+    /// @param[in]  controller  Controller controlling this locomotive
+    /// @param[in]  name        Friendly name
+    /// @param[in]  proto       Track protocol
+    /// @param[in]  id          Unique ID
     ///
     ///////////////////////////////////////////////////////////////////////////////
     Locomotive (LocomotiveController*   controller,
                 const std::string&      name,
+                trackProtocol           proto,
                 size_t                  id);
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the friendly name of this locomotive
     ///
@@ -88,27 +100,27 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     std::string getName () const { return m_name; }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the locomotive speed
     ///
-    /// @param[in]  speed           Speed value. Positive is forward. Negative is reverse.
+    /// @param[in]  speed       Speed value. Positive is forward. Negative is reverse.
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void setSpeed (int8_t speed);
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Request control of  this locomitve
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void requestControl ();
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Release control of  this locomitve
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void releaseControl ();
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Set a function value
     ///
@@ -117,7 +129,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void setFunc (uint8_t func, bool enable);
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the functions supported by this locomotive
     ///
@@ -126,21 +138,15 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     std::vector<funcInfo> getFunctions () const;
 
-        
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Get the controller controlling this locomotive
-    ///
-    /// @return     Locomotive controller
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    LocomotiveController* getController () { return m_controller; }
+    trackProtocol getProtocol () const { return m_proto; }
 
 signals:
     // TODO: not used
     void funcSet (uint8_t func, bool enable);
 
 private:
-    std::string m_name;     ///< Friendly name
+    std::string     m_name;     ///< Friendly name
+    trackProtocol   m_proto;    ///< Protocol to communicate between the controller and loco
     };
 
 
@@ -151,10 +157,10 @@ private:
 class LocomotiveController : public ControllerBase<Locomotive>
     {
     friend class Locomotive;
-        
+
     // private so only the locomotive class may call these functions
 private:
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the speed of a locomotive
     ///
@@ -163,8 +169,7 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void setSpeed (size_t id, int8_t speed) = 0;
-        
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Set a locomotive function
     ///
@@ -184,7 +189,7 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual std::vector<funcInfo> getFunctions (size_t id) const = 0;
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Request control of  a locomitve
     ///
@@ -192,7 +197,7 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void requestControl (size_t id) = 0;
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Request control of  a locomitve
     ///

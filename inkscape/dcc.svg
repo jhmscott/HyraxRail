@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100mm"
+   height="75mm"
+   viewBox="0 0 100 75"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   sodipodi:docname="dcc.svg"
+   inkscape:export-filename="..\res\icons\trains\dcc.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title5">DCC</title>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="2.0186728"
+     inkscape:cx="181.80262"
+     inkscape:cy="55.23431"
+     inkscape:window-width="1718"
+     inkscape:window-height="1341"
+     inkscape:window-x="3098"
+     inkscape:window-y="482"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       id="grid1"
+       units="mm"
+       originx="0"
+       originy="0"
+       spacingx="0.99999998"
+       spacingy="1"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Sleepers (Square wave)">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.74110909"
+       d="M 6.474883,70 V 45.385647 h 6.493701 V 70 H 27.254737 V 45.385647 h 3.896218 2.597484 v 0 0 h 2.59748 V 70 h 3.896222 V 45.385647 h 9.091188 V 70 h 9.091185 V 45.385647 h 3.896221 V 70 h 9.091187 V 45.385647 H 84.399327 V 70 h 3.896226 V 45.385647 h 5.194964 V 70"
+       id="path3"
+       sodipodi:nodetypes="cccccccccccccccccccccccccccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.41316"
+       id="path4"
+       sodipodi:type="arc"
+       sodipodi:cx="69.439987"
+       sodipodi:cy="23.232662"
+       sodipodi:rx="8.7379694"
+       sodipodi:ry="8.6527662"
+       sodipodi:start="4.712389"
+       sodipodi:end="0"
+       sodipodi:arc-type="arc"
+       d="m 69.439987,14.579896 a 8.7379694,8.6527662 0 0 1 8.73797,8.652766"
+       sodipodi:open="true" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.52546"
+       id="path4-6-2"
+       sodipodi:type="arc"
+       sodipodi:cx="69.464066"
+       sodipodi:cy="23.257475"
+       sodipodi:rx="19.841581"
+       sodipodi:ry="21.285576"
+       sodipodi:start="4.712389"
+       sodipodi:end="0"
+       sodipodi:arc-type="arc"
+       d="M 69.464066,1.971899 A 19.841581,21.285576 0 0 1 89.305647,23.257475"
+       sodipodi:open="true" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.69889"
+       id="path4-6"
+       sodipodi:type="arc"
+       sodipodi:cx="69.469978"
+       sodipodi:cy="23.263756"
+       sodipodi:rx="14.180577"
+       sodipodi:ry="14.91431"
+       sodipodi:start="4.712389"
+       sodipodi:end="0"
+       sodipodi:arc-type="arc"
+       d="M 69.469978,8.3494453 A 14.180577,14.91431 0 0 1 83.650556,23.263756"
+       sodipodi:open="true" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Text">
+    <text
+       xml:space="preserve"
+       style="font-size:33.8667px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:#000000;stroke-width:0.146658"
+       x="14.81659"
+       y="41.59594"
+       id="text4"><tspan
+         sodipodi:role="line"
+         id="tspan4"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:33.8667px;font-family:'Cascadia Mono';-inkscape-font-specification:'Cascadia Mono Bold';fill:#000000;stroke-width:0.146658"
+         x="14.81659"
+         y="41.59594">DCC</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:33.8667px;font-family:'Cascadia Mono';-inkscape-font-specification:'Cascadia Mono Bold';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:none;stroke:#000000;stroke-width:1.8838"
+       x="155"
+       y="40"
+       id="text5"><tspan
+         sodipodi:role="line"
+         id="tspan5"
+         style="stroke-width:1.8838"
+         x="155"
+         y="40" /><tspan
+         sodipodi:role="line"
+         style="stroke-width:1.8838"
+         id="tspan6"
+         x="155"
+         y="82.333374" /></text>
+  </g>
+  <g
+     inkscape:label="Rails"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g2"
+       transform="matrix(0.7419743,0,0,1.657546,-7.3807806,18.605919)"
+       style="stroke-width:2.43974">
+      <path
+         style="fill:#1a1a1a;stroke:#000000;stroke-width:2.43974"
+         d="M 9.961165,20.184466 144.69903,19.92233"
+         id="path2" />
+    </g>
+    <g
+       id="g2-7"
+       transform="matrix(0.74217794,0,0,1.6409567,-7.3929569,30.624594)"
+       style="stroke-width:2.4517">
+      <path
+         style="fill:#1a1a1a;stroke:#000000;stroke-width:2.4517"
+         d="M 9.961165,20.184466 144.69903,19.92233"
+         id="path2-1" />
+    </g>
+  </g>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>DCC</dc:title>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/4.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

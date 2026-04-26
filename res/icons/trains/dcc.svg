@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100mm"
+   height="75mm"
+   viewBox="0 0 100 75"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title5">DCC</title>
+  <defs
+     id="defs1" />
+  <g
+     id="layer2">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.74111"
+       d="M 6.474883,70 V 45.385647 h 6.493701 V 70 H 27.254737 V 45.385647 h 3.896218 2.597484 v 0 0 h 2.59748 V 70 h 3.896222 V 45.385647 h 9.091188 V 70 h 9.091185 V 45.385647 h 3.896221 V 70 h 9.091187 V 45.385647 H 84.399327 V 70 h 3.896226 V 45.385647 h 5.194964 V 70"
+       id="path3" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.41316"
+       id="path4"
+       d="m 69.439987,14.579896 a 8.7379694,8.6527662 0 0 1 8.73797,8.652766" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.52546"
+       id="path4-6-2"
+       d="M 69.464066,1.971899 A 19.841581,21.285576 0 0 1 89.305647,23.257475" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.69889"
+       id="path4-6"
+       d="M 69.469978,8.3494453 A 14.180577,14.91431 0 0 1 83.650556,23.263756" />
+  </g>
+  <g
+     id="layer3">
+    <text
+       xml:space="preserve"
+       style="font-size:33.8667px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:#000000;stroke-width:0.146658"
+       x="14.81659"
+       y="41.59594"
+       id="text4"><tspan
+         id="tspan4"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:33.8667px;font-family:'Cascadia Mono';-inkscape-font-specification:'Cascadia Mono Bold';fill:#000000;stroke-width:0.146658"
+         x="14.81659"
+         y="41.59594">DCC</tspan></text>
+  </g>
+  <g
+     id="layer1">
+    <g
+       id="g2"
+       transform="matrix(0.7419743,0,0,1.657546,-7.3807806,18.605919)"
+       style="stroke-width:2.43974">
+      <path
+         style="fill:#1a1a1a;stroke:#000000;stroke-width:2.43974"
+         d="M 9.961165,20.184466 144.69903,19.92233"
+         id="path2" />
+    </g>
+    <g
+       id="g2-7"
+       transform="matrix(0.74217794,0,0,1.6409567,-7.3929569,30.624594)"
+       style="stroke-width:2.4517">
+      <path
+         style="fill:#1a1a1a;stroke:#000000;stroke-width:2.4517"
+         d="M 9.961165,20.184466 144.69903,19.92233"
+         id="path2-1" />
+    </g>
+  </g>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>DCC</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

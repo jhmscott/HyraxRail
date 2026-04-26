@@ -74,9 +74,19 @@ inline void setComboBoxIndexByText (QComboBox& cb, const QString& text)
 
 inline void makeFrameless (QWidget& wdgt)
     {
+    const QMetaObject*  metaobj     = wdgt.metaObject ();
+    QString             classname;
+
+    // Follow up the object inheritance tree to the first standard QT widget
+    do
+        {
+        classname   = metaobj->className ();
+        metaobj     = metaobj->superClass ();
+        } while ('Q' != classname[0] && NULL != metaobj);
+
     wdgt.setStyleSheet (wdgt.styleSheet ()                  +
                         " "                                 +
-                        wdgt.metaObject ()->className ()    +
+                        classname                           +
                         " { border: none; background: transparent; }");
     }
 
@@ -89,6 +99,27 @@ inline void removeWidgetFromLayout (QLayout& layout, uint nn)
         QWidget* widget = item->widget ();
 
         delete widget;
+        delete item;
+        }
+    }
+
+inline void clearLayout (QLayout& layout)
+    {
+    QLayoutItem*    item;
+    QLayout*        childLayout;
+    QWidget*        widget;
+
+    while (NULL != (item = layout.takeAt (0)))
+        {
+        if (NULL != (widget = item->widget ()))
+            {
+            delete widget;
+            }
+        else if (NULL != (childLayout = item->layout ()))
+            {
+            clearLayout (*childLayout);
+            }
+
         delete item;
         }
     }

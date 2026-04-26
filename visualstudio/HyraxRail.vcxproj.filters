@@ -109,6 +109,9 @@
     <Filter Include="Resource Files\icons\app">
       <UniqueIdentifier>{6f765961-96db-45e1-88bd-4dca06bd253f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\icons\trains">
+      <UniqueIdentifier>{8716b2ee-d0bf-4df6-a8f1-20c9d2548d4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\stdafx.h">
@@ -299,6 +302,9 @@
     <ClCompile Include="..\src\cpp\control\controllers\manager.cpp">
       <Filter>Source Files\control\controllers</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\routes\routebutton.cpp">
+      <Filter>Source Files\ui\routes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\control\protocols\base.hpp">
@@ -400,9 +406,6 @@
     <ClInclude Include="..\src\cpp\ui\config\credits.hpp">
       <Filter>Header Files\ui\config</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\common\hovericon.hpp">
-      <Filter>Header Files\ui\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\cpp\ui\config\notifygroup.hpp">
       <Filter>Header Files\ui\config</Filter>
     </ClInclude>
@@ -431,6 +434,12 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\control\controllers\manager.hpp">
       <Filter>Header Files\control\controllers</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\routes\routebutton.hpp">
+      <Filter>Header Files\ui\routes</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\common\hovericon.hpp">
+      <Filter>Header Files\ui\common</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -578,6 +587,18 @@
     </None>
     <None Include="..\res\icons\misc\binary.svg">
       <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\trains\dcc.svg">
+      <Filter>Resource Files\icons\trains</Filter>
+    </None>
+    <None Include="..\res\icons\trains\mfx.svg">
+      <Filter>Resource Files\icons\trains</Filter>
+    </None>
+    <None Include="..\res\icons\misc\question.svg">
+      <Filter>Resource Files\icons\misc</Filter>
+    </None>
+    <None Include="..\res\icons\trains\mm.svg">
+      <Filter>Resource Files\icons\trains</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

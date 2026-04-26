@@ -23,7 +23,9 @@
 namespace ui::routes
 {
 
-EditRouteDialog::EditRouteDialog (control::ControllerBase& controller, QWidget* parent) :
+EditRouteDialog::EditRouteDialog (control::ControllerBase&  controller,
+                                  QWidget*                  parent,
+                                  const layout::Route*      route) :
     common::FormDialog (parent)
     {
     QVBoxLayout*            layout      = new QVBoxLayout{ this };
@@ -62,8 +64,30 @@ EditRouteDialog::EditRouteDialog (control::ControllerBase& controller, QWidget* 
         new QRegularExpressionValidator{
                 QRegularExpression{ utils::str::NON_EMPTY_REGEX }, this });
 
-    setWindowTitle (QString::asprintf ("Add Route - %s",
-                                       controller.getFriendlyName ().c_str ()));
+
+    if (NULL == route)
+        {
+        setWindowTitle (QString::asprintf ("Add Route - %s",
+                                           controller.getFriendlyName ().c_str ()));
+        }
+    else
+        {
+        setWindowTitle (QString::asprintf ("Edit Route - %s",
+                                           controller.getFriendlyName ().c_str ()));
+
+        m_name->setText (route->getName ().c_str ());
+
+        for (const layout::routeMember& actuator : route->getActuators ())
+            {
+            auto it = std::find_if (m_buttonList.begin (),
+                                    m_buttonList.end (),
+                                    [&actuator] (ActuatorIncludeButton* btn) -> bool
+                                    { return actuator.actuator == btn->getActuator (); });
+
+            (*it)->setIncluded (true);
+            (*it)->setState (actuator.state);
+            }
+        }
 
     connect (m_name,
             &QLineEdit::textChanged,
@@ -75,10 +99,10 @@ EditRouteDialog::EditRouteDialog (control::ControllerBase& controller, QWidget* 
     setLayout (layout);
     }
 
-std::vector<control::routeMember> EditRouteDialog::getActuators () const
+layout::routeList EditRouteDialog::getActuators () const
     {
     std::vector<ActuatorIncludeButton*> tmp;
-    std::vector<control::routeMember>   members;
+    layout::routeList                   members;
 
     tmp.reserve (m_buttonList.size ());
 
@@ -93,7 +117,7 @@ std::vector<control::routeMember> EditRouteDialog::getActuators () const
     std::transform (tmp.begin (),
                     tmp.end (),
                     std::back_inserter (members),
-                    [] (ActuatorIncludeButton* btn) -> control::routeMember
+                    [] (ActuatorIncludeButton* btn) -> layout::routeMember
                     { return { btn->getActuator (), btn->actuatorState () }; });
 
     return members;

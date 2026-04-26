@@ -21,18 +21,50 @@
 
 namespace ui::routes
 {
+//////////////////////////////////////////////////////////////////////////////
+/// Dialog box to edit or add a route
+///
+//////////////////////////////////////////////////////////////////////////////
 class EditRouteDialog : public common::FormDialog
     {
 public:
-    EditRouteDialog (control::ControllerBase& controller, QWidget* parent);
+    //////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  controller      Controller to add/edit route for
+    /// @param[in]  parent          Parent widget
+    /// @param[in]  route           Route to edit. If NULL, this is an add route
+    ///                             dialog
+    //////////////////////////////////////////////////////////////////////////////
+    EditRouteDialog (control::ControllerBase&   controller,
+                     QWidget*                   parent,
+                     const layout::Route*       route = NULL);
 
-    std::vector<control::routeMember> getActuators () const;
+    //////////////////////////////////////////////////////////////////////////////
+    /// Get the actuators the user has set
+    ///
+    /// @return     Actuator list
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    layout::routeList getActuators () const;
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Get the name of the route set by the user
+    ///
+    /// @return     Route name
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     std::string getName () const { return m_name->text ().toStdString (); }
 private:
-    std::vector<ActuatorIncludeButton*> m_buttonList;
-    QLineEdit*                          m_name;
+    std::vector<ActuatorIncludeButton*> m_buttonList;   ///< Actuator buttons
+    QLineEdit*                          m_name;         ///< Name field
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Check if this dialog has valid input
+    ///
+    /// @return     True if the entered values are valid
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     virtual bool hasAcceptableInput () const override;
     };
 

@@ -77,7 +77,6 @@ void SensorState::openMenu (QPoint pos)
     notify->setCheckable (true);
     notify->setChecked (m_notified);
 
-
     connect (notify,
             &QAction::toggled,
              this,

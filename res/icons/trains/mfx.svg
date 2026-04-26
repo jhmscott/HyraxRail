@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100mm"
+   height="75mm"
+   viewBox="0 0 100 75"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title5">Märklin-Motorola</title>
+  <defs
+     id="defs1" />
+  <g
+     id="layer2">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.74111"
+       d="M 6.474883,70 V 45.385647 h 6.493701 V 70 H 27.254737 V 45.385647 h 3.896218 2.597484 v 0 0 h 2.59748 V 70 h 3.896222 V 45.385647 h 9.091188 V 70 h 9.091185 V 45.385647 h 3.896221 V 70 h 9.091187 V 45.385647 H 84.399327 V 70 h 3.896226 V 45.385647 h 5.194964 V 70"
+       id="path3" />
+  </g>
+  <g
+     id="layer3">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:35.2809px;line-height:0;font-family:'Cascadia Mono';-inkscape-font-specification:'Cascadia Mono Bold';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:#000000;stroke-width:3.80742"
+       x="28.746897"
+       y="34.849335"
+       id="text7"
+       transform="scale(0.9147698,1.0931712)"><tspan
+         id="tspan7"
+         style="font-style:normal;font-variant:normal;font-weight:200;font-stretch:normal;font-size:35.2809px;line-height:0;font-family:'Cascadia Mono';-inkscape-font-specification:'Cascadia Mono Ultra-Light';fill:#000000;stroke-width:3.80742"
+         x="28.746897"
+         y="34.849335"> fx</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:32.7521px;line-height:0;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#ff0000;stroke:#ff0000;stroke-width:2.12072"
+       x="16.05703"
+       y="40.468018"
+       id="text1"
+       transform="scale(1.026836,0.97386534)"><tspan
+         id="tspan1"
+         style="fill:#ff0000;stroke:#ff0000;stroke-width:2.12072"
+         x="16.05703"
+         y="40.468018">m</tspan></text>
+  </g>
+  <g
+     id="layer1">
+    <g
+       id="g2"
+       transform="matrix(0.7419743,0,0,1.657546,-7.3807806,18.605919)"
+       style="stroke-width:2.43974">
+      <path
+         style="fill:#1a1a1a;stroke:#000000;stroke-width:2.43974"
+         d="M 9.961165,20.184466 144.69903,19.92233"
+         id="path2" />
+    </g>
+    <g
+       id="g2-7"
+       transform="matrix(0.74217794,0,0,1.6409567,-7.3929569,30.624594)"
+       style="stroke-width:2.4517">
+      <path
+         style="fill:#1a1a1a;stroke:#000000;stroke-width:2.4517"
+         d="M 9.961165,20.184466 144.69903,19.92233"
+         id="path2-1" />
+    </g>
+  </g>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Märklin-Motorola</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

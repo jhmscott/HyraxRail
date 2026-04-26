@@ -15,18 +15,43 @@
 
 namespace ui::actuators
 {
+
+//////////////////////////////////////////////////////////////////////////////
+/// Button to set the state of an actuator
+///
+//////////////////////////////////////////////////////////////////////////////
 class ActuatorButton : public QWidget
     {
 public:
+    //////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  actuator    Actuator this button controls
+    /// @param[in]  parent      Parent widget
+    /// @param[in]  dummy       (optional) If true, this won't update the actuator
+    ///                         state on the controller, it will only toggle locally
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     ActuatorButton (const layout::Actuator& actuator, QWidget* parent, bool dummy = false);
 
-    bool getState () { return m_button->isChecked (); }
+    //////////////////////////////////////////////////////////////////////////////
+    /// Get the state of the button
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    bool getState () const { return m_button->isChecked (); }
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Set the sate of the button
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void setState (bool state);
 
 private:
-    layout::Actuator    m_actuator;
-    common::IconToggle* m_button;
-    bool                m_dummy;
+    layout::Actuator    m_actuator; ///< Actuator under control
+    common::IconToggle* m_button;   ///< Toggle button controlling actuator
+    bool                m_dummy;    ///< True if this does not control the actuator
 
+private slots:
     void onToggle (bool state);
     };
 }

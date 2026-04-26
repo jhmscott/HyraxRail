@@ -10,71 +10,39 @@
 
 #include <QBoxLayout>
 #include <QLabel>
+#include <QMenu>
 #include <QPushButton>
+#include <QTimer>
 
 #include <ui/common/autogrid.hpp>
 #include <ui/common/seperator.hpp>
 #include <ui/common/pointedwidget.hpp>
 #include <ui/common/utils.hpp>
+
 #include <ui/routes/editroute.hpp>
+#include <ui/routes/routebutton.hpp>
 #include <ui/routes/routegroup.hpp>
 
 
 namespace ui::routes
 {
 
-class RouteButton : public QWidget
-    {
-public:
-    RouteButton (const layout::Route& route, QWidget* parent) :
-        QWidget (parent),
-        m_route (new layout::Route{ route })
-        {
-        QVBoxLayout* layout = new QVBoxLayout{ this };
-        QPushButton* button = new common::PointedButton{ QIcon{ ":/icons/misc/path.svg" }, "", this };
-
-        m_route->request ();
-
-        button->setFixedSize (50, 50);
-        button->setIconSize (QSize{ 30, 30 });
-        button->setStyleSheet ("QPushButton:pressed { background-color: royalblue; }");
-
-        layout->addWidget (button);
-        layout->addWidget (new QLabel{ m_route->getName ().c_str (), this}, 0, Qt::AlignHCenter);
-
-        setContentsMargins (0, 20, 0, 0);
-
-        connect (button,
-                 &QPushButton::released,
-                  m_route,
-                 &layout::Route::set);
-
-        setLayout (layout);
-        }
-
-    ~RouteButton () { delete m_route; }
-private:
-    layout::Route* m_route;
-
-    };
 
 RouteGroup::RouteGroup (control::ControllerBase& controller, QWidget* parent) :
     QGroupBox (controller.getFriendlyName ().c_str (), parent),
     m_controller (&controller)
     {
-    QVBoxLayout*            layout      = new QVBoxLayout{ this };
-    QHBoxLayout*            addLayout   = new QHBoxLayout{ this };
-    common::AutoGridLayout* gridLayout  =
-        new common::AutoGridLayout{ common::AutoGridLayout::expand::ROW_FIRST, 5, this };
+    QVBoxLayout*    layout      = new QVBoxLayout{};
+    QHBoxLayout*    addLayout   = new QHBoxLayout{};
 
-    auto routes = m_controller->getRoutes ();
+    m_gridLayout = new common::AutoGridLayout{ common::AutoGridLayout::expand::ROW_FIRST, 5, NULL };
 
-    for (const layout::Route& route : routes)
+    for (const layout::Route& route : m_controller->getRoutes ())
         {
-        gridLayout->addWidget (new RouteButton{ route, this});
+        addRouteToGrid (route);
         }
 
-    gridLayout->setAlignment (Qt::AlignTop | Qt::AlignLeft);
+    m_gridLayout->setAlignment (Qt::AlignTop | Qt::AlignLeft);
 
     common::PointedButton* addBtn = new common::PointedButton{ QIcon{ ":/icons/misc/plus.svg" }, "", this };
 
@@ -84,7 +52,7 @@ RouteGroup::RouteGroup (control::ControllerBase& controller, QWidget* parent) :
     addLayout->addWidget (new QLabel{ "Add Route", this }, 0, Qt::AlignLeft);
     addLayout->setAlignment (Qt::AlignLeft);
 
-    layout->addItem (gridLayout);
+    layout->addItem (m_gridLayout);
     layout->addWidget (new common::Separator{ this });
     layout->addLayout (addLayout);
 
@@ -98,13 +66,55 @@ RouteGroup::RouteGroup (control::ControllerBase& controller, QWidget* parent) :
     setLayout (layout);
     }
 
+void RouteGroup::addRouteToGrid (const layout::Route& route)
+    {
+    RouteButton* btn = new RouteButton{ route, this };
+
+    m_gridLayout->addWidget (btn);
+
+    connect (btn,
+            &RouteButton::routeDeleted,
+             this,
+            &RouteGroup::removeRoute);
+    }
+
+void RouteGroup::removeRoute ()
+    {
+    RouteButton*    btn         = static_cast<RouteButton*> (QObject::sender ());
+    QRect           geometry    = m_gridLayout->geometry ();
+
+    m_gridLayout->removeWidget (btn);
+
+    delete btn;
+
+    // Force a refresh
+    m_gridLayout->setGeometry (geometry);
+    }
+
 void RouteGroup::addRoute ()
+    {
+    layout::Route   route;
+
+    // Dialog box scope, it existing when we try to add the new
+    // route interferes with the layout
     {
     EditRouteDialog dlg{ *m_controller, this };
 
     if (QDialog::Accepted == dlg.exec ())
         {
-        m_controller->createRoute (dlg.getName (), dlg.getActuators ());
+        route = m_controller->createRoute (dlg.getName (),
+                                           dlg.getActuators ());
+        }
+    }
+
+    if (route)
+        {
+        addRouteToGrid (route);
+
+        m_gridLayout->itemAt (m_gridLayout->count () - 1)->widget ()->show ();
+
+        // Force a refresh
+        m_gridLayout->setGeometry (m_gridLayout->geometry ());
         }
     }
 

@@ -10,6 +10,9 @@
 
 #pragma once
 
+
+#include <common.hpp>
+
 #include <QObject>
 
 #include <set>
@@ -29,7 +32,7 @@ class ComponentBase : public QObject
     {
     Q_OBJECT
 signals:
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Signals that this component's controller is being destroyed, and this component should be removed
     ///
@@ -52,7 +55,7 @@ class ComponentDerived : public ComponentBase
 public:
     using controller_t  = typename Controller;
 
-    // TODO: het this compiler check working
+    // TODO: get this compiler check working
 #if 0
     static_assert (std::is_base_of_v<ControllerBase<typename Controller::component_t>, Controller>,
                    "Controller must derive from ControllerBase");
@@ -74,9 +77,7 @@ public:
     /// Default constructor. Creates a component with no control
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    ComponentDerived () :
-        ComponentDerived (NULL, 0)
-        {}
+    ComponentDerived () = default;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Copy constructor
@@ -148,7 +149,7 @@ public:
 
         return *this;
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Destructor. Deregisters this with the controller so it no longer recieves destory signals
     ///
@@ -165,7 +166,7 @@ public:
         emit destroyed ();
         m_controller = NULL;
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Comparison operator. Evaluates to true if these reference the same object on the same controller
     ///
@@ -179,7 +180,7 @@ public:
         return other.m_controller   == m_controller &&
                other.m_id           == m_id;
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the ID used to identify this component to the controller
     ///
@@ -188,10 +189,31 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     size_t getId () const { return m_id; }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the controller controlling this locomotive
+    ///
+    /// @return     Locomotive controller
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    Controller* getController () { return m_controller; }
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Check if this a valid component
+    ///
+    /// @return     false if not a valid component
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    operator bool () const { return 0 != m_id; }
+
 protected:
-    Controller* m_controller;   ///< Non owning controller reference
-    size_t      m_id = 0;       ///< Unique ID
-        
+    Controller* m_controller    = NULL;     ///< Non owning controller reference
+    size_t      m_id            = 0;        ///< Unique ID
+
+    template<class T, class ComponentT>
+    void setAll (T ComponentT::* member, const identityType<T>& value)
+        {  m_controller->setAll (member, value); }
+
     ///////////////////////////////////////////////////////////////////////////////
     /// De-register this with the controller, so it no longer receives the destroyed signal
     ///
@@ -204,7 +226,7 @@ protected:
             m_controller = NULL;
             }
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Register this with the controller, so it recieves the signal when the controller is destroyed
     ///
@@ -236,7 +258,7 @@ public:
 
     static_assert (std::is_base_of_v<componentBase_t, Component>,
                    "Component must derive from ComponentBase");
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Destructor. Signals to all its components it is being destroyed
     ///
@@ -248,12 +270,20 @@ public:
             component->destroy ();
             }
         }
-        
+
 protected:
     std::set<Component*> m_components;  ///< Components under control of this controller
 
 private:
-        
+    template<class T>
+    void setAll (T Component::* member, const identityType<T>& value)
+        {
+        for (Component* component : m_components)
+            {
+            component->*member = value;
+            }
+        }
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Register a component
     ///
@@ -267,7 +297,7 @@ private:
         {
         m_components.emplace (static_cast<component_t*> (component));
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// De-register a component
     ///

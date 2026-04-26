@@ -141,7 +141,7 @@ public:
         {
         uint16_t min;   ///< Minimum value
         uint16_t max;   ///< Maximum value
-        
+
         ///////////////////////////////////////////////////////////////////////////////
         /// Serialize this argument to send
         ///
@@ -150,7 +150,7 @@ public:
         ///////////////////////////////////////////////////////////////////////////////
         std::string serialize () const;
         };
-        
+
     // Set of four integer values used in an argument
     struct quad
         {
@@ -158,7 +158,7 @@ public:
         uint16_t val2;
         uint16_t val3;
         uint16_t val4;
-        
+
         ///////////////////////////////////////////////////////////////////////////////
         /// Serialize this argument to send
         ///
@@ -173,7 +173,7 @@ public:
         {
         argType                     type;   ///< Argument type
         std::optional<std::string>  val;    ///< Argument value
-        
+
         ///////////////////////////////////////////////////////////////////////////////
         /// Serialize this argument to send
         ///
@@ -181,7 +181,7 @@ public:
         ///
         ///////////////////////////////////////////////////////////////////////////////
         std::string serialize () const;
-        
+
         ///////////////////////////////////////////////////////////////////////////////
         /// Implicit constructor from argument type. Allows you to just pass the enumerated type when the argument
         /// requires no value
@@ -192,7 +192,7 @@ public:
         arg (argType type) :
             type (type)
             {}
-        
+
         ///////////////////////////////////////////////////////////////////////////////
         /// String argument contructor
         ///
@@ -205,7 +205,7 @@ public:
             val (val)
             {}
 
-        
+
         ///////////////////////////////////////////////////////////////////////////////
         /// Range argument constructor
         ///
@@ -217,7 +217,7 @@ public:
             type (type),
             val (range.serialize ())
             {}
-        
+
         ///////////////////////////////////////////////////////////////////////////////
         /// Integer argument constructor
         ///
@@ -229,7 +229,7 @@ public:
             type (type),
             val (std::to_string (integer))
             {}
-        
+
         ///////////////////////////////////////////////////////////////////////////////
         /// Boolean argument constructor
         ///
@@ -240,7 +240,7 @@ public:
         arg (argType type, bool bl) :
             arg (type, bl ? 1 : 0)
             {}
-        
+
         ///////////////////////////////////////////////////////////////////////////////
         /// Quad argument constructor
         ///
@@ -269,7 +269,7 @@ public:
         {
         replyStatus             status = REPLY_EMPTY;   ///< Status code
         std::vector<replyLine>  lines;                  ///< Reply contents
-        
+
         ///////////////////////////////////////////////////////////////////////////////
         /// Implicit cast to bool, used to check if the reply is not empty
         ///
@@ -279,7 +279,7 @@ public:
         operator bool () { return REPLY_EMPTY != status; }
         };
 
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
@@ -289,7 +289,7 @@ public:
     explicit ECoSProtocol (const utils::device::deviceInfo& deviceInfo) :
         ProtocolBase (deviceInfo, 1000)
         {}
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Query a given set of objects
     ///
@@ -308,7 +308,7 @@ public:
                             id,
                             { std::forward<Args> (args)... });
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Query a given set of objects
     ///
@@ -339,14 +339,14 @@ public:
         return queryObjects (id, std::forward<Args> (args)...);
         }
 
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Get an object or value
     ///
-    /// @tparam     Args     Command argument types
+    /// @tparam     Args        Command argument types
     ///
     /// @param[in]  id          Object ID
-    /// @param[in]  args      Command arguments
+    /// @param[in]  args        Command arguments
     ///
     /// @return     Reply from controller
     ///
@@ -358,14 +358,14 @@ public:
                             id,
                             { std::forward<Args> (args)... });
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Get an object or value
     ///
     /// @tparam     id          Object ID
-    /// @tparam     Args      Command argument types
+    /// @tparam     Args        Command argument types
     ///
-    /// @param[in]  args      Command arguments
+    /// @param[in]  args        Command arguments
     ///
     /// @return     Reply from controller
     ///
@@ -376,14 +376,14 @@ public:
         return get (id, std::forward<Args> (args)...);
         }
 
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Set an object or value
     ///
-    /// @tparam     Args     Command argument types
+    /// @tparam     Args        Command argument types
     ///
     /// @param[in]  id          Object ID
-    /// @param[in]  args      Command arguments
+    /// @param[in]  args        Command arguments
     ///
     /// @return     Reply from controller
     ///
@@ -395,14 +395,14 @@ public:
                             id,
                             { std::forward<Args> (args)... });
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Set an object or value
     ///
     /// @tparam     id          Object ID
-    /// @tparam     Args      Command argument types
+    /// @tparam     Args        Command argument types
     ///
-    /// @param[in]  args      Command arguments
+    /// @param[in]  args        Command arguments
     ///
     /// @return     Reply from controller
     ///
@@ -412,14 +412,14 @@ public:
         {
         return set (id, std::forward<Args> (args)...);
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Request acces to an object
     ///
-    /// @tparam     Args     Command argument types
+    /// @tparam     Args        Command argument types
     ///
     /// @param[in]  id          Object ID
-    /// @param[in]  args      Command arguments
+    /// @param[in]  args        Command arguments
     ///
     /// @return     Reply from controller
     ///
@@ -431,14 +431,14 @@ public:
                             id,
                             { std::forward<Args> (args)... });
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Request access to an object
     ///
     /// @tparam     id          Object ID
-    /// @tparam     Args      Command argument types
+    /// @tparam     Args        Command argument types
     ///
-    /// @param[in]  args      Command arguments
+    /// @param[in]  args        Command arguments
     ///
     /// @return     Reply from controller
     ///
@@ -448,14 +448,14 @@ public:
         {
         return request (id, std::forward<Args> (args)...);
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Relase acces to an object
     ///
-    /// @tparam     Args     Command argument types
+    /// @tparam     Args        Command argument types
     ///
     /// @param[in]  id          Object ID
-    /// @param[in]  args      Command arguments
+    /// @param[in]  args        Command arguments
     ///
     /// @return     Reply from controller
     ///
@@ -467,14 +467,14 @@ public:
                             id,
                             { std::forward<Args> (args)... });
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Release access to an object
     ///
     /// @tparam     id          Object ID
-    /// @tparam     Args      Command argument types
+    /// @tparam     Args        Command argument types
     ///
-    /// @param[in]  args      Command arguments
+    /// @param[in]  args        Command arguments
     ///
     /// @return     Reply from controller
     ///
@@ -484,14 +484,14 @@ public:
         {
         return release (id, std::forward<Args> (args)...);
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Create an object
     ///
-    /// @tparam     Args     Command argument types
+    /// @tparam     Args        Command argument types
     ///
     /// @param[in]  id          Object ID
-    /// @param[in]  args      Command arguments
+    /// @param[in]  args        Command arguments
     ///
     /// @return     Reply from controller
     ///
@@ -503,14 +503,14 @@ public:
                             id,
                             { std::forward<Args> (args)... });
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Create an object
     ///
     /// @tparam     id          Object ID
-    /// @tparam     Args      Command argument types
+    /// @tparam     Args        Command argument types
     ///
-    /// @param[in]  args      Command arguments
+    /// @param[in]  args        Command arguments
     ///
     /// @return     Reply from controller
     ///
@@ -524,10 +524,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Link two or more objects
     ///
-    /// @tparam     Args     Command argument types
+    /// @tparam     Args        Command argument types
     ///
     /// @param[in]  id          Object ID
-    /// @param[in]  args      Command arguments
+    /// @param[in]  args        Command arguments
     ///
     /// @return     Reply from controller
     ///
@@ -539,14 +539,14 @@ public:
                             id,
                             { std::forward<Args> (args)... });
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Link two or more objects
     ///
     /// @tparam     id          Object ID
-    /// @tparam     Args      Command argument types
+    /// @tparam     Args        Command argument types
     ///
-    /// @param[in]  args      Command arguments
+    /// @param[in]  args        Command arguments
     ///
     /// @return     Reply from controller
     ///
@@ -555,6 +555,42 @@ public:
     reply link (Args&&... args)
         {
         return link (id, std::forward<Args> (args)...);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Delete an object by it's ID
+    ///
+    /// @tparam     Args        Command argument types
+    ///
+    /// @param[in]  id          Object ID
+    /// @param[in]  args        Command arguments
+    ///
+    /// @return     Reply from controller
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<class... Args>
+    reply deleteId (dynamicId id, Args&&... args)
+        {
+        return makeRequest (CMD_DELETE,
+                            id,
+                            { std::forward<Args> (args)... });
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Delete an object by it's ID
+    ///
+    /// @tparam     id          Object ID
+    /// @tparam     Args        Command argument types
+    ///
+    /// @param[in]  args        Command arguments
+    ///
+    /// @return     Reply from controller
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<staticId id, class... Args>
+    reply deleteId (Args&&... args)
+        {
+        return deleteId (id, std::forward<Args> (args)...);
         }
 private:
     ///////////////////////////////////////////////////////////////////////////////
@@ -566,7 +602,7 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void issueCommand (cmd cmd, dynamicId id, std::initializer_list<arg> args);
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Read the reply to the last command from the device
     ///
@@ -574,7 +610,7 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     reply readReply ();
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Make a request. This sends a command to the controller, parses and returns the reply
     ///

@@ -36,12 +36,6 @@
 namespace control
 {
 
-// Represents an actuator's membership in a route
-struct routeMember
-    {
-    layout::Actuator    actuator;   ///< Actuator in thr route
-    bool                state;      ///< State to set the actuator to when this route is active
-    };
 
 // List of protocols supported  by a controller
 using protocolMetaList = std::vector<const ProtocolMetaClassBase*>;
@@ -216,8 +210,8 @@ public:
     /// @param[in]  actuators   List of actuators and the state to set them to
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual void createRoute (const std::string&                name,
-                              const std::vector<routeMember>&   actuators) = 0;
+    virtual layout::Route createRoute (const std::string&                name,
+                                       const layout::routeList&          actuators) = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the health of the conenction to this controller

@@ -16,6 +16,7 @@
 #include <ui/controllerinfo.hpp>
 
 #include <QComboBox>
+#include <QPushButton>
 
 namespace ui::trains
 {
@@ -32,7 +33,7 @@ private:
     FunctionPanel*          m_functions;
     QComboBox*              m_locos;
     ControllerInfo*         m_controllerInfo;
-
+    QPushButton*            m_proto;
 private slots:
     void add (control::ControllerBase& controller);
 

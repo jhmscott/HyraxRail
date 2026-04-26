@@ -17,41 +17,122 @@
 namespace ui::common
 {
 
+//////////////////////////////////////////////////////////////////////////////
+/// Pill style toggle switch
+///
+//////////////////////////////////////////////////////////////////////////////
 class ToggleSwitch : public PointedWidget<QAbstractButton>
     {
     Q_OBJECT
 
     Q_PROPERTY (int offset READ offset WRITE setOffset);
 public:
+    //////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  parent      Parent widget
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     ToggleSwitch (QWidget* parent = NULL);
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Widget size hint
+    ///
+    /// @return     Widget size hint
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     QSize sizeHint () const override;
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Get the offset of the thumb relative to the groove
+    ///
+    /// @return     Thumb offset
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     int offset () const { return m_x; }
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Set the thumb offset
+    ///
+    /// @param[in]  o       Thumb offset
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     void setOffset (int o) { m_x = o; update(); }
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Get the state of the switch
+    ///
+    /// @return     Switch state (on = true, off = false)
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     bool getSwitch () { return m_switch; }
 
-    void setSwitch (bool state) { m_switch = state; update (); }
+    //////////////////////////////////////////////////////////////////////////////
+    /// Set the state of the switch
+    ///
+    /// @param[in]  state       New switch state
+    /// @param[in]  animate     (optional) Whether to animate the switch, or to
+    ///                         jump to the new state
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void setSwitch (bool state, bool animate = true);
 
 signals:
+    //////////////////////////////////////////////////////////////////////////////
+    /// Signals the switch state has changed
+    ///
+    /// @param[in]  state       New state
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     void switched (bool state);
-protected:
-    void paintEvent (QPaintEvent*) override;
 
-    void mouseReleaseEvent (QMouseEvent*) override;
+protected:
+    //////////////////////////////////////////////////////////////////////////////
+    /// Handle the widget paint event
+    ///
+    /// @param[in,out]  event       Paint event
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual void paintEvent (QPaintEvent* event) override;
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Handle the mouse button release event
+    ///
+    /// @param[in,out]  event       Mouse event
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual void mouseReleaseEvent (QMouseEvent*) override;
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Widget resize event
+    ///
+    /// @param[in,out]  event       Widget resize event
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual void resizeEvent (QResizeEvent* event) override;
 
 private:
-    bool    m_switch;
-    qreal   m_opacity;
-    int     m_x;
-    int     m_y;
-    int     m_height;
-    int     m_margin;
-    QBrush  m_thumb;
-    QBrush  m_track;
-    QBrush  m_brush;
-    QPropertyAnimation* m_anim = nullptr;
+    bool                m_switch;           ///< State of the switch
+    qreal               m_opacity;          ///< Opacity of the track
+    int                 m_x;                ///< X position of the thumb
+    int                 m_y;                ///< Y position of the thumb
+    int                 m_height;           ///< Height of the thumb
+    int                 m_margin;           ///< Margin
+    QBrush              m_thumb;            ///< Brush used for switch thumb
+    QBrush              m_track;            ///< Brush used for switch track
+    QBrush              m_brush;            ///< Brush used for active switch state
+    QPropertyAnimation* m_anim      = NULL; ///< Switch animation
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Start animating the switch changing states
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void startAnimation ();
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Refresh the value of offsets to match the current widget size
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void refreshOffset ();
     };
 }

@@ -48,5 +48,9 @@
         <file>icons/misc/arrow-left.svg</file>
         <file>icons/misc/binary.svg</file>
         <file>text/DSEG-LICENSE.txt</file>
+        <file>icons/trains/dcc.svg</file>
+        <file>icons/trains/mfx.svg</file>
+        <file>icons/misc/question.svg</file>
+        <file>icons/trains/mm.svg</file>
     </qresource>
 </RCC>

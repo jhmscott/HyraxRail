@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include <layout/actuator.hpp>
 #include <layout/base.hpp>
 
 #include <string>
@@ -17,29 +18,66 @@
 namespace layout
 {
 
+// Represents an actuator's membership in a route
+struct routeMember
+    {
+    layout::Actuator    actuator;   ///< Actuator in thr route
+    bool                state;      ///< State to set the actuator to when this route is active
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Check for equality with another route member
+    ///
+    /// @param[in]  other       Other component to check
+    ///
+    /// @return     true if they contain the same actuator and state
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool operator== (const routeMember& other) const
+        {
+        return state    == other.state;
+               actuator == other.actuator;
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Check for inequality with another route member
+    ///
+    /// @param[in]  other       Other component to check
+    ///
+    /// @return     true if they contain a different actuator or state
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool operator!= (const routeMember& other) const { return !(*this == other); }
+    };
+
+// Components of a route
+using routeList = std::vector<routeMember>;
+
 // forward declare
 class RouteController;
 
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Interface to access a route. A route is a named group of actuators with an associated state that they
-/// can all be set to at once
+/// Interface to access a route. A route is a named group of actuators with an
+/// associated state that they can all be set to at once
 ///
 ///////////////////////////////////////////////////////////////////////////////
 class Route : public ComponentDerived<RouteController>
     {
 public:
-        
+    using ComponentDerived<RouteController>::ComponentDerived;
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
     /// @param[in]  controller      Controller controlling this route
-    /// @param[in]  name                   Route friendly name
-    /// @param[in]  id                       Unique ID of route
+    /// @param[in]  name            Route friendly name
+    /// @param[in]  members         List of actuators comprising this route
+    /// @param[in]  id              Unique ID of route
     ///
     ///////////////////////////////////////////////////////////////////////////////
     Route (RouteController*     controller,
            const std::string&   name,
+           const routeList&     members,
            size_t               id);
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -51,10 +89,40 @@ public:
     std::string getName () const { return m_name; }
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Set the name of this route
+    ///
+    /// @param[in]  name        Name of the route
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setName (const std::string& name);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the actuators comprising this route
+    ///
+    /// @return     List of actuators and states
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    routeList getActuators () const { return m_members; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the list of actuators
+    ///
+    /// @param[in]  members     List of actuators and states
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setActuators (const routeList& members);
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Activate this route
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void set ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Remove this route from the controller's database
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void remove ();
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Request control of this route
@@ -69,7 +137,8 @@ public:
     void release ();
 
 private:
-    std::string m_name; ////< Friendly name of route
+    std::string m_name;     ///< Friendly name of route
+    routeList   m_members;  ///< Switching items belonging to this route
     };
 
 
@@ -88,6 +157,32 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void setRoute (size_t id) = 0;
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Remove a route from the controller
+    ///
+    /// @param[in]  id      ID of route to remove
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual void removeRoute (size_t id) = 0;
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Set the components of the route
+    ///
+    /// @param[in]  id      ID of route
+    /// @param[in]  members Actuators/states comprising the route
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual void setRouteMembers (size_t id, const routeList& members) = 0;
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Set the route's name
+    ///
+    /// @param[in]  id      Route's ID
+    /// @param[in]  name    Route name
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual void setRouteName (size_t id, const std::string& name) = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Reuest control of a route

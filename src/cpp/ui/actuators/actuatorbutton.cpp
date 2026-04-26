@@ -71,6 +71,16 @@ ActuatorButton::ActuatorButton (const layout::Actuator& actuator, QWidget* paren
         }
     }
 
+void ActuatorButton::setState (bool state)
+    {
+    m_button->setChecked (state);
+
+    if (not m_dummy)
+        {
+        m_actuator.set (state);
+        }
+    }
+
 void ActuatorButton::onToggle (bool state)
     {
     if (not m_dummy)

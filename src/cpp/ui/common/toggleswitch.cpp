@@ -35,6 +35,25 @@ QSize ToggleSwitch::sizeHint () const
     return QSize{ 2 * (m_height + m_margin),
                   m_height + 2 * m_margin };
     }
+
+void ToggleSwitch::setSwitch (bool state, bool animate)
+    {
+    if (m_switch != state)
+        {
+        m_switch = state;
+
+        if (animate)
+            {
+            startAnimation ();
+            }
+        else
+            {
+            m_thumb = m_switch ? m_brush : QBrush{ "#d5d5d5" };
+            refreshOffset ();
+            }
+        }
+    }
+
 void ToggleSwitch::paintEvent (QPaintEvent*)
     {
     QPainter p (this);
@@ -87,30 +106,50 @@ void ToggleSwitch::mouseReleaseEvent (QMouseEvent* event)
     {
     if (event->button () & Qt::LeftButton)
         {
-        int w = width ();
-
         m_switch = m_switch ? false : true;
-        m_thumb  = m_switch ? m_brush : QBrush{ "#d5d5d5" };
-
-        if (m_switch)
-            {
-            m_anim->setStartValue (m_height / 2);
-            m_anim->setEndValue (w - m_height);
-            }
-        else
-            {
-            m_anim->setStartValue (m_x);
-            m_anim->setEndValue (m_height / 2);
-            }
-
-
-        m_anim->setDuration (120);
-        m_anim->start ();
-
+        startAnimation ();
         emit switched (m_switch);
         }
 
     QAbstractButton::mouseReleaseEvent (event);
+    }
+
+void ToggleSwitch::resizeEvent (QResizeEvent* event)
+    {
+    refreshOffset ();
+    }
+
+void ToggleSwitch::startAnimation ()
+    {
+    int w = width ();
+
+    m_thumb = m_switch ? m_brush : QBrush{ "#d5d5d5" };
+
+    if (m_switch)
+        {
+        m_anim->setStartValue (m_height / 2);
+        m_anim->setEndValue (w - m_height);
+        }
+    else
+        {
+        m_anim->setStartValue (m_x);
+        m_anim->setEndValue (m_height / 2);
+        }
+
+    m_anim->setDuration (120);
+    m_anim->start ();
+    }
+
+void ToggleSwitch::refreshOffset ()
+    {
+    if (m_switch)
+        {
+        setOffset (width () - m_height);
+        }
+    else
+        {
+        setOffset (m_height / 2);
+        }
     }
 
 }
