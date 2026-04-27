@@ -117,5 +117,17 @@ extract (std::string_view str, std::string_view start, std::string_view end)
     return res;
     }
 
+
+///////////////////////////////////////////////////////////////////////////////
+/// Format a boolean as on/off
+///
+/// @param[in]  bl      Boolean value
+///
+/// @return     On if true
+///             Off if false
+///
+///////////////////////////////////////////////////////////////////////////////
+inline std::string formatOnOff (bool bl) { return bl ? "On" : "Off"; }
+
 } // namespace utils::str
 

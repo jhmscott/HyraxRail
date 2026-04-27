@@ -210,9 +210,19 @@ protected:
     Controller* m_controller    = NULL;     ///< Non owning controller reference
     size_t      m_id            = 0;        ///< Unique ID
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set a member variable for all instances of this object with the same ID
+    ///
+    /// @tparam     T           Member variable type
+    /// @tparam     ComponentT  Component type
+    ///
+    /// @param[in]  member      Member variable pointer
+    /// @param[in]  value       New value
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     template<class T, class ComponentT>
     void setAll (T ComponentT::* member, const identityType<T>& value)
-        {  m_controller->setAll (member, value); }
+        {  m_controller->setAll (m_id, member, value); }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// De-register this with the controller, so it no longer receives the destroyed signal
@@ -275,12 +285,25 @@ protected:
     std::set<Component*> m_components;  ///< Components under control of this controller
 
 private:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set a member variable for all instances of a given object
+    ///
+    /// @tparam     Member variable type
+    ///
+    /// @param[in]  id      ID of object to set
+    /// @param[in]  member  Member variable pointer
+    /// @param[in]  value   Value to set member to
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     template<class T>
-    void setAll (T Component::* member, const identityType<T>& value)
+    void setAll (size_t id, T Component::* member, const identityType<T>& value)
         {
         for (Component* component : m_components)
             {
-            component->*member = value;
+            if (component->getId () == id)
+                {
+                component->*member = value;
+                }
             }
         }
 

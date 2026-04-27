@@ -1,4 +1,3 @@
-
 /**
  * @file        routes/rouetebutton.hpp
  * @brief       Button to control the state and configuration of a route
@@ -50,6 +49,12 @@ signals:
 private:
     layout::Route*  m_route;    ///< Route being controlled
     QLabel*         m_name;     ///< Name of the route
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Update the tooltips to match the cuurrent route state
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void updateTooltip ();
 
 private slots:
     //////////////////////////////////////////////////////////////////////////////

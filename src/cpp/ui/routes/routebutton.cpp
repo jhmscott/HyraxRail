@@ -12,6 +12,8 @@
 #include <ui/routes/editroute.hpp>
 #include <ui/routes/routebutton.hpp>
 
+#include <utils/string.hpp>
+
 #include <QBoxLayout>
 #include <QLabel>
 #include <QMenu>
@@ -53,7 +55,23 @@ RouteButton::RouteButton (const layout::Route& route, QWidget* parent) :
              this,
              &RouteButton::openMenu);
 
+    updateTooltip ();
     setLayout (layout);
+    }
+
+void RouteButton::updateTooltip ()
+    {
+    QString text = "Actuators:\n";
+
+    for (const auto& [actuator, state] : m_route->getActuators ())
+        {
+        text += "  " + actuator.getName () + " : " +
+                utils::str::formatOnOff (state) + "\n";
+        }
+
+    text.removeLast ();
+
+    setToolTip (text);
     }
 
 void RouteButton::removeRoute ()
@@ -87,6 +105,7 @@ void RouteButton::editRoute ()
         if (m_route->getActuators () != newMembers)
             {
             m_route->setActuators (newMembers);
+            updateTooltip ();
             }
 
         if (m_route->getName () != newName)

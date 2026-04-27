@@ -541,10 +541,16 @@ std::vector<T> MarklinCS1::getSwitchingItems () const
             std::transform (members.lines.begin (),
                             members.lines.end (),
                             std::back_inserter (routeList),
-                            [this] (const ECoSProtocol::replyLine& line) -> layout::routeMember
+                            [this, routeId] (const ECoSProtocol::replyLine& line) -> layout::routeMember
                             {
-                            layout::Actuator    actuator = getActuatorSingle (line.id);
-                            bool                state    = actuator.get ();
+                            auto                stateFuture = issueDynamicCommand (ECoSProtocol::get,
+                                                                                   routeId,
+                                                                                   ARG (ECoSProtocol::ARG_ID, line.id),
+                                                                                   ECoSProtocol::ARG_STATE);
+
+                            layout::Actuator    actuator    = getActuatorSingle (line.id);
+                            auto                stateRes    = stateFuture.get ();
+                            bool                state       = "1" == stateRes.lines[0].arg->val;
 
                             return { std::move (actuator), state };
                             });
