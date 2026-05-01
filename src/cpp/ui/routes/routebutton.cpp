@@ -43,17 +43,15 @@ RouteButton::RouteButton (const layout::Route& route, QWidget* parent) :
                        Qt::AlignHCenter);
 
     setContentsMargins (0, 20, 0, 0);
-    setContextMenuPolicy (Qt::CustomContextMenu);
+    setContextMenuPolicy (Qt::ActionsContextMenu);
+
+    addAction ("delete",this, &RouteButton::removeRoute);
+    addAction ("edit",  this, &RouteButton::editRoute);
 
     connect (button,
              &QPushButton::released,
              m_route,
              &layout::Route::set);
-
-    connect (this,
-             &QWidget::customContextMenuRequested,
-             this,
-             &RouteButton::openMenu);
 
     updateTooltip ();
     setLayout (layout);
@@ -114,28 +112,6 @@ void RouteButton::editRoute ()
             m_name->setText (newName.c_str ());
             }
         }
-    }
-
-void RouteButton::openMenu (const QPoint& point)
-    {
-    QMenu*      menu = new QMenu{ this };
-    QAction*    edit;
-    QAction*    deleteAct;
-
-    deleteAct   = menu->addAction ("delete");
-    edit        = menu->addAction ("edit");
-
-    connect (deleteAct,
-            &QAction::triggered,
-             this,
-            &RouteButton::removeRoute);
-
-    connect (edit,
-            &QAction::triggered,
-             this,
-            &RouteButton::editRoute);
-
-    menu->popup (mapToGlobal (point));
     }
 
 

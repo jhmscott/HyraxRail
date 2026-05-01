@@ -34,6 +34,18 @@
                                                               GET_ARG_FOR_TYPES (__VA_ARGS__)> __VA_OPT__(,) \
                                                                __VA_ARGS__))
 
+#define issueDynamicBatchCommands(reply, func, arg, results)        \
+    results.reserve (reply.lines.size ());                          \
+    std::transform (reply.lines.begin (),                           \
+                    reply.lines.end (),                             \
+                    std::back_inserter (results),                   \
+                    [this] (const ECoSProtocol::replyLine& line)    \
+                    {                                               \
+                    return issueDynamicCommand (func,               \
+                                                line.id,            \
+                                                arg);               \
+                    });
+
 #define ARG(type, val) (ECoSProtocol::arg{ (type), (val) })
 
 
@@ -41,6 +53,12 @@ using namespace std::chrono_literals;
 
 namespace control
 {
+
+static const std::map<int, layout::actuatorIcon> ICON_TABLE =
+    {
+        { 23, layout::ICON_TURNOUT_LEFT  },
+        { 24, layout::ICON_TURNOUT_RIGHT }
+    };
 
 //////////////////////////////////////////////////////////////////////////////
 /// Extract the icon information from a reply
@@ -52,21 +70,27 @@ namespace control
 //////////////////////////////////////////////////////////////////////////////
 static layout::actuatorIcon getActuatorIcon (const ECoSProtocol::reply& reply)
     {
-    static const std::map<int, layout::actuatorIcon> iconTable =
-        {
-            { 23, layout::ICON_TURNOUT_LEFT  },
-            { 24, layout::ICON_TURNOUT_RIGHT }
-        };
 
-    layout::actuatorIcon    icon = layout::NO_ICON;
-    auto                    it = iconTable.find (atoi (reply.lines[0].arg->val->c_str ()));
+    layout::actuatorIcon    icon    = layout::NO_ICON;
+    auto                    it      = ICON_TABLE.find (atoi (reply.lines[0].arg->val->c_str ()));
 
-    if (iconTable.end () != it)
+    if (ICON_TABLE.end () != it)
         {
         icon = it->second;
         }
 
     return icon;
+    }
+
+static void resolveReplyVector (std::vector<std::future<ECoSProtocol::reply>>&  replyFutures,
+                                std::vector<ECoSProtocol::reply>&               replies)
+    {
+    replies.reserve (replyFutures.size ());
+
+    std::transform (replyFutures.begin (),
+                    replyFutures.end (),
+                    std::back_inserter (replies),
+                    std::mem_fn (&std::future<ECoSProtocol::reply>::get));
     }
 
 MarklinCS1::MarklinCS1 (const std::string& friendlyName, std::unique_ptr<ProtocolBase>&& proto) :
@@ -140,12 +164,173 @@ std::vector<layout::Locomotive> MarklinCS1::getLocomotives () const
 
 std::vector<layout::Actuator> MarklinCS1::getActuators () const
     {
-    return getSwitchingItems<layout::Actuator> ();
+    std::vector<layout::Actuator> actuators;
+
+    auto future = issueStaticCommand (ECoSProtocol::queryObjects,
+                                      ECoSProtocol::ID_SWITCHING_ITEMS);
+
+
+    auto reply = future.get ();
+    auto it = std::remove_if (reply.lines.begin (),
+                              reply.lines.end (),
+                              [] (const ECoSProtocol::replyLine& line) -> bool
+                              { return line.id >= 30000; });
+
+    reply.lines.erase (it, reply.lines.end ());
+
+    std::vector<std::future<ECoSProtocol::reply>>   nameReplies;
+    std::vector<ECoSProtocol::reply>                names;
+
+    issueDynamicBatchCommands (reply,
+                               ECoSProtocol::get,
+                               ECoSProtocol::ARG_NAME1,
+                               nameReplies);
+
+    std::vector<std::future<ECoSProtocol::reply>>   stateReplies;
+    std::vector<ECoSProtocol::reply>                states;
+
+    issueDynamicBatchCommands (reply,
+                               ECoSProtocol::get,
+                               ECoSProtocol::ARG_STATE,
+                               stateReplies);
+
+    std::vector<std::future<ECoSProtocol::reply>>   iconReplies;
+    std::vector<ECoSProtocol::reply>                icons;
+
+    std::vector<std::future<ECoSProtocol::reply>>   modeReplies;
+    std::vector<ECoSProtocol::reply>                modes;
+
+    std::vector<std::future<ECoSProtocol::reply>>   addressReplies;
+    std::vector<ECoSProtocol::reply>                addresses;
+
+    std::vector<std::future<ECoSProtocol::reply>>   durationReplies;
+    std::vector<ECoSProtocol::reply>                durations;
+
+    issueDynamicBatchCommands (reply,
+                               ECoSProtocol::get,
+                               ECoSProtocol::ARG_SYMBOL,
+                               iconReplies);
+
+    issueDynamicBatchCommands (reply,
+                                ECoSProtocol::get,
+                                ECoSProtocol::ARG_MODE,
+                                modeReplies);
+
+    issueDynamicBatchCommands (reply,
+                                ECoSProtocol::get,
+                                ECoSProtocol::ARG_ADDR,
+                                addressReplies);
+
+    issueDynamicBatchCommands (reply,
+                               ECoSProtocol::get,
+                               ECoSProtocol::ARG_DURATION,
+                               durationReplies);
+
+    resolveReplyVector (nameReplies, names);
+    resolveReplyVector (stateReplies, states);
+    resolveReplyVector (iconReplies,    icons);
+    resolveReplyVector (modeReplies,    modes);
+    resolveReplyVector (addressReplies, addresses);
+    resolveReplyVector (durationReplies,durations);
+
+    actuators.reserve (reply.lines.size ());
+
+    for (size_t ii = 0; ii < reply.lines.size (); ++ii)
+        {
+        layout::actuatorMode mode;
+
+        if ("PULSE" == modes[ii].lines[0].arg->val)
+            {
+            mode = layout::actuatorMode::PULSE;
+            }
+        else
+            {
+            mode = layout::actuatorMode::SWITCH;
+            }
+
+        actuators.emplace_back (const_cast<MarklinCS1*> (this),
+                                *names[ii].lines[0].arg->val,
+                                getActuatorIcon (icons[ii]),
+                                mode,
+                                atoi (addresses[ii].lines[0].arg->val->c_str ()),
+                                atoi (durations[ii].lines[0].arg->val->c_str ()),
+                                static_cast<size_t> (reply.lines[ii].id),
+                                "1" == states[ii].lines[0].arg->val);
+        }
+
+    return actuators;
     }
 
 std::vector<layout::Route> MarklinCS1::getRoutes () const
     {
-    return getSwitchingItems<layout::Route> ();
+    std::vector<layout::Route> routes;
+
+    auto future = issueStaticCommand (ECoSProtocol::queryObjects,
+                                      ECoSProtocol::ID_SWITCHING_ITEMS);
+
+
+    auto reply = future.get ();
+    auto it = std::remove_if (reply.lines.begin (),
+                              reply.lines.end (),
+                              [] (const ECoSProtocol::replyLine& line) -> bool
+                              { return line.id < 30000; });
+
+    reply.lines.erase (it, reply.lines.end ());
+
+    std::vector<std::future<ECoSProtocol::reply>>   nameReplies;
+    std::vector<ECoSProtocol::reply>                names;
+    std::vector<std::future<ECoSProtocol::reply>>   stateReplies;
+    std::vector<ECoSProtocol::reply>                states;
+
+    issueDynamicBatchCommands (reply,
+                               ECoSProtocol::get,
+                               ECoSProtocol::ARG_NAME1,
+                               nameReplies);
+
+    issueDynamicBatchCommands (reply,
+                               ECoSProtocol::get,
+                               ECoSProtocol::ARG_STATE,
+                               stateReplies);
+
+    resolveReplyVector (nameReplies, names);
+    resolveReplyVector (stateReplies, states);
+
+    routes.reserve (reply.lines.size ());
+
+    for (size_t ii = 0; ii < reply.lines.size (); ++ii)
+        {
+        size_t  routeId         = static_cast<size_t> (reply.lines[ii].id);
+        auto    memberFutures   = issueDynamicCommand (ECoSProtocol::queryObjects,
+                                                        routeId);
+        auto    members         = memberFutures.get ();
+        layout::routeList routeList;
+
+        routeList.reserve (members.lines.size ());
+
+        std::transform (members.lines.begin (),
+                        members.lines.end (),
+                        std::back_inserter (routeList),
+                        [this, routeId] (const ECoSProtocol::replyLine& line) -> layout::routeMember
+                        {
+                        auto                stateFuture = issueDynamicCommand (ECoSProtocol::get,
+                                                                                routeId,
+                                                                                ARG (ECoSProtocol::ARG_ID, line.id),
+                                                                                ECoSProtocol::ARG_STATE);
+
+                        layout::Actuator    actuator    = getActuatorSingle (line.id);
+                        auto                stateRes    = stateFuture.get ();
+                        bool                state       = "1" == stateRes.lines[0].arg->val;
+
+                        return { std::move (actuator), state };
+                        });
+
+        routes.emplace_back (const_cast<MarklinCS1*> (this),
+                             *names[ii].lines[0].arg->val,
+                              routeList,
+                              routeId);
+        }
+
+    return routes;
     }
 
 layout::Route MarklinCS1::createRoute (const std::string& name, const layout::routeList& actuators)
@@ -177,6 +362,41 @@ layout::Route MarklinCS1::createRoute (const std::string& name, const layout::ro
     return layout::Route{ this, name, actuators, routeId };
     }
 
+layout::Actuator MarklinCS1::createActuator (const std::string&     name,
+                                             uint                   address,
+                                             layout::actuatorIcon   icon,
+                                             layout::actuatorMode   mode,
+                                             uint                   duration)
+    {
+    ECoSProtocol::dynamicId actuatorId = 0;
+
+    issueStaticCommand (ECoSProtocol::create,
+                        ECoSProtocol::ID_SWITCHING_ITEMS);
+
+    auto future = issueStaticCommand (ECoSProtocol::create,
+                                      ECoSProtocol::ID_SWITCHING_ITEMS,
+                                      ECoSProtocol::ARG_APPEND);
+
+    auto res = future.get ();
+
+    if (ECoSProtocol::REPLY_OK == res.status)
+        {
+        actuatorId = atoi (res.lines[0].arg->val->c_str ());
+
+        requestActuatorControl (actuatorId);
+
+        setActuatorName     (actuatorId, name);
+        setActuatorAddress  (actuatorId, address);
+        setActuatorIcon     (actuatorId, icon);
+        setActuatorMode     (actuatorId, mode);
+        setActuatorDuration (actuatorId, duration);
+
+        releaseActuatorControl (actuatorId);
+        }
+
+    return layout::Actuator{ this, name, icon, mode, address, duration, actuatorId, false };
+    }
+
 
 void MarklinCS1::eStop (bool stop)
     {
@@ -188,12 +408,12 @@ void MarklinCS1::eStop (bool stop)
         }
     else
         {
-
         issueStaticCommand (ECoSProtocol::set,
                             ECoSProtocol::ID_ECOS,
                             ECoSProtocol::ARG_GO);
         }
     }
+
 bool MarklinCS1::isEStopped ()
     {
     bool eStop = false;
@@ -227,9 +447,22 @@ layout::Actuator MarklinCS1::getActuatorSingle (size_t id) const
     auto symFuture      = issueDynamicCommand (ECoSProtocol::get,
                                                id,
                                                ECoSProtocol::ARG_SYMBOL);
+    auto modeFuture     = issueDynamicCommand (ECoSProtocol::get,
+                                               id,
+                                               ECoSProtocol::ARG_MODE);
+    auto addrFuture     = issueDynamicCommand (ECoSProtocol::get,
+                                               id,
+                                               ECoSProtocol::ARG_ADDR);
+    auto durFuture      = issueDynamicCommand (ECoSProtocol::get,
+                                               id,
+                                               ECoSProtocol::ARG_DURATION);
+
     auto name   = nameFuture.get ();
     auto state  = stateFuture.get ();
     auto sym    = symFuture.get ();
+    auto mode   = modeFuture.get ();
+    auto addr   = addrFuture.get ();
+    auto dur    = durFuture.get ();
 
 
     return layout::Actuator
@@ -237,6 +470,11 @@ layout::Actuator MarklinCS1::getActuatorSingle (size_t id) const
         const_cast<MarklinCS1*> (this),
         *name.lines[0].arg->val,
         getActuatorIcon (sym),
+        "PULSE" == mode.lines[0].arg->val ?
+        layout::actuatorMode::PULSE :
+        layout::actuatorMode::SWITCH,
+        static_cast<uint> (atoi (addr.lines[0].arg->val->c_str ())),
+        static_cast<uint> (atoi (dur.lines[0].arg->val->c_str ())),
         id,
         "1" == state.lines[0].arg->val
         };
@@ -291,6 +529,11 @@ void MarklinCS1::releaseActuatorControl (size_t id)
     issueDynamicCommand (ECoSProtocol::release,
                          id,
                          ECoSProtocol::ARG_CONTROL);
+    }
+
+void MarklinCS1::removeActuator (size_t id)
+    {
+    issueDynamicCommand (ECoSProtocol::deleteId, id);
     }
 
 void MarklinCS1::requestRouteControl (size_t id)
@@ -386,6 +629,63 @@ void MarklinCS1::setActuator (size_t id, bool val)
                          ARG (ECoSProtocol::ARG_STATE, val));
     }
 
+void MarklinCS1::setActuatorMode (size_t id, layout::actuatorMode mode)
+    {
+    std::string modeString;
+
+    if (layout::actuatorMode::PULSE == mode)
+        {
+        modeString = "PULSE";
+        }
+    else
+        {
+        modeString = "SWITCH";
+        }
+
+    issueDynamicCommand (ECoSProtocol::set,
+                         id,
+                         ARG (ECoSProtocol::ARG_MODE, modeString));
+    }
+
+void MarklinCS1::setActuatorName (size_t id, const std::string& name)
+    {
+    issueDynamicCommand (ECoSProtocol::set,
+                         id,
+                         ARG (ECoSProtocol::ARG_NAME1, "\"" + name + "\""));
+    }
+
+void MarklinCS1::setActuatorAddress (size_t id, uint address)
+    {
+    issueDynamicCommand (ECoSProtocol::set,
+                         id,
+                         ARG (ECoSProtocol::ARG_ADDR,
+                              std::to_string (address)));
+    }
+
+void MarklinCS1::setActuatorDuration (size_t id, uint duration)
+    {
+    issueDynamicCommand (ECoSProtocol::set,
+                         id,
+                         ARG (ECoSProtocol::ARG_DURATION,
+                              std::to_string (duration)));
+    }
+
+void MarklinCS1::setActuatorIcon (size_t id, layout::actuatorIcon icon)
+    {
+    auto it = std::find_if (ICON_TABLE.begin (),
+                            ICON_TABLE.end (),
+                            [icon] (const std::pair<int, layout::actuatorIcon>& pair) -> bool
+                            { return pair.second == icon; });
+
+    if (ICON_TABLE.end () != it)
+        {
+        issueDynamicCommand (ECoSProtocol::set,
+                             id,
+                             ARG (ECoSProtocol::ARG_SYMBOL,
+                                  std::to_string (it->first)));
+        }
+    }
+
 void MarklinCS1::setRoute (size_t id)
     {
     issueDynamicCommand (ECoSProtocol::set,
@@ -417,153 +717,5 @@ void MarklinCS1::setRouteMembers (size_t id, const layout::routeList & members)
                              ARG (ECoSProtocol::ARG_STATE,  state));
         }
     }
-
-template<class T>
-std::vector<T> MarklinCS1::getSwitchingItems () const
-    {
-    std::vector<T> actuators;
-
-    auto future = issueStaticCommand (ECoSProtocol::queryObjects,
-                                      ECoSProtocol::ID_SWITCHING_ITEMS);
-
-
-    auto reply = future.get ();
-    auto it = std::remove_if (reply.lines.begin (),
-                              reply.lines.end (),
-                              [] (const ECoSProtocol::replyLine& line) -> bool
-                              {
-                              if constexpr (std::is_same_v<T, layout::Actuator>)
-                                  {
-                                  return line.id >= 30000;
-                                  }
-                              else
-                                  {
-                                  return line.id < 30000;
-                                  }
-                              });
-
-    reply.lines.erase (it, reply.lines.end ());
-
-    std::vector<std::future<ECoSProtocol::reply>>   nameReplies;
-    std::vector<ECoSProtocol::reply>                names;
-
-    nameReplies.reserve (reply.lines.size ());
-    names.reserve (reply.lines.size ());
-
-    std::transform (reply.lines.begin (),
-                    reply.lines.end (),
-                    std::back_inserter (nameReplies),
-                    [this] (const ECoSProtocol::replyLine& line)
-                    {
-                    return issueDynamicCommand (ECoSProtocol::get,
-                                                line.id,
-                                                ECoSProtocol::ARG_NAME1);
-                    });
-
-
-    std::vector<std::future<ECoSProtocol::reply>>   stateReplies;
-    std::vector<ECoSProtocol::reply>                states;
-
-    stateReplies.reserve (reply.lines.size ());
-    states.reserve (reply.lines.size ());
-
-    std::transform (reply.lines.begin (),
-                    reply.lines.end (),
-                    std::back_inserter (stateReplies),
-                    [this] (const ECoSProtocol::replyLine& line)
-                    {
-                    return issueDynamicCommand (ECoSProtocol::get,
-                                                line.id,
-                                                ECoSProtocol::ARG_STATE);
-                    });
-
-    std::vector<std::future<ECoSProtocol::reply>>   iconReplies;
-    std::vector<ECoSProtocol::reply>                icons;
-
-    if constexpr (std::is_same_v<T, layout::Actuator>)
-        {
-        iconReplies.reserve (reply.lines.size ());
-        icons.reserve (reply.lines.size ());
-
-        std::transform (reply.lines.begin (),
-                        reply.lines.end (),
-                        std::back_inserter (iconReplies),
-                        [this] (const ECoSProtocol::replyLine& line)
-                        {
-                        return issueDynamicCommand (ECoSProtocol::get,
-                                                    line.id,
-                                                    ECoSProtocol::ARG_SYMBOL);
-                        });
-        }
-
-    std::transform (nameReplies.begin (),
-                    nameReplies.end (),
-                    std::back_inserter (names),
-                    std::mem_fn (&std::future<ECoSProtocol::reply>::get));
-
-    std::transform (stateReplies.begin (),
-                    stateReplies.end (),
-                    std::back_inserter (states),
-                    std::mem_fn (&std::future<ECoSProtocol::reply>::get));
-
-
-    if constexpr (std::is_same_v<T, layout::Actuator>)
-        {
-        std::transform (iconReplies.begin (),
-                        iconReplies.end (),
-                        std::back_inserter (icons),
-                        std::mem_fn (&std::future<ECoSProtocol::reply>::get));
-        }
-
-    actuators.reserve (reply.lines.size ());
-
-
-    for (size_t ii = 0; ii < reply.lines.size (); ++ii)
-        {
-        if constexpr (std::is_same_v<T, layout::Actuator>)
-            {
-            actuators.emplace_back (const_cast<MarklinCS1*> (this),
-                                    *names[ii].lines[0].arg->val,
-                                    getActuatorIcon (icons[ii]),
-                                    static_cast<size_t> (reply.lines[ii].id),
-                                    "1" == states[ii].lines[0].arg->val);
-            }
-        else
-            {
-            size_t  routeId         = static_cast<size_t> (reply.lines[ii].id);
-            auto    memberFutures   = issueDynamicCommand (ECoSProtocol::queryObjects,
-                                                           routeId);
-            auto    members         = memberFutures.get ();
-            layout::routeList routeList;
-
-            routeList.reserve (members.lines.size ());
-
-            std::transform (members.lines.begin (),
-                            members.lines.end (),
-                            std::back_inserter (routeList),
-                            [this, routeId] (const ECoSProtocol::replyLine& line) -> layout::routeMember
-                            {
-                            auto                stateFuture = issueDynamicCommand (ECoSProtocol::get,
-                                                                                   routeId,
-                                                                                   ARG (ECoSProtocol::ARG_ID, line.id),
-                                                                                   ECoSProtocol::ARG_STATE);
-
-                            layout::Actuator    actuator    = getActuatorSingle (line.id);
-                            auto                stateRes    = stateFuture.get ();
-                            bool                state       = "1" == stateRes.lines[0].arg->val;
-
-                            return { std::move (actuator), state };
-                            });
-
-            actuators.emplace_back (const_cast<MarklinCS1*> (this),
-                                    *names[ii].lines[0].arg->val,
-                                    routeList,
-                                    routeId);
-            }
-        }
-
-    return actuators;
-    }
-
 
 }

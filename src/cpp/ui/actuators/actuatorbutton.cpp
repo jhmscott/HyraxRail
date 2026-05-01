@@ -9,9 +9,11 @@
 
 
 #include <ui/actuators/actuatorbutton.hpp>
+#include <ui/actuators/editactuator.hpp>
+#include <ui/actuators/resources.hpp>
 
 #include <QBoxLayout>
-#include <QLabel>
+#include <QMessageBox>
 
 namespace ui::actuators
 {
@@ -20,43 +22,38 @@ ActuatorButton::ActuatorButton (const layout::Actuator& actuator, QWidget* paren
     m_actuator (actuator),
     m_dummy (dummy)
     {
-    static const std::pair<QIcon, QIcon> icons[] =
-        {
-            {
-            QIcon{ ":/icons/switches/left-track-left.svg"       },
-            QIcon{ ":/icons/switches/left-track-straight.svg"   }
-            },
-            {
-            QIcon{ ":/icons/switches/right-track-right.svg"     },
-            QIcon{ ":/icons/switches/right-track-straight.svg"  }
-            }
-        };
-
-    auto icon = icons[actuator.getIcon ()];
+    auto icon = resources::getIconInfo (actuator.getIcon ());
 
     QVBoxLayout* layout = new QVBoxLayout{ this };
 
     m_button = new common::IconToggle
         {
-        icon.first,
-        icon.second,
+        icon.on,
+        icon.off,
         false,
         parent
         };
 
     m_button->setChecked (actuator.get ());
 
-    QLabel* label = new QLabel{ actuator.getName ().c_str (), this };
+    m_name = new QLabel{ actuator.getName ().c_str (), this };
 
     m_button->setFixedSize (50, 50);
     m_button->setIconSize (QSize{ 30, 30 });
 
-    label->setAlignment (Qt::AlignTop);
+    m_name->setAlignment (Qt::AlignTop);
 
     layout->addWidget (m_button);
-    layout->addWidget (label, 0, Qt::AlignHCenter);
+    layout->addWidget (m_name, 0, Qt::AlignHCenter);
 
     setContentsMargins (0, 20, 0, 0);
+    setContextMenuPolicy (Qt::ActionsContextMenu);
+
+    if (not dummy)
+        {
+        addAction ("delete",this, &ActuatorButton::removeActuator);
+        addAction ("edit",  this, &ActuatorButton::editActuator);
+        }
 
     connect (m_button,
             &QPushButton::toggled,
@@ -78,6 +75,67 @@ void ActuatorButton::setState (bool state)
     if (not m_dummy)
         {
         m_actuator.set (state);
+        }
+    }
+
+void ActuatorButton::removeActuator ()
+    {
+    if (QMessageBox::Yes == QMessageBox::question (this,
+                                                   "Delete Actuator",
+                                                   QString::asprintf ("Would you like to delete %s?",
+                                                                      m_actuator.getName ().c_str ())))
+        {
+        m_actuator.remove ();
+        emit actuatorDeleted ();
+        }
+    }
+
+void ActuatorButton::editActuator ()
+    {
+    EditActuatorDialog dlg
+        {
+       *static_cast<control::ControllerBase*>
+                            (m_actuator.getController ()),
+        this,
+       &m_actuator
+        };
+
+    if (QDialog::Accepted == dlg.exec ())
+        {
+        std::string             newName = dlg.getName ();
+        layout::actuatorMode    newMode = dlg.getMode ();
+        layout::actuatorIcon    newIcon = dlg.getIcon ();
+        uint                    newAddr = dlg.getAddress ();
+        uint                    newDur  = dlg.getDuration ();
+
+        if (newName != m_actuator.getName ())
+            {
+            m_actuator.setName (newName);
+            m_name->setText (newName.c_str ());
+            }
+
+        if (newMode != m_actuator.getMode ())
+            {
+            m_actuator.setMode (newMode);
+            }
+
+        if (newIcon != m_actuator.getIcon ())
+            {
+            auto icon = resources::getIconInfo (newIcon);
+
+            m_actuator.setIcon (newIcon);
+            m_button->setIcons (icon.on, icon.off);
+            }
+
+        if (newAddr != m_actuator.getAddress ())
+            {
+            m_actuator.setAddress (newAddr);
+            }
+
+        if (newDur != m_actuator.getDuration ())
+            {
+            m_actuator.setDuration (newDur);
+            }
         }
     }
 

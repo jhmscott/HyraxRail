@@ -165,6 +165,12 @@
     <ClInclude Include="..\src\cpp\ui\common\formdialog.hpp">
       <Filter>Header Files\ui\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\actuators\editactuator.hpp">
+      <Filter>Header Files\ui\actuators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\actuators\resources.hpp">
+      <Filter>Header Files\ui\actuators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cpp\main.cpp">
@@ -305,6 +311,9 @@
     <ClCompile Include="..\src\cpp\ui\routes\routebutton.cpp">
       <Filter>Source Files\ui\routes</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\actuators\editactuator.cpp">
+      <Filter>Source Files\ui\actuators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\control\protocols\base.hpp">
@@ -353,9 +362,6 @@
       <Filter>Header Files\layout</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cpp\ui\actuators\actuatorpanel.hpp">
-      <Filter>Header Files\ui\actuators</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\actuators\actuatorbutton.hpp">
       <Filter>Header Files\ui\actuators</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cpp\ui\config\dialog.hpp">
@@ -440,6 +446,9 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\common\hovericon.hpp">
       <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\actuators\actuatorbutton.hpp">
+      <Filter>Header Files\ui\actuators</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

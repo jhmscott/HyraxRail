@@ -29,6 +29,12 @@ enum actuatorIcon
     NUM_TOTAL_ICONS             ///< Delimitor only
     };
 
+enum class actuatorMode
+    {
+    PULSE,
+    SWITCH
+    };
+
 // Forward declare
 class ActuatorController;
 
@@ -39,19 +45,24 @@ class ActuatorController;
 class Actuator : public ComponentDerived<ActuatorController>
     {
 public:
+    using ComponentDerived<ActuatorController>::ComponentDerived;
+
     ///////////////////////////////////////////////////////////////////////////////
    /// Constructor
    ///
-   /// @param[in]   controller          Controller controlling this actuator
-   /// @param[in]   name                       Friendly name
-   /// @param[in]   icon                       Symbol to use in the UI
-   /// @param[in]   id                           Unique ID
-   /// @param[in]   state                    Initial state of the actuator
+   /// @param[in]   controller      Controller controlling this actuator
+   /// @param[in]   name            Friendly name
+   /// @param[in]   icon            Symbol to use in the UI
+   /// @param[in]   id              Unique ID
+   /// @param[in]   state           Initial state of the actuator
    ///
    ///////////////////////////////////////////////////////////////////////////////
     Actuator (ActuatorController*   controller,
               const std::string&    name,
               actuatorIcon          icon,
+              actuatorMode          mode,
+              uint                  address,
+              uint                  duration,
               size_t                id,
               bool                  state);
 
@@ -64,12 +75,76 @@ public:
     actuatorIcon getIcon () const { return m_icon; }
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Set the UI icon
+    ///
+    /// @param[in]  icon        New icon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setIcon (actuatorIcon icon);
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Get the friendly name of this actuator
     ///
     /// @return     Name of the actuator in the UI
     ///
     ///////////////////////////////////////////////////////////////////////////////
     std::string getName () const { return m_name; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the friendly name of this actuator
+    ///
+    /// @param[in]  name    Name of the actuator in the UI
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setName (const std::string& name);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the actuator mode
+    ///
+    /// @return     Actuator mode (SWITCH or PULSE)
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    actuatorMode getMode () const { return m_mode; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the actuator mode
+    ///
+    /// @param[in]  mode    Actuator mode (SWITCH or PULSE)
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setMode (actuatorMode mode);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the track protocol address
+    ///
+    /// @return     Actuator track protocol address
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    uint getAddress () const { return m_address; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the track protocol address
+    ///
+    /// @param[in]  address     Actuator track protocol address
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setAddress (uint addrress);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the duration of the actuation
+    ///
+    /// @return     Actuation duration
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    uint getDuration () const { return m_duration; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the actuation duration
+    ///
+    /// @param[in]  duration        Actuation duration
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setDuration (uint duration);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the actuator value
@@ -99,10 +174,19 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     void release ();
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Remove this route from the controller's database
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void remove ();
+
 private:
     std::string         m_name;     ///< Friendly name
     actuatorIcon        m_icon;     ///< UI symbol
     bool                m_state;    ///< Cached state
+    actuatorMode        m_mode;     ///< Actuator mode
+    uint                m_address;  ///< Actuator track protocol address
+    uint                m_duration; ///< Actuation duration
     };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -118,11 +202,56 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the state of an actuator
     ///
-    /// @param[in]  id          Unique ID of actuator to set
-    /// @param[in]  val        Boolean value to set
+    /// @param[in]  id      Unique ID of actuator to set
+    /// @param[in]  val     Boolean value to set
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void setActuator (size_t id, bool val) = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the actuator mode
+    ///
+    /// @param[in]  id      Unique ID of actuator to set
+    /// @param[in]  mode    Actuator mode (SWITCH or PULSE)
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setActuatorMode (size_t id, actuatorMode mode) = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the friendly name of this actuator
+    ///
+    /// @param[in]  id      Unique ID of actuator to set
+    /// @param[in]  name    Name of the actuator in the UI
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setActuatorName (size_t id, const std::string& name) = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the track protocol address
+    ///
+    /// @param[in]  id          Unique ID of actuator to set
+    /// @param[in]  address     Actuator track protocol address
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setActuatorAddress (size_t id, uint address) = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the actuation duration
+    ///
+    /// @param[in]  id          Unique ID of actuator to set
+    /// @param[in]  duration    Actuation duration
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setActuatorDuration (size_t id, uint duration) = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the UI icon
+    ///
+    /// @param[in]  id      Unique ID of actuator to set
+    /// @param[in]  icon    New icon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setActuatorIcon (size_t id, actuatorIcon icon) = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Request control of an actuator
@@ -139,6 +268,14 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void releaseActuatorControl (size_t id) = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Remove an actuator
+    ///
+    /// @param[in]  id      Actuator ID
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void removeActuator (size_t id) = 0;
 
     };
 

@@ -24,8 +24,8 @@ namespace control
 {
 
 ///////////////////////////////////////////////////////////////////////////////
-/// The Märklin Central Station 1, model number 60212. This supports the oirginal fimrware, not the "reloaded"
-/// firmware from ESU. Uses the ESU ECoSProtocol version 0.1
+/// The Märklin Central Station 1, model number 60212. This supports the oirginal
+/// fimrware, not the "reloaded" firmware from ESU. Uses the ESU ECoSProtocol version 0.1
 ///
 ///////////////////////////////////////////////////////////////////////////////
 class MarklinCS1 : public ControllerBase
@@ -88,6 +88,24 @@ public:
                                        const layout::routeList&         actuators) override;
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Create a new actuator
+    ///
+    /// @param[in]  name        Friendly name
+    /// @param[in]  address     Track protocol address
+    /// @param[in]  icon        UI Icon
+    /// @param[in]  mode        Actuator mode
+    /// @param[in]  duration    Actuation duration
+    ///
+    /// @return     Created actuator
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual layout::Actuator createActuator (const std::string&     name,
+                                             uint                   address,
+                                             layout::actuatorIcon   icon,
+                                             layout::actuatorMode   mode,
+                                             uint                   duration) override;
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Trigger or leave an emergency stop state. This typically stops all locomotives by cutting track power
     ///
     /// @param[in]  stop            True to trigger an emergency stop
@@ -105,21 +123,6 @@ public:
     virtual bool isEStopped () override;
 
 private:
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Get the "switching items" i.e. routes or actuators
-    ///
-    /// @tparam     Switching item class, either layout::route or layout::actuator
-    ///
-    /// @return     List of routes or actuators under control of this controller
-    ///
-    /// @remarks    The ECoSProtocol queryObjects() does not have a discriminator for routes/actuators
-    ///             They are differentiated only by ID range. This can/should be written differently so it's not
-    ///             templated. I'll come back to it when I'm less lazy
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    template<class T>
-    std::vector<T> getSwitchingItems () const;
-
     ///////////////////////////////////////////////////////////////////////////////
     /// Get a single actuator by it's ID
     ///
@@ -193,6 +196,51 @@ private:
     virtual void setActuator (size_t id, bool val) override;
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Set the actuator mode
+    ///
+    /// @param[in]  id      Unique ID of actuator to set
+    /// @param[in]  mode    Actuator mode (SWITCH or PULSE)
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setActuatorMode (size_t id, layout::actuatorMode mode) override;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the friendly name of this actuator
+    ///
+    /// @param[in]  id      Unique ID of actuator to set
+    /// @param[in]  name    Name of the actuator in the UI
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setActuatorName (size_t id, const std::string& name) override;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the track protocol address
+    ///
+    /// @param[in]  id          Unique ID of actuator to set
+    /// @param[in]  address     Actuator track protocol address
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setActuatorAddress (size_t id, uint address) override;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the actuation duration
+    ///
+    /// @param[in]  id          Unique ID of actuator to set
+    /// @param[in]  duration    Actuation duration
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setActuatorDuration (size_t id, uint duration) override;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the UI icon
+    ///
+    /// @param[in]  id      Unique ID of actuator to set
+    /// @param[in]  icon    New icon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setActuatorIcon (size_t id, layout::actuatorIcon icon) override;
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Request control of an actuator
     ///
     /// @param[in]  id          Actuator ID
@@ -207,6 +255,14 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void releaseActuatorControl (size_t id) override;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Remove an actuator
+    ///
+    /// @param[in]  id      Actuator ID
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void removeActuator (size_t id) override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// ROUTE CONTROLLER OVERRIDES

@@ -210,8 +210,26 @@ public:
     /// @param[in]  actuators   List of actuators and the state to set them to
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual layout::Route createRoute (const std::string&                name,
-                                       const layout::routeList&          actuators) = 0;
+    virtual layout::Route createRoute (const std::string&       name,
+                                       const layout::routeList& actuators) = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Create a new actuator
+    ///
+    /// @param[in]  name        Friendly name
+    /// @param[in]  address     Track protocol address
+    /// @param[in]  icon        UI Icon
+    /// @param[in]  mode        Actuator mode
+    /// @param[in]  duration    Actuation duration
+    ///
+    /// @return     Created actuator
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual layout::Actuator createActuator (const std::string&     name,
+                                             uint                   address,
+                                             layout::actuatorIcon   icon,
+                                             layout::actuatorMode   mode,
+                                             uint                   duration) = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the health of the conenction to this controller

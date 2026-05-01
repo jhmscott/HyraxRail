@@ -154,6 +154,7 @@
     <ClCompile Include="..\src\cpp\ui\actuators\actuatorbutton.cpp" />
     <ClCompile Include="..\src\cpp\ui\actuators\actuatorgroup.cpp" />
     <ClCompile Include="..\src\cpp\ui\actuators\actuatorpanel.cpp" />
+    <ClCompile Include="..\src\cpp\ui\actuators\editactuator.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\autogrid.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\formdialog.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\hexvalidator.cpp" />
@@ -206,9 +207,11 @@
     <QtMoc Include="..\src\cpp\layout\base.hpp" />
     <QtMoc Include="..\src\cpp\layout\locomotive.hpp" />
     <ClInclude Include="..\src\cpp\layout\route.hpp" />
-    <ClInclude Include="..\src\cpp\ui\actuators\actuatorbutton.hpp" />
+    <QtMoc Include="..\src\cpp\ui\actuators\actuatorbutton.hpp" />
     <ClInclude Include="..\src\cpp\ui\actuators\actuatorgroup.hpp" />
     <ClInclude Include="..\src\cpp\ui\actuators\actuatorpanel.hpp" />
+    <ClInclude Include="..\src\cpp\ui\actuators\editactuator.hpp" />
+    <ClInclude Include="..\src\cpp\ui\actuators\resources.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\autogrid.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\formdialog.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\hexvalidator.hpp" />
