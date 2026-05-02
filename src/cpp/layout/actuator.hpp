@@ -19,6 +19,10 @@ namespace layout
 // Symbol to use for the actuator in the UI
 enum actuatorIcon
     {
+    ICON_STREET_LIGHT,          ///< Street light
+    ICON_MAST_LIGHT,            ///< Mast lighting
+    ICON_LIGHTING,              ///< Generic layout lighting
+
     ICON_TURNOUT_LEFT,          ///< Straight track with left turnout
     ICON_TURNOUT_RIGHT,         ///< Straight track with right turnout
 

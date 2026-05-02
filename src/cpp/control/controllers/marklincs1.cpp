@@ -56,8 +56,11 @@ namespace control
 
 static const std::map<int, layout::actuatorIcon> ICON_TABLE =
     {
-        { 23, layout::ICON_TURNOUT_LEFT  },
-        { 24, layout::ICON_TURNOUT_RIGHT }
+        { 14, layout::ICON_LIGHTING         },
+        { 15, layout::ICON_MAST_LIGHT       },
+        { 16, layout::ICON_STREET_LIGHT     },
+        { 23, layout::ICON_TURNOUT_LEFT     },
+        { 24, layout::ICON_TURNOUT_RIGHT    }
     };
 
 //////////////////////////////////////////////////////////////////////////////

@@ -16,14 +16,28 @@
 
 namespace ui::common
 {
+
+//////////////////////////////////////////////////////////////////////////////
+/// Widget that displays a pointing hand cursor when you hover over it
+///
+/// @tparam     Widget      QT widget class to add this capability to
+///
+//////////////////////////////////////////////////////////////////////////////
 template<class Widget>
 class PointedWidget : public Widget
     {
     static_assert (std::is_base_of_v<QWidget, Widget>,"Must inherit form a QWidget type");
 public:
+    // Use constructors from widget base class
     using Widget::Widget;
 
 protected:
+    //////////////////////////////////////////////////////////////////////////////
+    /// Handle the mouse enter event
+    ///
+    /// @param[in]  event       Mouse enter event
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     virtual void enterEvent (QEnterEvent* event) override
         {
         if (Widget::isEnabled ())
@@ -35,5 +49,8 @@ protected:
         }
     };
 
+// Push button that displays a pointing hand cursor when you hover over it
 using PointedButton = PointedWidget<QPushButton>;
-}
+
+
+} // namespace ui::common

@@ -432,9 +432,6 @@
     <QtMoc Include="..\src\cpp\ui\common\ipfield.hpp">
       <Filter>Header Files\ui\common</Filter>
     </QtMoc>
-    <QtMoc Include="..\src\cpp\ui\config\deviceinfo.hpp">
-      <Filter>Header Files\ui\common</Filter>
-    </QtMoc>
     <QtMoc Include="..\src\cpp\ui\routes\includebutton.hpp">
       <Filter>Header Files\ui\routes</Filter>
     </QtMoc>
@@ -449,6 +446,9 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\actuators\actuatorbutton.hpp">
       <Filter>Header Files\ui\actuators</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\config\deviceinfo.hpp">
+      <Filter>Header Files\ui\config</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -608,6 +608,24 @@
     </None>
     <None Include="..\res\icons\trains\mm.svg">
       <Filter>Resource Files\icons\trains</Filter>
+    </None>
+    <None Include="..\res\icons\switches\lightbulb.svg">
+      <Filter>Resource Files\icons\switches</Filter>
+    </None>
+    <None Include="..\res\icons\switches\lightbulb-off.svg">
+      <Filter>Resource Files\icons\switches</Filter>
+    </None>
+    <None Include="..\res\icons\switches\mast-light-off.svg">
+      <Filter>Resource Files\icons\switches</Filter>
+    </None>
+    <None Include="..\res\icons\switches\mast-light-on.svg">
+      <Filter>Resource Files\icons\switches</Filter>
+    </None>
+    <None Include="..\res\icons\switches\streetlight-off.svg">
+      <Filter>Resource Files\icons\switches</Filter>
+    </None>
+    <None Include="..\res\icons\switches\streetlight-on.svg">
+      <Filter>Resource Files\icons\switches</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

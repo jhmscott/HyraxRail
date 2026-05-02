@@ -14,7 +14,7 @@
 
 namespace ui::common
 {
-HexValidator::HexValidator (int min, int max, QObject* parent) :
+HexValidator::HexValidator (uint min, uint max, QObject* parent) :
     QValidator (parent),
     m_min (min),
     m_max (max)

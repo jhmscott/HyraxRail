@@ -15,16 +15,37 @@
 namespace ui::common
 {
 
+//////////////////////////////////////////////////////////////////////////////
+/// Integer validation for hex formatted strings
+///
+//////////////////////////////////////////////////////////////////////////////
 class HexValidator : public QValidator
     {
 public:
-    HexValidator (int min, int max, QObject* parent);
+    //////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  min     Minimum acceptable value
+    /// @param[in]  max     Maximum acceptable value
+    /// @param[in]  parent  Parent widget
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    HexValidator (uint min, uint max, QObject* parent);
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Validate the input
+    ///
+    /// @param[in]  input   Input to validate
+    /// @param[out] pos     Position of first character with input
+    ///
+    /// @return     Validation state
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     virtual QValidator::State validate (QString& input, int& pos) const override;
 
 private:
-    int m_min;
-    int m_max;
+    uint m_min; ///< Minimum acceptable value
+    uint m_max; ///< Maximum acceptable value
     };
 
-}
+} // namespace ui::common

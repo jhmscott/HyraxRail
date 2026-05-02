@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="56.077229mm"
+   height="121.88341mm"
+   viewBox="0 0 56.077229 121.88341"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title17">Mast Light (Off)</title>
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="translate(-3.4325445,-9.7779295)">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4.01955"
+       d="m 42.5,130 -10e-7,-70.000001 H 57.5 V 130"
+       id="path1" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3.99338;stroke-linejoin:bevel"
+       d="M 42.499999,59.999999 57.5,70 42.499999,79.999998 57.5,89.999999 42.499999,100 57.5,109.99999 42.499999,120 57.5,129.99999"
+       id="path2" />
+    <path
+       style="fill:#000000;stroke:#000000;stroke-width:1.22174"
+       d="m 42.499999,59.999999 5,-24.999998 H 52.5 l 5,24.999998"
+       id="path3" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3.77761"
+       d="M 55,44.999999 C 53.333334,38.333333 51.666667,31.666667 46.666584,26.666633 41.666501,21.666599 33.333332,18.333332 28.333316,18.333365 23.3333,18.333399 21.666667,21.666666 20,24.999999"
+       id="path4"
+       transform="translate(-4.166584,-6.6666317)" />
+    <g
+       id="g8"
+       transform="translate(1.0583333)">
+      <g
+         id="g7">
+        <g
+           id="g6"
+           transform="matrix(1.8304498,0,0,1.5946405,-14.254832,-10.012837)"
+           style="fill:#000000;paint-order:stroke fill markers">
+          <path
+             style="fill:#000000;stroke:none;stroke-width:2.08765;paint-order:stroke fill markers"
+             d="m 14.343377,16.939766 h 3.824197 L 20.5,37.000001 l -8.341878,0.007 2.185255,-20.067235"
+             id="path5" />
+          <path
+             style="fill:#000000;stroke:none;stroke-width:0.380226;paint-order:stroke fill markers"
+             d="m 20.5,37.000001 3.677026,6.90509 -15.0923501,0.007 3.0734461,-6.90509"
+             id="path6" />
+        </g>
+      </g>
+    </g>
+    <circle
+       style="fill:#000000;stroke:#000000;stroke-width:1.8092;stroke-linejoin:bevel;paint-order:stroke fill markers"
+       id="path12"
+       cx="17"
+       cy="58"
+       r="5" />
+  </g>
+  <metadata
+     id="metadata17">
+    <rdf:RDF>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+      <cc:Work
+         rdf:about="">
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/4.0/" />
+        <dc:title>Mast Light (Off)</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

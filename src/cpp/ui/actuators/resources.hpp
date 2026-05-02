@@ -38,6 +38,21 @@ inline iconInfo getIconInfo (layout::actuatorIcon icon)
     static const iconInfo icons[] =
         {
             {
+            "Street Light",
+            QIcon{ ":/icons/switches/streetlight-on.svg"},
+            QIcon{ ":/icons/switches/streetlight-off.svg"},
+            },
+            {
+            "Mast Light",
+            QIcon{ ":/icons/switches/mast-light-on.svg"},
+            QIcon{ ":/icons/switches/mast-light-off.svg"},
+            },
+            {
+            "Layout Lighting",
+            QIcon{ ":/icons/switches/lightbulb.svg"},
+            QIcon{ ":/icons/switches/lightbulb-off.svg"},
+            },
+            {
             "Straight Turnout Left",
             QIcon{ ":/icons/switches/left-track-left.svg"       },
             QIcon{ ":/icons/switches/left-track-straight.svg"   }

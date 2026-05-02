@@ -26,9 +26,9 @@ OptionalDropdown::OptionalDropdown (QWidget* parent) :
     layout->addWidget (m_dropdown);
 
     connect (m_dropdown,
-             &QComboBox::currentIndexChanged,
+            &QComboBox::currentIndexChanged,
              this,
-             &OptionalDropdown::currentIndexChanged);
+            &OptionalDropdown::currentIndexChanged);
 
     setLayout (layout);
     }

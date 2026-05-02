@@ -317,8 +317,14 @@
     <None Include="..\res\icons\misc\unplug.svg" />
     <None Include="..\res\icons\switches\left-track-left.svg" />
     <None Include="..\res\icons\switches\left-track-straight.svg" />
+    <None Include="..\res\icons\switches\lightbulb-off.svg" />
+    <None Include="..\res\icons\switches\lightbulb.svg" />
+    <None Include="..\res\icons\switches\mast-light-off.svg" />
+    <None Include="..\res\icons\switches\mast-light-on.svg" />
     <None Include="..\res\icons\switches\right-track-right.svg" />
     <None Include="..\res\icons\switches\right-track-straight.svg" />
+    <None Include="..\res\icons\switches\streetlight-off.svg" />
+    <None Include="..\res\icons\switches\streetlight-on.svg" />
     <None Include="..\res\icons\trains\dcc.svg" />
     <None Include="..\res\icons\trains\mfx.svg" />
     <None Include="..\res\icons\trains\mm.svg" />

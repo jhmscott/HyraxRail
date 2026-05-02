@@ -43,9 +43,12 @@ ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* pa
     m_stop->setTooltips ("Go", "Emergency Stop");
 
     m_connectionIcon->setIconSize (QSize{ ICON_SIZE, ICON_SIZE });
+
     ui::common::makeFrameless (*m_connectionIcon);
 
     m_settings->setIconSize (QSize{ ICON_SIZE, ICON_SIZE });
+    m_settings->setToolTip ("Controller Settings");
+
     common::makeFrameless (*m_settings);
 
     m_nameLabel = new QLabel{ NULL == controller ? "-" : controller->getFriendlyName ().c_str (), this};
@@ -56,7 +59,6 @@ ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* pa
 
     m_nameLabel->setFont (font);
 
-
     layout->addWidget (m_connectionIcon,    0, Qt::AlignLeft);
     layout->addWidget (m_nameLabel,         0, Qt::AlignCenter);
     layout->addWidget (m_stop,              0, Qt::AlignRight);
@@ -65,7 +67,9 @@ ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* pa
     if (includeDelete)
         {
         deleteBtn = new common::PointedButton{ QIcon{ ":/icons/misc/trash.svg" }, "", this };
+
         deleteBtn->setIconSize (QSize{ ICON_SIZE, ICON_SIZE });
+        deleteBtn->setToolTip ("Delete Controller");
 
         common::makeFrameless (*deleteBtn);
 
@@ -118,7 +122,7 @@ void ControllerInfo::clear ()
     m_settings->setDisabled (true);
     m_nameLabel->setText ("-");
 
-    setToolTip ("");
+    m_nameLabel->setToolTip ("");
 
     refreshHealthIcon ();
     }
@@ -133,8 +137,8 @@ void ControllerInfo::setController (control::ControllerBase& controller)
 
     m_stop->setChecked (m_controller->isEStopped ());
 
-    setToolTip (QString::asprintf ("Model: %s",
-                                   controller.getMetaClass ().friendlyName.c_str ()));
+    m_nameLabel->setToolTip (QString::asprintf ("Model: %s",
+                                                controller.getMetaClass ().friendlyName.c_str ()));
 
     refreshHealthIcon ();
     }

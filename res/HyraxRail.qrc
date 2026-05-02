@@ -52,5 +52,11 @@
         <file>icons/trains/mfx.svg</file>
         <file>icons/misc/question.svg</file>
         <file>icons/trains/mm.svg</file>
+        <file>icons/switches/lightbulb.svg</file>
+        <file>icons/switches/lightbulb-off.svg</file>
+        <file>icons/switches/mast-light-off.svg</file>
+        <file>icons/switches/mast-light-on.svg</file>
+        <file>icons/switches/streetlight-off.svg</file>
+        <file>icons/switches/streetlight-on.svg</file>
     </qresource>
 </RCC>

@@ -55,7 +55,7 @@ EditActuatorDialog::EditActuatorDialog (control::ControllerBase&    controller,
         layout::actuatorIcon    icon = static_cast<layout::actuatorIcon> (ii);
         auto                    info = resources::getIconInfo (icon);
 
-        m_icon->addItem (info.off,
+        m_icon->addItem (info.on,
                          info.title,
                          QVariant::fromValue (icon));
         }
