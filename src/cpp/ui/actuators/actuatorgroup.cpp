@@ -30,7 +30,7 @@ ActuatorGroup::ActuatorGroup (control::ControllerBase&  controller,
     m_gridLayout  = new common::AutoGridLayout
                         {
                         common::AutoGridLayout::expand::ROW_FIRST,
-                        5,
+                        common::AutoGridLayout::EXPAND,
                         this
                         };
 

@@ -34,7 +34,8 @@ public:
         };
 
     static constexpr int EXPAND = -1;   ///< Expand or shrink to fit geometry
-                                        ///  TODO: Not implemented yet
+                                        ///  Pass for numRowsOrColumns
+                                        ///  Only supported with ROW_FIRST
 
     //////////////////////////////////////////////////////////////////////////////
     /// Constructor
@@ -47,11 +48,7 @@ public:
     /// @param[in]  parent              Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
-    AutoGridLayout (expand exp, int numRowsOrColumns, QWidget* parent) :
-        QLayout (parent),
-        m_expand (exp),
-        m_numRowsOrColumns (numRowsOrColumns)
-        {}
+    AutoGridLayout (expand exp, int numRowsOrColumns, QWidget* parent);
 
     //////////////////////////////////////////////////////////////////////////////
     /// Add a layout item
@@ -112,6 +109,12 @@ public:
     ///
     //////////////////////////////////////////////////////////////////////////////
     void setGeometry (const QRect& rect) override;
+
+    virtual int minimumHeightForWidth (int width) const override;
+
+    virtual int heightForWidth (int width) const override { return minimumHeightForWidth (width); }
+
+    virtual bool hasHeightForWidth () const override { return EXPAND == m_numRowsOrColumns; }
 private:
     std::vector<QLayoutItem*>   m_items;            ///< List of the layout items
     expand                      m_expand;           ///< Expansion direction

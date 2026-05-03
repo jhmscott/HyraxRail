@@ -26,7 +26,7 @@ QValidator::State ui::common::HexValidator::validate (QString & input, int& pos)
     QValidator::State   state;
     bool                ok = false;
 
-    int val = input.toInt (&ok, 16);
+    uint val = input.toInt (&ok, 16);
 
     if (not ok)
         {

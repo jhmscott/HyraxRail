@@ -35,7 +35,12 @@ RouteGroup::RouteGroup (control::ControllerBase& controller, QWidget* parent) :
     QVBoxLayout*    layout      = new QVBoxLayout{};
     QHBoxLayout*    addLayout   = new QHBoxLayout{};
 
-    m_gridLayout = new common::AutoGridLayout{ common::AutoGridLayout::expand::ROW_FIRST, 5, NULL };
+    m_gridLayout = new common::AutoGridLayout
+        {
+        common::AutoGridLayout::expand::ROW_FIRST,
+        common::AutoGridLayout::EXPAND,
+        NULL
+        };
 
     for (const layout::Route& route : m_controller->getRoutes ())
         {
