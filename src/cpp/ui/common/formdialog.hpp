@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <ui/common/schemeicon.hpp>
+
 #include <QDialog>
 #include <QDialogButtonBox>
 
@@ -21,7 +23,7 @@ namespace ui::common
 /// have acceptable input
 ///
 //////////////////////////////////////////////////////////////////////////////
-class FormDialog : public QDialog
+class FormDialog : public SchemeDialog
     {
 public:
     //////////////////////////////////////////////////////////////////////////////

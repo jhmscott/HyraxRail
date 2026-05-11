@@ -29,7 +29,7 @@ RouteButton::RouteButton (const layout::Route& route, QWidget* parent) :
     m_route (new layout::Route{ route })
     {
     QVBoxLayout* layout = new QVBoxLayout{ this };
-    QPushButton* button = new common::PointedButton{ QIcon{ ":/icons/misc/path.svg" }, "", this };
+    QPushButton* button = new common::PointedIconButton{ "misc/path", this };
 
     m_route->request ();
 
@@ -38,9 +38,7 @@ RouteButton::RouteButton (const layout::Route& route, QWidget* parent) :
     button->setStyleSheet ("QPushButton:pressed { background-color: royalblue; }");
 
     layout->addWidget (button);
-    layout->addWidget (m_name = new QLabel{ m_route->getName ().c_str (), this },
-                       0,
-                       Qt::AlignHCenter);
+    layout->addWidget (m_name = new QLabel{ m_route->getName ().c_str (), this });
 
     setContentsMargins (0, 20, 0, 0);
     setContextMenuPolicy (Qt::ActionsContextMenu);

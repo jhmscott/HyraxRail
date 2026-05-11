@@ -87,11 +87,11 @@ public:
     uint getDuration () const
         { return m_duration->currentData ().toInt (); }
 private:
-    QLineEdit*  m_name;     ///< Friendly name field
-    QSpinBox*   m_address;  ///< Track protocol address spin box
-    QComboBox*  m_icon;     ///< Icon dropdown
-    QComboBox*  m_mode;     ///< Actuator mode dropdown
-    QComboBox*  m_duration; ///< Duration dropdown
+    QLineEdit*              m_name;     ///< Friendly name field
+    QSpinBox*               m_address;  ///< Track protocol address spin box
+    common::SchemeComboBox* m_icon;     ///< Icon dropdown
+    QComboBox*              m_mode;     ///< Actuator mode dropdown
+    QComboBox*              m_duration; ///< Duration dropdown
 
     //////////////////////////////////////////////////////////////////////////////
     /// Check if all fields have valid input

@@ -31,24 +31,32 @@ ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* pa
 
     QPushButton* deleteBtn;
 
-    m_settings = new common::PointedButton{ QIcon{ ":/icons/misc/gear.svg" }, "", this };
+    m_settings = new common::PointedIconButton{ "misc/gear", this };
 
-    m_connectionIcon = new QPushButton{ "", this };
-    m_stop = new common::IconToggle{ QIcon{ ":/icons/misc/circle-play.svg"},
-                                     QIcon{ ":/icons/misc/prohibit-inset.svg"},
-                                     true,
-                                     this };
+    m_connectionIcon = new common::SchemeIconButton{ "", this};
+
+    QIcon icon;
+
+    icon.addFile (":/icons/common/misc/circle-play.svg",
+                  QSize{},
+                  QIcon::Normal,
+                  QIcon::On);
+    icon.addFile (":/icons/common/misc/prohibit-inset.svg",
+                  QSize{},
+                  QIcon::Normal,
+                  QIcon::Off);
+
+    m_stop = new QPushButton{ icon, "", this };
+    common::makeFrameless (*m_stop);
 
     m_stop->setIconSize (QSize{ ICON_SIZE, ICON_SIZE });
-    m_stop->setTooltips ("Go", "Emergency Stop");
+    m_stop->setCheckable (true);
+    // m_stop->setTooltips ("Go", "Emergency Stop");
 
     m_connectionIcon->setIconSize (QSize{ ICON_SIZE, ICON_SIZE });
-
     ui::common::makeFrameless (*m_connectionIcon);
 
     m_settings->setIconSize (QSize{ ICON_SIZE, ICON_SIZE });
-    m_settings->setToolTip ("Controller Settings");
-
     common::makeFrameless (*m_settings);
 
     m_nameLabel = new QLabel{ NULL == controller ? "-" : controller->getFriendlyName ().c_str (), this};
@@ -59,6 +67,7 @@ ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* pa
 
     m_nameLabel->setFont (font);
 
+
     layout->addWidget (m_connectionIcon,    0, Qt::AlignLeft);
     layout->addWidget (m_nameLabel,         0, Qt::AlignCenter);
     layout->addWidget (m_stop,              0, Qt::AlignRight);
@@ -66,10 +75,8 @@ ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* pa
 
     if (includeDelete)
         {
-        deleteBtn = new common::PointedButton{ QIcon{ ":/icons/misc/trash.svg" }, "", this };
-
+        deleteBtn = new common::PointedIconButton{ "misc/trash", this };
         deleteBtn->setIconSize (QSize{ ICON_SIZE, ICON_SIZE });
-        deleteBtn->setToolTip ("Delete Controller");
 
         common::makeFrameless (*deleteBtn);
 
@@ -122,7 +129,7 @@ void ControllerInfo::clear ()
     m_settings->setDisabled (true);
     m_nameLabel->setText ("-");
 
-    m_nameLabel->setToolTip ("");
+    setToolTip ("");
 
     refreshHealthIcon ();
     }
@@ -137,26 +144,26 @@ void ControllerInfo::setController (control::ControllerBase& controller)
 
     m_stop->setChecked (m_controller->isEStopped ());
 
-    m_nameLabel->setToolTip (QString::asprintf ("Model: %s",
-                                                controller.getMetaClass ().friendlyName.c_str ()));
+    setToolTip (QString::asprintf ("Model: %s",
+                                   controller.getMetaClass ().friendlyName.c_str ()));
 
     refreshHealthIcon ();
     }
 
 void ControllerInfo::setHealth (control::ConnectionWorkerThread::health health)
     {
-    static const QIcon healthIcons[] =
+    static const utils::resources::Icon healthIcons[] =
         {
-        QIcon{":/icons/misc/cell-signal-x"},
-        QIcon{":/icons/misc/cell-signal-low"},
-        QIcon{":/icons/misc/cell-signal-medium"},
-        QIcon{":/icons/misc/cell-signal-high"},
-        QIcon{":/icons/misc/cell-signal-full"},
+        "misc/cell-signal-x",
+        "misc/cell-signal-low",
+        "misc/cell-signal-medium",
+        "misc/cell-signal-high",
+        "misc/cell-signal-full",
 
-        QIcon{":/icons/misc/plugs-connected"},
-        QIcon{":/icons/misc/unplug"},
+        "misc/plugs-connected",
+        "misc/unplug",
 
-        QIcon{":/icons/misc/cell-signal-grey"}
+        "misc/cell-signal-grey"
         };
 
     m_connectionIcon->setIcon (healthIcons[health.level]);

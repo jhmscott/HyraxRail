@@ -64,15 +64,6 @@
     <Filter Include="Resource Files\icons">
       <UniqueIdentifier>{41522a5e-839c-40ef-ad78-7cdb2971c59d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\icons\misc">
-      <UniqueIdentifier>{c6ed85e7-d7b8-4a57-b698-34bb71662f96}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons\functions">
-      <UniqueIdentifier>{d23e8cf5-be8c-4add-ad92-9ec1736d5664}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons\switches">
-      <UniqueIdentifier>{7f62e966-316d-4b5a-b68a-2f76e78bdcc4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\control\proto">
       <UniqueIdentifier>{c8b3a86c-4664-461d-a859-96b1f3a5b487}</UniqueIdentifier>
     </Filter>
@@ -109,8 +100,41 @@
     <Filter Include="Resource Files\icons\app">
       <UniqueIdentifier>{6f765961-96db-45e1-88bd-4dca06bd253f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\icons\trains">
+    <Filter Include="Resource Files\icons\common">
+      <UniqueIdentifier>{8f94bca7-f91c-4753-b3c7-0bfe5150107a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\common\misc">
+      <UniqueIdentifier>{929c090d-0696-464b-8011-f1d43b600127}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\light">
+      <UniqueIdentifier>{2edeb6d2-9a2e-42b1-af41-69e028fa0ebe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\dark">
+      <UniqueIdentifier>{e6dd47d3-a36c-4f27-bf59-9857b995812c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\light\misc">
+      <UniqueIdentifier>{c6ed85e7-d7b8-4a57-b698-34bb71662f96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\light\switches">
+      <UniqueIdentifier>{7f62e966-316d-4b5a-b68a-2f76e78bdcc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\light\trains">
       <UniqueIdentifier>{8716b2ee-d0bf-4df6-a8f1-20c9d2548d4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\light\functions">
+      <UniqueIdentifier>{d23e8cf5-be8c-4add-ad92-9ec1736d5664}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\dark\functions">
+      <UniqueIdentifier>{b06e2e68-506d-48d1-956d-30f094abab33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\dark\misc">
+      <UniqueIdentifier>{1c020f57-e90f-4341-b96b-8ef4b567a29f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\dark\switches">
+      <UniqueIdentifier>{a28ce88d-9a5c-47a2-8dd8-7e75eb690d6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\dark\trains">
+      <UniqueIdentifier>{67d5b922-5af7-4f83-801b-5a638309b895}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +194,12 @@
     </ClInclude>
     <ClInclude Include="..\src\cpp\ui\actuators\resources.hpp">
       <Filter>Header Files\ui\actuators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\schemeicon.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\utils\resources.hpp">
+      <Filter>Header Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +343,12 @@
     </ClCompile>
     <ClCompile Include="..\src\cpp\ui\actuators\editactuator.cpp">
       <Filter>Source Files\ui\actuators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\schemeicon.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\utils\resources.cpp">
+      <Filter>Source Files\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -471,110 +507,8 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\icons\misc\cell-signal-full.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\cell-signal-high.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\cell-signal-low.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\cell-signal-medium.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\cell-signal-x.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\circle-play.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\gear.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\path.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\prohibit-inset.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\split.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\stop.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\train.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\train-track.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\functions\chart-line-up.svg">
-      <Filter>Resource Files\icons\functions</Filter>
-    </None>
-    <None Include="..\res\icons\functions\engine.svg">
-      <Filter>Resource Files\icons\functions</Filter>
-    </None>
-    <None Include="..\res\icons\functions\headlights.svg">
-      <Filter>Resource Files\icons\functions</Filter>
-    </None>
-    <None Include="..\res\icons\functions\lightbulb.svg">
-      <Filter>Resource Files\icons\functions</Filter>
-    </None>
-    <None Include="..\res\icons\functions\megaphone.svg">
-      <Filter>Resource Files\icons\functions</Filter>
-    </None>
-    <None Include="..\res\icons\functions\plugs-connected.svg">
-      <Filter>Resource Files\icons\functions</Filter>
-    </None>
-    <None Include="..\res\icons\functions\radical.svg">
-      <Filter>Resource Files\icons\functions</Filter>
-    </None>
-    <None Include="..\res\icons\functions\snail.svg">
-      <Filter>Resource Files\icons\functions</Filter>
-    </None>
-    <None Include="..\res\icons\functions\speaker-high.svg">
-      <Filter>Resource Files\icons\functions</Filter>
-    </None>
-    <None Include="..\res\icons\functions\tire.svg">
-      <Filter>Resource Files\icons\functions</Filter>
-    </None>
-    <None Include="..\res\icons\switches\left-track-left.svg">
-      <Filter>Resource Files\icons\switches</Filter>
-    </None>
-    <None Include="..\res\icons\switches\left-track-straight.svg">
-      <Filter>Resource Files\icons\switches</Filter>
-    </None>
-    <None Include="..\res\icons\switches\right-track-right.svg">
-      <Filter>Resource Files\icons\switches</Filter>
-    </None>
-    <None Include="..\res\icons\switches\right-track-straight.svg">
-      <Filter>Resource Files\icons\switches</Filter>
-    </None>
-    <None Include="..\res\icons\misc\trash.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\plus.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
     <None Include="..\README.md">
       <Filter>Resource Files\text</Filter>
-    </None>
-    <None Include="..\res\icons\misc\cell-signal-grey.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\plugs-connected.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\unplug.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\dot.svg">
-      <Filter>Resource Files\icons\misc</Filter>
-    </None>
-    <None Include="..\res\icons\misc\empty-dot.svg">
-      <Filter>Resource Files\icons\misc</Filter>
     </None>
     <None Include="..\res\icons\app\conductor-hyrax.svg">
       <Filter>Resource Files\icons\app</Filter>
@@ -591,41 +525,245 @@
     <None Include="..\res\text\LICENSE_PHOSPHOR">
       <Filter>Resource Files\text</Filter>
     </None>
-    <None Include="..\res\icons\misc\arrow-left.svg">
-      <Filter>Resource Files\icons\misc</Filter>
+    <None Include="..\res\icons\dark\misc\arrow-left.svg">
+      <Filter>Resource Files\icons\dark\misc</Filter>
     </None>
-    <None Include="..\res\icons\misc\binary.svg">
-      <Filter>Resource Files\icons\misc</Filter>
+    <None Include="..\res\icons\light\misc\arrow-left.svg">
+      <Filter>Resource Files\icons\light\misc</Filter>
     </None>
-    <None Include="..\res\icons\trains\dcc.svg">
-      <Filter>Resource Files\icons\trains</Filter>
+    <None Include="..\res\icons\dark\misc\binary.svg">
+      <Filter>Resource Files\icons\dark\misc</Filter>
     </None>
-    <None Include="..\res\icons\trains\mfx.svg">
-      <Filter>Resource Files\icons\trains</Filter>
+    <None Include="..\res\icons\light\misc\binary.svg">
+      <Filter>Resource Files\icons\light\misc</Filter>
     </None>
-    <None Include="..\res\icons\misc\question.svg">
-      <Filter>Resource Files\icons\misc</Filter>
+    <None Include="..\res\icons\common\misc\cell-signal-full.svg">
+      <Filter>Resource Files\icons\common\misc</Filter>
     </None>
-    <None Include="..\res\icons\trains\mm.svg">
-      <Filter>Resource Files\icons\trains</Filter>
+    <None Include="..\res\icons\common\misc\cell-signal-grey.svg">
+      <Filter>Resource Files\icons\common\misc</Filter>
     </None>
-    <None Include="..\res\icons\switches\lightbulb.svg">
-      <Filter>Resource Files\icons\switches</Filter>
+    <None Include="..\res\icons\common\misc\cell-signal-high.svg">
+      <Filter>Resource Files\icons\common\misc</Filter>
     </None>
-    <None Include="..\res\icons\switches\lightbulb-off.svg">
-      <Filter>Resource Files\icons\switches</Filter>
+    <None Include="..\res\icons\common\misc\cell-signal-low.svg">
+      <Filter>Resource Files\icons\common\misc</Filter>
     </None>
-    <None Include="..\res\icons\switches\mast-light-off.svg">
-      <Filter>Resource Files\icons\switches</Filter>
+    <None Include="..\res\icons\common\misc\cell-signal-medium.svg">
+      <Filter>Resource Files\icons\common\misc</Filter>
     </None>
-    <None Include="..\res\icons\switches\mast-light-on.svg">
-      <Filter>Resource Files\icons\switches</Filter>
+    <None Include="..\res\icons\common\misc\cell-signal-x.svg">
+      <Filter>Resource Files\icons\common\misc</Filter>
     </None>
-    <None Include="..\res\icons\switches\streetlight-off.svg">
-      <Filter>Resource Files\icons\switches</Filter>
+    <None Include="..\res\icons\light\functions\chart-line-up.svg">
+      <Filter>Resource Files\icons\light\functions</Filter>
     </None>
-    <None Include="..\res\icons\switches\streetlight-on.svg">
-      <Filter>Resource Files\icons\switches</Filter>
+    <None Include="..\res\icons\dark\functions\chart-line-up.svg">
+      <Filter>Resource Files\icons\dark\functions</Filter>
+    </None>
+    <None Include="..\res\icons\common\misc\circle-play.svg">
+      <Filter>Resource Files\icons\common\misc</Filter>
+    </None>
+    <None Include="..\res\icons\light\trains\dcc.svg">
+      <Filter>Resource Files\icons\light\trains</Filter>
+    </None>
+    <None Include="..\res\icons\dark\trains\dcc.svg">
+      <Filter>Resource Files\icons\dark\trains</Filter>
+    </None>
+    <None Include="..\res\icons\dark\misc\dot.svg">
+      <Filter>Resource Files\icons\dark\misc</Filter>
+    </None>
+    <None Include="..\res\icons\light\misc\dot.svg">
+      <Filter>Resource Files\icons\light\misc</Filter>
+    </None>
+    <None Include="..\res\icons\dark\misc\empty-dot.svg">
+      <Filter>Resource Files\icons\dark\misc</Filter>
+    </None>
+    <None Include="..\res\icons\light\misc\empty-dot.svg">
+      <Filter>Resource Files\icons\light\misc</Filter>
+    </None>
+    <None Include="..\res\icons\light\functions\engine.svg">
+      <Filter>Resource Files\icons\light\functions</Filter>
+    </None>
+    <None Include="..\res\icons\dark\functions\engine.svg">
+      <Filter>Resource Files\icons\dark\functions</Filter>
+    </None>
+    <None Include="..\res\icons\dark\misc\gear.svg">
+      <Filter>Resource Files\icons\dark\misc</Filter>
+    </None>
+    <None Include="..\res\icons\light\misc\gear.svg">
+      <Filter>Resource Files\icons\light\misc</Filter>
+    </None>
+    <None Include="..\res\icons\light\functions\headlights.svg">
+      <Filter>Resource Files\icons\light\functions</Filter>
+    </None>
+    <None Include="..\res\icons\dark\functions\headlights.svg">
+      <Filter>Resource Files\icons\dark\functions</Filter>
+    </None>
+    <None Include="..\res\icons\dark\switches\left-track-on.svg">
+      <Filter>Resource Files\icons\dark\switches</Filter>
+    </None>
+    <None Include="..\res\icons\light\switches\left-track-on.svg">
+      <Filter>Resource Files\icons\light\switches</Filter>
+    </None>
+    <None Include="..\res\icons\dark\switches\left-track-off.svg">
+      <Filter>Resource Files\icons\dark\switches</Filter>
+    </None>
+    <None Include="..\res\icons\light\switches\left-track-off.svg">
+      <Filter>Resource Files\icons\light\switches</Filter>
+    </None>
+    <None Include="..\res\icons\dark\functions\lightbulb.svg">
+      <Filter>Resource Files\icons\dark\functions</Filter>
+    </None>
+    <None Include="..\res\icons\light\functions\lightbulb.svg">
+      <Filter>Resource Files\icons\light\functions</Filter>
+    </None>
+    <None Include="..\res\icons\dark\switches\lightbulb-on.svg">
+      <Filter>Resource Files\icons\dark\switches</Filter>
+    </None>
+    <None Include="..\res\icons\light\switches\lightbulb-on.svg">
+      <Filter>Resource Files\icons\light\switches</Filter>
+    </None>
+    <None Include="..\res\icons\dark\switches\lightbulb-off.svg">
+      <Filter>Resource Files\icons\dark\switches</Filter>
+    </None>
+    <None Include="..\res\icons\light\switches\lightbulb-off.svg">
+      <Filter>Resource Files\icons\light\switches</Filter>
+    </None>
+    <None Include="..\res\icons\dark\switches\mast-light-off.svg">
+      <Filter>Resource Files\icons\dark\switches</Filter>
+    </None>
+    <None Include="..\res\icons\dark\switches\mast-light-on.svg">
+      <Filter>Resource Files\icons\dark\switches</Filter>
+    </None>
+    <None Include="..\res\icons\light\switches\mast-light-on.svg">
+      <Filter>Resource Files\icons\light\switches</Filter>
+    </None>
+    <None Include="..\res\icons\light\switches\mast-light-off.svg">
+      <Filter>Resource Files\icons\light\switches</Filter>
+    </None>
+    <None Include="..\res\icons\dark\functions\megaphone.svg">
+      <Filter>Resource Files\icons\dark\functions</Filter>
+    </None>
+    <None Include="..\res\icons\light\functions\megaphone.svg">
+      <Filter>Resource Files\icons\light\functions</Filter>
+    </None>
+    <None Include="..\res\icons\dark\trains\mfx.svg">
+      <Filter>Resource Files\icons\dark\trains</Filter>
+    </None>
+    <None Include="..\res\icons\dark\trains\mm.svg">
+      <Filter>Resource Files\icons\dark\trains</Filter>
+    </None>
+    <None Include="..\res\icons\light\trains\mfx.svg">
+      <Filter>Resource Files\icons\light\trains</Filter>
+    </None>
+    <None Include="..\res\icons\light\trains\mm.svg">
+      <Filter>Resource Files\icons\light\trains</Filter>
+    </None>
+    <None Include="..\res\icons\dark\misc\path.svg">
+      <Filter>Resource Files\icons\dark\misc</Filter>
+    </None>
+    <None Include="..\res\icons\light\misc\path.svg">
+      <Filter>Resource Files\icons\light\misc</Filter>
+    </None>
+    <None Include="..\res\icons\dark\functions\plugs-connected.svg">
+      <Filter>Resource Files\icons\dark\functions</Filter>
+    </None>
+    <None Include="..\res\icons\light\functions\plugs-connected.svg">
+      <Filter>Resource Files\icons\light\functions</Filter>
+    </None>
+    <None Include="..\res\icons\dark\misc\plus.svg">
+      <Filter>Resource Files\icons\dark\misc</Filter>
+    </None>
+    <None Include="..\res\icons\light\misc\plus.svg">
+      <Filter>Resource Files\icons\light\misc</Filter>
+    </None>
+    <None Include="..\res\icons\common\misc\plugs-connected.svg">
+      <Filter>Resource Files\icons\common\misc</Filter>
+    </None>
+    <None Include="..\res\icons\common\misc\prohibit-inset.svg">
+      <Filter>Resource Files\icons\common\misc</Filter>
+    </None>
+    <None Include="..\res\icons\common\misc\unplug.svg">
+      <Filter>Resource Files\icons\common\misc</Filter>
+    </None>
+    <None Include="..\res\icons\common\misc\trash.svg">
+      <Filter>Resource Files\icons\common\misc</Filter>
+    </None>
+    <None Include="..\res\icons\light\misc\question.svg">
+      <Filter>Resource Files\icons\light\misc</Filter>
+    </None>
+    <None Include="..\res\icons\dark\misc\question.svg">
+      <Filter>Resource Files\icons\dark\misc</Filter>
+    </None>
+    <None Include="..\res\icons\light\functions\radical.svg">
+      <Filter>Resource Files\icons\light\functions</Filter>
+    </None>
+    <None Include="..\res\icons\light\switches\right-track-off.svg">
+      <Filter>Resource Files\icons\light\switches</Filter>
+    </None>
+    <None Include="..\res\icons\light\switches\right-track-on.svg">
+      <Filter>Resource Files\icons\light\switches</Filter>
+    </None>
+    <None Include="..\res\icons\light\functions\snail.svg">
+      <Filter>Resource Files\icons\light\functions</Filter>
+    </None>
+    <None Include="..\res\icons\light\functions\speaker-high.svg">
+      <Filter>Resource Files\icons\light\functions</Filter>
+    </None>
+    <None Include="..\res\icons\light\misc\split.svg">
+      <Filter>Resource Files\icons\light\misc</Filter>
+    </None>
+    <None Include="..\res\icons\dark\switches\streetlight-off.svg">
+      <Filter>Resource Files\icons\dark\switches</Filter>
+    </None>
+    <None Include="..\res\icons\dark\switches\streetlight-on.svg">
+      <Filter>Resource Files\icons\dark\switches</Filter>
+    </None>
+    <None Include="..\res\icons\light\switches\streetlight-off.svg">
+      <Filter>Resource Files\icons\light\switches</Filter>
+    </None>
+    <None Include="..\res\icons\light\switches\streetlight-on.svg">
+      <Filter>Resource Files\icons\light\switches</Filter>
+    </None>
+    <None Include="..\res\icons\common\misc\stop.svg">
+      <Filter>Resource Files\icons\dark\misc</Filter>
+    </None>
+    <None Include="..\res\icons\light\misc\train.svg">
+      <Filter>Resource Files\icons\light\misc</Filter>
+    </None>
+    <None Include="..\res\icons\light\misc\train-track.svg">
+      <Filter>Resource Files\icons\light\misc</Filter>
+    </None>
+    <None Include="..\res\icons\light\functions\tire.svg">
+      <Filter>Resource Files\icons\light\functions</Filter>
+    </None>
+    <None Include="..\res\icons\dark\functions\radical.svg">
+      <Filter>Resource Files\icons\dark\functions</Filter>
+    </None>
+    <None Include="..\res\icons\dark\functions\snail.svg">
+      <Filter>Resource Files\icons\dark\functions</Filter>
+    </None>
+    <None Include="..\res\icons\dark\functions\speaker-high.svg">
+      <Filter>Resource Files\icons\dark\functions</Filter>
+    </None>
+    <None Include="..\res\icons\dark\functions\tire.svg">
+      <Filter>Resource Files\icons\dark\functions</Filter>
+    </None>
+    <None Include="..\res\icons\dark\switches\right-track-off.svg">
+      <Filter>Resource Files\icons\dark\switches</Filter>
+    </None>
+    <None Include="..\res\icons\dark\switches\right-track-on.svg">
+      <Filter>Resource Files\icons\dark\switches</Filter>
+    </None>
+    <None Include="..\res\icons\dark\misc\train-track.svg">
+      <Filter>Resource Files\icons\dark\misc</Filter>
+    </None>
+    <None Include="..\res\icons\dark\misc\split.svg">
+      <Filter>Resource Files\icons\dark\misc</Filter>
+    </None>
+    <None Include="..\res\icons\dark\misc\train.svg">
+      <Filter>Resource Files\icons\dark\misc</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

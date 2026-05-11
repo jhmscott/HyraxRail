@@ -10,14 +10,24 @@
 
 #pragma once
 
+#include <QApplication>
 #include <QComboBox>
 #include <QLayout>
 #include <QLayoutItem>
 #include <QPushButton>
+#include <QStyleHints>
 
 namespace ui::common
 {
-
+///////////////////////////////////////////////////////////////////////////////
+/// Set the current item in a combobox to the first item with a given user data
+///
+/// @tparam         T       Type of user data
+///
+/// @param[in,out]  cb      Combobox to set current item for
+/// @param[in]      ud      User data
+///
+///////////////////////////////////////////////////////////////////////////////
 template<class T>
 void setComboBoxIndexByUserData (QComboBox& cb, const T& ud)
     {
@@ -31,6 +41,15 @@ void setComboBoxIndexByUserData (QComboBox& cb, const T& ud)
         }
     }
 
+///////////////////////////////////////////////////////////////////////////////
+/// Remove the first item in a combobox with a given user data
+///
+/// @tparam         T       Type of user data
+///
+/// @param[in,out]  cb      Combobox to remove item from
+/// @param[in]      ud      User data
+///
+///////////////////////////////////////////////////////////////////////////////
 template<class T>
 void removeComboBoxItemByUserData (QComboBox& cb, const T& ud)
     {
@@ -60,6 +79,13 @@ void removeComboBoxItemByUserData (QComboBox& cb, const T& ud)
         }
     }
 
+///////////////////////////////////////////////////////////////////////////////
+/// Set the current item in a combobox to the first item with a given text
+///
+/// @param[in,out]  cb      Combobox to set current item for
+/// @param[in]      text    Text of item to find and set
+///
+///////////////////////////////////////////////////////////////////////////////
 inline void setComboBoxIndexByText (QComboBox& cb, const QString& text)
     {
     for (int ii = 0; ii < cb.count (); ++ii)
@@ -72,6 +98,33 @@ inline void setComboBoxIndexByText (QComboBox& cb, const QString& text)
         }
     }
 
+///////////////////////////////////////////////////////////////////////////////
+/// Setting a stylesheet results in the widget not automatically updating its
+/// colors when the color scheme changes. Calling this function fixes this
+/// by refreshing the style sheet when the color scheme changes. Call this
+/// if you set the stylesheet for a widget
+///
+/// @param[in,out]  wdgt        Widget stylesheet was added to
+///
+///////////////////////////////////////////////////////////////////////////////
+inline void refreshStyleSheetOnColorSchemeChange (QWidget& wdgt)
+    {
+    wdgt.connect (qApp->styleHints (),
+                 &QStyleHints::colorSchemeChanged,
+                 &wdgt,
+                  [&wdgt] (Qt::ColorScheme scheme) -> void
+                  { wdgt.setStyleSheet (wdgt.styleSheet ()); },
+                  // This needs to execute AFTER all the other color scheme
+                  // handlers, and queued connection ensures that
+                  Qt::QueuedConnection);
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Remove the frame from a widget
+///
+/// @param[in,out]  wdgt    Widget to remove frame from
+///
+///////////////////////////////////////////////////////////////////////////////
 inline void makeFrameless (QWidget& wdgt)
     {
     const QMetaObject*  metaobj     = wdgt.metaObject ();
@@ -88,8 +141,19 @@ inline void makeFrameless (QWidget& wdgt)
                         " "                                 +
                         classname                           +
                         " { border: none; background: transparent; }");
+
+    // We are adding a stylesheet, so we need to call this to not
+    // break automatic colour scheme handling
+    refreshStyleSheetOnColorSchemeChange (wdgt);
     }
 
+///////////////////////////////////////////////////////////////////////////////
+/// Remove a widget from a layout
+///
+/// @param[in,out]  layout  Layout to remove widget
+/// @param[in]      nn      Index of widget to remove
+///
+///////////////////////////////////////////////////////////////////////////////
 inline void removeWidgetFromLayout (QLayout& layout, uint nn)
     {
     QLayoutItem* item = layout.takeAt (nn);
@@ -103,6 +167,12 @@ inline void removeWidgetFromLayout (QLayout& layout, uint nn)
         }
     }
 
+///////////////////////////////////////////////////////////////////////////////
+/// Remove all the items from a layout
+///
+/// @param[in,out]  layout      Layout to clear
+///
+///////////////////////////////////////////////////////////////////////////////
 inline void clearLayout (QLayout& layout)
     {
     QLayoutItem*    item;
@@ -123,4 +193,5 @@ inline void clearLayout (QLayout& layout)
         delete item;
         }
     }
+
 }

@@ -16,7 +16,7 @@
 namespace ui::common
 {
 FormDialog::FormDialog (QWidget* parent) :
-    QDialog (parent)
+    common::SchemeDialog (parent)
     {
     m_buttons = new QDialogButtonBox{ QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this };
 

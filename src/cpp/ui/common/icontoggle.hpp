@@ -13,6 +13,8 @@
 
 #include <ui/common/pointedwidget.hpp>
 
+#include <utils/resources.hpp>
+
 namespace ui::common
 {
 
@@ -20,32 +22,21 @@ namespace ui::common
 /// Push button that has different icons for each toggle state
 ///
 //////////////////////////////////////////////////////////////////////////////
-class IconToggle : public PointedButton
+class IconToggle : public PointedIconButton
     {
 public:
 
     //////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
-    /// @param[in]  active      Active state icon
-    /// @param[in]  disabled    Disabled state icon
+    /// @param[in]  icon        Scheme aware icon
     /// @param[in]  frameless   If true, render this without a frame
     /// @param[in]  parent      Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
-    IconToggle (const QIcon&    active,
-                const QIcon&    disabled,
+    IconToggle (const utils::resources::Icon&  icon,
                 bool            frameless,
                 QWidget*        parent);
-
-    //////////////////////////////////////////////////////////////////////////////
-    /// Set the icons
-    ///
-    /// @param[in]  active      Active state icon
-    /// @param[in]  disabled    Disabled state icon
-    ///
-    //////////////////////////////////////////////////////////////////////////////
-    void setIcons (const QIcon& active, const QIcon& disabled);
 
     //////////////////////////////////////////////////////////////////////////////
     /// Set the tooltips
@@ -58,9 +49,6 @@ public:
 
 
 private:
-    QIcon   m_active;               ///< Active state icon
-    QIcon   m_disabled;             ///< Disabled state icon
-
     QString m_activeTip;            ///< Active state tooltip
     QString m_disabledTip;          ///< Disabled state tooltip
 
@@ -72,6 +60,7 @@ private slots:
     ///
     //////////////////////////////////////////////////////////////////////////////
     void onToggle ();
+
     };
 
 } // namespace ui::common

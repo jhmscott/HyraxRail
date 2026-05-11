@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <ui/common/schemeicon.hpp>
+
 #include <QPushButton>
 #include <QWidget>
 
@@ -50,7 +52,8 @@ protected:
     };
 
 // Push button that displays a pointing hand cursor when you hover over it
-using PointedButton = PointedWidget<QPushButton>;
+using PointedIconButton = PointedWidget<SchemeIconButton>;
+using PointedButton     = PointedWidget<QPushButton>;
 
 
 } // namespace ui::common

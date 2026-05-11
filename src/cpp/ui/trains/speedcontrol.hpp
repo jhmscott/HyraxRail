@@ -19,30 +19,57 @@
 namespace ui::trains
 {
 
+///////////////////////////////////////////////////////////////////////////////
+/// Speed controller widget with stop button, slider bar and speed indicator
+///
+///////////////////////////////////////////////////////////////////////////////
 class SpeedControlWidget : public QWidget
     {
 public:
-
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  parent      Parent widget
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     SpeedControlWidget (QWidget* parent);
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the locomotive to control
+    ///
+    /// @param[in]  loco        Locomtive to control
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     void setLocomotive (const layout::Locomotive& loco);
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Clear the locomotive under control
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     void clear ();
 private:
-    layout::Locomotive  m_loco;
-    QSlider*            m_slider;
-    QLabel*             m_label;
-    QPushButton*        m_stop;
+    layout::Locomotive  m_loco;     ///< Locomotive under control
+    QSlider*            m_slider;   ///< Speed slider bar
+    QLabel*             m_label;    ///< Speed indicator
+    QPushButton*        m_stop;     ///< Stop button (not emergency stop)
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle the slider value changing
+    ///
+    /// @param[in]  value       New slider value
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     void onSliderChange (int value)
         {
         m_loco.setSpeed (static_cast<int8_t> (value));
         m_label->setText (QString::asprintf ("%02d", abs (value * 99 / 127)));
         }
 
-    void onStopButton ()
-        {
-        m_slider->setValue (0);
-        }
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle the stop being pressed
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void onStopButton () { m_slider->setValue (0); }
     };
-}
+
+} // namespace ui::trains

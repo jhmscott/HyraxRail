@@ -46,10 +46,9 @@ ActuatorGroup::ActuatorGroup (control::ControllerBase&  controller,
 
     m_gridLayout->setAlignment (Qt::AlignTop | Qt::AlignLeft);
 
-    common::PointedButton* addBtn = new common::PointedButton
+    common::PointedIconButton* addBtn = new common::PointedIconButton
                                         {
-                                        QIcon{ ":/icons/misc/plus.svg" },
-                                        "",
+                                        "misc/plus",
                                         this
                                         };
 

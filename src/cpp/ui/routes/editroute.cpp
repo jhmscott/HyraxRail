@@ -37,6 +37,8 @@ EditRouteDialog::EditRouteDialog (control::ControllerBase&  controller,
 
     m_buttonList.reserve (actuators.size ());
 
+    setWindowIcon ("misc/path");
+
     for (const auto& actuator : actuators)
         {
         btnLayout->addWidget (

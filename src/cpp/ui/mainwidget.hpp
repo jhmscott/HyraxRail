@@ -13,6 +13,7 @@
 #include <control/controllers/manager.hpp>
 
 #include <ui/actuators/actuatorpanel.hpp>
+#include <ui/common/schemeicon.hpp>
 #include <ui/config/configpanel.hpp>
 #include <ui/routes/routepanel.hpp>
 #include <ui/trains/dualcontrol.hpp>
@@ -27,7 +28,7 @@ namespace ui
 /// Main widget, which comprises the client area of the main widget
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class MainWidget : public QTabWidget
+class MainWidget : public common::SchemeTabWidget
     {
     Q_OBJECT;
 public:

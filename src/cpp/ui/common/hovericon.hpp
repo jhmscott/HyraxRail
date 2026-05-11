@@ -23,7 +23,7 @@ namespace ui::common
 /// Icon button with a shadow effect that is added on mouse over
 ///
 //////////////////////////////////////////////////////////////////////////////
-class HoverIcon : public PointedButton
+class HoverIcon : public PointedIconButton
     {
     Q_OBJECT
 
@@ -45,7 +45,7 @@ public:
     /// @param[in]  parent      Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
-    HoverIcon (const QIcon& icon, const QColor& hoverColor, style style, QWidget* parent);
+    HoverIcon (const utils::resources::Icon& icon, const QColor& hoverColor, style style, QWidget* parent);
 
     //////////////////////////////////////////////////////////////////////////////
     /// Get the opacity of the shadow

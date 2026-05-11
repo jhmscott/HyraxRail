@@ -11,16 +11,17 @@
 
 #include <ui/common/utils.hpp>
 
+#include <QApplication>
+#include <QStyleHints>
+
 namespace ui::common
 {
 
-IconToggle::IconToggle (const QIcon&    active,
-                        const QIcon&    disabled,
+
+IconToggle::IconToggle (const utils::resources::Icon&  icon,
                         bool            frameless,
                         QWidget*        parent) :
-    PointedButton (disabled, "", parent),
-    m_active (active),
-    m_disabled (disabled)
+    PointedIconButton (icon, parent)
     {
     setCheckable (true);
 
@@ -35,20 +36,13 @@ IconToggle::IconToggle (const QIcon&    active,
              &IconToggle::onToggle);
     }
 
-void IconToggle::setIcons (const QIcon& active, const QIcon& disabled)
-    {
-    m_active = active;
-    m_disabled = disabled;
-
-    setIcon (isChecked () ? active : disabled);
-    }
 
 void IconToggle::setTooltips (const QString& active, const QString disabled)
     {
-    m_activeTip = active;
-    m_disabledTip = disabled;
+    m_activeTip     = active;
+    m_disabledTip   = disabled;
 
-    m_hasTooltips = true;
+    m_hasTooltips   = true;
 
     setToolTip (isChecked () ? active : disabled);
     }
@@ -56,8 +50,6 @@ void IconToggle::setTooltips (const QString& active, const QString disabled)
 
 void IconToggle::onToggle ()
     {
-    setIcon (isChecked () ? m_active : m_disabled);
-
     if (m_hasTooltips)
         {
         setToolTip (isChecked () ? m_activeTip : m_disabledTip);

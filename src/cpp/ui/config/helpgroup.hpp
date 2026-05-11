@@ -21,7 +21,6 @@ class HelpGroup : public QGroupBox
 public:
     explicit HelpGroup (QWidget* parent);
 private:
-
     void about ();
 
     void help ();

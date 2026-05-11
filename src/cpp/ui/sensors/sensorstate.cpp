@@ -11,9 +11,11 @@
 
 #include <ui/sensors/sensorstate.hpp>
 
+#include <QApplication>
 #include <QLabel>
 #include <QMenu>
 #include <QPainter>
+#include <QStyleHints>
 #include <QWidgetAction>
 
 namespace ui::sensors
@@ -41,10 +43,19 @@ void SensorState::paintEvent (QPaintEvent* event)
     {
     QPainter        painter{ this };
     Qt::GlobalColor color   = m_state       ? Qt::green : Qt::red;
-    Qt::GlobalColor outline = m_notified    ? Qt::blue  : Qt::black;
+    Qt::GlobalColor outline;
     QPoint          center  = rect ().center ();
+    bool            darkMode= Qt::ColorScheme::Dark == qApp->styleHints ()->colorScheme ();
 
-    // ... Why do I need to do this?
+    if (darkMode)
+        {
+        outline = m_notified ? Qt::cyan : Qt::white;
+        }
+    else
+        {
+        outline = m_notified ? Qt::blue : Qt::black;
+        }
+
     center.rx () += 1;
     center.ry () += 1;
 

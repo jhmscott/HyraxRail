@@ -49,7 +49,7 @@ RouteGroup::RouteGroup (control::ControllerBase& controller, QWidget* parent) :
 
     m_gridLayout->setAlignment (Qt::AlignTop | Qt::AlignLeft);
 
-    common::PointedButton* addBtn = new common::PointedButton{ QIcon{ ":/icons/misc/plus.svg" }, "", this };
+    common::PointedIconButton* addBtn = new common::PointedIconButton{ "misc/plus", this };
 
     common::makeFrameless (*addBtn);
 

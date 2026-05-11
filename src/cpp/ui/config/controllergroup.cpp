@@ -37,7 +37,7 @@ ControllerGroup::ControllerGroup (control::ControllerManager* controllers,
         }
 
     QHBoxLayout* addController  = new QHBoxLayout{ this };
-    QPushButton* plusIcon       = new common::PointedButton{ QIcon{ ":/icons/misc/plus.svg" }, "", this};
+    QPushButton* plusIcon       = new common::PointedIconButton{ "misc/plus", this};
     QLabel*      plusLabel      = new QLabel{ "New Controller", this };
     QFont        font           = QApplication::font ();
 

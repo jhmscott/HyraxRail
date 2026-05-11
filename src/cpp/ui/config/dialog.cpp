@@ -38,7 +38,7 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
     m_layout = new QFormLayout{ this };
 
     setWindowTitle ("Controller Settings");
-    setWindowIcon (QIcon{ ":/icons/misc/gear.svg" });
+    setWindowIcon ("misc/gear");
 
     m_controller    = new common::OptionalDropdown{ this };
     m_protocol      = new common::OptionalDropdown{ this };

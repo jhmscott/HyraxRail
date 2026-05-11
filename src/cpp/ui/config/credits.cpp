@@ -54,7 +54,7 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
     QHBoxLayout*    navLayout   = new QHBoxLayout{ this };
     QPushButton*    back        = new common::HoverIcon
         {
-        QIcon{ ":/icons/misc/arrow-left.svg"},
+        "misc/arrow-left",
         Qt::lightGray,
         common::HoverIcon::style::ROUNDED_RECT,
         this

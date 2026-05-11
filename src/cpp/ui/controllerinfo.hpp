@@ -38,13 +38,13 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     ControllerInfo (control::ControllerBase* controller, QWidget* parent, bool includeDelete);
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Clear the controller info from the widget
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void clear ();
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the controller to display
     ///
@@ -61,12 +61,12 @@ signals:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void deleted (control::ControllerBase& controller);
-        
+
 private:
     control::ControllerBase*    m_controller;       ///< Controller being displayed
-    QPushButton*                m_connectionIcon;   ///< Connection status icon
-    common::IconToggle*         m_stop;             ///< Emergency/global stop button
-    QPushButton*                m_settings;         ///< Settinsg button. Opens the config dialog
+    common::SchemeIconButton*   m_connectionIcon;   ///< Connection status icon
+    QPushButton*                m_stop;             ///< Emergency/global stop button
+    common::SchemeIconButton*   m_settings;         ///< Settinsg button. Opens the config dialog
     QLabel*                     m_nameLabel;        ///< Controller friendly name label
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -91,7 +91,7 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void eStop () { m_controller->eStop (m_stop->isChecked ()); }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the controller health icon
     ///
@@ -99,13 +99,13 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void setHealth (control::ConnectionWorkerThread::health health);
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Called when the config button is pressed. Opens the controller config dialog
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void onConfig ();
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Called when the delete button is pressed. Prompts the user to confirm the deletion, before signalling the
     /// parent

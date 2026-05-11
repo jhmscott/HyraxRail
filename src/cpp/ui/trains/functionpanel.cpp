@@ -14,21 +14,24 @@
 
 #include <QApplication>
 #include <QPainter>
+#include <QStyleHints>
 #include <QStyleOption>
 
 namespace ui::trains
 {
-class FunctionButton : public common::PointedButton
+class FunctionButton : public common::PointedIconButton
     {
 public:
     FunctionButton (uint8_t id, QWidget* parent) :
-        common::PointedButton (QString::number (id), parent)
+        common::PointedIconButton (QString::number (id), parent)
         {}
 
     void setInstanceNum (int instanceNum) { m_instanceNum = instanceNum; }
 protected:
     virtual void paintEvent (QPaintEvent* event) override
         {
+        bool    darkMode = Qt::ColorScheme::Dark == qApp->styleHints ()->colorScheme ();
+
         QPushButton::paintEvent (event);
 
         if (0 != m_instanceNum)
@@ -49,6 +52,7 @@ protected:
 
 
             painter.setFont (font);
+            painter.setPen (darkMode ? Qt::white : Qt::black);
             painter.drawText (bottomRight,
                               QString::number (m_instanceNum));
             }
@@ -101,23 +105,23 @@ FunctionPanel::FunctionPanel (vAlignment align, QWidget* parent) :
 
 void FunctionPanel::setLocomotive (const layout::Locomotive& loco)
     {
-    static std::array<QIcon, layout::funcInfo::NUM_TRUE_ICONS> icons =
+    static std::array<utils::resources::Icon, layout::funcInfo::NUM_TRUE_ICONS> icons =
         {
         // lights
-        QIcon{":/icons/functions/headlights.svg"},        ///< ICON_FUNC_LIGHT_HEADLIGHT,
-        QIcon{":/icons/functions/lightbulb.svg"},         ///< ICON_FUNC_LIGHT_CAB
+        "functions/headlights",        ///< ICON_FUNC_LIGHT_HEADLIGHT,
+        "functions/lightbulb",         ///< ICON_FUNC_LIGHT_CAB
 
         // Sound
-        QIcon{":/icons/functions/megaphone.svg"},         ///< ICON_FUNC_SOUND_HORN
-        QIcon{":/icons/functions/tire.svg"},              ///< ICON_FUNC_SOUND_BRAKES
-        QIcon{":/icons/functions/plugs-connected.svg"},   ///< ICON_FUNC_SOUND_COUPLING
-        QIcon{":/icons/functions/speaker-high.svg"},      ///< ICON_FUNC_SOUND_GENERIC
-        QIcon{":/icons/functions/engine.svg"},            ///< ICON_FUNC_SOUND_OPERATING
+        "functions/megaphone",         ///< ICON_FUNC_SOUND_HORN
+        "functions/tire",              ///< ICON_FUNC_SOUND_BRAKES
+        "functions/plugs-connected",   ///< ICON_FUNC_SOUND_COUPLING
+        "functions/speaker-high",      ///< ICON_FUNC_SOUND_GENERIC
+        "functions/engine",            ///< ICON_FUNC_SOUND_OPERATING
 
         // Misc
-        QIcon{":/icons/functions/radical.svg"},
-        QIcon{":/icons/functions/chart-line-up.svg"},
-        QIcon{":/icons/functions/snail.svg"},
+        "functions/radical",
+        "functions/chart-line-up",
+        "functions/snail",
         };
 
     m_loco = loco;

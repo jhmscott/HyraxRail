@@ -15,6 +15,7 @@
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QStyle>
+#include <QStyleHints>
 
 #include <ui/common/pointedwidget.hpp>
 #include <ui/common/utils.hpp>
@@ -45,6 +46,7 @@ protected:
         QPoint  handlePoint;
         int     handlePos   = 0;
         QRect   widgetRect  = rect ();
+        bool    darkMode    = Qt::ColorScheme::Dark == qApp->styleHints ()->colorScheme ();
 
         if (orientation () == Qt::Horizontal)
             {
@@ -132,7 +134,7 @@ protected:
             const int       minTick     = minimum () + ((tickInterval () - (minimum () % tickInterval ())) % tickInterval ());
             const int       maxTick     = maximum () - (maximum () % tickInterval ());
 
-            painter.setPen (Qt::black);
+            painter.setPen (darkMode ? Qt::white : Qt::black);
 
             for (int ii = minimum (); ii < maximum (); ++ii)
                 {
@@ -171,10 +173,9 @@ SpeedControlWidget::SpeedControlWidget (QWidget* parent) :
     {
     QVBoxLayout* layout = new QVBoxLayout{ this };
 
-    m_stop = new common::PointedButton
+    m_stop = new common::PointedIconButton
                     {
-                    QIcon{ ":/icons/misc/stop.svg" },
-                    "",
+                    "misc/stop",
                     this
                     };
 

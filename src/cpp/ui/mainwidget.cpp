@@ -17,10 +17,13 @@
 #include <utils/algorithm.hpp>
 #include <utils/os.hpp>
 
+#include <QApplication>
+#include <QStyleHints>
+
 namespace ui
 {
 MainWidget::MainWidget (QWidget* parent) :
-    QTabWidget (parent),
+    common::SchemeTabWidget (parent),
     m_controllers (new control::ControllerManager{ this })
     {
     QSettings   settings{ QSettings::UserScope };
@@ -71,23 +74,17 @@ MainWidget::MainWidget (QWidget* parent) :
     setUsesScrollButtons (false);
 
     addTab (m_trains = new trains::DualControlWidget{ m_controllers, this },
-            QIcon{ ":/icons/misc/train.svg" },
-            "");
+            "misc/train");
     addTab (m_actuators = new actuators::ActuatorPanel{ m_controllers, this},
-            QIcon{ ":/icons/misc/split.svg" },
-            "");
+            "misc/split");
     addTab (new sensors::SensorPanel{ this },
-            QIcon{ ":/icons/misc/train-track.svg" },
-            "");
+            "misc/train-track");
     addTab (m_routes = new routes::RoutePanel{ m_controllers, this },
-            QIcon{ ":/icons/misc/path.svg" },
-            "");
+            "misc/path");
     addTab (new QWidget{ this },
-            QIcon{ ":/icons/misc/binary.svg" },
-            "");
+            "misc/binary");
     addTab (m_cfg = new config::ConfigPanel{ m_controllers, this},
-            QIcon{ ":/icons/misc/gear.svg" },
-            "");
+            "misc/gear");
 
     setTabToolTip (0, "Trains");
     setTabToolTip (1, "Actuators");
@@ -97,7 +94,6 @@ MainWidget::MainWidget (QWidget* parent) :
     setTabToolTip (5, "Settings");
 
     setIconSize ({ 24, 24 });
-
     }
 
 MainWidget::~MainWidget ()

@@ -11,6 +11,8 @@
 
 #include <layout/actuator.hpp>
 
+#include <utils/resources.hpp>
+
 #include <QIcon>
 
 namespace ui::actuators::resources
@@ -19,9 +21,8 @@ namespace ui::actuators::resources
 // Display information for an actuator icon
 struct iconInfo
     {
-    QString title;  ///< Title of this icon
-    QIcon   on;     ///< Actuator on state icon
-    QIcon   off;    ///< Actuator off state icon
+    QString                 title;  ///< Title of this icon
+    utils::resources::Icon  icon;   ///< Scheme aware icon
     };
 
 
@@ -39,28 +40,23 @@ inline iconInfo getIconInfo (layout::actuatorIcon icon)
         {
             {
             "Street Light",
-            QIcon{ ":/icons/switches/streetlight-on.svg"},
-            QIcon{ ":/icons/switches/streetlight-off.svg"},
+            "switches/streetlight"
             },
             {
             "Mast Light",
-            QIcon{ ":/icons/switches/mast-light-on.svg"},
-            QIcon{ ":/icons/switches/mast-light-off.svg"},
+            "switches/mast-light",
             },
             {
             "Layout Lighting",
-            QIcon{ ":/icons/switches/lightbulb.svg"},
-            QIcon{ ":/icons/switches/lightbulb-off.svg"},
+            "switches/lightbulb"
             },
             {
             "Straight Turnout Left",
-            QIcon{ ":/icons/switches/left-track-left.svg"       },
-            QIcon{ ":/icons/switches/left-track-straight.svg"   }
+            "switches/left-track"
             },
             {
             "Straight Turnout Right",
-            QIcon{ ":/icons/switches/right-track-right.svg"     },
-            QIcon{ ":/icons/switches/right-track-straight.svg"  }
+            "switches/right-track"
             }
         };
 

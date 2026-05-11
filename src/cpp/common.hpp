@@ -59,6 +59,12 @@ using identityType = typename _identityType<T>::type;
 #endif // __cpp_lib_type_identity
 
 
+enum userDataRole
+    {
+    genericData = Qt::UserRole, ///< Generic user data. Always leave this available to clients
+    schemeIcon                  ///< Icon without the color scheme applied
+    };
+
 template<class T, size_t N>
 constexpr bool contains (const T (&arr)[N], const identityType<T>& val)
     {

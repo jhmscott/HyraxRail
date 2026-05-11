@@ -28,8 +28,7 @@ ActuatorButton::ActuatorButton (const layout::Actuator& actuator, QWidget* paren
 
     m_button = new common::IconToggle
         {
-        icon.on,
-        icon.off,
+        icon.icon,
         false,
         parent
         };
@@ -124,7 +123,7 @@ void ActuatorButton::editActuator ()
             auto icon = resources::getIconInfo (newIcon);
 
             m_actuator.setIcon (newIcon);
-            m_button->setIcons (icon.on, icon.off);
+            m_button->setIcon (icon.icon);
             }
 
         if (newAddr != m_actuator.getAddress ())

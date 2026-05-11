@@ -1,62 +1,120 @@
 <RCC>
     <qresource prefix="/">
-        <file>icons/misc/cell-signal-full.svg</file>
-        <file>icons/misc/cell-signal-high.svg</file>
-        <file>icons/misc/cell-signal-low.svg</file>
-        <file>icons/misc/cell-signal-medium.svg</file>
-        <file>icons/misc/cell-signal-x.svg</file>
-        <file>icons/misc/circle-play.svg</file>
-        <file>icons/misc/gear.svg</file>
-        <file>icons/misc/path.svg</file>
-        <file>icons/misc/split.svg</file>
-        <file>icons/misc/stop.svg</file>
-        <file>icons/misc/train.svg</file>
-        <file>icons/misc/train-track.svg</file>
+        <!--Fonts-->
         <file>fonts/DSEG7-Classic/DSEG7Classic-Bold.ttf</file>
         <file>fonts/DSEG7-Classic/DSEG7Classic-BoldItalic.ttf</file>
         <file>fonts/DSEG7-Classic/DSEG7Classic-LightItalic.ttf</file>
         <file>fonts/DSEG7-Classic/DSEG7Classic-Regular.ttf</file>
-        <file>icons/functions/engine.svg</file>
-        <file>icons/functions/headlights.svg</file>
-        <file>icons/functions/lightbulb.svg</file>
-        <file>icons/functions/megaphone.svg</file>
-        <file>icons/functions/plugs-connected.svg</file>
-        <file>icons/misc/prohibit-inset.svg</file>
-        <file>icons/functions/radical.svg</file>
-        <file>icons/functions/snail.svg</file>
-        <file>icons/functions/speaker-high.svg</file>
-        <file>icons/functions/tire.svg</file>
-        <file>icons/switches/left-track-left.svg</file>
-        <file>icons/switches/left-track-straight.svg</file>
-        <file>icons/switches/right-track-right.svg</file>
-        <file>icons/switches/right-track-straight.svg</file>
-        <file>icons/functions/chart-line-up.svg</file>
-        <file>icons/misc/trash.svg</file>
-        <file>icons/misc/plus.svg</file>
+        
+        <!--Text-->        
+        <file>text/LICENSE_LUCIDE</file>
+        <file>text/LICENSE_PHOSPHOR</file>
+        <file>text/DSEG-LICENSE.txt</file>
         <file>text/README.md</file>
         <file>text/LICENSE</file>
-        <file>icons/misc/cell-signal-grey.svg</file>
-        <file>icons/misc/plugs-connected.svg</file>
-        <file>icons/misc/unplug.svg</file>
-        <file>icons/misc/dot.svg</file>
-        <file>icons/misc/empty-dot.svg</file>
+
+        <!--App Icon Variants-->        
         <file>icons/app/conductor-hyrax.svg</file>
         <file>icons/app/conductor-hyrax.ico</file>
         <file>icons/app/conductor-hyrax-mini.svg</file>
-        <file>text/LICENSE_LUCIDE</file>
-        <file>text/LICENSE_PHOSPHOR</file>
-        <file>icons/misc/arrow-left.svg</file>
-        <file>icons/misc/binary.svg</file>
-        <file>text/DSEG-LICENSE.txt</file>
-        <file>icons/trains/dcc.svg</file>
-        <file>icons/trains/mfx.svg</file>
-        <file>icons/misc/question.svg</file>
-        <file>icons/trains/mm.svg</file>
-        <file>icons/switches/lightbulb.svg</file>
-        <file>icons/switches/lightbulb-off.svg</file>
-        <file>icons/switches/mast-light-off.svg</file>
-        <file>icons/switches/mast-light-on.svg</file>
-        <file>icons/switches/streetlight-off.svg</file>
-        <file>icons/switches/streetlight-on.svg</file>
+
+        <!--Misc Icons - Light -->
+        <file>icons/light/misc/gear.svg</file>
+        <file>icons/light/misc/path.svg</file>
+        <file>icons/light/misc/split.svg</file>
+        <file>icons/light/misc/train.svg</file>
+        <file>icons/light/misc/train-track.svg</file>
+        <file>icons/light/misc/plus.svg</file>
+        <file>icons/light/misc/dot.svg</file>
+        <file>icons/light/misc/empty-dot.svg</file>
+        <file>icons/light/misc/arrow-left.svg</file>
+        <file>icons/light/misc/binary.svg</file>
+        <file>icons/light/misc/question.svg</file>
+
+        <!--Function Icons - Light-->
+        <file>icons/light/functions/engine.svg</file>
+        <file>icons/light/functions/headlights.svg</file>
+        <file>icons/light/functions/lightbulb.svg</file>
+        <file>icons/light/functions/megaphone.svg</file>
+        <file>icons/light/functions/plugs-connected.svg</file>
+        <file>icons/light/functions/radical.svg</file>
+        <file>icons/light/functions/snail.svg</file>
+        <file>icons/light/functions/speaker-high.svg</file>
+        <file>icons/light/functions/tire.svg</file>
+        <file>icons/light/functions/chart-line-up.svg</file>
+
+        <!--Actuator Icons - Light-->
+        <file>icons/light/switches/left-track-on.svg</file>
+        <file>icons/light/switches/left-track-off.svg</file>
+        <file>icons/light/switches/right-track-on.svg</file>
+        <file>icons/light/switches/right-track-off.svg</file>
+        <file>icons/light/switches/lightbulb-on.svg</file>
+        <file>icons/light/switches/lightbulb-off.svg</file>
+        <file>icons/light/switches/mast-light-off.svg</file>
+        <file>icons/light/switches/mast-light-on.svg</file>
+        <file>icons/light/switches/streetlight-off.svg</file>
+        <file>icons/light/switches/streetlight-on.svg</file>
+        
+        <!--Train Icons - Light-->
+        <file>icons/light/trains/dcc.svg</file>
+        <file>icons/light/trains/mfx.svg</file>
+        <file>icons/light/trains/mm.svg</file>
+
+        
+        <!--Misc Icons - Dark -->
+        <file>icons/dark/misc/gear.svg</file>
+        <file>icons/dark/misc/path.svg</file>
+        <file>icons/dark/misc/split.svg</file>
+        <file>icons/dark/misc/train.svg</file>
+        <file>icons/dark/misc/train-track.svg</file>
+        <file>icons/dark/misc/plus.svg</file>
+        <file>icons/dark/misc/dot.svg</file>
+        <file>icons/dark/misc/empty-dot.svg</file>
+        <file>icons/dark/misc/arrow-left.svg</file>
+        <file>icons/dark/misc/binary.svg</file>
+        <file>icons/dark/misc/question.svg</file>
+
+        <!--Function Icons - Dark-->
+        <file>icons/dark/functions/engine.svg</file>
+        <file>icons/dark/functions/headlights.svg</file>
+        <file>icons/dark/functions/lightbulb.svg</file>
+        <file>icons/dark/functions/megaphone.svg</file>
+        <file>icons/dark/functions/plugs-connected.svg</file>
+        <file>icons/dark/functions/radical.svg</file>
+        <file>icons/dark/functions/snail.svg</file>
+        <file>icons/dark/functions/speaker-high.svg</file>
+        <file>icons/dark/functions/tire.svg</file>
+        <file>icons/dark/functions/chart-line-up.svg</file>
+
+        <!--Actuator Icons - Dark-->
+        <file>icons/dark/switches/left-track-on.svg</file>
+        <file>icons/dark/switches/left-track-off.svg</file>
+        <file>icons/dark/switches/right-track-on.svg</file>
+        <file>icons/dark/switches/right-track-off.svg</file>
+        <file>icons/dark/switches/lightbulb-on.svg</file>
+        <file>icons/dark/switches/lightbulb-off.svg</file>
+        <file>icons/dark/switches/mast-light-off.svg</file>
+        <file>icons/dark/switches/mast-light-on.svg</file>
+        <file>icons/dark/switches/streetlight-off.svg</file>
+        <file>icons/dark/switches/streetlight-on.svg</file>
+        
+        <!--Train Icons - Dark-->
+        <file>icons/dark/trains/dcc.svg</file>
+        <file>icons/dark/trains/mfx.svg</file>
+        <file>icons/dark/trains/mm.svg</file>
+
+        <!--Common Icons-->        
+        <file>icons/common/misc/circle-play.svg</file>        
+        <file>icons/common/misc/prohibit-inset.svg</file>
+        <file>icons/common/misc/trash.svg</file>
+        <file>icons/common/misc/cell-signal-full.svg</file>
+        <file>icons/common/misc/cell-signal-high.svg</file>
+        <file>icons/common/misc/cell-signal-low.svg</file>
+        <file>icons/common/misc/cell-signal-medium.svg</file>
+        <file>icons/common/misc/cell-signal-x.svg</file>
+        <file>icons/common/misc/cell-signal-grey.svg</file>
+        <file>icons/common/misc/stop.svg</file>
+        <file>icons/common/misc/plugs-connected.svg</file>        
+        <file>icons/common/misc/unplug.svg</file>
     </qresource>
 </RCC>

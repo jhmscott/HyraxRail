@@ -24,13 +24,14 @@ constexpr uint MAX_OPACITY          = 128;  ///< Final opacity value
 constexpr uint ANIMATION_DURATION   = 250;  ///< In milseconds
 }
 
-HoverIcon::HoverIcon (const QIcon& icon, const QColor& hoverColor, style style, QWidget* parent) :
-    PointedButton (icon, "", parent),
+HoverIcon::HoverIcon (const utils::resources::Icon& icon, const QColor& hoverColor, style style, QWidget* parent) :
+    PointedIconButton (icon, parent),
     m_anim (new QPropertyAnimation{ this, "opacity", this }),
     m_hoverColor (hoverColor),
     m_style (style)
     {
     common::makeFrameless (*this);
+
     }
 
 void HoverIcon::paintEvent (QPaintEvent* event)
@@ -77,12 +78,12 @@ void HoverIcon::paintEvent (QPaintEvent* event)
 
         }
 
-    PointedButton::paintEvent (event);
+    PointedIconButton::paintEvent (event);
     }
 
 void HoverIcon::enterEvent (QEnterEvent* event)
     {
-    PointedButton::enterEvent (event);
+    PointedIconButton::enterEvent (event);
 
     m_anim->setStartValue (m_opacity);
     m_anim->setEndValue (constants::MAX_OPACITY);
@@ -96,7 +97,7 @@ void HoverIcon::enterEvent (QEnterEvent* event)
 
 void HoverIcon::leaveEvent (QEvent* event)
     {
-    PointedButton::leaveEvent (event);
+    PointedIconButton::leaveEvent (event);
 
     m_anim->setStartValue (m_opacity);
     m_anim->setEndValue (0);

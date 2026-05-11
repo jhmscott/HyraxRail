@@ -5,7 +5,9 @@
 
 #include <utils/string.hpp>
 
+#include <QApplication>
 #include <QFormLayout>
+#include <QStyleHints>
 #include <QValidator>
 
 namespace ui::actuators
@@ -32,9 +34,11 @@ EditActuatorDialog::EditActuatorDialog (control::ControllerBase&    controller,
 
     form->addRow ("Name",     m_name      = new QLineEdit{ this });
     form->addRow ("Address",  m_address   = new QSpinBox{ this });
-    form->addRow ("Icon",     m_icon      = new QComboBox{ this });
+    form->addRow ("Icon",     m_icon      = new common::SchemeComboBox{ this });
     form->addRow ("Mode",     m_mode      = new QComboBox{ this });
     form->addRow ("Duration", m_duration  = new QComboBox{ this });
+
+    setWindowIcon ("misc/split");
 
     m_name->setValidator (new QRegularExpressionValidator
                                 {
@@ -55,7 +59,7 @@ EditActuatorDialog::EditActuatorDialog (control::ControllerBase&    controller,
         layout::actuatorIcon    icon = static_cast<layout::actuatorIcon> (ii);
         auto                    info = resources::getIconInfo (icon);
 
-        m_icon->addItem (info.on,
+        m_icon->addItem (info.icon,
                          info.title,
                          QVariant::fromValue (icon));
         }

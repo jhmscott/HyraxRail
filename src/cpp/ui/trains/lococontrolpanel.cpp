@@ -19,16 +19,16 @@ namespace ui::trains
 
 struct protocolInfo
     {
-    const char* iconPath;
-    const char* tooltip;
+    utils::resources::Icon  iconPath;
+    const char*             tooltip;
     };
 
 static const protocolInfo PROTOCOLS[] =
     {
-    { ":/icons/trains/dcc.svg",     "NMRA DCC (Digital Command Control)"    },
-    { ":/icons/trains/mfx.svg",     "MFX (Märklin Digital)"                 },
-    { ":/icons/trains/mm.svg",      "Märklin-Motorola"                      },
-    { ":/icons/misc/question.svg",  ""                                      }
+    { "trains/dcc",     "NMRA DCC (Digital Command Control)"    },
+    { "trains/mfx",     "MFX (Märklin Digital)"                 },
+    { "trains/mm",      "Märklin-Motorola"                      },
+    { "misc/question",  ""                                      }
     };
 
 LocoControlPanel::LocoControlPanel (control::ControllerManager* controllers, vAlignment align, QWidget* parent) :
@@ -41,7 +41,7 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager* controllers, vAl
 
     m_controllerInfo = new ControllerInfo (controllers->size () > 0 ? &((*controllers)[0]) : NULL, this, false);
 
-    m_locos = new QComboBox{ this };
+    m_locos = new common::SchemeComboBox{ this };
 
     m_locos->setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Maximum);
 
@@ -62,7 +62,7 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager* controllers, vAl
         proto = PROTOCOLS[m_currentLoco.getProtocol ()];
         }
 
-    m_proto = new QPushButton{ QIcon{ proto.iconPath }, "", this };
+    m_proto = new common::SchemeIconButton{ proto.iconPath, this };
 
     m_proto->setToolTip (proto.tooltip);
     m_proto->setIconSize (QSize{ 40, 30 });
@@ -120,7 +120,7 @@ void LocoControlPanel::add (control::ControllerBase& controller)
         std::string         name        = loco.getName ();
         layout::Locomotive* locoInCb    = new layout::Locomotive{ std::move (loco) };
 
-        m_locos->addItem (QIcon{ ":/icons/misc/train.svg" },
+        m_locos->addItem ("misc/train",
                           name.c_str (),
                           QVariant::fromValue (locoInCb));
 
@@ -162,7 +162,7 @@ void LocoControlPanel::onLocoChange (int idx)
                 m_currentLoco.getController ()));
         }
 
-    m_proto->setIcon (QIcon{ proto.iconPath });
+    m_proto->setIcon (proto.iconPath);
     m_proto->setToolTip (proto.tooltip);
     }
 
