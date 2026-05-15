@@ -37,12 +37,12 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>6.10.1</QtInstall>
+    <QtInstall>6.11.0</QtInstall>
     <QtModules>core;gui;network;widgets;serialport;</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
-    <QtInstall>6.10.1</QtInstall>
+    <QtInstall>6.11.0</QtInstall>
     <QtModules>core;gui;network;widgets;serialport;</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
     <QtDeploy>true</QtDeploy>
@@ -158,6 +158,7 @@
     <ClCompile Include="..\src\cpp\ui\common\autogrid.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\formdialog.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\hexvalidator.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\hostentry.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\hovericon.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\icontoggle.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\ipfield.cpp">
@@ -198,6 +199,7 @@
     <ClCompile Include="..\src\cpp\ui\trains\functionpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\lococontrolpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\speedcontrol.cpp" />
+    <ClCompile Include="..\src\cpp\utils\device.cpp" />
     <ClCompile Include="..\src\cpp\utils\os.cpp" />
     <ClCompile Include="..\src\cpp\utils\pinger.cpp" />
     <ClCompile Include="..\src\cpp\utils\resources.cpp" />
@@ -218,6 +220,8 @@
     <ClInclude Include="..\src\cpp\ui\common\formdialog.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\hexvalidator.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\hovericon.hpp" />
+    <QtMoc Include="..\src\cpp\ui\common\hostentry.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\hostfield.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\icontoggle.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\optionaldropdown.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\ipfield.hpp" />

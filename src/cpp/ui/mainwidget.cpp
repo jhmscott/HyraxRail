@@ -45,8 +45,9 @@ MainWidget::MainWidget (QWidget* parent) :
                                                                                .toUtf8      ()
                                                                                .toStdString ();
         QString     transport   = settings.value (controller + "/transport","").toString    ();
-        QString     address     = settings.value (controller + "/address",  "").toString    ();
+        QString     host        = settings.value (controller + "/host",     "").toString    ();
         int         port        = settings.value (controller + "/port",      0).toInt       ();
+        int         hostType    = settings.value (controller + "/hostType",  0).toInt       ();
 
         if ("TCP" == transport)
             {
@@ -63,7 +64,8 @@ MainWidget::MainWidget (QWidget* parent) :
 
         utils::device::socketInfo skt;
 
-        skt.addr = QHostAddress{ address };
+        skt.host = utils::device::HostInfo::fromString (host,
+                                                        static_cast<utils::device::HostInfo::type> (hostType));
         skt.port = port;
 
         info.info = skt;
@@ -139,8 +141,10 @@ MainWidget::~MainWidget ()
                            (*m_controllers)[ii].getProtocol ().name.c_str ());
         settings.setValue (controller + "/transport",
                            transport);
-        settings.setValue (controller + "/address",
-                           skt.addr.toString ());
+        settings.setValue (controller + "/host",
+                           skt.host.toString ());
+        settings.setValue (controller + "/hostType",
+                           static_cast<int> (skt.host.getType ()));
         settings.setValue (controller + "/port",
                            skt.port);
         }

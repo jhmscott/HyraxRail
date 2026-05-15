@@ -61,8 +61,16 @@ inline void setThreadName (std::string_view name, std::jthread& thread)
 ///
 /// @param[in]  title                   Notification title
 /// @param[in]  description      Notification text
-/// 
+///
 ///////////////////////////////////////////////////////////////////////////////
 void notify (std::string_view title, std::string_view description);
+
+///////////////////////////////////////////////////////////////////////////////
+/// Check if IPv6 is available on this machine
+///
+/// @return     True if IPv6 is available
+///
+///////////////////////////////////////////////////////////////////////////////
+bool isIPv6Available ();
 
 } // namespace utils::os

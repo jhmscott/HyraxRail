@@ -13,6 +13,7 @@
 #include <QWidget>
 
 #include <ui/common/hexvalidator.hpp>
+#include <ui/common/hostfield.hpp>
 #include <ui/common/shortcutlineedit.hpp>
 
 
@@ -24,7 +25,7 @@ namespace ui::common
 /// Base class for IP address entry
 ///
 //////////////////////////////////////////////////////////////////////////////
-class IpField : public QWidget
+class IpField : public QWidget, public AbstractHostField
     {
     Q_OBJECT
 public:
@@ -61,13 +62,21 @@ public:
     ///
     /// @return     True if the field has a valid IP address
     //////////////////////////////////////////////////////////////////////////////
-    bool hasAcceptableInput () const
+    virtual bool hasAcceptableInput () const override
         {
         return std::all_of (m_fields.begin (),
                             m_fields.end (),
                             [] (ShortcutLineEdit* edit) -> bool
                             { return edit->hasAcceptableInput (); });
         }
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Get the IP entered in this field as host info
+    ///
+    /// @return     User entered host info
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual utils::device::HostInfo getHostInfo () const override { return getValue (); }
 
 signals:
     //////////////////////////////////////////////////////////////////////////////

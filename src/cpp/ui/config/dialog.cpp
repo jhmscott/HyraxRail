@@ -37,7 +37,6 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
 
     m_layout = new QFormLayout{ this };
 
-    setWindowTitle ("Controller Settings");
     setWindowIcon ("misc/gear");
 
     m_controller    = new common::OptionalDropdown{ this };
@@ -80,11 +79,13 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
     if (NULL == controller)
         {
         setNetworkMode ();
+        setWindowTitle ("Add Controller");
         }
     else
         {
         utils::device::deviceInfo device = controller->getDeviceInfo ();
 
+        m_name->setText (controller->getFriendlyName ().c_str ());
         m_controller->setIndexByUserData (&controller->getMetaClass ());
         m_protocol->setIndexByUserData (&controller->getProtocol ());
         m_transport->setIndexByUserData (device.type);
@@ -99,6 +100,8 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
             m_network->setInfo (device.info);
             setNetworkMode ();
             }
+
+        setWindowTitle ("Edit Controller Settings");
         }
 
     layout->addLayout (m_layout);
@@ -125,6 +128,11 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
             &QLineEdit::textChanged,
              this,
             &Dialog::inputChanged);
+
+    connect (m_transport,
+            &common::OptionalDropdown::currentIndexChanged,
+             this,
+            &Dialog::setTransportProto);
 
     setLayout (layout);
     }
@@ -183,4 +191,20 @@ bool Dialog::hasAcceptableInput() const
            m_name->hasAcceptableInput ();
     }
 
-}
+QString Dialog::getErrorString () const
+    {
+    QString error;
+
+    if (not m_name->hasAcceptableInput ())
+        {
+        error = "Enter a controller name";
+        }
+    else if (not m_active->hasAcceptableInput ())
+        {
+        error = m_active->getErrorString ();
+        }
+
+    return error;
+    }
+
+} // namespace ui::config

@@ -8,8 +8,6 @@
  * @copyright   Copyright (c) 2026 Justin Scott
  */
 
-
-
 #pragma once
 
 #include <bitset>
@@ -52,10 +50,92 @@ using mask = std::bitset<NUM_TYPES>;
 // TCP/UDP port number, 16-bits
 using portNumber_t = uint16_t;
 
+
+///////////////////////////////////////////////////////////////////////////////
+/// Network host info, wraps either an IP address or DNS host name
+///
+///////////////////////////////////////////////////////////////////////////////
+class HostInfo
+    {
+public:
+    // Type of network host, kept in sync with m_value index
+    enum class type
+        {
+        IP,         ///< IPv4 or IPv6
+        HOSTNAME,   ///< DNS host name
+        EMPTY       ///< Emty object
+        };
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Default constructor
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    HostInfo () = default;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Implicit copy constructor from IP address
+    ///
+    /// @param[in]  addr        Host IP address
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    HostInfo (const QHostAddress& addr) :
+        m_value (addr)
+        {}
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get what type of host info this is
+    ///
+    /// @return     What type of host
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    type getType () const { return static_cast<type> (m_value.index ()); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the IP address for this host
+    ///
+    /// @return     Host IP address
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    QHostAddress toAddress () const;
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Convert this to a string
+    ///
+    /// @return     IP/hostname string
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    QString toString () const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Check if this empty or not
+    ///
+    /// @return     true if this contains host info
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    operator bool () const { return type::EMPTY != getType (); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Create a host info object from a string
+    ///
+    /// @param[in]  string      host info string
+    /// @param[in]  type        If type::IP, string is an IP address
+    ///                         If type::HOSTNAME, string is a DNS hostname
+    ///
+    /// @return     Host info object
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    static HostInfo fromString (const QString& string, type type);
+
+private:
+    // Host info storage
+    std::variant<QHostAddress, QString, std::nullopt_t> m_value = std::nullopt;
+    };
+
 // Information needed to bind to a socket
 struct socketInfo
     {
-    QHostAddress    addr;       ///< IPv4/IPv6 address
+    HostInfo        host;       ///< IPv4/IPv6 address, or DNS hostname
     portNumber_t    port;       ///< TCP/UDP port number
     };
 
@@ -134,7 +214,7 @@ constexpr bool isDeviceSupported (type type, const mask& mask)
 /// @param[in]  mask               Device type mask
 ///
 /// @return     true is device is of an enabled type
-    /// 
+///
 ///////////////////////////////////////////////////////////////////////////////
 inline bool isDeviceSupported (const QIODevice& device, const mask& mask)
     {

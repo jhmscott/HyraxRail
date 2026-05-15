@@ -12,6 +12,9 @@
 #include <res/version.h>
 #include <utils/os.hpp>
 
+#include <QNetworkInterface>
+#include <QHostAddress>
+
 #ifdef Q_OS_WIN
 #include <debugapi.h>
 #include <processthreadsapi.h>
@@ -159,6 +162,41 @@ void notify (std::string_view title, std::string_view description)
         }
 
 #endif // Q_OS_WIN
+    }
+
+bool isIPv6Available ()
+    {
+    bool hasIpv6 = false;
+
+    // Loop through available network adapters
+    for (const QNetworkInterface& netInterface : QNetworkInterface::allInterfaces ())
+        {
+        // Filter out the loopback and adapters in the "down" link state
+        if (    netInterface.flags ().testFlag (QNetworkInterface::IsUp) &&
+            not netInterface.flags ().testFlag (QNetworkInterface::IsLoopBack))
+            {
+            // Loop through each address for that netowrk adapter
+            for (const QNetworkAddressEntry& entry : netInterface.addressEntries ())
+                {
+                // If it's an IPv6 address and it's not in the link local address state,
+                // which typically indicates no DHCP lease has been acquired
+                if (    entry.ip ().protocol () == QAbstractSocket::IPv6Protocol &&
+                    not entry.ip ().isLinkLocal ())
+                    {
+                    hasIpv6 = true;
+                    break;
+                    }
+                }
+            }
+
+        if (hasIpv6)
+            {
+            // Stop search early
+            break;
+            }
+        }
+
+    return hasIpv6;
     }
 
 } // namespace utils::os

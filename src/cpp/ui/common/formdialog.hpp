@@ -47,6 +47,13 @@ protected:
                                     ///  Derived classes are responsible for
                                     ///  adding this to their central layout
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Handle the mouse enter event
+    ///
+    /// @param[in]  event       Mouse enter event
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual void enterEvent (QEnterEvent* event) override;
 private:
     //////////////////////////////////////////////////////////////////////////////
     /// Virtual function to check if all fields in the derived class have
@@ -56,6 +63,14 @@ private:
     ///
     //////////////////////////////////////////////////////////////////////////////
     virtual bool hasAcceptableInput () const = 0;
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Get the message to display to the user to explain why the input is invalid
+    ///
+    /// @return     Error string
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual QString getErrorString () const { return ""; }
 
     };
 } // namespace ui::common

@@ -1,0 +1,104 @@
+/**
+ * @file        common/hostentry.hpp
+ * @brief       Entry field for network host name
+ * @author      Justin Scott
+ * @date        2026-05-10
+ *
+ * @copyright   Copyright (c) 2026 Justin Scott
+ */
+
+#pragma once
+
+#include <ui/common/hostfield.hpp>
+
+#include <QHostInfo>
+#include <QLineEdit>
+
+
+namespace ui::common
+{
+
+//////////////////////////////////////////////////////////////////////////////
+/// Entry field for network host name
+///
+//////////////////////////////////////////////////////////////////////////////
+class HostEntryField : public QLineEdit, public AbstractHostField
+    {
+    Q_OBJECT
+public:
+    // validity of input
+    enum class validity
+        {
+        NON_RFC_1123_COMPLIANT, ///< Text entered doesn't meet RFC 1123
+        NON_EXISTENT_HOST,      ///< Host name is valid, but does not exist
+        VALID                   ///< Valid hostname and exist
+        };
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  parent      Parent widget
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    explicit HostEntryField (QWidget* parent);
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Check if the field contains a valid host name
+    ///
+    /// @return     true if field contains a valid host name
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual bool hasAcceptableInput () const override;
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Get the validity of the input
+    ///
+    /// @return     validity::VALID, or the reason it is invalid
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    validity getValidityState () const;
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Get the hostname entered in this field
+    ///
+    /// @return     User entered host info
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual utils::device::HostInfo getHostInfo () const override
+        { return utils::device::HostInfo::fromString (text (), utils::device::HostInfo::type::HOSTNAME); }
+
+signals:
+    //////////////////////////////////////////////////////////////////////////////
+    /// Signaled when the validity of the text entered changes
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void validityChanged ();
+
+private:
+    QTimer* m_timer;
+    bool    m_validHostName = false;
+
+private slots:
+    //////////////////////////////////////////////////////////////////////////////
+    /// Handles the text input changed
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void inputChanged ();
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Handles the input reaching stability. That is, no text has been entered
+    /// in more than 1 second
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void inputStable ();
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Handles the host name lookup completing
+    ///
+    /// @param[in]  host        Host looked up
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void hostLookedUp (const QHostInfo& host);
+    };
+
+} // namespace ui::commmon

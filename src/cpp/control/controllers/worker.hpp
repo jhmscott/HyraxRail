@@ -153,7 +153,7 @@ public:
         healthLevel                 level;  ///< Enumerated health value
         std::chrono::milliseconds   ping;   ///< Connection ping (only for socket connections)
         };
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
@@ -162,7 +162,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     ConnectionWorkerThread (std::string_view controllerName, std::unique_ptr<ProtocolBase>&& proto);
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Destructor. Closes the connection
     ///
@@ -190,7 +190,7 @@ public:
 
         return newTask->getFuture ();
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the health of the connection
     ///
@@ -198,7 +198,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     health getConnectionHealth () const { return m_health; }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the protocol type's meta class
     ///
@@ -206,7 +206,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     const control::ProtocolMetaClassBase& getProtocol () const { return m_proto->getMetaClass (); }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the connection device information
     ///
@@ -227,7 +227,7 @@ private:
         ///
         ///////////////////////////////////////////////////////////////////////////////
         virtual ~TaskBase () {}
-            
+
         ///////////////////////////////////////////////////////////////////////////////
         /// Call the task functions
         ///
@@ -237,7 +237,7 @@ private:
         virtual void callContained (ProtocolBase& protocol) = 0;
         };
 
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Derived templated task
     ///
@@ -263,7 +263,7 @@ private:
             m_args ({ std::forward<PassedArgs> (args)... }),
             m_func (func)
             {}
-            
+
         ///////////////////////////////////////////////////////////////////////////////
         /// Execute the contained task
         ///
@@ -301,7 +301,7 @@ private:
                     {}
                 }
             }
-        
+
         ///////////////////////////////////////////////////////////////////////////////
         /// Get the future for this task. Undefined to call this more than once
         ///

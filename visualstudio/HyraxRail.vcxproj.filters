@@ -201,6 +201,9 @@
     <ClInclude Include="..\src\cpp\utils\resources.hpp">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\hostfield.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cpp\main.cpp">
@@ -350,6 +353,12 @@
     <ClCompile Include="..\src\cpp\utils\resources.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\hostentry.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\utils\device.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\control\protocols\base.hpp">
@@ -482,6 +491,9 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\actuators\actuatorbutton.hpp">
       <Filter>Header Files\ui\actuators</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\common\hostentry.hpp">
+      <Filter>Header Files\ui\common</Filter>
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\config\deviceinfo.hpp">
       <Filter>Header Files\ui\config</Filter>

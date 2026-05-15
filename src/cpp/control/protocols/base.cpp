@@ -63,7 +63,8 @@ bool ProtocolBase::maintainConnection ()
                 {
                 auto& sktInfo = std::get<utils::device::socketInfo> (m_deviceInfo.info);
 
-                skt->connectToHost (sktInfo.addr, sktInfo.port);
+                skt->connectToHost (sktInfo.host.toAddress (),
+                                    sktInfo.port);
                 connected = skt->waitForConnected ();
                 }
 
@@ -80,7 +81,8 @@ QHostAddress ProtocolBase::getIpAddress ()
 
     if (isNetworkConnection ())
         {
-        addr = std::get<utils::device::socketInfo> (m_deviceInfo.info).addr;
+        addr = std::get<utils::device::socketInfo>
+                    (m_deviceInfo.info).host.toAddress ();
         }
 
     return addr;

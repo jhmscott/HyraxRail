@@ -24,11 +24,6 @@ MainWindow::MainWindow(QWidget *parent) :
     setCentralWidget (new ui::MainWidget{ this });
     setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Minimum);
     setWindowTitle (PRODUCT_NAME_FULL);
-
-    QMetaObject::connectSlotsByName (this);
-
-    // utils::os::notify (winId (), "Window Created", "Finished Creating the main window");
-
     }
 
 MainWindow::~MainWindow()

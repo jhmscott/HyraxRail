@@ -15,6 +15,7 @@
 
 namespace ui::common
 {
+
 FormDialog::FormDialog (QWidget* parent) :
     common::SchemeDialog (parent)
     {
@@ -31,10 +32,23 @@ FormDialog::FormDialog (QWidget* parent) :
             &QDialog::reject);
     }
 
+void FormDialog::enterEvent (QEnterEvent* event)
+    {
+    QPushButton* btn = m_buttons->button (QDialogButtonBox::Ok);
+
+    if (hasAcceptableInput ())
+        {
+        btn->setToolTip ("");
+        }
+    else
+        {
+        btn->setToolTip (getErrorString ());
+        }
+    }
+
 void FormDialog::inputChanged ()
     {
     m_buttons->button (QDialogButtonBox::Ok)->setEnabled (hasAcceptableInput ());
     }
 
-
-}
+} // namespace ui::common
