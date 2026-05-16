@@ -19,6 +19,7 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QShortcut>
 #include <QTextBrowser>
 
 #include <res/version.h>
@@ -158,6 +159,11 @@ HelpGroup::HelpGroup (QWidget* parent) :
     layout->addWidget (licBtn);
     layout->addWidget (new common::Separator{ this });
     layout->addWidget (creditsBtn);
+
+    new QShortcut{ QKeySequence::HelpContents,
+                   this, // parent
+                   this, // reciever
+                  &HelpGroup::help };
 
     connect (aboutBtn,
             &QPushButton::released,

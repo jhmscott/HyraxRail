@@ -14,6 +14,7 @@
 
 #include <ui/common/hexvalidator.hpp>
 #include <ui/common/hostfield.hpp>
+#include <ui/common/pointedwidget.hpp>
 #include <ui/common/shortcutlineedit.hpp>
 
 
@@ -32,14 +33,11 @@ public:
     //////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
-    /// @param[in]  delimiter   Delimiter character between octets
-    /// @param[in]  numOctets   Number of octet fields
-    /// @param[in]  hex         If true, octets are hexadecimal formatted
-    ///                         If false, octets are decimal formatted
+    /// @param[in]  proto       IP protocol version
     /// @param[in]  parent      Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
-    IpField (QChar delimeter, size_t numOctets, bool hex, QWidget* parent);
+    IpField (QAbstractSocket::NetworkLayerProtocol proto, QWidget* parent);
 
     //////////////////////////////////////////////////////////////////////////////
     /// Get the IP address entered
@@ -61,6 +59,7 @@ public:
     /// Check if this field has a valid IP address
     ///
     /// @return     True if the field has a valid IP address
+    ///
     //////////////////////////////////////////////////////////////////////////////
     virtual bool hasAcceptableInput () const override
         {
@@ -85,11 +84,10 @@ signals:
     //////////////////////////////////////////////////////////////////////////////
     void inputChanged ();
 
-protected:
-    std::vector<ShortcutLineEdit*>  m_fields;       ///< Octets fields
-    bool                            m_hex;          ///< True for hexadecimal format octets
-                                                    ///  false for decimal format octets
-    QChar                           m_delimiter;    ///< Delimiter field
+private:
+    std::vector<ShortcutLineEdit*>              m_fields;   ///< Octets fields
+    PointedIconButton*                          m_copy;     ///< Copy button
+    const QAbstractSocket::NetworkLayerProtocol m_proto;    ///< Network layer rotocol
 
 private slots:
     //////////////////////////////////////////////////////////////////////////////
@@ -107,6 +105,26 @@ private slots:
     ///
     //////////////////////////////////////////////////////////////////////////////
     void back (int idx);
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Handle the paste event
+    ///
+    /// @param[in]  field       Octet field recieving the paste
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void paste (QLineEdit* field);
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Handle change to the input in one of the fields
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void handleInput ();
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Copy the IP address to clipboard
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void copyIpToClipboard ();
     };
 
 
@@ -124,7 +142,7 @@ public:
     ///
     //////////////////////////////////////////////////////////////////////////////
     explicit IpV4Field (QWidget* parent) :
-        IpField ('.', 4, false, parent)
+        IpField (QHostAddress::IPv4Protocol, parent)
         {}
     };
 
@@ -143,4 +161,5 @@ public:
     //////////////////////////////////////////////////////////////////////////////
     explicit IpV6Field (QWidget* parent);
     };
+
 } // namespace ui::common

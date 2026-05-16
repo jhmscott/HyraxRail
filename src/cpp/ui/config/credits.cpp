@@ -20,6 +20,7 @@
 #include <QBoxLayout>
 #include <QFile>
 #include <QLabel>
+#include <QShortcut>
 
 
 namespace ui::config
@@ -60,6 +61,7 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
         this
         };
 
+    // Setup main components
 
     m_licenses  = new QGroupBox{ "Third Party Software Notices", this };
     m_credits   = new QGroupBox{ "Credits", this };
@@ -67,11 +69,13 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
     m_navBar    = new QWidget{ this };
     m_licTitle  = new QLabel{ this };
 
+    // Fonts
+
     font.setPixelSize (16);
-
     boldFont = font;
-
     boldFont.setBold (true);
+
+    // 3rd party licenses
 
     for (int ii = 0; ii < NUM_SW_LICENSES; ++ii)
         {
@@ -100,6 +104,8 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
 
     m_licenses->setLayout (licLayout);
 
+    // Credits
+
     for (size_t ii = 0; ii < numCredits; ++ii)
         {
         QLabel* label = new QLabel{ this };
@@ -118,11 +124,14 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
             }
         }
 
+    // Components styling and sizing
+
     m_credits->setLayout (creditLayout);
 
     m_licTitle->setFont (boldFont);
 
     back->setIconSize (QSize{ 20, 20 });
+    back->setShortcut (QKeySequence::Back);
 
     navLayout->addWidget (back,         0, Qt::AlignLeft);
     navLayout->addWidget (m_licTitle,   0, Qt::AlignLeft);
@@ -139,11 +148,15 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
     m_credits->setSizePolicy  (QSizePolicy::Minimum,
                                QSizePolicy::Maximum);
 
+    // Add widgets to layout
+
     layout->addWidget (m_licenses);
     layout->addWidget (m_credits);
     layout->addWidget (m_navBar, 0, Qt::AlignLeft);
     layout->addWidget (m_licViewer);
     layout->setContentsMargins (0, 0, 0, 0);
+
+    // Main widget styling and sizing
 
     mainWidget->setSizePolicy (QSizePolicy::Minimum,
                                QSizePolicy::Maximum);
@@ -153,10 +166,30 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
 
     mainLayout->addWidget (mainWidget, 0, Qt::AlignTop);
 
+    // Keyboard shortcut
+
+    new QShortcut{ QKeySequence::Back,
+                   this,    // parent
+                   this,    // reciever
+                  &CreditsDialog::back };
+
+    new QShortcut{ QKeySequence::Backspace,
+                   this,    // parent
+                   this,    // reciever
+                  &CreditsDialog::back };
+
+    new QShortcut{ QKeySequence::Forward,
+                   this,    // parent
+                   this,    // reciever
+                  &CreditsDialog::forward };
+    // Signals
+
     connect (back,
             &QPushButton::released,
              this,
             &CreditsDialog::back);
+
+    // Margins, title, layout
 
     setContentsMargins (0, 0, 0, 0);
     setWindowTitle (TITLE);
@@ -186,6 +219,16 @@ void CreditsDialog::openLicense (swLicense lic)
         m_credits->setHidden        (true);
 
         m_licTitle->setText (softwareName[lic]);
+        }
+
+    m_lastPage = lic;
+    }
+
+void CreditsDialog::forward ()
+    {
+    if (NUM_SW_LICENSES != m_lastPage)
+        {
+        openLicense (m_lastPage);
         }
     }
 

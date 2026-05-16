@@ -20,32 +20,62 @@
 namespace ui::config
 {
 
+//////////////////////////////////////////////////////////////////////////////
+/// Dialog to display 3rd party licenses and accreditation
+///
+//////////////////////////////////////////////////////////////////////////////
 class CreditsDialog : public QDialog
     {
 public:
+    // Dialog box title
     static inline const QString TITLE = "Third Party Licenses & Credits";
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  parent      Parent widget
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     explicit CreditsDialog (QWidget* parent);
 
 private:
+    // 3rd Party licenses
     enum swLicense
         {
-        SWLIC_LUCIDE,
-        SWLIC_POSPHUR,
-        SWLIC_DSEG,
+        SWLIC_LUCIDE,   ///< Lucide Icons
+        SWLIC_POSPHUR,  ///< Phosphur Icons
+        SWLIC_DSEG,     ///< DSEG font
 
-        NUM_SW_LICENSES
+        NUM_SW_LICENSES ///< Delimiter only
         };
 
-    QGroupBox*      m_licenses;
-    QGroupBox*      m_credits;
-    QTextBrowser*   m_licViewer;
-    QWidget*        m_navBar;
-    QLabel*         m_licTitle;
+    QGroupBox*      m_licenses;                     ///< 3rd party licenses
+    QGroupBox*      m_credits;                      ///< Special credits
+    QTextBrowser*   m_licViewer;                    ///< License text viewer
+    QWidget*        m_navBar;                       ///< Navigation bar, title and back button
+    QLabel*         m_licTitle;                     ///< Name of the license
+    swLicense       m_lastPage = NUM_SW_LICENSES;   ///< Last license viewed when on main page
 
+private slots:
+    //////////////////////////////////////////////////////////////////////////////
+    /// Open a license file
+    ///
+    /// @param[in]  lic     Which license file to open
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     void openLicense (swLicense lic);
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Go to the previous page (home page)
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     void back ();
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Go forward, back to the previous viewed license page
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void forward ();
     };
 
 }

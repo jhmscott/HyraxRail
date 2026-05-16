@@ -30,6 +30,7 @@
         <file>icons/light/misc/arrow-left.svg</file>
         <file>icons/light/misc/binary.svg</file>
         <file>icons/light/misc/question.svg</file>
+        <file>icons/light/misc/clipboard-copy.svg</file>
 
         <!--Function Icons - Light-->
         <file>icons/light/functions/engine.svg</file>
@@ -73,6 +74,7 @@
         <file>icons/dark/misc/arrow-left.svg</file>
         <file>icons/dark/misc/binary.svg</file>
         <file>icons/dark/misc/question.svg</file>
+        <file>icons/dark/misc/clipboard-copy.svg</file>
 
         <!--Function Icons - Dark-->
         <file>icons/dark/functions/engine.svg</file>

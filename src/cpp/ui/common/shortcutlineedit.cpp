@@ -22,6 +22,11 @@ void ShortcutLineEdit::keyPressEvent (QKeyEvent* event)
         {
         event->accept ();
         }
+    else if (m_overridePaste && event->matches (QKeySequence::Paste))
+        {
+        emit pasteSpecial ();
+        event->accept ();
+        }
     else
         {
         if (Qt::Key_Backspace == event->key () && text ().isEmpty ())

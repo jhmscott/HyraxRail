@@ -36,6 +36,25 @@ public:
         m_shortcut (shortcut)
         {}
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Set a custom paste handler
+    ///
+    /// @tparam     Func        Paste handler function type
+    ///
+    /// @param[in]  reciever    Object to recieve the paste event
+    /// @param[in]  slot        Paste handler slot
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    template<class Func>
+    void setPasteHandler (QObject* reciever, Func slot)
+        {
+        connect (this,
+                &ShortcutLineEdit::pasteSpecial,
+                 reciever,
+                 slot);
+        m_overridePaste = true;
+        }
+
 signals:
     //////////////////////////////////////////////////////////////////////////////
     /// Signals the user has requested to move to the next widget
@@ -48,6 +67,12 @@ signals:
     ///
     //////////////////////////////////////////////////////////////////////////////
     void back ();
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Custom paste signal
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void pasteSpecial ();
 
 protected:
     //////////////////////////////////////////////////////////////////////////////
@@ -67,7 +92,8 @@ protected:
     void keyReleaseEvent (QKeyEvent* event);
 
 private:
-    QChar   m_shortcut;         ///< Next widget shortcut character
-    bool    m_empty = false;    ///< True if line edit is empty
+    QChar   m_shortcut;                 ///< Next widget shortcut character
+    bool    m_empty         = false;    ///< True if line edit is empty
+    bool    m_overridePaste = false;    ///< True if the paste signal has been overriden
     };
 }
