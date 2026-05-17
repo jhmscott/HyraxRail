@@ -1,0 +1,14 @@
+default : true
+
+# Line length
+MD013 : false
+
+# Inline HTML
+MD033 :
+  # HTML image tag allowed, as it is more capable than [img] in md
+  # Anchor tag allowed for cross referencing
+  allowed_elements : [img, a]
+
+# First line in a file should be a top-level heading
+# Disabled to support project icon in heading
+MD041 : false

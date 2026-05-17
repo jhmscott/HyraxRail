@@ -19,26 +19,29 @@ Like the protocols, controllers use a meta class system, and all derived control
 ## <a name="meta"></a>Meta Classes
 
 The control module relies on a meta class system. This provides:
- * Metadata about the controller model and protocol
- * Mechanism for creating classes by type name
- 
+
+* Metadata about the controller model and protocol
+* Mechanism for creating classes by type name
+
 This allows for the UI to adapt to new controller models without needing to change the UI code. It also provides a mechaism to store and retrieve controller data between session (i.e. registrty).
 
 ### Protocol Meta Class
 
 The protocol meta class provides the following metadata about the protocol:
- * Type name (this is the same as the name of the class)
- * Friendly name (used in UI)
- * Supported transport layer protocols (UDP, TCP, COM)
- * Default port
- * Default transport protocol
- 
+
+* Type name (this is the same as the name of the class)
+* Friendly name (used in UI)
+* Supported transport layer protocols (UDP, TCP, COM)
+* Default port
+* Default transport protocol
+
 ### Controller Meta Class
 
 The controller meta class provides the following metadata about the controller model:
- * Type name (this is the same as the name of the class)
- * Friendly name (used in UI)
- * Supported protocols
+
+* Type name (this is the same as the name of the class)
+* Friendly name (used in UI)
+* Supported protocols
 
 ## <a name="utils"></a>Utilities
 

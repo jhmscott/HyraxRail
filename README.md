@@ -3,16 +3,17 @@
 # HyraxRail
 
 Hyrax Rail is a cross platform model train controller app, based on QT 6, using QWidgets. The main principles of it's design are as follows:
- * Cross Platform : Rely on QT as much as possible to maintain portability
- * Zero config : Pull as many settings from the controller as possible to make use plug and play
- * Extendable : It should be possible to add new models of controller without changing the UI code
+
+* Cross Platform : Rely on QT as much as possible to maintain portability
+* Zero config : Pull as many settings from the controller as possible to make use plug and play
+* Extendable : It should be possible to add new models of controller without changing the UI code
 
 [![Qt](https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=white)](https://www.qt.io)
 [![Apache 2.0 License](https://img.shields.io/badge/license-Apache%20License%202.0-blue)](https://www.apache.org/licenses/LICENSE-2.0)
 
 ## Architecture
 
-```
+```text
 ├── Control : Logic for communicating with the train controllers
 │   ├── controllers : Controller communication implementation
 │   └── protocols : Application layer protocols used for communication
@@ -29,20 +30,20 @@ Hyrax Rail is a cross platform model train controller app, based on QT 6, using 
 
 ## Controller Support
 
-* Märklin Central Station 1 (60212) : _In progress_ 
+* Märklin Central Station 1 (60212) : _In progress_
 * Märklin Central Station 2 (60215) : _Planned_
 * DCC-Ex : _planned_
 
 ## Operating System Support
 
- * Windows : _Done_
- * Mac OS : _In progress_
- * Android : _In progress_
- * Linux : _Planned_
+* Windows : _Done_
+* Mac OS : _In progress_
+* Android : _In progress_
+* Linux : _Planned_
 
 ## Getting Started
 
-To get started, navigate to the <img src="./res/icons/misc/gear.svg" alt="gear" width="16" height="16">_settings_ tab and select <img src="./res/icons/misc/plus.svg" alt="plus" width="16" height="16">_Add Controller_. 
+To get started, navigate to the <img src="./res/icons/light/misc/gear.svg" alt="gear" width="16" height="16">_settings_ tab and select <img src="./res/icons/light/misc/plus.svg" alt="plus" width="16" height="16">_Add Controller_.
 
 Select the controller model from the drop-down. The default protocol and connection settings will automatically populate. If you wish to change them, do so here. Note that the COM port and IP address fields must always be manually entered. Press OK to continue.
 
