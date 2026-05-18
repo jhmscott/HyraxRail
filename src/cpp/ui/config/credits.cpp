@@ -25,7 +25,7 @@
 
 namespace ui::config
 {
-static const char* const softwareName[] =
+static const char* const SOFTWARE_NAMES[] =
     {
     "Luicde Icons",
     "Posphur Icons",
@@ -36,6 +36,8 @@ static const char* const softwareName[] =
 CreditsDialog::CreditsDialog (QWidget* parent) :
     QDialog (parent)
     {
+    ASSERT_ARRAY_LENGTH (SOFTWARE_NAMES, NUM_SW_LICENSES);
+
     static const char* const creditsText[] =
         {
         "App icon by Rose Spencer-Spreeuw "
@@ -79,7 +81,7 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
 
     for (int ii = 0; ii < NUM_SW_LICENSES; ++ii)
         {
-        QPushButton* btn = new common::PointedButton{ softwareName[ii], this };
+        QPushButton* btn = new common::PointedButton{ SOFTWARE_NAMES[ii], this };
 
         btn->setFont (font);
         btn->setSizePolicy (QSizePolicy::Maximum,
@@ -198,13 +200,15 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
 
 void CreditsDialog::openLicense (swLicense lic)
     {
-    static const char* const licenseFiles[] =
+    static const char* const LICENSE_FILES[] =
         {
         ":/text/LICENSE_LUCIDE",
         ":/text/LICENSE_PHOSPHOR",
         ":/text/DSEG-LICENSE.txt"
         };
-    QFile file (licenseFiles[lic]);
+    ASSERT_ARRAY_LENGTH (LICENSE_FILES, NUM_SW_LICENSES);
+
+    QFile file (LICENSE_FILES[lic]);
 
     if (file.open (QIODevice::ReadOnly))
         {
@@ -218,7 +222,7 @@ void CreditsDialog::openLicense (swLicense lic)
         m_licenses->setHidden       (true);
         m_credits->setHidden        (true);
 
-        m_licTitle->setText (softwareName[lic]);
+        m_licTitle->setText (SOFTWARE_NAMES[lic]);
         }
 
     m_lastPage = lic;

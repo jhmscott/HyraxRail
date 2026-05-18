@@ -121,11 +121,12 @@ public:
     // Status of a command, extracted from the reply
     enum replyStatus
         {
-        REPLY_OK,               ///< Command suceeded
-        REPLY_NERROR_NOAPPEND,  ///< Could not append the object
-        REPLY_NERROR_NOCONTROL, ///< You do not have control of this object
+        REPLY_OK,                           ///< Command suceeded
+        REPLY_NERROR_NOAPPEND,              ///< Could not append the object
+        REPLY_NERROR_NOCONTROL,             ///< You do not have control of this object
 
-        REPLY_EMPTY             ///< Not a real status, used to signal an unitialized status object
+        REPLY_EMPTY,                        ///< Not a real status, used to signal an unitialized status object
+        NUM_REPLY_STATUSES = REPLY_EMPTY    ///< Delimeter only
         };
 
     // Status of a locomotive

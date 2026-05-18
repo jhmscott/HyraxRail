@@ -105,7 +105,7 @@ FunctionPanel::FunctionPanel (vAlignment align, QWidget* parent) :
 
 void FunctionPanel::setLocomotive (const layout::Locomotive& loco)
     {
-    static std::array<utils::resources::Icon, layout::funcInfo::NUM_TRUE_ICONS> icons =
+    static utils::resources::Icon ICONS[] =
         {
         // lights
         "functions/headlights",        ///< ICON_FUNC_LIGHT_HEADLIGHT,
@@ -123,6 +123,8 @@ void FunctionPanel::setLocomotive (const layout::Locomotive& loco)
         "functions/chart-line-up",
         "functions/snail",
         };
+    ASSERT_ARRAY_LENGTH (ICONS, layout::funcInfo::NUM_TRUE_ICONS);
+
 
     m_loco = loco;
 
@@ -167,7 +169,7 @@ void FunctionPanel::setLocomotive (const layout::Locomotive& loco)
                 m_btns[idx]->setInstanceNum (0);
                 }
 
-            m_btns[idx]->setIcon (icons[icon]);
+            m_btns[idx]->setIcon (ICONS[icon]);
             m_btns[idx]->setText ("");
             }
 

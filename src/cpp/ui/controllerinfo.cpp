@@ -165,6 +165,7 @@ void ControllerInfo::setHealth (control::ConnectionWorkerThread::health health)
 
         "misc/cell-signal-grey"
         };
+    ASSERT_ARRAY_LENGTH (healthIcons, control::ConnectionWorkerThread::NUM_HEALTH_VALUES);
 
     m_connectionIcon->setIcon (healthIcons[health.level]);
 

@@ -59,7 +59,7 @@ static constexpr const char* const ARG_STRINGS[] =
     "name2",
     "name3"
     };
-
+ASSERT_ARRAY_LENGTH (ARG_STRINGS, ECoSProtocol::NUM_ARGS);
 
 static constexpr const char* const REPLY_STATUS_STRINGS[]
     {
@@ -67,6 +67,7 @@ static constexpr const char* const REPLY_STATUS_STRINGS[]
     "(NERROR_NOAPPEND)",
     "(NERROR_NOCONTROL)"
     };
+ASSERT_ARRAY_LENGTH (REPLY_STATUS_STRINGS, ECoSProtocol::NUM_REPLY_STATUSES);
 
 
 static ECoSProtocol::argType argTypeFromString (std::string_view str)
@@ -144,7 +145,7 @@ std::string ECoSProtocol::quad::serialize () const
 
 void ECoSProtocol::issueCommand (cmd cmd, dynamicId id, std::initializer_list<arg> args)
     {
-    static constexpr std::array<const char*, ECoSProtocol::NUM_CMD> CMD_STRINGS =
+    static constexpr const char* const CMD_STRINGS[] =
         {
         "queryObjects",
         "set",
@@ -155,6 +156,7 @@ void ECoSProtocol::issueCommand (cmd cmd, dynamicId id, std::initializer_list<ar
         "release",
         "link"
         };
+    ASSERT_ARRAY_LENGTH (CMD_STRINGS, ECoSProtocol::NUM_CMD);
 
     std::stringstream ss;
 

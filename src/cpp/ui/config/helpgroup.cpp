@@ -8,11 +8,14 @@
  */
 
 #include <ui/common/pointedwidget.hpp>
+#include <ui/common/schemeicon.hpp>
 #include <ui/common/seperator.hpp>
 #include <ui/common/utils.hpp>
 
 #include <ui/config/credits.hpp>
 #include <ui/config/helpgroup.hpp>
+
+#include <utils/string.hpp>
 
 #include <QApplication>
 #include <QBoxLayout>
@@ -26,33 +29,55 @@
 
 
 #define HELPGROUP_ABOUT_MESSAGE         \
-    PRODUCT_DESCRIPTION         "\n"    \
-    "Version " VERSION_STRING   "\n"    \
-    "Build " __DATE__           "\n"    \
-    COPYRIGHT
+    PRODUCT_DESCRIPTION         "<BR>"  \
+    "Version " VERSION_STRING   "<BR>"  \
+    "Build " __DATE__           "<BR>"  \
+    COPYRIGHT                   "<BR>"  \
+    "Github : <a href='https://github.com/jhmscott/HyraxRail'>" \
+                      "https://github.com/jhmscott/HyraxRail</a>"
 
 namespace ui::config
 {
 
-class RichTextDialog : public QDialog
+///////////////////////////////////////////////////////////////////////////////
+/// Simple dialog with a rich text browser
+///
+///////////////////////////////////////////////////////////////////////////////
+class RichTextDialog : public common::SchemeDialog
     {
 public:
+    // Text mode
     enum class mode
         {
-        MD,
-        TXT
+        MD,     ///< Markdown
+        TXT     ///< Plain text
         };
 
+    // Resize mode
     enum resize
         {
-        NO_RESIZE   = 0x0,
-        AUTO_WIDTH  = 0x01,
-        AUTO_HEIGHT = 0x02,
-        AUTO_RESIZE = AUTO_WIDTH | AUTO_HEIGHT
+        NO_RESIZE   = 0x0,                      ///< Don't resize the dialog
+        AUTO_WIDTH  = 0x01,                     ///< Resize the dialog to match the text browser's width
+        AUTO_HEIGHT = 0x02,                     ///< Resize the dialog to match the text browser's height
+        AUTO_RESIZE = AUTO_WIDTH | AUTO_HEIGHT  ///< Resize the dialog to match the text browser
         };
 
-     RichTextDialog (const char* title, const char* path, mode type, resize resize, QWidget* parent) :
-        QDialog (parent)
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  title       Dialog box title
+    /// @param[in]  path        Path to file to view
+    /// @param[in]  type        Type of text file
+    /// @param[in]  resize      Resize mode
+    /// @param[in]  parent      Parent widget
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    RichTextDialog (const char* title,
+                    const char* path,
+                    mode        type,
+                    resize      resize,
+                    QWidget*    parent) :
+        common::SchemeDialog (parent)
         {
         QVBoxLayout*    layout = new QVBoxLayout{ this };
         QFile           file (path);
@@ -115,6 +140,12 @@ public:
     };
 
 
+///////////////////////////////////////////////////////////////////////////////
+/// Style a button for the help menu
+///
+/// @param[in,out]  btn     Button to style
+///
+///////////////////////////////////////////////////////////////////////////////
 static void styleButton (QPushButton& btn)
     {
     QFont font = QApplication::font ();
@@ -128,10 +159,6 @@ static void styleButton (QPushButton& btn)
     common::makeFrameless (btn);
     }
 
-static QString escape (QString str)
-    {
-    return str.replace ("&", "&&");
-    }
 
 HelpGroup::HelpGroup (QWidget* parent) :
     QGroupBox ("Help", parent)
@@ -142,7 +169,7 @@ HelpGroup::HelpGroup (QWidget* parent) :
     QPushButton* aboutBtn   = new common::PointedButton{ "About Hyrax Rail",      this };
     QPushButton* aboutQtBtn = new common::PointedButton{ "About Qt",              this };
     QPushButton* licBtn     = new common::PointedButton{ "License Info",          this };
-    QPushButton* creditsBtn = new common::PointedButton{ escape (CreditsDialog::TITLE), this};
+    QPushButton* creditsBtn = new common::PointedButton{ utils::str::escape (CreditsDialog::TITLE), this};
 
     styleButton (*help);
     styleButton (*aboutBtn);
@@ -195,9 +222,14 @@ HelpGroup::HelpGroup (QWidget* parent) :
 
 void HelpGroup::about ()
     {
-    QMessageBox::about (this,
-                        "About",
-                        HELPGROUP_ABOUT_MESSAGE);
+    QMessageBox msg{ this };
+
+    msg.setWindowTitle ("About");
+    msg.setTextFormat (Qt::RichText);
+    msg.setText (HELPGROUP_ABOUT_MESSAGE);
+    msg.setIconPixmap (QIcon{ ":/icons/app/conductor-hyrax.ico" }.pixmap (64, 64));
+
+    msg.exec ();
     }
 
 void HelpGroup::help ()
@@ -211,6 +243,7 @@ void HelpGroup::help ()
         this
         };
 
+    dlg.setWindowIcon ("misc/question");
     dlg.exec ();
     }
 
@@ -225,6 +258,7 @@ void HelpGroup::license ()
         this
         };
 
+    dlg.setWindowIcon ("misc/key");
     dlg.exec ();
     }
 

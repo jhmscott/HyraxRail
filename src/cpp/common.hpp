@@ -37,6 +37,17 @@
 
 #define NULL nullptr
 
+//////////////////////////////////////////////////////////////////////////////
+// Static assert that an array is an expected length
+// Useful when array is tied to enum values
+///
+/// @param[in]  array       Array to check size of
+/// @param[in]  len         Expected length of array
+///
+//////////////////////////////////////////////////////////////////////////////
+#define ASSERT_ARRAY_LENGTH(array, len) static_assert (std::size (array) == len,\
+                                                       "Array size mismatch")
+
 enum class vAlignment
     {
     LEFT,
@@ -99,6 +110,7 @@ size_t findArrayIdx (const T (&arr)[N], U& val)
 
     return it - arr;
     }
+
 
 namespace control
 {

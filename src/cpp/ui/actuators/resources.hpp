@@ -36,7 +36,7 @@ struct iconInfo
 //////////////////////////////////////////////////////////////////////////////
 inline iconInfo getIconInfo (layout::actuatorIcon icon)
     {
-    static const iconInfo icons[] =
+    static const iconInfo ICONS[] =
         {
             {
             "Street Light",
@@ -59,8 +59,9 @@ inline iconInfo getIconInfo (layout::actuatorIcon icon)
             "switches/right-track"
             }
         };
+    ASSERT_ARRAY_LENGTH (ICONS, layout::NUM_TRUE_ICONS);
 
-    return icons[icon];
+    return ICONS[icon];
     }
 
 } // namespace ui::actuators::resources

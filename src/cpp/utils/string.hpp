@@ -129,5 +129,15 @@ extract (std::string_view str, std::string_view start, std::string_view end)
 ///////////////////////////////////////////////////////////////////////////////
 inline std::string formatOnOff (bool bl) { return bl ? "On" : "Off"; }
 
+///////////////////////////////////////////////////////////////////////////////
+/// Escape text for use with a QButton
+///
+/// @param[in]  str     String to escape
+///
+/// @return     Escaped string
+///
+///////////////////////////////////////////////////////////////////////////////
+static QString escape (QString str) { return str.replace ("&", "&&"); }
+
 } // namespace utils::str
 
