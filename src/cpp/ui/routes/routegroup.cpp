@@ -54,7 +54,7 @@ RouteGroup::RouteGroup (control::ControllerBase& controller, QWidget* parent) :
     common::makeFrameless (*addBtn);
 
     addLayout->addWidget (addBtn, 0, Qt::AlignLeft);
-    addLayout->addWidget (new QLabel{ "Add Route", this }, 0, Qt::AlignLeft);
+    addLayout->addWidget (new QLabel{ tr ("Add Route"), this }, 0, Qt::AlignLeft);
     addLayout->setAlignment (Qt::AlignLeft);
 
     layout->addItem (m_gridLayout);

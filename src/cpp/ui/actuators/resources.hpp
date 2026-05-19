@@ -39,23 +39,23 @@ inline iconInfo getIconInfo (layout::actuatorIcon icon)
     static const iconInfo ICONS[] =
         {
             {
-            "Street Light",
+            QObject::tr ("Street Light"),
             "switches/streetlight"
             },
             {
-            "Mast Light",
+            QObject::tr ("Mast Light"),
             "switches/mast-light",
             },
             {
-            "Layout Lighting",
+            QObject::tr ("Layout Lighting"),
             "switches/lightbulb"
             },
             {
-            "Straight Turnout Left",
+            QObject::tr ("Straight Turnout Left"),
             "switches/left-track"
             },
             {
-            "Straight Turnout Right",
+            QObject::tr ("Straight Turnout Right"),
             "switches/right-track"
             }
         };

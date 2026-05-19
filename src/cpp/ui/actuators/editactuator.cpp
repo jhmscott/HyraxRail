@@ -32,11 +32,11 @@ EditActuatorDialog::EditActuatorDialog (control::ControllerBase&    controller,
     QFormLayout* form   = new QFormLayout;
     QVBoxLayout* layout = new QVBoxLayout{ this };
 
-    form->addRow ("Name",     m_name      = new QLineEdit{ this });
-    form->addRow ("Address",  m_address   = new QSpinBox{ this });
-    form->addRow ("Icon",     m_icon      = new common::SchemeComboBox{ this });
-    form->addRow ("Mode",     m_mode      = new QComboBox{ this });
-    form->addRow ("Duration", m_duration  = new QComboBox{ this });
+    form->addRow (tr ("Name"),     m_name      = new QLineEdit{ this });
+    form->addRow (tr ("Address"),  m_address   = new QSpinBox{ this });
+    form->addRow (tr ("Icon"),     m_icon      = new common::SchemeComboBox{ this });
+    form->addRow (tr ("Mode"),     m_mode      = new QComboBox{ this });
+    form->addRow (tr ("Duration"), m_duration  = new QComboBox{ this });
 
     setWindowIcon ("misc/split");
 
@@ -51,8 +51,8 @@ EditActuatorDialog::EditActuatorDialog (control::ControllerBase&    controller,
     m_address->setMaximum (80);
     m_address->setButtonSymbols (QAbstractSpinBox::PlusMinus);
 
-    m_mode->addItem ("Switch", QVariant::fromValue (layout::actuatorMode::SWITCH));
-    m_mode->addItem ("Pulse",  QVariant::fromValue (layout::actuatorMode::PULSE));
+    m_mode->addItem (tr ("Switch"), QVariant::fromValue (layout::actuatorMode::SWITCH));
+    m_mode->addItem (tr ("Pulse"),  QVariant::fromValue (layout::actuatorMode::PULSE));
 
     for (uint ii = 0; ii < layout::NUM_TRUE_ICONS; ++ii)
         {

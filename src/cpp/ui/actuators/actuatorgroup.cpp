@@ -55,7 +55,7 @@ ActuatorGroup::ActuatorGroup (control::ControllerBase&  controller,
     common::makeFrameless (*addBtn);
 
     addLayout->addWidget (addBtn, 0, Qt::AlignLeft);
-    addLayout->addWidget (new QLabel{ "Add Switching Item", this }, 0, Qt::AlignLeft);
+    addLayout->addWidget (new QLabel{ tr ("Add Switching Item"), this }, 0, Qt::AlignLeft);
     addLayout->setAlignment (Qt::AlignLeft);
 
     layout->addItem (m_gridLayout);

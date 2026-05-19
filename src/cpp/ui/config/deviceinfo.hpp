@@ -23,9 +23,6 @@
 
 namespace ui::config
 {
-
-
-
 //////////////////////////////////////////////////////////////////////////////
 /// Base class for tansport layer device setting entry. Defines interface,
 /// not widgets

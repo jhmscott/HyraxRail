@@ -141,17 +141,17 @@ IpField::IpField (QAbstractSocket::NetworkLayerProtocol proto, QWidget* parent) 
 
         m_fields[ii]->setContextMenuPolicy (Qt::ActionsContextMenu);
 
-        m_fields[ii]->addAction ("Paste",
+        m_fields[ii]->addAction (tr ("Paste"),
                                  QKeySequence::Paste,
                                  this,
                                  pasteHandler);
 
-        m_fields[ii]->addAction ("Copy",
+        m_fields[ii]->addAction (tr ("Copy"),
                                  QKeySequence::Copy,
                                  m_fields[ii],
                                 &QLineEdit::copy);
 
-        m_fields[ii]->addAction ("Cut",
+        m_fields[ii]->addAction (tr ("Cut"),
                                  QKeySequence::Cut,
                                  m_fields[ii],
                                 &QLineEdit::cut);
@@ -166,7 +166,7 @@ IpField::IpField (QAbstractSocket::NetworkLayerProtocol proto, QWidget* parent) 
     m_copy = new PointedIconButton{ "misc/clipboard-copy", this };
 
     m_copy->setFixedSize (height, height);
-    m_copy->setToolTip ("Copy IP Address to Clipboard");
+    m_copy->setToolTip (tr ("Copy IP Address to Clipboard"));
     m_copy->setEnabled (false);
 
     layout->addWidget (m_copy);

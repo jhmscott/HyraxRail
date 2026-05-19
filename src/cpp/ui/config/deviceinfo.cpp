@@ -31,20 +31,20 @@ NetworkDeviceInfoWidget::NetworkDeviceInfoWidget (QWidget* parent, utils::device
     m_hostname  = new common::HostEntryField{ this };
     m_port      = new QLineEdit{ this };
 
-    m_network->addItem ("IPv4",     QVariant::fromValue (QHostAddress::IPv4Protocol));
+    m_network->addItem (tr ("IPv4"),     QVariant::fromValue (QHostAddress::IPv4Protocol));
 
     if (utils::os::isIPv6Available ())
         {
-        m_network->addItem ("IPv6", QVariant::fromValue (QHostAddress::IPv6Protocol));
+        m_network->addItem (tr ("IPv6"), QVariant::fromValue (QHostAddress::IPv6Protocol));
         }
 
-    m_network->addItem ("Host Name",QVariant::fromValue (HOST_NAME_TYPE));
+    m_network->addItem (tr ("Host Name"),QVariant::fromValue (HOST_NAME_TYPE));
 
-    m_layout->addRow ("Network Protocol",   m_network);
-    m_layout->addRow ("Address",            m_addressV4);
-    m_layout->addRow ("Address",            m_addressV6);
-    m_layout->addRow ("Host Name",          m_hostname);
-    m_layout->addRow ("Port",               m_port);
+    m_layout->addRow (tr ("Network Protocol"),   m_network);
+    m_layout->addRow (tr ("Address"),            m_addressV4);
+    m_layout->addRow (tr ("Address"),            m_addressV6);
+    m_layout->addRow (tr ("Host Name"),          m_hostname);
+    m_layout->addRow (tr ("Port"),               m_port);
 
     m_layout->setContentsMargins (0, 0, 0, 0);
 
@@ -153,15 +153,15 @@ QString NetworkDeviceInfoWidget::getErrorString () const
             {
             case validity::NON_RFC_1123_COMPLIANT:
                 {
-                error = "Invalid host name format \"" +
+                error = tr ("Invalid host name format \"") +
                         m_hostname->text () + "\"";
                 break;
                 }
             case validity::NON_EXISTENT_HOST:
                 {
-                error = "Host \""           +
+                error = tr ("Host \"")      +
                         m_hostname->text () +
-                        "\" does not exist";
+                        tr ("\" does not exist");
                 }
             }
         }
@@ -222,8 +222,8 @@ ComPortInfoWidget::ComPortInfoWidget (QWidget* parent) :
                          QVariant::fromValue (baud));
         }
 
-    m_layout->addRow ("Baud Rate",  m_baud);
-    m_layout->addRow ("COM Port",   m_comport);
+    m_layout->addRow (tr ("Baud Rate"),  m_baud);
+    m_layout->addRow (tr ("COM Port"),   m_comport);
 
     m_layout->setContentsMargins (0, 0, 0, 0);
 

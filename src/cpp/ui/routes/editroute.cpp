@@ -51,7 +51,7 @@ EditRouteDialog::EditRouteDialog (control::ControllerBase&  controller,
                 &FormDialog::inputChanged);
         }
 
-    QLabel* label = new QLabel{ "Name:", this };
+    QLabel* label = new QLabel{ tr ("Name:"), this };
 
     nameLayout->addWidget (label);
     nameLayout->addWidget (m_name = new QLineEdit{ this });
@@ -69,13 +69,13 @@ EditRouteDialog::EditRouteDialog (control::ControllerBase&  controller,
 
     if (NULL == route)
         {
-        setWindowTitle (QString::asprintf ("Add Route - %s",
-                                           controller.getFriendlyName ().c_str ()));
+        setWindowTitle (tr ("Add Route - ") +
+                        controller.getFriendlyName ().c_str ());
         }
     else
         {
-        setWindowTitle (QString::asprintf ("Edit Route - %s",
-                                           controller.getFriendlyName ().c_str ()));
+        setWindowTitle (tr ("Edit Route - ") +
+                        controller.getFriendlyName ().c_str ());
 
         m_name->setText (route->getName ().c_str ());
 

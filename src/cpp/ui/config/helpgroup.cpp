@@ -28,16 +28,17 @@
 #include <res/version.h>
 
 
-#define HELPGROUP_ABOUT_MESSAGE         \
-    PRODUCT_DESCRIPTION         "<BR>"  \
-    "Version " VERSION_STRING   "<BR>"  \
-    "Build " __DATE__           "<BR>"  \
-    COPYRIGHT                   "<BR>"  \
-    "Github : <a href='https://github.com/jhmscott/HyraxRail'>" \
-                      "https://github.com/jhmscott/HyraxRail</a>"
+
 
 namespace ui::config
 {
+static const QString HELPGROUP_ABOUT_MESSAGE =
+    QObject::tr (PRODUCT_DESCRIPTION) + "<BR>"
+    "Version " VERSION_STRING           "<BR>"
+    "Build " __DATE__                   "<BR>" +
+    QObject::tr (COPYRIGHT) +           "<BR>"
+    "Github : <a href='https://github.com/jhmscott/HyraxRail'>"
+                      "https://github.com/jhmscott/HyraxRail</a>";
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Simple dialog with a rich text browser
@@ -72,11 +73,11 @@ public:
     /// @param[in]  parent      Parent widget
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    RichTextDialog (const char* title,
-                    const char* path,
-                    mode        type,
-                    resize      resize,
-                    QWidget*    parent) :
+    RichTextDialog (const QString&  title,
+                    const char*     path,
+                    mode            type,
+                    resize          resize,
+                    QWidget*        parent) :
         common::SchemeDialog (parent)
         {
         QVBoxLayout*    layout = new QVBoxLayout{ this };
@@ -103,7 +104,7 @@ public:
                 }
             else if (NO_RESIZE != resize)
                 {
-                for (const auto& line : qTokenize (contents, tr ("\n")))
+                for (const auto& line : qTokenize (contents, QString{ "\n" }))
                     {
                     width = std::max (width,
                                       fontMetrics.
@@ -161,14 +162,14 @@ static void styleButton (QPushButton& btn)
 
 
 HelpGroup::HelpGroup (QWidget* parent) :
-    QGroupBox ("Help", parent)
+    QGroupBox (tr ("Help"), parent)
     {
     QVBoxLayout* layout     = new QVBoxLayout{ this };
 
-    QPushButton* help       = new common::PointedButton{ "View Help",             this };
-    QPushButton* aboutBtn   = new common::PointedButton{ "About Hyrax Rail",      this };
-    QPushButton* aboutQtBtn = new common::PointedButton{ "About Qt",              this };
-    QPushButton* licBtn     = new common::PointedButton{ "License Info",          this };
+    QPushButton* help       = new common::PointedButton{ tr ("View Help"),             this };
+    QPushButton* aboutBtn   = new common::PointedButton{ tr ("About Hyrax Rail"),      this };
+    QPushButton* aboutQtBtn = new common::PointedButton{ tr ("About Qt"),              this };
+    QPushButton* licBtn     = new common::PointedButton{ tr ("License Info"),          this };
     QPushButton* creditsBtn = new common::PointedButton{ utils::str::escape (CreditsDialog::TITLE), this};
 
     styleButton (*help);
@@ -224,7 +225,7 @@ void HelpGroup::about ()
     {
     QMessageBox msg{ this };
 
-    msg.setWindowTitle ("About");
+    msg.setWindowTitle (tr ("About"));
     msg.setTextFormat (Qt::RichText);
     msg.setText (HELPGROUP_ABOUT_MESSAGE);
     msg.setIconPixmap (QIcon{ ":/icons/app/conductor-hyrax.ico" }.pixmap (64, 64));
@@ -236,7 +237,7 @@ void HelpGroup::help ()
     {
     RichTextDialog dlg
         {
-        "Help",
+        tr ("Help"),
         ":/text/README.md",
         RichTextDialog::mode::MD,
         RichTextDialog::NO_RESIZE,
@@ -251,7 +252,7 @@ void HelpGroup::license ()
     {
     RichTextDialog dlg
         {
-        "License",
+        tr ("License"),
         ":/text/LICENSE",
         RichTextDialog::mode::TXT,
         RichTextDialog::AUTO_WIDTH,

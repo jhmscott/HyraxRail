@@ -8,6 +8,7 @@
  */
 
 #include <ui/common/pointedwidget.hpp>
+#include <ui/common/utils.hpp>
 
 #include <ui/routes/editroute.hpp>
 #include <ui/routes/routebutton.hpp>
@@ -37,14 +38,16 @@ RouteButton::RouteButton (const layout::Route& route, QWidget* parent) :
     button->setIconSize (QSize{ 30, 30 });
     button->setStyleSheet ("QPushButton:pressed { background-color: royalblue; }");
 
+    common::refreshStyleSheetOnColorSchemeChange (*button);
+
     layout->addWidget (button);
     layout->addWidget (m_name = new QLabel{ m_route->getName ().c_str (), this });
 
     setContentsMargins (0, 20, 0, 0);
     setContextMenuPolicy (Qt::ActionsContextMenu);
 
-    addAction ("delete",this, &RouteButton::removeRoute);
-    addAction ("edit",  this, &RouteButton::editRoute);
+    addAction (tr ("Delete"),this, &RouteButton::removeRoute);
+    addAction (tr ("Edit"),  this, &RouteButton::editRoute);
 
     connect (button,
              &QPushButton::released,
@@ -57,7 +60,7 @@ RouteButton::RouteButton (const layout::Route& route, QWidget* parent) :
 
 void RouteButton::updateTooltip ()
     {
-    QString text = "Actuators:\n";
+    QString text = tr ("Actuators") + ":\n";
 
     for (const auto& [actuator, state] : m_route->getActuators ())
         {
@@ -73,9 +76,9 @@ void RouteButton::updateTooltip ()
 void RouteButton::removeRoute ()
     {
     if (QMessageBox::Yes == QMessageBox::question (this,
-                                                   "Delete Route",
-                                                   QString::asprintf ("Would you like to delete %s?",
-                                                                      m_route->getName ().c_str ())))
+                                                   tr ("Delete Route"),
+                                                   tr ("Would you like to delete ") +
+                                                   m_route->getName ().c_str ()     + "?"))
         {
         m_route->remove ();
 

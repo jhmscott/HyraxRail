@@ -17,23 +17,52 @@
 
 namespace ui::config
 {
+
+//////////////////////////////////////////////////////////////////////////////
+/// Group box for controller setting
+///
+//////////////////////////////////////////////////////////////////////////////
 class ControllerGroup : public QGroupBox
     {
     Q_OBJECT
 public:
+    //////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  controllers     List of controllers
+    /// @param[in]  parent          Parent widget
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     ControllerGroup (control::ControllerManager*    controllers,
                      QWidget*                       parent);
 
 private:
-    control::ControllerManager* m_controllers;
-    bool                        m_hasAddController = false;
+    control::ControllerManager* m_controllers;              ///< List of controllers
+    bool                        m_hasAddController = false; ///< Set once the controller
+                                                            ///  add widget has been added
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Open dialog to add a new controller
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     void addController ();
 
 private slots:
+    //////////////////////////////////////////////////////////////////////////////
+    /// Handle a controller being deleted
+    ///
+    /// @param[in]  controller      Controller being deleted
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     void onControllerDeleted (const control::ControllerBase& controller);
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Handle a new controller being added
+    ///
+    /// @param[in]  controller      Controller being added
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     void addControllerInfo (control::ControllerBase& controller);
     };
 
-}
+} // ui::config

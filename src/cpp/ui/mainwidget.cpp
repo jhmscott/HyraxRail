@@ -88,12 +88,12 @@ MainWidget::MainWidget (QWidget* parent) :
     addTab (m_cfg = new config::ConfigPanel{ m_controllers, this},
             "misc/gear");
 
-    setTabToolTip (0, "Trains");
-    setTabToolTip (1, "Actuators");
-    setTabToolTip (2, "Sensors");
-    setTabToolTip (3, "Routes");
-    setTabToolTip (4, "Programming");
-    setTabToolTip (5, "Settings");
+    setTabToolTip (0, tr ("Trains"));
+    setTabToolTip (1, tr ("Actuators"));
+    setTabToolTip (2, tr ("Sensors"));
+    setTabToolTip (3, tr ("Routes"));
+    setTabToolTip (4, tr ("Programming"));
+    setTabToolTip (5, tr ("Settings"));
 
     setIconSize ({ 24, 24 });
     }

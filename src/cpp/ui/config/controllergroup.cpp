@@ -24,7 +24,7 @@ namespace ui::config
 
 ControllerGroup::ControllerGroup (control::ControllerManager* controllers,
                                   QWidget*                   parent) :
-    QGroupBox ("Controllers", parent),
+    QGroupBox (tr ("Controllers"), parent),
     m_controllers (controllers)
     {
     QVBoxLayout* layout = new QVBoxLayout{ this };
@@ -38,7 +38,7 @@ ControllerGroup::ControllerGroup (control::ControllerManager* controllers,
 
     QHBoxLayout* addController  = new QHBoxLayout{ this };
     QPushButton* plusIcon       = new common::PointedIconButton{ "misc/plus", this};
-    QLabel*      plusLabel      = new QLabel{ "New Controller", this };
+    QLabel*      plusLabel      = new QLabel{ tr ("New Controller"), this };
     QFont        font           = QApplication::font ();
 
     font.setPixelSize (16);

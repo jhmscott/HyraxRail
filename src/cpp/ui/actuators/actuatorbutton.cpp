@@ -50,8 +50,8 @@ ActuatorButton::ActuatorButton (const layout::Actuator& actuator, QWidget* paren
 
     if (not dummy)
         {
-        addAction ("delete",this, &ActuatorButton::removeActuator);
-        addAction ("edit",  this, &ActuatorButton::editActuator);
+        addAction (tr ("Delete"),this, &ActuatorButton::removeActuator);
+        addAction (tr ("Edit"),  this, &ActuatorButton::editActuator);
         }
 
     connect (m_button,
@@ -80,9 +80,9 @@ void ActuatorButton::setState (bool state)
 void ActuatorButton::removeActuator ()
     {
     if (QMessageBox::Yes == QMessageBox::question (this,
-                                                   "Delete Actuator",
-                                                   QString::asprintf ("Would you like to delete %s?",
-                                                                      m_actuator.getName ().c_str ())))
+                                                   tr ("Delete Actuator"),
+                                                   tr ("Would you like to delete") +
+                                                   m_actuator.getName ().c_str ()  + "?"))
         {
         m_actuator.remove ();
         emit actuatorDeleted ();

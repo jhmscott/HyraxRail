@@ -71,15 +71,15 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
                               QVariant::fromValue (transport));
         }
 
-    m_layout->addRow ("Name",               m_name);
-    m_layout->addRow ("Controller Model",   m_controller);
-    m_layout->addRow ("Protocol",           m_protocol);
-    m_layout->addRow ("Transport Protocol", m_transport);
+    m_layout->addRow (tr ("Name"),               m_name);
+    m_layout->addRow (tr ("Controller Model"),   m_controller);
+    m_layout->addRow (tr ("Protocol"),           m_protocol);
+    m_layout->addRow (tr ("Transport Protocol"), m_transport);
 
     if (NULL == controller)
         {
         setNetworkMode ();
-        setWindowTitle ("Add Controller");
+        setWindowTitle (tr ("Add Controller"));
         }
     else
         {
@@ -101,7 +101,7 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
             setNetworkMode ();
             }
 
-        setWindowTitle ("Edit Controller Settings");
+        setWindowTitle (tr ("Edit Controller Settings"));
         }
 
     layout->addLayout (m_layout);
@@ -197,7 +197,7 @@ QString Dialog::getErrorString () const
 
     if (not m_name->hasAcceptableInput ())
         {
-        error = "Enter a controller name";
+        error = tr ("Enter a controller name");
         }
     else if (not m_active->hasAcceptableInput ())
         {

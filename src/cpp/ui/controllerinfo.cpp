@@ -144,8 +144,8 @@ void ControllerInfo::setController (control::ControllerBase& controller)
 
     m_stop->setChecked (m_controller->isEStopped ());
 
-    setToolTip (QString::asprintf ("Model: %s",
-                                   controller.getMetaClass ().friendlyName.c_str ()));
+    setToolTip (tr ("Model") + ": " +
+                controller.getMetaClass ().friendlyName.c_str ());
 
     refreshHealthIcon ();
     }
@@ -172,7 +172,7 @@ void ControllerInfo::setHealth (control::ConnectionWorkerThread::health health)
     if (control::ConnectionWorkerThread::HEALTH_DEAD            == health.level ||
         control::ConnectionWorkerThread::HEALTH_DISCONNECTED    == health.level)
         {
-        m_connectionIcon->setToolTip ("Disconnected");
+        m_connectionIcon->setToolTip (tr ("Disconnected"));
         }
     else if (control::ConnectionWorkerThread::HEALTH_UNAVAILABLE == health.level)
         {
@@ -180,12 +180,13 @@ void ControllerInfo::setHealth (control::ConnectionWorkerThread::health health)
         }
     else if (control::ConnectionWorkerThread::HEALTH_CONNECTED == health.level)
         {
-        m_connectionIcon->setToolTip ("Connected");
+        m_connectionIcon->setToolTip (tr ("Connected"));
         }
     else
         {
-        m_connectionIcon->setToolTip (QString::asprintf ("Ping %d ms",
-                                                         health.ping.count ()));
+        m_connectionIcon->setToolTip (tr ("Ping") + " " +
+                                      QString::number (health.ping.count ()) +
+                                      " ms");
         }
     }
 
@@ -199,11 +200,11 @@ void ControllerInfo::onConfig ()
 
 void ControllerInfo::onDelete ()
     {
-    QString msg = QString::asprintf ("Are you sure you want to delete %s?",
-                                     m_controller->getFriendlyName ().c_str ());
+    QString msg =   tr ("Are you sure you want to delete ")     +
+                    m_controller->getFriendlyName ().c_str ()   + "?";
 
     if (QMessageBox::Yes == QMessageBox::question (this,
-                                                   "Delete Controller",
+                                                   tr ("Delete Controller"),
                                                    msg))
         {
         emit deleted (*m_controller);

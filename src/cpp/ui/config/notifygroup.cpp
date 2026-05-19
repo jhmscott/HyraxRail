@@ -20,7 +20,7 @@
 namespace ui::config
 {
 NotifyGroup::NotifyGroup (QWidget* parent) :
-    QGroupBox ("Notifications", parent)
+    QGroupBox (tr ("Notifications"), parent)
     {
     QVBoxLayout*    layout  = new QVBoxLayout{ this };
     QFont           font    = QApplication::font ();
@@ -28,7 +28,7 @@ NotifyGroup::NotifyGroup (QWidget* parent) :
     font.setPixelSize (16);
 
     QHBoxLayout*    stopNotify  = new QHBoxLayout{ this };
-    QLabel*         stopLabel   = new QLabel{ "Global Stop", this};
+    QLabel*         stopLabel   = new QLabel{ tr ("Global Stop"), this};
 
     stopLabel->setFont (font);
 
@@ -36,7 +36,7 @@ NotifyGroup::NotifyGroup (QWidget* parent) :
     stopNotify->addWidget (new common::ToggleSwitch{ this }, 0, Qt::AlignRight);
 
     QHBoxLayout*    sensorNotify    = new QHBoxLayout{ this };
-    QLabel*         sensorLabel     = new QLabel{ "Sensors", this};
+    QLabel*         sensorLabel     = new QLabel{ tr ("Sensors"), this};
 
     sensorLabel->setFont (font);
 

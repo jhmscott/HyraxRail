@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QApplication::setApplicationName        (PRODUCT_NAME_SHORT);
-    QApplication::setApplicationDisplayName (PRODUCT_NAME_FULL);
+    QApplication::setApplicationDisplayName (QObject::tr (PRODUCT_NAME_FULL));
     QApplication::setOrganizationName       (COMPANY_NAME);
     QApplication::setOrganizationDomain     (COMPANY_DOMAIN);
     QApplication::setApplicationVersion     (VERSION_STRING);

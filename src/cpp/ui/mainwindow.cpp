@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
     setCentralWidget (new ui::MainWidget{ this });
     setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Minimum);
-    setWindowTitle (PRODUCT_NAME_FULL);
+    setWindowTitle (tr (PRODUCT_NAME_FULL));
     }
 
 MainWindow::~MainWindow()

@@ -18,11 +18,9 @@ namespace ui::config
 {
 ConfigPanel::ConfigPanel (control::ControllerManager* controllers, QWidget* parent)
     {
-    QVBoxLayout*        layout          = new QVBoxLayout{ this };
+    QVBoxLayout* layout = new QVBoxLayout{ this };
 
-    m_controllers = new ControllerGroup{ controllers, this };
-
-    layout->addWidget (m_controllers);
+    layout->addWidget (new ControllerGroup{ controllers, this });
     layout->addWidget (new NotifyGroup{ this });
     layout->addWidget (new HelpGroup{ this });
 

@@ -38,12 +38,12 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
     {
     ASSERT_ARRAY_LENGTH (SOFTWARE_NAMES, NUM_SW_LICENSES);
 
-    static const char* const creditsText[] =
+    static const QString CREDITS_TEXT[] =
         {
-        "App icon by Rose Spencer-Spreeuw "
+        tr ("App icon by Rose Spencer-Spreeuw ") +
         "(<a href=\"https://www.linkedin.com/in/rose-spencer-spreeuw-82278a1a1/\">Linkedin</a>)"
         };
-    static constexpr size_t numCredits = std::size (creditsText);
+    static constexpr size_t numCredits = std::size (CREDITS_TEXT);
 
     QFont           font        = QApplication::font ();
     QFont           boldFont;
@@ -65,8 +65,8 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
 
     // Setup main components
 
-    m_licenses  = new QGroupBox{ "Third Party Software Notices", this };
-    m_credits   = new QGroupBox{ "Credits", this };
+    m_licenses  = new QGroupBox{ tr ("Third Party Software Notices"), this };
+    m_credits   = new QGroupBox{ tr ("Credits"), this };
     m_licViewer = new QTextBrowser{ this };
     m_navBar    = new QWidget{ this };
     m_licTitle  = new QLabel{ this };
@@ -112,7 +112,7 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
         {
         QLabel* label = new QLabel{ this };
 
-        label->setText                  (creditsText[ii]);
+        label->setText                  (CREDITS_TEXT[ii]);
         label->setTextFormat            (Qt::RichText);
         label->setTextInteractionFlags  (Qt::TextBrowserInteraction);
         label->setOpenExternalLinks     (true);

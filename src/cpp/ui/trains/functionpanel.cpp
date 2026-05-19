@@ -175,18 +175,20 @@ void FunctionPanel::setLocomotive (const layout::Locomotive& loco)
 
         if (name.empty ())
             {
-            m_btns[idx]->setToolTip (QString::asprintf ("Function %d", idx));
+            m_btns[idx]->setToolTip (tr ("Function") + " " + QString::number (idx));
             }
         // Function 0 is pretty universally the main headlight
         else if (0 == idx)
             {
-            m_btns[idx]->setToolTip (QString::asprintf ("Function %d: Headlights", idx));
+            m_btns[idx]->setToolTip (tr ("Function") + " "  +
+                                     QString::number (idx)  + ": " +
+                                     tr ("Headlights"));
             }
         else
             {
-            m_btns[idx]->setToolTip (QString::asprintf ("Function %d: %s",
-                                                        idx,
-                                                        name.c_str ()));
+            m_btns[idx]->setToolTip (tr ("Function") + " "  +
+                                     QString::number (idx)  + ": " +
+                                     name.c_str ());
             }
 
         m_btns[idx]->setChecked (state);
