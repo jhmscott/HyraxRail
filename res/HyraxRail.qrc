@@ -120,5 +120,9 @@
         <file>icons/common/misc/stop.svg</file>
         <file>icons/common/misc/plugs-connected.svg</file>
         <file>icons/common/misc/unplug.svg</file>
+
+        <!--Translations-->
+        <file>translations/HyraxRail_vi_VN.qm</file>
+        <file>translations/HyraxRail_fr.qm</file>
     </qresource>
 </RCC>

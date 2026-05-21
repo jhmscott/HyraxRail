@@ -61,7 +61,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual Pinger::result ping () = 0;
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Virtual destructor
     ///
@@ -70,7 +70,7 @@ public:
     };
 
 // Platform and version dependent implementations
-    
+
 #ifdef Q_OS_WIN
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -80,7 +80,7 @@ public:
 class PingerWin :  public PingerImpl
     {
 public:
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
@@ -118,7 +118,7 @@ public:
         PingerWin (IcmpCreateFile ()),
         m_ip (_byteswap_ulong (ip))
         {}
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Perform a ping of the IPv4 address
     ///
@@ -165,7 +165,7 @@ public:
 
         return res;
         }
-        
+
 private:
     IPAddr m_ip;    ///< IPv4 address to ping
     };
@@ -189,7 +189,7 @@ public:
                    ip.c + std::size (ip.c),
                    m_ip.sin6_addr.u.Byte);
         }
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Perform a ping of the IPv6 address
     ///
@@ -267,7 +267,7 @@ public:
     explicit IpV4Pinger (quint32 ip):
         m_ip (__builtin_bswap32 (ip))
         {}
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Perform a ping of the IPv4 address
     ///

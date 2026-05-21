@@ -19,13 +19,13 @@
 
 namespace ui::config
 {
-
 //////////////////////////////////////////////////////////////////////////////
 /// Dialog to display 3rd party licenses and accreditation
 ///
 //////////////////////////////////////////////////////////////////////////////
 class CreditsDialog : public QDialog
     {
+    Q_OBJECT
 public:
     // Dialog box title
     static inline const QString TITLE = tr ("Third Party Licenses & Credits");

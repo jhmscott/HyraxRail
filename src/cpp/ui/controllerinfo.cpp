@@ -144,8 +144,7 @@ void ControllerInfo::setController (control::ControllerBase& controller)
 
     m_stop->setChecked (m_controller->isEStopped ());
 
-    setToolTip (tr ("Model") + ": " +
-                controller.getMetaClass ().friendlyName.c_str ());
+    setToolTip (tr ("Model : %1").arg (controller.getMetaClass ().friendlyName.c_str ()));
 
     refreshHealthIcon ();
     }
@@ -184,9 +183,7 @@ void ControllerInfo::setHealth (control::ConnectionWorkerThread::health health)
         }
     else
         {
-        m_connectionIcon->setToolTip (tr ("Ping") + " " +
-                                      QString::number (health.ping.count ()) +
-                                      " ms");
+        m_connectionIcon->setToolTip (tr ("Ping %1 ms").arg (health.ping.count ()));
         }
     }
 
@@ -200,8 +197,8 @@ void ControllerInfo::onConfig ()
 
 void ControllerInfo::onDelete ()
     {
-    QString msg =   tr ("Are you sure you want to delete ")     +
-                    m_controller->getFriendlyName ().c_str ()   + "?";
+    QString msg =   tr ("Are you sure you want to delete %1 ?").arg (
+                                    m_controller->getFriendlyName ().c_str ());
 
     if (QMessageBox::Yes == QMessageBox::question (this,
                                                    tr ("Delete Controller"),

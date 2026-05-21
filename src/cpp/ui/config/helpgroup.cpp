@@ -32,14 +32,6 @@
 
 namespace ui::config
 {
-static const QString HELPGROUP_ABOUT_MESSAGE =
-    QObject::tr (PRODUCT_DESCRIPTION) + "<BR>"
-    "Version " VERSION_STRING           "<BR>"
-    "Build " __DATE__                   "<BR>" +
-    QObject::tr (COPYRIGHT) +           "<BR>"
-    "Github : <a href='https://github.com/jhmscott/HyraxRail'>"
-                      "https://github.com/jhmscott/HyraxRail</a>";
-
 ///////////////////////////////////////////////////////////////////////////////
 /// Simple dialog with a rich text browser
 ///
@@ -223,6 +215,14 @@ HelpGroup::HelpGroup (QWidget* parent) :
 
 void HelpGroup::about ()
     {
+    static const QString HELPGROUP_ABOUT_MESSAGE =
+        tr (PRODUCT_DESCRIPTION)  + "<BR>"
+        "Version " VERSION_STRING   "<BR>"
+        "Build " __DATE__           "<BR>" +
+        tr (COPYRIGHT)            + "<BR>"
+        "Github : <a href='https://github.com/jhmscott/HyraxRail'>"
+                          "https://github.com/jhmscott/HyraxRail</a>";
+
     QMessageBox msg{ this };
 
     msg.setWindowTitle (tr ("About"));

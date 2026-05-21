@@ -38,14 +38,17 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>6.11.0</QtInstall>
-    <QtModules>core;gui;network;widgets;serialport;</QtModules>
+    <QtModules>core;gui;network;widgets;serialport</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
+    <QtLinkNatvisFile>true</QtLinkNatvisFile>
+    <QtDeployNoVirtualKeyboard>true</QtDeployNoVirtualKeyboard>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>6.11.0</QtInstall>
-    <QtModules>core;gui;network;widgets;serialport;</QtModules>
+    <QtModules>core;gui;network;widgets;serialport</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
     <QtDeploy>true</QtDeploy>
+    <QtDeployNoVirtualKeyboard>true</QtDeployNoVirtualKeyboard>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
     <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
@@ -86,6 +89,11 @@
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <QtTranslation>
+      <BuildAction>lupdate_lrelease</BuildAction>
+      <QmOutputFile>%(RelativeDir)%(Filename).qm</QmOutputFile>
+      <IncludePath>$(SolutionDir)..\src\cpp;%(IncludePath)</IncludePath>
+    </QtTranslation>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -104,6 +112,11 @@
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <QtTranslation>
+      <BuildAction>lupdate_lrelease</BuildAction>
+      <QmOutputFile>%(RelativeDir)%(Filename).qm</QmOutputFile>
+      <IncludePath>$(SolutionDir)..\src\cpp;%(IncludePath)</IncludePath>
+    </QtTranslation>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
@@ -172,12 +185,13 @@
     <ClCompile Include="..\src\cpp\ui\common\stringdialog.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\schemeicon.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\toggleswitch.cpp" />
+    <ClCompile Include="..\src\cpp\ui\config\cominfo.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\credits.cpp" />
-    <ClCompile Include="..\src\cpp\ui\config\deviceinfo.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\helpgroup.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\configpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\controllergroup.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\dialog.cpp" />
+    <ClCompile Include="..\src\cpp\ui\config\networkinfo.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\notifygroup.cpp" />
     <ClCompile Include="..\src\cpp\ui\controllerinfo.cpp" />
     <ClCompile Include="..\src\cpp\ui\mainwidget.cpp" />
@@ -212,9 +226,9 @@
     <QtMoc Include="..\src\cpp\layout\locomotive.hpp" />
     <ClInclude Include="..\src\cpp\layout\route.hpp" />
     <QtMoc Include="..\src\cpp\ui\actuators\actuatorbutton.hpp" />
-    <ClInclude Include="..\src\cpp\ui\actuators\actuatorgroup.hpp" />
+    <QtMoc Include="..\src\cpp\ui\actuators\actuatorgroup.hpp" />
     <ClInclude Include="..\src\cpp\ui\actuators\actuatorpanel.hpp" />
-    <ClInclude Include="..\src\cpp\ui\actuators\editactuator.hpp" />
+    <QtMoc Include="..\src\cpp\ui\actuators\editactuator.hpp" />
     <ClInclude Include="..\src\cpp\ui\actuators\resources.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\autogrid.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\formdialog.hpp" />
@@ -235,23 +249,25 @@
     <QtMoc Include="..\src\cpp\ui\config\helpgroup.hpp" />
     <QtMoc Include="..\src\cpp\ui\config\configpanel.hpp" />
     <QtMoc Include="..\src\cpp\ui\config\controllergroup.hpp" />
-    <ClInclude Include="..\src\cpp\ui\config\credits.hpp" />
+    <QtMoc Include="..\src\cpp\ui\config\credits.hpp" />
     <QtMoc Include="..\src\cpp\ui\config\deviceinfo.hpp" />
-    <ClInclude Include="..\src\cpp\ui\config\dialog.hpp" />
+    <QtMoc Include="..\src\cpp\ui\config\dialog.hpp" />
     <QtMoc Include="..\src\cpp\ui\controllerinfo.hpp" />
-    <ClInclude Include="..\src\cpp\ui\config\notifygroup.hpp" />
+    <QtMoc Include="..\src\cpp\ui\config\notifygroup.hpp" />
     <QtMoc Include="..\src\cpp\ui\mainwidget.hpp" />
     <QtMoc Include="..\src\cpp\ui\mainwindow.hpp" />
-    <ClInclude Include="..\src\cpp\ui\routes\editroute.hpp" />
+    <QtMoc Include="..\src\cpp\ui\routes\editroute.hpp" />
     <QtMoc Include="..\src\cpp\ui\routes\includebutton.hpp" />
     <QtMoc Include="..\src\cpp\ui\routes\routebutton.hpp" />
-    <ClInclude Include="..\src\cpp\ui\routes\routegroup.hpp" />
+    <QtMoc Include="..\src\cpp\ui\routes\routegroup.hpp" />
+    <QtMoc Include="..\src\cpp\ui\config\networkinfo.hpp" />
+    <QtMoc Include="..\src\cpp\ui\config\cominfo.hpp" />
     <ClInclude Include="..\src\cpp\ui\routes\routepanel.hpp" />
     <ClInclude Include="..\src\cpp\ui\sensors\sensorbar.hpp" />
     <ClInclude Include="..\src\cpp\ui\sensors\sensorpanel.hpp" />
     <QtMoc Include="..\src\cpp\ui\sensors\sensorstate.hpp" />
     <ClInclude Include="..\src\cpp\ui\trains\dualcontrol.hpp" />
-    <ClInclude Include="..\src\cpp\ui\trains\functionpanel.hpp" />
+    <QtMoc Include="..\src\cpp\ui\trains\functionpanel.hpp" />
     <QtMoc Include="..\src\cpp\ui\trains\lococontrolpanel.hpp" />
     <ClInclude Include="..\src\cpp\ui\trains\speedcontrol.hpp" />
     <ClInclude Include="..\src\cpp\utils\algorithm.hpp" />
@@ -381,6 +397,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\res\text\DSEG-LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtTranslation Include="..\res\translations\HyraxRail_fr.ts" />
+    <QtTranslation Include="..\res\translations\HyraxRail_vi_VN.ts" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

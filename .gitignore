@@ -40,12 +40,17 @@
 # debug information files
 *.dwo
 
+# Compiled translation files
+*.qm
+
 # Visual Studio Temp Files
 .vs/
 visualstudio/intermediate/
+*.aps
 
 # Output files
 runtime/
+docs/
 
 # MacOS DS Store file
 .DS_Store

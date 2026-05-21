@@ -77,8 +77,8 @@ void RouteButton::removeRoute ()
     {
     if (QMessageBox::Yes == QMessageBox::question (this,
                                                    tr ("Delete Route"),
-                                                   tr ("Would you like to delete ") +
-                                                   m_route->getName ().c_str ()     + "?"))
+                                                   tr ("Would you like to delete route \"%1\"?").arg (
+                                                                    m_route->getName ().c_str ())))
         {
         m_route->remove ();
 

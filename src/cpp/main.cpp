@@ -18,6 +18,8 @@
 #include <res/version.h>
 
 #include <QDebug>
+#include <QLibraryInfo>
+#include <QTranslator>
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Main application entry point
@@ -32,14 +34,61 @@ int main(int argc, char *argv[])
     {
     utils::os::setThreadName ("Main Thread");
 
-    QApplication app(argc, argv);
+    QApplication    app(argc, argv);
+    QTranslator     sysTranslator;
+    QTranslator     appTranslator;
+    QLocale         locale              = QLocale::system ();
+    QString         translationLibray   = QLibraryInfo::path (QLibraryInfo::TranslationsPath);
 
-    QApplication::setApplicationName        (PRODUCT_NAME_SHORT);
-    QApplication::setApplicationDisplayName (QObject::tr (PRODUCT_NAME_FULL));
-    QApplication::setOrganizationName       (COMPANY_NAME);
-    QApplication::setOrganizationDomain     (COMPANY_DOMAIN);
-    QApplication::setApplicationVersion     (VERSION_STRING);
-    QApplication::setWindowIcon             (QIcon{ ":/icons/app/conductor-hyrax.ico" });
+    QLocale::setDefault (locale);
+
+    // don't install translators if we're already in English
+    if (QLocale::English != locale.language ())
+        {
+        if (sysTranslator.load (locale,
+                                "qt",
+                                "_",
+                                translationLibray))
+            {
+            if (app.installTranslator (&sysTranslator))
+                {
+                qDebug () << "Installed qt_" << locale.name () << ".qm";
+                }
+            else
+                {
+                qDebug () << "Failed to install qt_" << locale.name () << ".qm";
+                }
+            }
+        else
+            {
+            qDebug () << "No system translation for language" << locale.name ();
+            }
+
+        if (appTranslator.load (locale,
+                                "HyraxRail",
+                                "_",
+                                ":/translations"))
+            {
+            if (app.installTranslator (&appTranslator))
+                {
+                qDebug () << "Installed HyraxRail_" << locale.name () << ".qm";
+                }
+            else
+                {
+                qDebug () << "Failed to install HyraxRail_" << locale.name () << ".qm";
+                }
+            }
+        else
+            {
+            qDebug () << "No app translation for language" << locale.name ();
+            }
+        }
+
+    QApplication::setApplicationName    (PRODUCT_NAME_SHORT);
+    QApplication::setOrganizationName   (COMPANY_NAME);
+    QApplication::setOrganizationDomain (COMPANY_DOMAIN);
+    QApplication::setApplicationVersion (VERSION_STRING);
+    QApplication::setWindowIcon         (QIcon{ ":/icons/app/conductor-hyrax.ico" });
 
     int rc;
 

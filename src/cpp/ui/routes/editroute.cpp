@@ -69,13 +69,13 @@ EditRouteDialog::EditRouteDialog (control::ControllerBase&  controller,
 
     if (NULL == route)
         {
-        setWindowTitle (tr ("Add Route - ") +
-                        controller.getFriendlyName ().c_str ());
+        setWindowTitle (tr ("Add Route - %1").arg (
+                            controller.getFriendlyName ().c_str ()));
         }
     else
         {
-        setWindowTitle (tr ("Edit Route - ") +
-                        controller.getFriendlyName ().c_str ());
+        setWindowTitle (tr ("Edit Route - %1").arg (
+                            controller.getFriendlyName ().c_str ()));
 
         m_name->setText (route->getName ().c_str ());
 

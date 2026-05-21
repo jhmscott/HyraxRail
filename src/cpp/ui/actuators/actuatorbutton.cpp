@@ -81,8 +81,8 @@ void ActuatorButton::removeActuator ()
     {
     if (QMessageBox::Yes == QMessageBox::question (this,
                                                    tr ("Delete Actuator"),
-                                                   tr ("Would you like to delete") +
-                                                   m_actuator.getName ().c_str ()  + "?"))
+                                                   tr ("Would you like to delete actuator \"%1\"?").arg ( +
+                                                        m_actuator.getName ().c_str ())))
         {
         m_actuator.remove ();
         emit actuatorDeleted ();

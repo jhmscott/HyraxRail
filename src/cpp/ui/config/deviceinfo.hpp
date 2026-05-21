@@ -1,6 +1,6 @@
 /**
  * @file        config/deviceinfo.hpp
- * @brief       Defines widgets for entering transport layer device info
+ * @brief       Defines base class for entering device info
  * @author      Justin Scott
  * @date        2026-04-07
  *
@@ -9,14 +9,9 @@
 
 #pragma once
 
-#include <ui/common/hostentry.hpp>
-#include <ui/common/ipfield.hpp>
 
 #include <utils/device.hpp>
 
-#include <QComboBox>
-#include <QFormLayout>
-#include <QLineEdit>
 #include <QWidget>
 
 
@@ -84,122 +79,5 @@ signals:
     };
 
 
-//////////////////////////////////////////////////////////////////////////////
-/// Entry widget for TCP/IP and UDP/IP device settings
-///
-//////////////////////////////////////////////////////////////////////////////
-class NetworkDeviceInfoWidget : public DeviceInfoWidget
-    {
-public:
-    //////////////////////////////////////////////////////////////////////////////
-    /// Constructor
-    ///
-    /// @param[in]  parent      Parent widget
-    /// @param[in]  port        Default TCP/UDP port to use
-    ///
-    //////////////////////////////////////////////////////////////////////////////
-    NetworkDeviceInfoWidget (QWidget* parent, utils::device::portNumber_t port);
-
-    //////////////////////////////////////////////////////////////////////////////
-    /// Set the network info
-    ///
-    /// @param[in]  info        Device network connection info
-    ///
-    //////////////////////////////////////////////////////////////////////////////
-    virtual void setInfo (const utils::device::deviceInfo::info_t& info) override;
-
-    ////////////////////////////////////////////////////////////////////////////
-    /// Get the entered network device settings
-    ///
-    /// @return     Device network connection info
-    ///
-    ////////////////////////////////////////////////////////////////////////////
-    virtual utils::device::deviceInfo::info_t getInfo () const override;
-
-    ////////////////////////////////////////////////////////////////////////////
-    /// Check if the fields have acceptable input
-    ///
-    /// @return     True if all fields have been filled out correctly
-    ///
-    ////////////////////////////////////////////////////////////////////////////
-    virtual bool hasAcceptableInput () const override;
-
-    ////////////////////////////////////////////////////////////////////////////
-    /// If the fields are not filled out correctly, returns a string with information
-    /// for the user to correct it
-    ///
-    /// @return     Error message
-    ///
-    ////////////////////////////////////////////////////////////////////////////
-    virtual QString getErrorString () const override;
-
-private:
-    common::IpV4Field*          m_addressV4;        ///< IPv4 entry field
-    common::IpV6Field*          m_addressV6;        ///< IPv6 entry field
-    common::AbstractHostField*  m_activeIp = NULL;  ///< Active host entry field (IPv4, IPv6, or hostname)
-    common::HostEntryField*     m_hostname;         ///< Host name entry field (alternative to IP address)
-
-    QLineEdit*                  m_port;             ///< TCP/UDP port number
-    QComboBox*                  m_network;          ///< Network host type slection
-                                                    ///  Either IP version selector (IPv4 or IPv6)
-                                                    ///  or DNS hostname/FQDN
-    QFormLayout*                m_layout;           ///< Main form layout
-
-    ////////////////////////////////////////////////////////////////////////////
-    /// Handle a change to the layer 3 (IP) protocol
-    ///
-    /// @param[in]  idx     Network protocol comobox index
-    ///
-    ////////////////////////////////////////////////////////////////////////////
-    void networkProtoChanged (int idx);
-
-    };
-
-
-////////////////////////////////////////////////////////////////////////////
-/// COM/Serial port entry widget
-///
-////////////////////////////////////////////////////////////////////////////
-class ComPortInfoWidget : public DeviceInfoWidget
-    {
-public:
-    ////////////////////////////////////////////////////////////////////////////
-    /// Constructor
-    ///
-    /// @param[in]  parent      Parent widget
-    ///
-    ////////////////////////////////////////////////////////////////////////////
-    explicit ComPortInfoWidget (QWidget* parent);
-
-    ////////////////////////////////////////////////////////////////////////////
-    /// Apply COM port settings to the field
-    ///
-    /// @param[in]  info        Serial device connection info
-    ///
-    ////////////////////////////////////////////////////////////////////////////
-    virtual void setInfo (const utils::device::deviceInfo::info_t& info) override;
-
-    ////////////////////////////////////////////////////////////////////////////
-    /// Get the entered COM device settings
-    ///
-    /// @return     Serial device connection info
-    ///
-    ////////////////////////////////////////////////////////////////////////////
-    virtual utils::device::deviceInfo::info_t getInfo () const override;
-
-    ////////////////////////////////////////////////////////////////////////////
-    /// Check if the fields have acceptable input
-    ///
-    /// @return     True if all fields have been filled out correctly
-    ///
-    ////////////////////////////////////////////////////////////////////////////
-    virtual bool hasAcceptableInput () const override { return true; }
-
-private:
-    QComboBox*      m_comport;  ///< Com port selection, populated with available ports
-    QComboBox*      m_baud;     ///< Baud rate selection in bits/second
-    QFormLayout*    m_layout;   ///< Main form layout
-
-    };
 
 } // namespace ui::config

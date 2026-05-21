@@ -136,6 +136,9 @@
     <Filter Include="Resource Files\icons\dark\trains">
       <UniqueIdentifier>{67d5b922-5af7-4f83-801b-5a638309b895}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\translations">
+      <UniqueIdentifier>{8101c5f9-066b-42ca-b52a-29b7d75dac5f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\stdafx.h">
@@ -183,14 +186,8 @@
     <ClInclude Include="..\src\cpp\ui\common\pointedwidget.hpp">
       <Filter>Header Files\ui\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\routes\editroute.hpp">
-      <Filter>Header Files\ui\routes</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\cpp\ui\common\formdialog.hpp">
       <Filter>Header Files\ui\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\actuators\editactuator.hpp">
-      <Filter>Header Files\ui\actuators</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cpp\ui\actuators\resources.hpp">
       <Filter>Header Files\ui\actuators</Filter>
@@ -326,9 +323,6 @@
     <ClCompile Include="..\src\cpp\ui\trains\speedcontrol.cpp">
       <Filter>Source Files\ui\trains</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\cpp\ui\config\deviceinfo.cpp">
-      <Filter>Source Files\ui\config</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\cpp\ui\routes\editroute.cpp">
       <Filter>Source Files\ui\routes</Filter>
     </ClCompile>
@@ -358,6 +352,12 @@
     </ClCompile>
     <ClCompile Include="..\src\cpp\utils\device.cpp">
       <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\config\networkinfo.cpp">
+      <Filter>Source Files\ui\config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\config\cominfo.cpp">
+      <Filter>Source Files\ui\config</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -409,9 +409,6 @@
     <ClInclude Include="..\src\cpp\ui\actuators\actuatorpanel.hpp">
       <Filter>Header Files\ui\actuators</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\config\dialog.hpp">
-      <Filter>Header Files\ui\config</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\cpp\ui\common\hexvalidator.hpp">
       <Filter>Header Files\ui\common</Filter>
     </ClInclude>
@@ -442,26 +439,11 @@
     <ClInclude Include="..\src\cpp\control\controllers\base.hpp">
       <Filter>Header Files\control\controllers</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\actuators\actuatorgroup.hpp">
-      <Filter>Header Files\ui\actuators</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\cpp\ui\common\seperator.hpp">
       <Filter>Header Files\ui\common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cpp\ui\common\stringdialog.hpp">
       <Filter>Header Files\ui\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\routes\routegroup.hpp">
-      <Filter>Header Files\ui\routes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\config\credits.hpp">
-      <Filter>Header Files\ui\config</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\config\notifygroup.hpp">
-      <Filter>Header Files\ui\config</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\trains\functionpanel.hpp">
-      <Filter>Header Files\ui\trains</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cpp\ui\trains\speedcontrol.hpp">
       <Filter>Header Files\ui\trains</Filter>
@@ -496,6 +478,36 @@
       <Filter>Header Files\ui\common</Filter>
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\config\deviceinfo.hpp">
+      <Filter>Header Files\ui\config</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\config\credits.hpp">
+      <Filter>Header Files\ui\config</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\actuators\actuatorgroup.hpp">
+      <Filter>Header Files\ui\actuators</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\actuators\editactuator.hpp">
+      <Filter>Header Files\ui\actuators</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\config\dialog.hpp">
+      <Filter>Header Files\ui\config</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\config\notifygroup.hpp">
+      <Filter>Header Files\ui\config</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\routes\editroute.hpp">
+      <Filter>Header Files\ui\routes</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\routes\routegroup.hpp">
+      <Filter>Header Files\ui\routes</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\trains\functionpanel.hpp">
+      <Filter>Header Files\ui\trains</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\config\networkinfo.hpp">
+      <Filter>Header Files\ui\config</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\config\cominfo.hpp">
       <Filter>Header Files\ui\config</Filter>
     </QtMoc>
   </ItemGroup>
@@ -792,5 +804,13 @@
     <Text Include="..\res\text\DSEG-LICENSE.txt">
       <Filter>Resource Files\text</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <QtTranslation Include="..\res\translations\HyraxRail_vi_VN.ts">
+      <Filter>Resource Files\translations</Filter>
+    </QtTranslation>
+    <QtTranslation Include="..\res\translations\HyraxRail_fr.ts">
+      <Filter>Resource Files\translations</Filter>
+    </QtTranslation>
   </ItemGroup>
 </Project>

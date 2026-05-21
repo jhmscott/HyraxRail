@@ -10,6 +10,7 @@
 #include <ui/mainwidget.hpp>
 #include <ui/mainwindow.hpp>
 
+#include <QApplication>
 #include <QTabWidget>
 
 #include <res/version.h>
@@ -21,9 +22,13 @@ namespace ui
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
     {
+    static const QString appName = tr ("Hyrax Rail");
+
+    QApplication::setApplicationDisplayName (appName);
+
     setCentralWidget (new ui::MainWidget{ this });
     setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Minimum);
-    setWindowTitle (tr (PRODUCT_NAME_FULL));
+    setWindowTitle (appName);
     }
 
 MainWindow::~MainWindow()

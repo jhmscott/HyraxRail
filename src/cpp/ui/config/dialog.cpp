@@ -8,7 +8,9 @@
  */
 
 
+#include <ui/config/cominfo.hpp>
 #include <ui/config/dialog.hpp>
+#include <ui/config/networkinfo.hpp>
 
 #include <utils/string.hpp>
 

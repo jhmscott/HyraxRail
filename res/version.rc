@@ -14,8 +14,8 @@
 IDI_ICON1               ICON                    "icons\\app\\conductor-hyrax.ico"
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION VERSION 
- PRODUCTVERSION VERSION 
+ FILEVERSION VERSION
+ PRODUCTVERSION VERSION
  FILEFLAGSMASK 0x0L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -28,19 +28,48 @@ VS_VERSION_INFO VERSIONINFO
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "040904E4"
+
+        // English
+        BLOCK "040904B0"
         BEGIN
             VALUE "CompanyName", COMPANY_NAME
             VALUE "FileDescription", PRODUCT_NAME_FULL
-            VALUE "FileVersion", VERSION_STRING 
+            VALUE "FileVersion", VERSION_STRING
             VALUE "ProductName", PRODUCT_NAME_FULL
-            VALUE "ProductVersion", VERSION_STRING 
+            VALUE "ProductVersion", VERSION_STRING
             VALUE "LegalCopyright", COPYRIGHT
+            VALUE "OriginalFilename", "HyraxRail.exe"
+        END
+
+        // Vietnamese
+        BLOCK "042A04B0"
+        BEGIN
+            VALUE "CompanyName", COMPANY_NAME
+            VALUE "FileDescription", "Đường Sắt Hyrax"
+            VALUE "FileVersion", VERSION_STRING
+            VALUE "ProductName", "Đường Sắt Hyrax"
+            VALUE "ProductVersion", VERSION_STRING
+            VALUE "LegalCopyright",  "Bản Quyền " COPYRIGHT_SYMBOL " 2026 Justin H. Scott"
+            VALUE "OriginalFilename", "HyraxRail.exe"
+        END
+
+        // French
+        BLOCK "040C04B0"
+        BEGIN
+            VALUE "CompanyName", COMPANY_NAME
+            VALUE "FileDescription", "Râle Daman"
+            VALUE "FileVersion", VERSION_STRING
+            VALUE "ProductName", "Râle Daman"
+            VALUE "ProductVersion", VERSION_STRING
+            VALUE "LegalCopyright",  "Droit D'Auteur " COPYRIGHT_SYMBOL " 2026 Justin H. Scott"
             VALUE "OriginalFilename", "HyraxRail.exe"
         END
     END
     BLOCK "VarFileInfo"
     BEGIN
-        VALUE "Translation", 0x409, 65001
+        VALUE "Translation",
+        0x409, 0x4B0,   // English (US)
+        0x42A, 0x4B0,   // Vietnamese
+        0x40C, 0x4B0    // French
     END
 END
