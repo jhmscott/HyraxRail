@@ -6,27 +6,28 @@
     <message>
         <location filename="../../src/cpp/ui/actuators/resources.hpp" line="42"/>
         <source>Street Light</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>street=đường,light=đèn</translatorcomment>
+        <translation>Đèn Đường</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/resources.hpp" line="46"/>
         <source>Mast Light</source>
-        <translation type="unfinished"></translation>
+        <translation>đèn cột</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/resources.hpp" line="50"/>
         <source>Layout Lighting</source>
-        <translation type="unfinished"></translation>
+        <translation>Đèn Bố Trí</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/resources.hpp" line="54"/>
         <source>Straight Turnout Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Công Tắc Thẳng/Trái</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/resources.hpp" line="58"/>
         <source>Straight Turnout Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Công Tắc Thẳng/Phải</translation>
     </message>
 </context>
 <context>
@@ -34,32 +35,32 @@
     <message>
         <location filename="../../src/cpp/ui/controllerinfo.cpp" line="147"/>
         <source>Model : %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Mô Hình : %1</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/controllerinfo.cpp" line="174"/>
         <source>Disconnected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ngắt Kết Nối</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/controllerinfo.cpp" line="182"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Kết Nối</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/controllerinfo.cpp" line="186"/>
         <source>Ping %1 ms</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/controllerinfo.cpp" line="200"/>
         <source>Are you sure you want to delete %1 ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Xác Nhận Muốn Xóa %1?</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/controllerinfo.cpp" line="204"/>
         <source>Delete Controller</source>
-        <translation type="unfinished"></translation>
+        <translation>Xóa Bộ Điều Khiển</translation>
     </message>
 </context>
 <context>
@@ -67,32 +68,33 @@
     <message>
         <location filename="../../src/cpp/ui/mainwidget.cpp" line="91"/>
         <source>Trains</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tàu</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/mainwidget.cpp" line="92"/>
         <source>Actuators</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>actuators</translatorcomment>
+        <translation type="unfinished">Bộ Truyền Động</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/mainwidget.cpp" line="93"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cảm Biến Điện Tử</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/mainwidget.cpp" line="94"/>
         <source>Routes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tuyến Đường</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/mainwidget.cpp" line="95"/>
         <source>Programming</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lập Trình</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/mainwidget.cpp" line="96"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cài Đặt</translation>
     </message>
 </context>
 <context>
@@ -108,22 +110,22 @@
     <message>
         <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="53"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Xóa</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="54"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Thay Đổi</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="83"/>
         <source>Delete Actuator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Xóa Bộ Truyền Động</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="84"/>
         <source>Would you like to delete actuator &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Xác Nhận Xóa Bộ Truyền Động &quot;%1&quot;?</translation>
     </message>
 </context>
 <context>
@@ -139,37 +141,37 @@
     <message>
         <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="35"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tên</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="36"/>
         <source>Address</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Địa Chỉ</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="37"/>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Biểu Tượng</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="38"/>
         <source>Mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chế Độ</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="39"/>
         <source>Duration</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Thời Hạn</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="54"/>
         <source>Switch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bật Công Tắc</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="55"/>
         <source>Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mở Nhanh</translation>
     </message>
 </context>
 <context>
@@ -177,22 +179,22 @@
     <message>
         <location filename="../../src/cpp/ui/common/ipfield.cpp" line="144"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dán</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/common/ipfield.cpp" line="149"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sao chép</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/common/ipfield.cpp" line="154"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cắt</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/common/ipfield.cpp" line="169"/>
         <source>Copy IP Address to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sao Chép Địa Chỉ IP Vào Clipboard</translation>
     </message>
 </context>
 <context>
@@ -249,7 +251,7 @@
     <message>
         <location filename="../../src/cpp/ui/config/dialog.cpp" line="76"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tên</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/dialog.cpp" line="77"/>
@@ -288,37 +290,37 @@
         <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="157"/>
         <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="240"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Giúp Đỡ</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="161"/>
         <source>View Help</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Xem Giúp Đỡ</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="162"/>
         <source>About Hyrax Rail</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Về Đường Sắt Hyrax</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="163"/>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Về Qt</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="164"/>
         <source>License Info</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Thông Tin Giấy Phép</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="228"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Về Phần Mềm</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="255"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Giấy Phép</translation>
     </message>
 </context>
 <context>
@@ -371,17 +373,17 @@
     <message>
         <location filename="../../src/cpp/ui/config/notifygroup.cpp" line="23"/>
         <source>Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Thông Báo</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/notifygroup.cpp" line="31"/>
         <source>Global Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dừng Tất Cả Tàu</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/notifygroup.cpp" line="39"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cảm Biến</translation>
     </message>
 </context>
 <context>
@@ -389,17 +391,17 @@
     <message>
         <location filename="../../src/cpp/ui/routes/editroute.cpp" line="54"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tên:</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/routes/editroute.cpp" line="72"/>
         <source>Add Route - %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Thêm Tuyến Đường - %1</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/routes/editroute.cpp" line="77"/>
         <source>Edit Route - %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Thay Đổi Tuyến Đường - %1</translation>
     </message>
 </context>
 <context>
@@ -407,12 +409,12 @@
     <message>
         <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="49"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Xóa</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="50"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Thay Đổi</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="63"/>
@@ -435,7 +437,7 @@
     <message>
         <location filename="../../src/cpp/ui/routes/routegroup.cpp" line="57"/>
         <source>Add Route</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Thêm Tuyến Đường</translation>
     </message>
 </context>
 <context>
