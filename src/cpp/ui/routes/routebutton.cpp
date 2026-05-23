@@ -64,8 +64,8 @@ void RouteButton::updateTooltip ()
 
     for (const auto& [actuator, state] : m_route->getActuators ())
         {
-        text += "  " + actuator.getName () + " : " +
-                utils::str::formatOnOff (state) + "\n";
+        text += QString{ "  %1 : %2\n" }.arg (actuator.getName (),
+                                              utils::str::formatOnOff (state));
         }
 
     text.removeLast ();

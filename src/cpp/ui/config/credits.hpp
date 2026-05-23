@@ -49,12 +49,34 @@ private:
         NUM_SW_LICENSES ///< Delimiter only
         };
 
+    // Credit information
+    struct creditPair
+        {
+        QString title;  ///< Title of this credit (brief)
+        QString info;   ///< Full credit information
+        };
+
+    // Stores previously visited page
+    using lastPage = std::variant<swLicense, creditPair>;
+
     QGroupBox*      m_licenses;                     ///< 3rd party licenses
     QGroupBox*      m_credits;                      ///< Special credits
-    QTextBrowser*   m_licViewer;                    ///< License text viewer
+    QTextBrowser*   m_licViewer;                    ///< License text viewer (Plain text)
+    QTextBrowser*   m_creditViewer;                 ///< Credit "more info" viewer (HTML)
     QWidget*        m_navBar;                       ///< Navigation bar, title and back button
     QLabel*         m_licTitle;                     ///< Name of the license
-    swLicense       m_lastPage = NUM_SW_LICENSES;   ///< Last license viewed when on main page
+    lastPage        m_lastPage = NUM_SW_LICENSES;   ///< Last license viewed when on main page
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Open the license or credit viewer text browser
+    ///
+    /// @param[in]  title       Title
+    /// @param[in]  text        Text to display
+    /// @param[in]  plainText   True if text is plain text
+    ///                         False if text is HTML
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void openLicenseViewer (const QString& title, const QString& text, bool plainText);
 
 private slots:
     //////////////////////////////////////////////////////////////////////////////
@@ -64,6 +86,14 @@ private slots:
     ///
     //////////////////////////////////////////////////////////////////////////////
     void openLicense (swLicense lic);
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Open credit information
+    ///
+    /// @param[in]  credit      Credit to display
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void openCreditInfo (const creditPair& credit);
 
     //////////////////////////////////////////////////////////////////////////////
     /// Go to the previous page (home page)

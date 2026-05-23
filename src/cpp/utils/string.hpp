@@ -127,7 +127,7 @@ extract (std::string_view str, std::string_view start, std::string_view end)
 ///             Off if false
 ///
 ///////////////////////////////////////////////////////////////////////////////
-inline std::string formatOnOff (bool bl) { return bl ? "On" : "Off"; }
+inline QString formatOnOff (bool bl) { return bl ? QObject::tr ("On") : QObject::tr ("Off"); }
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Escape text for use with a QButton

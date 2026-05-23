@@ -28,6 +28,16 @@
         <source>Straight Turnout Right</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../src/cpp/utils/string.hpp" line="130"/>
+        <source>On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/string.hpp" line="130"/>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ui::ControllerInfo</name>
@@ -229,12 +239,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/credits.cpp" line="68"/>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="54"/>
+        <source>Long Dương (%1) : Vietnamese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="79"/>
         <source>Third Party Software Notices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/credits.cpp" line="69"/>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="80"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>

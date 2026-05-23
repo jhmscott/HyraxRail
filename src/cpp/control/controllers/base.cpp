@@ -5,7 +5,7 @@
  * @author      Justin Scott
  * @date        2026-02-01
  *
- * @copyright   Copyright (c) 2026 Justin ScottS
+ * @copyright   Copyright (c) 2026 Justin Scott
  */
 
 

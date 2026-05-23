@@ -228,7 +228,7 @@ void HelpGroup::about ()
     msg.setWindowTitle (tr ("About"));
     msg.setTextFormat (Qt::RichText);
     msg.setText (HELPGROUP_ABOUT_MESSAGE);
-    msg.setIconPixmap (QIcon{ ":/icons/app/conductor-hyrax.ico" }.pixmap (64, 64));
+    msg.setIconPixmap (QIcon{ ":/icons/app/conductor-hyrax.ico" }.pixmap (96, 96));
 
     msg.exec ();
     }

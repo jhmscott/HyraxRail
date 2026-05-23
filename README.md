@@ -48,3 +48,13 @@ To get started, navigate to the <img src="./res/icons/light/misc/gear.svg" alt="
 Select the controller model from the drop-down. The default protocol and connection settings will automatically populate. If you wish to change them, do so here. Note that the COM port and IP address fields must always be manually entered. Press OK to continue.
 
 The app will automatically populate the trains, actuators, routes and sensors configured on your controller. Any changes you make to this configuration will be pushed back to the controller.
+
+## Contributors
+
+### Localization Team
+
+* [Long Dương](https://github.com/longd1999) : Vietnamese
+
+### Other Credits
+
+App icon by [Rose Spencer-Spreeuw](https://www.linkedin.com/in/rose-spencer-spreeuw-82278a1a1/).

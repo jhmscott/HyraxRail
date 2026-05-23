@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file        config/credits.cpp
  * @brief       Dialog box for the third party software notices,
  *              and other credits
@@ -41,9 +41,20 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
     static const QString CREDITS_TEXT[] =
         {
         tr ("App icon by Rose Spencer-Spreeuw ") +
-        "(<a href=\"https://www.linkedin.com/in/rose-spencer-spreeuw-82278a1a1/\">Linkedin</a>)"
+        "(<a href=\"https://www.linkedin.com/in/rose-spencer-spreeuw-82278a1a1/\">LinkedIn</a>)",
+        "Localization Team"
         };
-    static constexpr size_t numCredits = std::size (CREDITS_TEXT);
+    static constexpr size_t NUM_CREDITS = std::size (CREDITS_TEXT);
+
+    static const QString CREDITS_MORE_INFO[] =
+        {
+        "", // App Icon
+
+        // Localization Team
+        tr ("Long Dương (%1) : Vietnamese").arg (
+            "<a href=\"https://github.com/longd1999\">GitHub</a>")
+        };
+    ASSERT_ARRAY_LENGTH (CREDITS_MORE_INFO, NUM_CREDITS);
 
     QFont           font        = QApplication::font ();
     QFont           boldFont;
@@ -65,11 +76,12 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
 
     // Setup main components
 
-    m_licenses  = new QGroupBox{ tr ("Third Party Software Notices"), this };
-    m_credits   = new QGroupBox{ tr ("Credits"), this };
-    m_licViewer = new QTextBrowser{ this };
-    m_navBar    = new QWidget{ this };
-    m_licTitle  = new QLabel{ this };
+    m_licenses      = new QGroupBox{ tr ("Third Party Software Notices"), this };
+    m_credits       = new QGroupBox{ tr ("Credits"), this };
+    m_licViewer     = new QTextBrowser{ this };
+    m_creditViewer  = new QTextBrowser{ this };
+    m_navBar        = new QWidget{ this };
+    m_licTitle      = new QLabel{ this };
 
     // Fonts
 
@@ -108,19 +120,48 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
 
     // Credits
 
-    for (size_t ii = 0; ii < numCredits; ++ii)
+    for (size_t ii = 0; ii < NUM_CREDITS; ++ii)
         {
-        QLabel* label = new QLabel{ this };
+        QWidget* credit;
 
-        label->setText                  (CREDITS_TEXT[ii]);
-        label->setTextFormat            (Qt::RichText);
-        label->setTextInteractionFlags  (Qt::TextBrowserInteraction);
-        label->setOpenExternalLinks     (true);
-        label->setFont                  (font);
+        if (CREDITS_MORE_INFO[ii].isEmpty ())
+            {
 
-        creditLayout->addWidget (label);
+            QLabel* label = new QLabel{ this };
 
-        if (numCredits - 1 != ii)
+            label->setText                  (CREDITS_TEXT[ii]);
+            label->setTextFormat            (Qt::RichText);
+            label->setTextInteractionFlags  (Qt::TextBrowserInteraction);
+            label->setOpenExternalLinks     (true);
+
+            credit = label;
+            }
+        else
+            {
+            QPushButton* btn = new common::PointedButton{ CREDITS_TEXT[ii], this };
+
+            btn->setSizePolicy (QSizePolicy::Maximum,
+                                QSizePolicy::Maximum);
+
+            common::makeFrameless (*btn);
+
+            connect (btn,
+                    &QPushButton::released,
+                     this,
+                     std::bind (&CreditsDialog::openCreditInfo,
+                                 this,
+                                 creditPair{ CREDITS_TEXT[ii],
+                                             CREDITS_MORE_INFO[ii] }));
+
+            credit = btn;
+            }
+
+
+        credit->setFont (font);
+
+        creditLayout->addWidget (credit);
+
+        if (NUM_CREDITS - 1 != ii)
             {
             creditLayout->addWidget (new common::Separator{ this });
             }
@@ -144,6 +185,10 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
 
     m_navBar->setHidden (true);
     m_licViewer->setHidden (true);
+    m_creditViewer->setHidden (true);
+
+    m_creditViewer->setOpenExternalLinks (true);
+    m_creditViewer->setTextInteractionFlags (Qt::TextBrowserInteraction);
 
     m_licenses->setSizePolicy (QSizePolicy::Minimum,
                                QSizePolicy::Maximum);
@@ -156,6 +201,7 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
     layout->addWidget (m_credits);
     layout->addWidget (m_navBar, 0, Qt::AlignLeft);
     layout->addWidget (m_licViewer);
+    layout->addWidget (m_creditViewer);
     layout->setContentsMargins (0, 0, 0, 0);
 
     // Main widget styling and sizing
@@ -168,7 +214,7 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
 
     mainLayout->addWidget (mainWidget, 0, Qt::AlignTop);
 
-    // Keyboard shortcut
+    // Keyboard shortcuts
 
     new QShortcut{ QKeySequence::Back,
                    this,    // parent
@@ -212,17 +258,7 @@ void CreditsDialog::openLicense (swLicense lic)
 
     if (file.open (QIODevice::ReadOnly))
         {
-        m_licViewer->setPlainText   (file.readAll ());
-
-        m_licViewer->show           ();
-
-        m_navBar->setHidden         (false);
-        m_licViewer->setHidden      (false);
-
-        m_licenses->setHidden       (true);
-        m_credits->setHidden        (true);
-
-        m_licTitle->setText (SOFTWARE_NAMES[lic]);
+        openLicenseViewer (SOFTWARE_NAMES[lic], file.readAll (), true);
         }
 
     m_lastPage = lic;
@@ -230,16 +266,58 @@ void CreditsDialog::openLicense (swLicense lic)
 
 void CreditsDialog::forward ()
     {
-    if (NUM_SW_LICENSES != m_lastPage)
+    if (std::holds_alternative<swLicense> (m_lastPage))
         {
-        openLicense (m_lastPage);
+        swLicense lic = std::get<swLicense> (m_lastPage);
+
+        if (NUM_SW_LICENSES != lic)
+            {
+            openLicense (lic);
+            }
         }
+    else
+        {
+        openCreditInfo (std::get<creditPair> (m_lastPage));
+        }
+    }
+
+void CreditsDialog::openLicenseViewer (const QString& title, const QString& text, bool plainText)
+    {
+    // There's a bug if you switch from HTML to plain text, it hyperlinks the entirey
+    // of the plaintext. Just maintain two versions of the widget
+    if (plainText)
+        {
+        m_licViewer->setPlainText (text);
+        m_licViewer->show ();
+        m_creditViewer->hide ();
+        }
+    else
+        {
+        m_creditViewer->setHtml (text);
+        m_creditViewer->show ();
+        m_licViewer->hide ();
+        }
+
+
+    m_navBar->setHidden         (false);
+    m_licenses->setHidden       (true);
+    m_credits->setHidden        (true);
+
+    m_licTitle->setText         (title);
+    }
+
+void CreditsDialog::openCreditInfo (const creditPair& credit)
+    {
+    openLicenseViewer (credit.title, credit.info, false);
+
+    m_lastPage = credit;
     }
 
 void CreditsDialog::back ()
     {
     m_navBar->setHidden         (true);
     m_licViewer->setHidden      (true);
+    m_creditViewer->setHidden   (true);
 
     m_licenses->setHidden       (false);
     m_credits->setHidden        (false);

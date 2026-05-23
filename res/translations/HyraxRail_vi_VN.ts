@@ -29,6 +29,16 @@
         <source>Straight Turnout Right</source>
         <translation>Công Tắc Thẳng/Phải</translation>
     </message>
+    <message>
+        <location filename="../../src/cpp/utils/string.hpp" line="130"/>
+        <source>On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/string.hpp" line="130"/>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ui::ControllerInfo</name>
@@ -236,12 +246,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/credits.cpp" line="68"/>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="54"/>
+        <source>Long Dương (%1) : Vietnamese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="79"/>
         <source>Third Party Software Notices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/credits.cpp" line="69"/>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="80"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
@@ -350,7 +365,7 @@
         <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="44"/>
         <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="45"/>
         <source>Address</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Địa Chỉ</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="47"/>
@@ -419,7 +434,7 @@
     <message>
         <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="63"/>
         <source>Actuators</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bộ Truyền Động</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="79"/>
