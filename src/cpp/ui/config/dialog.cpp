@@ -21,7 +21,8 @@ namespace ui::config
 {
 
 Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
-    common::FormDialog (parent)
+    common::FormDialog (parent),
+    m_edit (NULL != controller)
     {
     auto controllers = control::getControllers ();
 
@@ -73,15 +74,14 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
                               QVariant::fromValue (transport));
         }
 
-    m_layout->addRow (tr ("Name"),               m_name);
-    m_layout->addRow (tr ("Controller Model"),   m_controller);
-    m_layout->addRow (tr ("Protocol"),           m_protocol);
-    m_layout->addRow (tr ("Transport Protocol"), m_transport);
+    m_layout->addRow (new QLabel{ this }, m_name);
+    m_layout->addRow (new QLabel{ this }, m_controller);
+    m_layout->addRow (new QLabel{ this }, m_protocol);
+    m_layout->addRow (new QLabel{ this }, m_transport);
 
     if (NULL == controller)
         {
         setNetworkMode ();
-        setWindowTitle (tr ("Add Controller"));
         }
     else
         {
@@ -102,16 +102,14 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
             m_network->setInfo (device.info);
             setNetworkMode ();
             }
-
-        setWindowTitle (tr ("Edit Controller Settings"));
         }
+
+    setLabels ();
 
     layout->addLayout (m_layout);
     layout->addWidget (m_com);
     layout->addWidget (m_network);
     layout->addWidget (m_buttons, 0, Qt::AlignHCenter);
-
-
 
     // Set the initial state of the OK button
     inputChanged ();
@@ -207,6 +205,23 @@ QString Dialog::getErrorString () const
         }
 
     return error;
+    }
+
+void Dialog::setLabels ()
+    {
+    common::setFormRowText (*m_layout, *m_name,         tr ("Name"));
+    common::setFormRowText (*m_layout, *m_controller,   tr ("Controller Model"));
+    common::setFormRowText (*m_layout, *m_protocol,     tr ("Protocol"));
+    common::setFormRowText (*m_layout, *m_transport,    tr ("Transport Protocol"));
+
+    if (m_edit)
+        {
+        setWindowTitle (tr ("Edit Controller Settings"));
+        }
+    else
+        {
+        setWindowTitle (tr ("Add Controller"));
+        }
     }
 
 } // namespace ui::config

@@ -35,10 +35,12 @@ ComPortInfoWidget::ComPortInfoWidget (QWidget* parent) :
                          QVariant::fromValue (baud));
         }
 
-    m_layout->addRow (tr ("Baud Rate"),  m_baud);
-    m_layout->addRow (tr ("COM Port"),   m_comport);
+    m_layout->addRow (new QLabel{ this }, m_baud);
+    m_layout->addRow (new QLabel{ this }, m_comport);
 
     m_layout->setContentsMargins (0, 0, 0, 0);
+
+    setLabels ();
 
     connect (m_baud,
             &QComboBox::currentIndexChanged,
@@ -69,6 +71,12 @@ utils::device::deviceInfo::info_t ComPortInfoWidget::getInfo () const
     info.port = m_comport->currentData ().value<QSerialPortInfo> ();
 
     return info;
+    }
+
+void ComPortInfoWidget::setLabels ()
+    {
+    common::setFormRowText (*m_layout, *m_baud,     tr ("Baud Rate"));
+    common::setFormRowText (*m_layout, *m_comport,  tr ("COM Port"));
     }
 
 } // namespace ui::config

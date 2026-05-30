@@ -17,7 +17,8 @@
 
 namespace control
 {
-ConnectionWorkerThread::ConnectionWorkerThread (std::string_view controllerName, std::unique_ptr<ProtocolBase>&& proto) :
+ConnectionWorkerThread::ConnectionWorkerThread (std::string_view                controllerName,
+                                                std::unique_ptr<ProtocolBase>&& proto) :
     m_proto (std::move (proto)),
     m_thread (std::bind (&ConnectionWorkerThread::loop, this))
     {
@@ -31,6 +32,9 @@ ConnectionWorkerThread::ConnectionWorkerThread (std::string_view controllerName,
         {
         m_pinger = new utils::Pinger{ m_proto->getIpAddress () };
         }
+
+    m_cv.notify_all ();
+
     }
 
 ConnectionWorkerThread::~ConnectionWorkerThread ()
@@ -65,6 +69,7 @@ void ConnectionWorkerThread::loop ()
     using namespace std::chrono_literals;
 
     const std::chrono::duration pingInterval     = 5000ms;
+    const std::chrono::duration queueTimeout     = 1000ms;
 
     std::unique_lock lk (m_mtx);
 
@@ -73,10 +78,12 @@ void ConnectionWorkerThread::loop ()
 
     while (m_continue)
         {
-        std::chrono::duration eventInterval = m_proto->getEventPollInterval ();
-        std::chrono::duration waitInterval  = std::min (eventInterval, pingInterval);
+        std::chrono::duration   eventInterval   = m_proto->getEventPollInterval ();
+        std::chrono::duration   waitInterval    = std::min (eventInterval, queueTimeout);
 
         m_cv.wait_for (lk, waitInterval);
+
+        health                  newHealth       = m_health;
 
         if (m_proto->maintainConnection ())
             {
@@ -88,29 +95,29 @@ void ConnectionWorkerThread::loop ()
 
                     if (res.roundtrip <= 1ms)
                         {
-                        m_health.level = HEALTH_FULL;
+                        newHealth.level = HEALTH_FULL;
                         }
                     else if (res.roundtrip <= 5ms)
                         {
-                        m_health.level = HEALTH_HIGH;
+                        newHealth.level = HEALTH_HIGH;
                         }
                     else if (res.roundtrip <= 10ms)
                         {
-                        m_health.level = HEALTH_MEDIUM;
+                        newHealth.level = HEALTH_MEDIUM;
                         }
                     else // (res.roundtrip > 10ms)
                         {
-                        m_health.level = HEALTH_LOW;
+                        newHealth.level = HEALTH_LOW;
                         }
 
-                    m_health.ping = res.roundtrip;
+                    newHealth.ping = res.roundtrip;
 
                     lastPing = std::chrono::system_clock::now ();
                     }
                 }
             else
                 {
-                m_health = { HEALTH_CONNECTED, std::chrono::milliseconds{ 0 } };
+                newHealth = { HEALTH_CONNECTED, std::chrono::milliseconds{ 0 } };
                 }
 
             if (std::chrono::system_clock::now () - lastEvent >= eventInterval)
@@ -124,14 +131,30 @@ void ConnectionWorkerThread::loop ()
                 m_taskQueue.pop ();
                 }
             }
-        // If com port...
-        else if (NULL == m_pinger)
-            {
-            m_health = { HEALTH_DISCONNECTED, std::chrono::milliseconds{ 0 } };
-            }
         else
             {
-            m_health = { HEALTH_DEAD, std::chrono::milliseconds{ 0 } };
+            if (NULL == m_pinger)
+                {
+                newHealth = { HEALTH_DISCONNECTED, std::chrono::milliseconds{ 0 } };
+                }
+            else // If com port...
+                {
+                newHealth = { HEALTH_DEAD, std::chrono::milliseconds{ 0 } };
+                }
+
+            while (not m_taskQueue.empty () &&
+                   std::chrono::system_clock::now () -
+                   m_taskQueue.front ()->getCreationTime () > queueTimeout)
+                {
+                m_taskQueue.pop ();
+                }
+            }
+
+        if (newHealth != m_health)
+            {
+            std::lock_guard lk{ m_healthLock };
+            m_health = newHealth;
+            m_healthChange.notify_all ();
             }
         }
     }

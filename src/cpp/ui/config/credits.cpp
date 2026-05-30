@@ -38,7 +38,7 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
     {
     ASSERT_ARRAY_LENGTH (SOFTWARE_NAMES, NUM_SW_LICENSES);
 
-    static const QString CREDITS_TEXT[] =
+    const QString CREDITS_TEXT[] =
         {
         tr ("App icon by Rose Spencer-Spreeuw ") +
         "(<a href=\"https://www.linkedin.com/in/rose-spencer-spreeuw-82278a1a1/\">LinkedIn</a>)",
@@ -46,7 +46,7 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
         };
     static constexpr size_t NUM_CREDITS = std::size (CREDITS_TEXT);
 
-    static const QString CREDITS_MORE_INFO[] =
+    const QString CREDITS_MORE_INFO[] =
         {
         "", // App Icon
 
@@ -240,7 +240,7 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
     // Margins, title, layout
 
     setContentsMargins (0, 0, 0, 0);
-    setWindowTitle (TITLE);
+    setWindowTitle (TITLE ());
     setLayout (mainLayout);
     }
 

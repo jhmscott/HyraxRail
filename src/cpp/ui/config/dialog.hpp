@@ -19,6 +19,7 @@
 #include <ui/common/formdialog.hpp>
 #include <ui/common/optionaldropdown.hpp>
 #include <ui/common/ipfield.hpp>
+#include <ui/lang.hpp>
 
 namespace ui::config
 {
@@ -58,7 +59,7 @@ private:
     DeviceInfoWidget*           m_active;       ///< Active device settings (m_network or m_com)
     QLineEdit*                  m_name;         ///< Controller name field
     QFormLayout*                m_layout;       ///< Main form layout
-
+    bool                        m_edit;         ///< True if editing a controller
 
     //////////////////////////////////////////////////////////////////////////////
     /// Makes the network device widget active and hides the COM entry widget
@@ -89,6 +90,9 @@ private:
     //////////////////////////////////////////////////////////////////////////////
     virtual QString getErrorString () const override;
 
+    void setLabels ();
+
+    UILANG_ON_CHANGE (QDialog, setLabels ());
 private slots:
     //////////////////////////////////////////////////////////////////////////////
     /// Handles the transport combobox index change by setting the active transport

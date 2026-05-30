@@ -16,6 +16,7 @@
 #include <control/controllers/base.hpp>
 
 #include <ui/common/icontoggle.hpp>
+#include <ui/lang.hpp>
 
 namespace ui
 {
@@ -112,6 +113,12 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void onDelete ();
+
+    UILANG_ON_CHANGE (QWidget,
+        {
+        refreshHealthIcon ();
+        setController (*m_controller);
+        });
     };
 
 }

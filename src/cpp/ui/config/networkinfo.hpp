@@ -13,6 +13,7 @@
 
 #include <ui/common/hostentry.hpp>
 #include <ui/common/ipfield.hpp>
+#include <ui/lang.hpp>
 
 #include <QComboBox>
 #include <QFormLayout>
@@ -83,6 +84,7 @@ private:
                                                     ///  or DNS hostname/FQDN
     QFormLayout*                m_layout;           ///< Main form layout
 
+
     ////////////////////////////////////////////////////////////////////////////
     /// Handle a change to the layer 3 (IP) protocol
     ///
@@ -91,5 +93,12 @@ private:
     ////////////////////////////////////////////////////////////////////////////
     void networkProtoChanged (int idx);
 
+    ////////////////////////////////////////////////////////////////////////////
+    /// Set the form labels for the widget
+    ///
+    ////////////////////////////////////////////////////////////////////////////
+    void setLabels ();
+
+    UILANG_ON_CHANGE (DeviceInfoWidget, setLabels ());
     };
 } // namespace ui::config

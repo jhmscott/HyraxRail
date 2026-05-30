@@ -20,6 +20,7 @@ namespace ui::config
 
 static constexpr auto HOST_NAME_TYPE = QHostAddress::AnyIPProtocol;
 
+
 NetworkDeviceInfoWidget::NetworkDeviceInfoWidget (QWidget* parent, utils::device::portNumber_t port) :
     DeviceInfoWidget (parent)
     {
@@ -40,11 +41,13 @@ NetworkDeviceInfoWidget::NetworkDeviceInfoWidget (QWidget* parent, utils::device
 
     m_network->addItem (tr ("Host Name"),QVariant::fromValue (HOST_NAME_TYPE));
 
-    m_layout->addRow (tr ("Network Protocol"),   m_network);
-    m_layout->addRow (tr ("Address"),            m_addressV4);
-    m_layout->addRow (tr ("Address"),            m_addressV6);
-    m_layout->addRow (tr ("Host Name"),          m_hostname);
-    m_layout->addRow (tr ("Port"),               m_port);
+    m_layout->addRow (new QLabel{ this }, m_network);
+    m_layout->addRow (new QLabel{ this }, m_addressV4);
+    m_layout->addRow (new QLabel{ this }, m_addressV6);
+    m_layout->addRow (new QLabel{ this }, m_hostname);
+    m_layout->addRow (new QLabel{ this }, m_port);
+
+    setLabels ();
 
     m_layout->setContentsMargins (0, 0, 0, 0);
 
@@ -198,5 +201,25 @@ void NetworkDeviceInfoWidget::networkProtoChanged (int idx)
         }
 
     emit inputChanged ();
+    }
+
+void NetworkDeviceInfoWidget::setLabels ()
+    {
+    common::setFormRowText (*m_layout, *m_network,  tr ("Network Protocol"));
+    common::setFormRowText (*m_layout, *m_addressV4,tr ("Address"));
+    common::setFormRowText (*m_layout, *m_addressV6,tr ("Address"));
+    common::setFormRowText (*m_layout, *m_hostname, tr ("Host Name"));
+    common::setFormRowText (*m_layout, *m_port,     tr ("Port"));
+
+    int idx = 0;
+
+    m_network->setItemText (idx++, tr ("IPv4"));
+
+    if (m_network->count () > 2)
+        {
+        m_network->setItemText (idx++, tr ("IPv6"));
+        }
+
+    m_network->setItemText (idx++, tr ("Host Name"));
     }
 } // namespace ui::config

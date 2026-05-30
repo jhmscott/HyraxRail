@@ -16,7 +16,8 @@
 #include <ui/common/hostfield.hpp>
 #include <ui/common/pointedwidget.hpp>
 #include <ui/common/shortcutlineedit.hpp>
-
+#include <ui/common/utils.hpp>
+#include <ui/lang.hpp>
 
 
 namespace ui::common
@@ -88,6 +89,23 @@ private:
     std::vector<ShortcutLineEdit*>              m_fields;   ///< Octets fields
     PointedIconButton*                          m_copy;     ///< Copy button
     const QAbstractSocket::NetworkLayerProtocol m_proto;    ///< Network layer rotocol
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Add the context menu to a shortcut line edit field
+    ///
+    /// @param[in]  idx     Field index [0, m_fields.size() - 1]
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void addMenuToField (size_t idx);
+
+    UILANG_ON_CHANGE (QWidget,
+        {
+        for (size_t ii = 0; ii < m_fields.size (); ++ii)
+            {
+            removeAllActions (*m_fields[ii]);
+            addMenuToField (ii);
+            }
+        });
 
 private slots:
     //////////////////////////////////////////////////////////////////////////////

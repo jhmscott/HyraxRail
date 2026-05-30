@@ -13,6 +13,7 @@
 #include <control/controllers/base.hpp>
 
 #include <ui/common/autogrid.hpp>
+#include <ui/lang.hpp>
 
 #include <QGroupBox>
 
@@ -38,6 +39,7 @@ public:
 private:
     control::ControllerBase*    m_controller;   ///< Controller
     common::AutoGridLayout*     m_gridLayout;   ///< Layout containing route buttons
+    QLabel*                     m_addLabel;
 
     //////////////////////////////////////////////////////////////////////////////
     /// Add a route button to the grid layout
@@ -47,6 +49,13 @@ private:
     //////////////////////////////////////////////////////////////////////////////
     void addRouteToGrid (const layout::Route& route);
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Set this widget's labels' text
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void setLabels ();
+
+    UILANG_ON_CHANGE (QGroupBox, setLabels ());
 private slots:
     //////////////////////////////////////////////////////////////////////////////
     /// Prompt the user to create a new route

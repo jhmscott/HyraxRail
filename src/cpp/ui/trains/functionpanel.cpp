@@ -173,25 +173,12 @@ void FunctionPanel::setLocomotive (const layout::Locomotive& loco)
             m_btns[idx]->setText ("");
             }
 
-        if (name.empty ())
-            {
-            m_btns[idx]->setToolTip (tr ("Function %1"). arg (idx));
-            }
-        // Function 0 is pretty universally the main headlight
-        else if (0 == idx)
-            {
-            m_btns[idx]->setToolTip (tr ("Function %1 : %2").arg (idx, tr ("Headlights")));
-            }
-        else
-            {
-            m_btns[idx]->setToolTip (tr ("Function %1 : %2").arg (idx, name.c_str ()));
-            }
-
         m_btns[idx]->setChecked (state);
         // Show buttons for functions we are using
         m_btns[idx]->show ();
         }
 
+    setTooltips ();
     // refresh the layout
     layout ()->update ();
     }
@@ -203,6 +190,28 @@ void FunctionPanel::clear ()
     std::for_each (m_btns.begin (),
                    m_btns.end (),
                    std::mem_fn (&QPushButton::hide));
+    }
+
+void FunctionPanel::setTooltips ()
+    {
+    for (auto& [name, _, idx, __] : m_loco.getFunctions ())
+        {
+        if (not name.empty ())
+            {
+            m_btns[idx]->setToolTip (tr ("Function %1 : %2").arg (idx).arg (name.c_str ()));
+            }
+        // Function 0 is pretty universally the main headlight
+        else if (0 == idx)
+            {
+            static constexpr const int id0 = 0;
+
+            m_btns[idx]->setToolTip (tr ("Function %1 : %2").arg (id0).arg (tr ("Headlights")));
+            }
+        else
+            {
+            m_btns[idx]->setToolTip (tr ("Function %1").arg (idx));
+            }
+        }
     }
 
 

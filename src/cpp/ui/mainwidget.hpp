@@ -15,6 +15,7 @@
 #include <ui/actuators/actuatorpanel.hpp>
 #include <ui/common/schemeicon.hpp>
 #include <ui/config/configpanel.hpp>
+#include <ui/lang.hpp>
 #include <ui/routes/routepanel.hpp>
 #include <ui/trains/dualcontrol.hpp>
 
@@ -52,6 +53,13 @@ private:
     config::ConfigPanel*            m_cfg;          ///< Main settings widget
     routes::RoutePanel*             m_routes;       ///< Route control widget
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the tab tooltips
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setTooltips ();
+
+    UILANG_ON_CHANGE (common::SchemeTabWidget, setTooltips ());
     };
 
 } // namespace ui

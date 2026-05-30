@@ -26,7 +26,9 @@ namespace ui::routes
 EditRouteDialog::EditRouteDialog (control::ControllerBase&  controller,
                                   QWidget*                  parent,
                                   const layout::Route*      route) :
-    common::FormDialog (parent)
+    common::FormDialog (parent),
+    m_controllerName (controller.getFriendlyName ()),
+    m_edit (NULL != route)
     {
     QVBoxLayout*            layout      = new QVBoxLayout{ this };
     QHBoxLayout*            nameLayout  = new QHBoxLayout{ };
@@ -51,9 +53,9 @@ EditRouteDialog::EditRouteDialog (control::ControllerBase&  controller,
                 &FormDialog::inputChanged);
         }
 
-    QLabel* label = new QLabel{ tr ("Name:"), this };
+    m_label = new QLabel{ this };
 
-    nameLayout->addWidget (label);
+    nameLayout->addWidget (m_label);
     nameLayout->addWidget (m_name = new QLineEdit{ this });
 
     layout->addItem   (btnLayout);
@@ -67,16 +69,8 @@ EditRouteDialog::EditRouteDialog (control::ControllerBase&  controller,
                 QRegularExpression{ utils::str::NON_EMPTY_REGEX }, this });
 
 
-    if (NULL == route)
+    if (m_edit)
         {
-        setWindowTitle (tr ("Add Route - %1").arg (
-                            controller.getFriendlyName ().c_str ()));
-        }
-    else
-        {
-        setWindowTitle (tr ("Edit Route - %1").arg (
-                            controller.getFriendlyName ().c_str ()));
-
         m_name->setText (route->getName ().c_str ());
 
         for (const layout::routeMember& actuator : route->getActuators ())
@@ -95,6 +89,8 @@ EditRouteDialog::EditRouteDialog (control::ControllerBase&  controller,
             &QLineEdit::textChanged,
              this,
             &FormDialog::inputChanged);
+
+    setLabels ();
 
     inputChanged ();
 
@@ -123,6 +119,23 @@ layout::routeList EditRouteDialog::getActuators () const
                     { return { btn->getActuator (), btn->actuatorState () }; });
 
     return members;
+    }
+
+void EditRouteDialog::setLabels ()
+    {
+    m_label->setText (tr ("Name:"));
+
+    if (m_edit)
+        {
+        setWindowTitle (tr ("Edit Route - %1").arg (
+                                m_controllerName.c_str ()));
+        }
+    else
+        {
+        setWindowTitle (tr ("Add Route - %1").arg (
+                               m_controllerName.c_str ()));
+        }
+
     }
 
 bool EditRouteDialog::hasAcceptableInput () const

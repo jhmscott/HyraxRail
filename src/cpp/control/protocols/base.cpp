@@ -50,7 +50,7 @@ ProtocolBase::ProtocolBase (const utils::device::deviceInfo& deviceInfo, int tim
 
 bool ProtocolBase::maintainConnection ()
     {
-    bool connected = true;
+    bool connected = false;
 
     switch (m_deviceInfo.type)
         {
@@ -59,15 +59,27 @@ bool ProtocolBase::maintainConnection ()
             {
             QAbstractSocket* skt = static_cast<QAbstractSocket*> (m_device.get ());
 
-            if (not (connected = skt->isValid ()))
+            if (QAbstractSocket::ConnectedState == skt->state ())
+                {
+                connected = true;
+                }
+            else
                 {
                 auto& sktInfo = std::get<utils::device::socketInfo> (m_deviceInfo.info);
 
                 skt->connectToHost (sktInfo.host.toAddress (),
                                     sktInfo.port);
-                connected = skt->waitForConnected ();
+                if (not (connected = skt->waitForConnected (500)))
+                    {
+                    skt->disconnect ();
+                    }
                 }
 
+            break;
+            }
+        default:
+            {
+            connected = true;
             break;
             }
         }

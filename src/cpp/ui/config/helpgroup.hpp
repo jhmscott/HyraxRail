@@ -10,7 +10,10 @@
 
 #pragma once
 
+#include <ui/lang.hpp>
+
 #include <QGroupBox>
+#include <QPushButton>
 
 namespace ui::config
 {
@@ -30,6 +33,21 @@ public:
     ///
     //////////////////////////////////////////////////////////////////////////////
     explicit HelpGroup (QWidget* parent);
+
+private:
+    QPushButton* m_help;        ///< Help button
+    QPushButton* m_aboutBtn;    ///< Application about
+    QPushButton* m_aboutQtBtn;  ///< QT about
+    QPushButton* m_licBtn;      ///< This application's license
+    QPushButton* m_creditsBtn;  ///< Other licenses and credits
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Set all the widget text labels
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void setLabels ();
+
+    UILANG_ON_CHANGE (QGroupBox, setLabels ());
 
 private slots:
     //////////////////////////////////////////////////////////////////////////////

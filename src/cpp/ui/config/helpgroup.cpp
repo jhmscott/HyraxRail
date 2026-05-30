@@ -154,58 +154,60 @@ static void styleButton (QPushButton& btn)
 
 
 HelpGroup::HelpGroup (QWidget* parent) :
-    QGroupBox (tr ("Help"), parent)
+    QGroupBox (parent)
     {
     QVBoxLayout* layout     = new QVBoxLayout{ this };
 
-    QPushButton* help       = new common::PointedButton{ tr ("View Help"),             this };
-    QPushButton* aboutBtn   = new common::PointedButton{ tr ("About Hyrax Rail"),      this };
-    QPushButton* aboutQtBtn = new common::PointedButton{ tr ("About Qt"),              this };
-    QPushButton* licBtn     = new common::PointedButton{ tr ("License Info"),          this };
-    QPushButton* creditsBtn = new common::PointedButton{ utils::str::escape (CreditsDialog::TITLE), this};
+    m_help       = new common::PointedButton{ this };
+    m_aboutBtn   = new common::PointedButton{ this };
+    m_aboutQtBtn = new common::PointedButton{ this };
+    m_licBtn     = new common::PointedButton{ this };
+    m_creditsBtn = new common::PointedButton{ this };
 
-    styleButton (*help);
-    styleButton (*aboutBtn);
-    styleButton (*aboutQtBtn);
-    styleButton (*licBtn);
-    styleButton (*creditsBtn);
+    styleButton (*m_help);
+    styleButton (*m_aboutBtn);
+    styleButton (*m_aboutQtBtn);
+    styleButton (*m_licBtn);
+    styleButton (*m_creditsBtn);
 
-    layout->addWidget (help);
+    layout->addWidget (m_help);
     layout->addWidget (new common::Separator{ this });
-    layout->addWidget (aboutBtn);
+    layout->addWidget (m_aboutBtn);
     layout->addWidget (new common::Separator{ this });
-    layout->addWidget (aboutQtBtn);
+    layout->addWidget (m_aboutQtBtn);
     layout->addWidget (new common::Separator{ this });
-    layout->addWidget (licBtn);
+    layout->addWidget (m_licBtn);
     layout->addWidget (new common::Separator{ this });
-    layout->addWidget (creditsBtn);
+    layout->addWidget (m_creditsBtn);
+
+    setLabels ();
 
     new QShortcut{ QKeySequence::HelpContents,
                    this, // parent
                    this, // reciever
                   &HelpGroup::help };
 
-    connect (aboutBtn,
+    connect (m_aboutBtn,
             &QPushButton::released,
              this,
             &HelpGroup::about);
 
-    connect (aboutQtBtn,
+    connect (m_aboutQtBtn,
             &QPushButton::released,
              this,
             &QApplication::aboutQt);
 
-    connect (help,
+    connect (m_help,
             &QPushButton::released,
              this,
             &HelpGroup::help);
 
-    connect (licBtn,
+    connect (m_licBtn,
             &QPushButton::released,
              this,
             &HelpGroup::license);
 
-    connect (creditsBtn,
+    connect (m_creditsBtn,
             &QPushButton::released,
              this,
             &HelpGroup::credits);
@@ -213,9 +215,20 @@ HelpGroup::HelpGroup (QWidget* parent) :
     setLayout (layout);
     }
 
+void HelpGroup::setLabels ()
+    {
+    setTitle (tr ("Help"));
+
+    m_help->setText (tr ("View Help"));
+    m_aboutBtn->setText (tr ("About Hyrax Rail"));
+    m_aboutQtBtn->setText (tr ("About Qt"));
+    m_licBtn->setText (tr ("License Info"));
+    m_creditsBtn->setText (utils::str::escape (CreditsDialog::TITLE ()));
+    }
+
 void HelpGroup::about ()
     {
-    static const QString HELPGROUP_ABOUT_MESSAGE =
+    const QString HELPGROUP_ABOUT_MESSAGE =
         tr (PRODUCT_DESCRIPTION)  + "<BR>"
         "Version " VERSION_STRING   "<BR>"
         "Build " __DATE__           "<BR>" +

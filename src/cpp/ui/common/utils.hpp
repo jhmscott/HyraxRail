@@ -12,6 +12,7 @@
 
 #include <QApplication>
 #include <QComboBox>
+#include <QFormLayout>
 #include <QLayout>
 #include <QLayoutItem>
 #include <QPushButton>
@@ -194,4 +195,35 @@ inline void clearLayout (QLayout& layout)
         }
     }
 
+///////////////////////////////////////////////////////////////////////////////
+/// Remove all actions from a widget
+///
+/// @param[in,out]  wdgt        Widget to remove actions from
+///
+///////////////////////////////////////////////////////////////////////////////
+inline void removeAllActions (QWidget& wdgt)
+    {
+    for (QAction* action : wdgt.actions ())
+        {
+        wdgt.removeAction (action);
+        }
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Set the label for a gievn text row in a form layout
+///
+/// @param[in,out]  layout      Form layout to set the label text for
+/// @param[in]      field       Which field to set the layout for
+/// @param[in]      text        New text for layout
+///
+///////////////////////////////////////////////////////////////////////////////
+inline void setFormRowText (QFormLayout& layout, QWidget& field, const QString& text)
+    {
+    QWidget* label = layout.labelForField (&field);
+
+    if (NULL != label)
+        {
+        static_cast<QLabel*> (label)->setText (text);
+        }
+    }
 }

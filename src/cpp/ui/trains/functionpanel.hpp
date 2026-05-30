@@ -12,6 +12,8 @@
 
 #include <layout/locomotive.hpp>
 
+#include <ui/lang.hpp>
+
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QWidget>
@@ -67,6 +69,14 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     void buttonPressed (uint8_t id, bool enabled)
         { m_loco.setFunc (id, enabled); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the function button tooltips
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setTooltips ();
+
+    UILANG_ON_CHANGE (QWidget, setTooltips ());
     };
 
 } // namespace ui::trains

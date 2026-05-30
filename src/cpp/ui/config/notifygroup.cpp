@@ -11,7 +11,7 @@
 #include <ui/common/seperator.hpp>
 #include <ui/common/toggleswitch.hpp>
 
-#include "notifygroup.hpp"
+#include <ui/config/notifygroup.hpp>
 
 #include <QApplication>
 #include <QBoxLayout>
@@ -20,7 +20,7 @@
 namespace ui::config
 {
 NotifyGroup::NotifyGroup (QWidget* parent) :
-    QGroupBox (tr ("Notifications"), parent)
+    QGroupBox (parent)
     {
     QVBoxLayout*    layout  = new QVBoxLayout{ this };
     QFont           font    = QApplication::font ();
@@ -28,25 +28,36 @@ NotifyGroup::NotifyGroup (QWidget* parent) :
     font.setPixelSize (16);
 
     QHBoxLayout*    stopNotify  = new QHBoxLayout{ this };
-    QLabel*         stopLabel   = new QLabel{ tr ("Global Stop"), this};
 
-    stopLabel->setFont (font);
+    m_stopLabel   = new QLabel{ this };
 
-    stopNotify->addWidget (stopLabel, 0, Qt::AlignLeft);
+    m_stopLabel->setFont (font);
+
+    stopNotify->addWidget (m_stopLabel, 0, Qt::AlignLeft);
     stopNotify->addWidget (new common::ToggleSwitch{ this }, 0, Qt::AlignRight);
 
     QHBoxLayout*    sensorNotify    = new QHBoxLayout{ this };
-    QLabel*         sensorLabel     = new QLabel{ tr ("Sensors"), this};
 
-    sensorLabel->setFont (font);
+    m_sensorLabel     = new QLabel{ this };
 
-    sensorNotify->addWidget (sensorLabel, 0, Qt::AlignLeft);
+    m_sensorLabel->setFont (font);
+
+    sensorNotify->addWidget (m_sensorLabel, 0, Qt::AlignLeft);
     sensorNotify->addWidget (new common::ToggleSwitch{ this }, 0, Qt::AlignRight);
 
     layout->addLayout (stopNotify);
     layout->addWidget (new common::Separator{ this });
     layout->addLayout (sensorNotify);
 
+    setLabels ();
     setLayout (layout);
+    }
+
+void NotifyGroup::setLabels ()
+    {
+    setTitle (tr ("Notifications"));
+
+    m_stopLabel->setText (tr ("Global Stop"));
+    m_sensorLabel->setText (tr ("Sensors"));
     }
 }

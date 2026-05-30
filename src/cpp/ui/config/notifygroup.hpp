@@ -10,7 +10,10 @@
 
 #pragma once
 
+#include <ui/lang.hpp>
+
 #include <QGroupBox>
+#include <QLabel>
 
 namespace ui::config
 {
@@ -30,6 +33,18 @@ public:
     ///
     //////////////////////////////////////////////////////////////////////////////
     explicit NotifyGroup (QWidget* parent);
+
+private:
+    QLabel* m_stopLabel;    ///< Stop toggle label
+    QLabel* m_sensorLabel;  ///< Sensor toggle label
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Set all the widget label text
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void setLabels ();
+
+    UILANG_ON_CHANGE (QGroupBox, setLabels ());
     };
 
 } // ui::config

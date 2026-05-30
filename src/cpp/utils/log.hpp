@@ -56,8 +56,8 @@ namespace internal
 ///////////////////////////////////////////////////////////////////////////////
 inline std::string getLastErrorAsString ()
     {        //Get the error message ID, if any.
-    DWORD errorMessageID = GetLastError ();
-    LPSTR messageBuffer = nullptr;
+    DWORD       errorMessageID  = GetLastError ();
+    LPSTR       messageBuffer   = NULL;
     std::string message;
 
     //Ask Win32 to give us the string version of that message ID.

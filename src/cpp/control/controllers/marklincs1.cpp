@@ -109,6 +109,11 @@ std::vector<layout::Locomotive> MarklinCS1::getLocomotives () const
     {
     std::vector<layout::Locomotive> locos;
 
+    if (not m_thread.isConnected ())
+        {
+        return locos;
+        }
+
     auto future = issueStaticCommand (ECoSProtocol::queryObjects,
                                       ECoSProtocol::ID_LOCOMOTIVES,
                                       ECoSProtocol::ARG_NAME);
@@ -168,6 +173,11 @@ std::vector<layout::Locomotive> MarklinCS1::getLocomotives () const
 std::vector<layout::Actuator> MarklinCS1::getActuators () const
     {
     std::vector<layout::Actuator> actuators;
+
+    if (not m_thread.isConnected ())
+        {
+        return actuators;
+        }
 
     auto future = issueStaticCommand (ECoSProtocol::queryObjects,
                                       ECoSProtocol::ID_SWITCHING_ITEMS);
@@ -267,6 +277,12 @@ std::vector<layout::Actuator> MarklinCS1::getActuators () const
 std::vector<layout::Route> MarklinCS1::getRoutes () const
     {
     std::vector<layout::Route> routes;
+
+
+    if (not m_thread.isConnected ())
+        {
+        return routes;
+        }
 
     auto future = issueStaticCommand (ECoSProtocol::queryObjects,
                                       ECoSProtocol::ID_SWITCHING_ITEMS);

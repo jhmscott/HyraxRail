@@ -201,11 +201,11 @@
     <ClInclude Include="..\src\cpp\ui\common\hostfield.hpp">
       <Filter>Header Files\ui\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\lang.hpp">
+      <Filter>Header Files\ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\cpp\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\cpp\control\controllers\base.cpp">
       <Filter>Source Files\control\controllers</Filter>
     </ClCompile>
@@ -358,6 +358,12 @@
     </ClCompile>
     <ClCompile Include="..\src\cpp\ui\config\cominfo.cpp">
       <Filter>Source Files\ui\config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\lang.cpp">
+      <Filter>Source Files\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

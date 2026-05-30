@@ -135,28 +135,8 @@ IpField::IpField (QAbstractSocket::NetworkLayerProtocol proto, QWidget* parent) 
 
         // Context menu
 
-        auto pasteHandler = std::bind (&IpField::paste,
-                                       this,
-                                       m_fields[ii]);
-
         m_fields[ii]->setContextMenuPolicy (Qt::ActionsContextMenu);
-
-        m_fields[ii]->addAction (tr ("Paste"),
-                                 QKeySequence::Paste,
-                                 this,
-                                 pasteHandler);
-
-        m_fields[ii]->addAction (tr ("Copy"),
-                                 QKeySequence::Copy,
-                                 m_fields[ii],
-                                &QLineEdit::copy);
-
-        m_fields[ii]->addAction (tr ("Cut"),
-                                 QKeySequence::Cut,
-                                 m_fields[ii],
-                                &QLineEdit::cut);
-
-        m_fields[ii]->setPasteHandler (this, pasteHandler);
+        addMenuToField (ii);
         }
 
     // Copy cliboard to keyboard button
@@ -230,6 +210,31 @@ void IpField::setValue (const QHostAddress& addr)
 void IpField::next (int idx)
     {
     m_fields[idx + 1]->setFocus ();
+    }
+
+void IpField::addMenuToField (size_t idx)
+    {
+
+    auto pasteHandler = std::bind (&IpField::paste,
+                                    this,
+                                    m_fields[idx]);
+
+    m_fields[idx]->addAction (tr ("Paste"),
+                              QKeySequence::Paste,
+                              this,
+                              pasteHandler);
+
+    m_fields[idx]->addAction (tr ("Copy"),
+                              QKeySequence::Copy,
+                              m_fields[idx],
+                             &QLineEdit::copy);
+
+    m_fields[idx]->addAction (tr ("Cut"),
+                              QKeySequence::Cut,
+                              m_fields[idx],
+                             &QLineEdit::cut);
+
+    m_fields[idx]->setPasteHandler (this, pasteHandler);
     }
 
 void IpField::back (int idx)

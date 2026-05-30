@@ -28,7 +28,7 @@ class CreditsDialog : public QDialog
     Q_OBJECT
 public:
     // Dialog box title
-    static inline const QString TITLE = tr ("Third Party Licenses & Credits");
+    static QString TITLE () { return tr ("Third Party Licenses & Credits"); };
 
     //////////////////////////////////////////////////////////////////////////////
     /// Constructor

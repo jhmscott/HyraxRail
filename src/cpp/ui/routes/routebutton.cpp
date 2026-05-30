@@ -46,14 +46,12 @@ RouteButton::RouteButton (const layout::Route& route, QWidget* parent) :
     setContentsMargins (0, 20, 0, 0);
     setContextMenuPolicy (Qt::ActionsContextMenu);
 
-    addAction (tr ("Delete"),this, &RouteButton::removeRoute);
-    addAction (tr ("Edit"),  this, &RouteButton::editRoute);
-
     connect (button,
              &QPushButton::released,
              m_route,
              &layout::Route::set);
 
+    createMenu ();
     updateTooltip ();
     setLayout (layout);
     }
@@ -71,6 +69,12 @@ void RouteButton::updateTooltip ()
     text.removeLast ();
 
     setToolTip (text);
+    }
+
+void RouteButton::createMenu ()
+    {
+    addAction (tr ("Delete"),this, &RouteButton::removeRoute);
+    addAction (tr ("Edit"),  this, &RouteButton::editRoute);
     }
 
 void RouteButton::removeRoute ()

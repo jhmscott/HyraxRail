@@ -15,8 +15,10 @@
 #include <layout/actuator.hpp>
 
 #include <ui/common/formdialog.hpp>
+#include <ui/lang.hpp>
 
 #include <QComboBox>
+#include <QFormLayout>
 #include <QLineEdit>
 #include <QSpinBox>
 
@@ -60,7 +62,6 @@ public:
     //////////////////////////////////////////////////////////////////////////////
     uint getAddress () const { return m_address->value (); }
 
-
     //////////////////////////////////////////////////////////////////////////////
     /// Get the UI icon selected by the user
     ///
@@ -85,14 +86,28 @@ public:
     /// @return     Actuation duration
     ///
     //////////////////////////////////////////////////////////////////////////////
-    uint getDuration () const
-        { return m_duration->currentData ().toInt (); }
+    uint getDuration () const { return m_duration->currentData ().toInt (); }
 private:
     QLineEdit*              m_name;     ///< Friendly name field
     QSpinBox*               m_address;  ///< Track protocol address spin box
     common::SchemeComboBox* m_icon;     ///< Icon dropdown
     QComboBox*              m_mode;     ///< Actuator mode dropdown
     QComboBox*              m_duration; ///< Duration dropdown
+    QFormLayout*            m_form;     ///< Form layout
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Upate the text to the current language
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void updateTexts ();
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Set the form labels' text
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void setLabels ();
+
+    UILANG_ON_CHANGE (common::FormDialog, updateTexts ());
 
     //////////////////////////////////////////////////////////////////////////////
     /// Check if all fields have valid input

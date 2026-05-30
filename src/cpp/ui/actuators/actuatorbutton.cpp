@@ -48,11 +48,7 @@ ActuatorButton::ActuatorButton (const layout::Actuator& actuator, QWidget* paren
     setContentsMargins (0, 20, 0, 0);
     setContextMenuPolicy (Qt::ActionsContextMenu);
 
-    if (not dummy)
-        {
-        addAction (tr ("Delete"),this, &ActuatorButton::removeActuator);
-        addAction (tr ("Edit"),  this, &ActuatorButton::editActuator);
-        }
+    createMenu ();
 
     connect (m_button,
             &QPushButton::toggled,
@@ -74,6 +70,15 @@ void ActuatorButton::setState (bool state)
     if (not m_dummy)
         {
         m_actuator.set (state);
+        }
+    }
+
+void ActuatorButton::createMenu ()
+    {
+    if (not m_dummy)
+        {
+        addAction (tr ("Delete"), this, &ActuatorButton::removeActuator);
+        addAction (tr ("Edit"), this, &ActuatorButton::editActuator);
         }
     }
 

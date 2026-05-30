@@ -29,14 +29,17 @@ EditActuatorDialog::EditActuatorDialog (control::ControllerBase&    controller,
         750
         };
 
-    QFormLayout* form   = new QFormLayout;
     QVBoxLayout* layout = new QVBoxLayout{ this };
 
-    form->addRow (tr ("Name"),     m_name      = new QLineEdit{ this });
-    form->addRow (tr ("Address"),  m_address   = new QSpinBox{ this });
-    form->addRow (tr ("Icon"),     m_icon      = new common::SchemeComboBox{ this });
-    form->addRow (tr ("Mode"),     m_mode      = new QComboBox{ this });
-    form->addRow (tr ("Duration"), m_duration  = new QComboBox{ this });
+    m_form = new QFormLayout;
+
+    m_form->addRow (new QLabel{ this }, m_name      = new QLineEdit{ this });
+    m_form->addRow (new QLabel{ this }, m_address   = new QSpinBox{ this });
+    m_form->addRow (new QLabel{ this }, m_icon      = new common::SchemeComboBox{ this });
+    m_form->addRow (new QLabel{ this }, m_mode      = new QComboBox{ this });
+    m_form->addRow (new QLabel{ this }, m_duration  = new QComboBox{ this });
+
+    setLabels ();
 
     setWindowIcon ("misc/split");
 
@@ -70,7 +73,7 @@ EditActuatorDialog::EditActuatorDialog (control::ControllerBase&    controller,
                              QVariant::fromValue (durations[ii]));
         }
 
-    layout->addLayout (form);
+    layout->addLayout (m_form);
     layout->addWidget (m_buttons, 0, Qt::AlignHCenter | Qt::AlignBottom);
 
     if (NULL != actuator)
@@ -91,6 +94,30 @@ EditActuatorDialog::EditActuatorDialog (control::ControllerBase&    controller,
     inputChanged ();
 
     setLayout (layout);
+    }
+
+void EditActuatorDialog::updateTexts ()
+    {
+    for (int ii = 0; ii < m_icon->count (); ++ii)
+        {
+        const auto& icon = m_icon->itemData (ii).value<layout::actuatorIcon> ();
+
+        m_icon->setItemText (ii, resources::getIconInfo (icon).title);
+        }
+
+    m_mode->setItemText (0, tr ("Switch"));
+    m_mode->setItemText (1, tr ("Pulse"));
+
+    setLabels ();
+    }
+
+void EditActuatorDialog::setLabels ()
+    {
+    common::setFormRowText (*m_form, *m_name,       tr ("Name"));
+    common::setFormRowText (*m_form, *m_address,    tr ("Address"));
+    common::setFormRowText (*m_form, *m_icon,       tr ("Icon"));
+    common::setFormRowText (*m_form, *m_mode,       tr ("Mode"));
+    common::setFormRowText (*m_form, *m_duration,   tr ("Duration"));
     }
 
 bool EditActuatorDialog::hasAcceptableInput () const

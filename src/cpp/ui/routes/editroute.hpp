@@ -12,6 +12,7 @@
 #include <control/controllers/base.hpp>
 
 #include <ui/common/formdialog.hpp>
+#include <ui/lang.hpp>
 #include <ui/routes/includebutton.hpp>
 
 #include <QDialog>
@@ -57,8 +58,17 @@ public:
     //////////////////////////////////////////////////////////////////////////////
     std::string getName () const { return m_name->text ().toStdString (); }
 private:
-    std::vector<ActuatorIncludeButton*> m_buttonList;   ///< Actuator buttons
-    QLineEdit*                          m_name;         ///< Name field
+    std::vector<ActuatorIncludeButton*> m_buttonList;       ///< Actuator buttons
+    std::string                         m_controllerName;   ///< Name of the controller this route belongs to
+    QLineEdit*                          m_name;             ///< Name field
+    QLabel*                             m_label;            ///< Route name label
+    bool                                m_edit;             ///< True if this is in edit mode, false if this is add mode
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Set the form labels
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void setLabels ();
 
     //////////////////////////////////////////////////////////////////////////////
     /// Check if this dialog has valid input
@@ -67,6 +77,8 @@ private:
     ///
     //////////////////////////////////////////////////////////////////////////////
     virtual bool hasAcceptableInput () const override;
+
+    UILANG_ON_CHANGE (common::FormDialog, setLabels ());
     };
 
 }

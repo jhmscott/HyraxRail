@@ -12,6 +12,8 @@
 #include <control/controllers/base.hpp>
 #include <control/controllers/manager.hpp>
 
+#include <ui/lang.hpp>
+
 #include <QGroupBox>
 #include <QWidget>
 
@@ -38,6 +40,7 @@ public:
 
 private:
     control::ControllerManager* m_controllers;              ///< List of controllers
+    QLabel*                     m_plusLabel;                ///< Label for the plus/add button
     bool                        m_hasAddController = false; ///< Set once the controller
                                                             ///  add widget has been added
 
@@ -47,6 +50,13 @@ private:
     //////////////////////////////////////////////////////////////////////////////
     void addController ();
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Set the text labels for the widget
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void setLabels ();
+
+    UILANG_ON_CHANGE (QGroupBox, setLabels ());
 private slots:
     //////////////////////////////////////////////////////////////////////////////
     /// Handle a controller being deleted

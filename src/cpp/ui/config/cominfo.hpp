@@ -10,6 +10,7 @@
 #pragma once
 
 #include <ui/config/deviceinfo.hpp>
+#include <ui/lang.hpp>
 
 #include <QComboBox>
 #include <QFormLayout>
@@ -62,5 +63,12 @@ private:
     QComboBox*      m_baud;     ///< Baud rate selection in bits/second
     QFormLayout*    m_layout;   ///< Main form layout
 
+    ////////////////////////////////////////////////////////////////////////////
+    /// Set this widget's form labels
+    ///
+    ////////////////////////////////////////////////////////////////////////////
+    void setLabels ();
+
+    UILANG_ON_CHANGE (DeviceInfoWidget, setLabels ());
     };
 } // namespace ui::config

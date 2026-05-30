@@ -88,13 +88,7 @@ MainWidget::MainWidget (QWidget* parent) :
     addTab (m_cfg = new config::ConfigPanel{ m_controllers, this},
             "misc/gear");
 
-    setTabToolTip (0, tr ("Trains"));
-    setTabToolTip (1, tr ("Actuators"));
-    setTabToolTip (2, tr ("Sensors"));
-    setTabToolTip (3, tr ("Routes"));
-    setTabToolTip (4, tr ("Programming"));
-    setTabToolTip (5, tr ("Settings"));
-
+    setTooltips ();
     setIconSize ({ 24, 24 });
     }
 
@@ -148,6 +142,16 @@ MainWidget::~MainWidget ()
         settings.setValue (controller + "/port",
                            skt.port);
         }
+    }
+
+void MainWidget::setTooltips ()
+    {
+    setTabToolTip (0, tr ("Trains"));
+    setTabToolTip (1, tr ("Actuators"));
+    setTabToolTip (2, tr ("Sensors"));
+    setTabToolTip (3, tr ("Routes"));
+    setTabToolTip (4, tr ("Programming"));
+    setTabToolTip (5, tr ("Settings"));
     }
 
 

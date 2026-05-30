@@ -52,7 +52,7 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager* controllers, vAl
 
     protocolInfo proto = PROTOCOLS[layout::TRACK_PROTO_UNKNOWN];
 
-    if (controllers->size () > 0)
+    if (m_locos->count () > 0)
         {
         m_locos->setCurrentIndex (0);
 

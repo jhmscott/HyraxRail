@@ -152,6 +152,28 @@ public:
         {
         healthLevel                 level;  ///< Enumerated health value
         std::chrono::milliseconds   ping;   ///< Connection ping (only for socket connections)
+
+        ///////////////////////////////////////////////////////////////////////////////
+        /// Equality operator
+        ///
+        /// @param[in]  other       Health to compare to
+        ///
+        ///////////////////////////////////////////////////////////////////////////////
+        bool operator== (const health& other) const
+            {
+            return other.level == level && other.ping == ping;
+            }
+
+        ///////////////////////////////////////////////////////////////////////////////
+        /// Inequality operator
+        ///
+        /// @param[in]  other       Health to compare to
+        ///
+        ///////////////////////////////////////////////////////////////////////////////
+        bool operator!= (const health& other) const
+            {
+            return !(*this == other);
+            }
         };
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -197,7 +219,22 @@ public:
     /// @return     Connection health
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    health getConnectionHealth () const { return m_health; }
+    health getConnectionHealth () const { std::lock_guard lk{ m_healthLock }; return m_health; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Check if the thread has successfuly connected to the host
+    ///
+    /// @return     True if connected
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool isConnected () const
+        {
+        std::lock_guard lk{ m_healthLock };
+
+        return HEALTH_DISCONNECTED != m_health.level &&
+                HEALTH_UNAVAILABLE != m_health.level &&
+                       HEALTH_DEAD != m_health.level;
+        }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the protocol type's meta class
@@ -235,6 +272,17 @@ private:
         ///
         ///////////////////////////////////////////////////////////////////////////////
         virtual void callContained (ProtocolBase& protocol) = 0;
+
+        ///////////////////////////////////////////////////////////////////////////////
+        /// Get the time this task was added to the queue
+        ///
+        /// @return     creation time point
+        ///
+        ///////////////////////////////////////////////////////////////////////////////
+        auto getCreationTime () const { return m_creation; }
+
+    private:
+        std::chrono::system_clock::time_point m_creation = std::chrono::system_clock::now ();
         };
 
 
@@ -324,6 +372,8 @@ private:
     std::thread                             m_thread;           ///< Connection thread
     std::mutex                              m_mtx;              ///< Queue lock
     std::condition_variable                 m_cv;               ///< Enueue signal
+    mutable std::mutex                      m_healthLock;       ///< Protects the connection health status
+    std::condition_variable                 m_healthChange;     ///< Signals the health as changed
     std::atomic_bool                        m_continue = true;  ///< Continue flag, set to false to signal shutdown
 
     utils::Pinger*                          m_pinger = NULL;    ///< Connection pinger instance

@@ -24,7 +24,7 @@ namespace ui::config
 
 ControllerGroup::ControllerGroup (control::ControllerManager* controllers,
                                   QWidget*                   parent) :
-    QGroupBox (tr ("Controllers"), parent),
+    QGroupBox (parent),
     m_controllers (controllers)
     {
     QVBoxLayout* layout = new QVBoxLayout{ this };
@@ -38,8 +38,9 @@ ControllerGroup::ControllerGroup (control::ControllerManager* controllers,
 
     QHBoxLayout* addController  = new QHBoxLayout{ this };
     QPushButton* plusIcon       = new common::PointedIconButton{ "misc/plus", this};
-    QLabel*      plusLabel      = new QLabel{ tr ("New Controller"), this };
     QFont        font           = QApplication::font ();
+
+    m_plusLabel = new QLabel{ this };
 
     font.setPixelSize (16);
 
@@ -47,16 +48,18 @@ ControllerGroup::ControllerGroup (control::ControllerManager* controllers,
     plusIcon->setSizePolicy (QSizePolicy::Maximum,
                              QSizePolicy::Maximum);
 
-    plusLabel->setFont (font);
+    m_plusLabel->setFont (font);
 
     common::makeFrameless (*plusIcon);
 
     addController->addWidget (plusIcon);
-    addController->addWidget (plusLabel);
+    addController->addWidget (m_plusLabel);
     addController->setAlignment (Qt::AlignLeft);
 
     layout->addLayout (addController);
     m_hasAddController = true;
+
+    setLabels ();
 
     connect (plusIcon,
             &QPushButton::released,
@@ -105,6 +108,12 @@ void ControllerGroup::addController ()
         {
         m_controllers->append (dlg.createController ());
         }
+    }
+
+void ControllerGroup::setLabels ()
+    {
+    m_plusLabel->setText (tr ("New Controller"));
+    setTitle (tr ("Controllers"));
     }
 
 

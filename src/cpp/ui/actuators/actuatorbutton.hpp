@@ -10,6 +10,8 @@
 #pragma once
 
 #include <ui/common/icontoggle.hpp>
+#include <ui/common/utils.hpp>
+#include <ui/lang.hpp>
 
 #include <layout/actuator.hpp>
 
@@ -57,6 +59,18 @@ private:
     QLabel*             m_name;     ///< Actuator name label
     common::IconToggle* m_button;   ///< Toggle button controlling actuator
     bool                m_dummy;    ///< True if this does not control the actuator
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Create the actions for the context menu
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void createMenu ();
+
+    UILANG_ON_CHANGE (QWidget,
+        {
+        common::removeAllActions (*this);
+        createMenu ();
+        });
 
 private slots:
 

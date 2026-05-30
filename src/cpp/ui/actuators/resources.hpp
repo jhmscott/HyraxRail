@@ -36,7 +36,7 @@ struct iconInfo
 //////////////////////////////////////////////////////////////////////////////
 inline iconInfo getIconInfo (layout::actuatorIcon icon)
     {
-    static const iconInfo ICONS[] =
+    const iconInfo ICONS[] =
         {
             {
             QObject::tr ("Street Light"),

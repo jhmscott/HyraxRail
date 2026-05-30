@@ -13,6 +13,7 @@
 #include <control/controllers/base.hpp>
 
 #include <ui/common/autogrid.hpp>
+#include <ui/lang.hpp>
 
 #include <QGroupBox>
 
@@ -39,6 +40,13 @@ public:
 private:
     control::ControllerBase*    m_controller;   ///< Controller this refers to
     common::AutoGridLayout*     m_gridLayout;   ///< Grid layout containing buttons for each actuator
+    QLabel*                     m_addLabel;     ///< "Add Switching Item" label
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Set the add label text
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void setAddLabelText () { m_addLabel->setText (tr ("Add Switching Item")); }
 
     //////////////////////////////////////////////////////////////////////////////
     /// Add an actuator button to the grid
@@ -48,6 +56,7 @@ private:
     //////////////////////////////////////////////////////////////////////////////
     void addActuatorToGrid (const layout::Actuator& actuator);
 
+    UILANG_ON_CHANGE (QGroupBox, setAddLabelText ());
 private slots:
 
     //////////////////////////////////////////////////////////////////////////////

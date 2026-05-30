@@ -11,6 +11,9 @@
 
 #include <layout/route.hpp>
 
+#include <ui/common/utils.hpp>
+#include <ui/lang.hpp>
+
 #include <QLabel>
 #include <QWidget>
 
@@ -55,6 +58,19 @@ private:
     ///
     //////////////////////////////////////////////////////////////////////////////
     void updateTooltip ();
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Create the context menu actions
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void createMenu ();
+
+    UILANG_ON_CHANGE (QWidget,
+        {
+        common::removeAllActions (*this);
+        createMenu ();
+        updateTooltip ();
+        });
 
 private slots:
     //////////////////////////////////////////////////////////////////////////////
