@@ -75,32 +75,32 @@
 <context>
     <name>ui::MainWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="149"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="150"/>
         <source>Trains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="150"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="151"/>
         <source>Actuators</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="151"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="152"/>
         <source>Sensors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="152"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="153"/>
         <source>Routes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="153"/>
-        <source>Programming</source>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="154"/>
+        <source>Fast Clock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="154"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="155"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -181,6 +181,29 @@
         <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="58"/>
         <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="109"/>
         <source>Pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::clock::ConfigForm</name>
+    <message>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="84"/>
+        <source>Running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="85"/>
+        <source>Ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="86"/>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="87"/>
+        <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

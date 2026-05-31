@@ -139,6 +139,18 @@
     <Filter Include="Resource Files\translations">
       <UniqueIdentifier>{8101c5f9-066b-42ca-b52a-29b7d75dac5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\control\automation">
+      <UniqueIdentifier>{a93de1c9-7741-4e2a-91c7-541fc6ae93f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui\clock">
+      <UniqueIdentifier>{19654262-9ffa-41d5-81e1-161e0dbb58e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\control\automation">
+      <UniqueIdentifier>{5c6cf73c-a56c-430f-83b4-2678a2f6211e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\clock">
+      <UniqueIdentifier>{fb4f1ed4-b8f2-41d8-b655-005f3cf0984e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\stdafx.h">
@@ -203,6 +215,12 @@
     </ClInclude>
     <ClInclude Include="..\src\cpp\ui\lang.hpp">
       <Filter>Header Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\clock\analogclock.hpp">
+      <Filter>Header Files\ui\clock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\utils\time.hpp">
+      <Filter>Header Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -365,6 +383,18 @@
     <ClCompile Include="..\src\cpp\ui\lang.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cpp\control\automation\clock.cpp">
+      <Filter>Source Files\control\automation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\clock\clockpanel.cpp">
+      <Filter>Source Files\ui\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\clock\analogclock.cpp">
+      <Filter>Source Files\ui\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\clock\config.cpp">
+      <Filter>Source Files\ui\clock</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\control\protocols\base.hpp">
@@ -515,6 +545,15 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\config\cominfo.hpp">
       <Filter>Header Files\ui\config</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\clock\config.hpp">
+      <Filter>Header Files\ui\clock</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\clock\clockpanel.hpp">
+      <Filter>Header Files\ui\clock</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\control\automation\clock.hpp">
+      <Filter>Header Files\control\automation</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

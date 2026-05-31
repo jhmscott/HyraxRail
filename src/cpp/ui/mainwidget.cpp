@@ -9,6 +9,7 @@
 
 #include <ui/mainwidget.hpp>
 #include <ui/actuators/actuatorpanel.hpp>
+#include <ui/clock/clockpanel.hpp>
 #include <ui/config/configpanel.hpp>
 #include <ui/sensors/sensorpanel.hpp>
 #include <ui/trains/dualcontrol.hpp>
@@ -83,8 +84,8 @@ MainWidget::MainWidget (QWidget* parent) :
             "misc/train-track");
     addTab (m_routes = new routes::RoutePanel{ m_controllers, this },
             "misc/path");
-    addTab (new QWidget{ this },
-            "misc/binary");
+    addTab (new clock::ClockPanel{ this },
+            "misc/clock");
     addTab (m_cfg = new config::ConfigPanel{ m_controllers, this},
             "misc/gear");
 
@@ -150,7 +151,7 @@ void MainWidget::setTooltips ()
     setTabToolTip (1, tr ("Actuators"));
     setTabToolTip (2, tr ("Sensors"));
     setTabToolTip (3, tr ("Routes"));
-    setTabToolTip (4, tr ("Programming"));
+    setTabToolTip (4, tr ("Fast Clock"));
     setTabToolTip (5, tr ("Settings"));
     }
 

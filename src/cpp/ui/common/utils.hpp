@@ -212,13 +212,21 @@ inline void removeAllActions (QWidget& wdgt)
 ///////////////////////////////////////////////////////////////////////////////
 /// Set the label for a gievn text row in a form layout
 ///
+/// @tparam         Field       Field type (QWidget or QLayout)
+///
 /// @param[in,out]  layout      Form layout to set the label text for
 /// @param[in]      field       Which field to set the layout for
 /// @param[in]      text        New text for layout
 ///
 ///////////////////////////////////////////////////////////////////////////////
-inline void setFormRowText (QFormLayout& layout, QWidget& field, const QString& text)
+template<class Field>
+void setFormRowText (QFormLayout&   layout,
+                     Field&         field,
+                     const QString& text)
     {
+    static_assert (std::is_base_of_v<QWidget, Field> || std::is_same_v<QLayout, Field>,
+                   "Field must be a QWidget or QLayout");
+
     QWidget* label = layout.labelForField (&field);
 
     if (NULL != label)

@@ -32,6 +32,7 @@
         <file>icons/light/misc/question.svg</file>
         <file>icons/light/misc/clipboard-copy.svg</file>
         <file>icons/light/misc/key.svg</file>
+        <file>icons/light/misc/clock.svg</file>
 
         <!--Function Icons - Light-->
         <file>icons/light/functions/engine.svg</file>
@@ -77,6 +78,7 @@
         <file>icons/dark/misc/question.svg</file>
         <file>icons/dark/misc/clipboard-copy.svg</file>
         <file>icons/dark/misc/key.svg</file>
+        <file>icons/dark/misc/clock.svg</file>
 
         <!--Function Icons - Dark-->
         <file>icons/dark/functions/engine.svg</file>
