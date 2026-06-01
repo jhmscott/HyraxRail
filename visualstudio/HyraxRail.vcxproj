@@ -415,6 +415,9 @@
     <QtTranslation Include="..\res\translations\HyraxRail_fr.ts" />
     <QtTranslation Include="..\res\translations\HyraxRail_vi_VN.ts" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="HyraxRail.natvis" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />

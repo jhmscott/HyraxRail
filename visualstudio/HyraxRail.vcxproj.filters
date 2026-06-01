@@ -858,4 +858,7 @@
       <Filter>Resource Files\translations</Filter>
     </QtTranslation>
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="HyraxRail.natvis" />
+  </ItemGroup>
 </Project>

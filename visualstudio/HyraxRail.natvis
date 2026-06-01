@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+
+    <!-- Device Utilities -->
+    <Type Name="utils::device::HostInfo">
+        <DisplayString Condition="0 == m_value._Which">{m_value._Head}</DisplayString>
+        <DisplayString Condition="1 == m_value._Which">{m_value._Tail._Head,s8b}</DisplayString>
+        <DisplayString Condition="2 == m_value._Which">Empty</DisplayString>
+    </Type>
+    <Type Name="utils::device::socketInfo">
+        <DisplayString>
+            {host}:{port}
+        </DisplayString>
+    </Type>
+    <Type Name="utils::device::deviceInfo">
+        <DisplayString Condition="utils::device::TYPE_TCP == type">
+            TCP://{info._Head}
+        </DisplayString>
+        <DisplayString Condition="utils::device::TYPE_UDP == type">
+            UDP://{info._Head}
+        </DisplayString>
+        <DisplayString Condition="utils::device::TYPE_SERIAL == type">
+            {info._Tail._Head}
+        </DisplayString>
+        <DisplayString>Unsupported</DisplayString>
+    </Type>
+
+    <!-- Misc Utilities -->
+    <Type Name="utils::resources::Icon">
+        <DisplayString>{m_subPath,s8b}.svg</DisplayString>
+    </Type>
+
+    <Type Name="control::version">
+        <DisplayString>{major}.{minor}.{micro}</DisplayString>
+    </Type>
+
+    <!-- Protocols -->
+    <Type Name="control::ProtocolMetaClassBase">
+        <DisplayString>{friendlyName,s8b}</DisplayString>
+    </Type>
+
+    <Type Name="control::ProtocolBase">
+        <DisplayString>{m_deviceInfo}</DisplayString>
+    </Type>
+
+    <!-- Controllers -->
+    <Type Name="control::ControllerMetaClassBase">
+        <DisplayString>{friendlyName,s8b}</DisplayString>
+    </Type>
+
+    <Type Name="control::ControllerBase">
+        <DisplayString>{m_friendlyName,s8b}</DisplayString>
+        <Expand>
+            <Item Name="[Name]">m_friendlyName,s8b</Item>
+            <Item Name="[Thread]">m_thread</Item>
+        </Expand>
+    </Type>
+
+    <Type Name="control::ControllerManager">
+        <DisplayString>{m_controllers}</DisplayString>
+        <Expand HideRawView="true">
+            <Item Name="[size]">m_controllers.size()</Item>
+            <Item Name="[capacity]">m_controllers.capacity()</Item>
+            <CustomListItems>
+                <Variable Name="ii" InitialValue="0"/>
+                <Size>m_controllers.size()</Size>
+                <Loop>
+                    <Break Condition="m_controllers.size() == ii"/>
+                    <Item>*m_controllers._Mypair._Myval2._Myfirst[ii]</Item>
+                    <Exec>++ii</Exec>
+                </Loop>
+            </CustomListItems>
+        </Expand>
+    </Type>
+
+    <!-- Connection Worker Thread-->
+    <Type Name="control::ConnectionWorkerThread">
+        <DisplayString>{*m_proto} ({m_health})</DisplayString>
+        <Expand>
+            <Item Name="[Protocol]">*m_proto</Item>
+            <Item Name="[Tasks]">m_taskQueue</Item>
+            <Item Name="[Pinger]">*m_pinger</Item>
+            <Item Name="[Health]">m_health</Item>
+        </Expand>
+    </Type>
+
+    <Type Name="control::ConnectionWorkerThread::health">
+        <DisplayString
+            Condition="HEALTH_DEAD == level || HEALTH_DISCONNECTED == level">
+            Disconnected
+        </DisplayString>
+        <DisplayString Condition="HEALTH_CONNECTED == level">
+            Connected
+        </DisplayString>
+        <DisplayString>Ping {ping._MyRep} ms</DisplayString>
+    </Type>
+
+    <Type Name="utils::IpV4Pinger">
+        <DisplayString>
+            ICMP://{0xFF &amp; m_ip}.{(0xFF00 &amp; m_ip) >> 8}.{(0xFF0000 &amp; m_ip) >> 16}.{(0xFF000000 &amp; m_ip) >> 24}
+        </DisplayString>
+    </Type>
+
+    <Type Name="utils::Pinger">
+        <DisplayString>{*m_impl}</DisplayString>
+    </Type>
+
+    <!-- Automations -->
+    <Type Name="control::FastClock">
+        <!-- TODO: Figure out the eunning case-->
+        <!--
+        <DisplayString Condition="m_running">
+            {reinterpret_cast&lt;control::FastClock::time_point&gt;
+                (m_startTime._MyDur._MyRep +
+                 m_ratio * (std::chrono::system_clock::now()._MyDur._MyRep -
+                            m_startTimeSystem._MyDur._MyRep))}
+        </DisplayString>
+        -->
+        <DisplayString Condition="!m_running">{m_startTime} (stopped)</DisplayString>
+        <Expand>
+            <Item Name="[Start Time (Simulated)]">m_startTime</Item>
+            <Item Name="[Start Time (Real)]">m_startTimeSystem</Item>
+            <Synthetic Name="[Ratio]"><DisplayString>1:{m_ratio}</DisplayString></Synthetic>
+            <Item Name="[State]" Condition="m_running">"Running",s8b</Item>
+            <Item Name="[State]" Condition="!m_running">"Stopped",s8b</Item>
+        </Expand>
+    </Type>
+
+    <!-- Common UI Elements-->
+    <Type Name="ui::common::SchemeTabWidget">
+        <DisplayString>Icon Count = {m_icons.size()}</DisplayString>
+        <Expand>
+            <ExpandedItem>m_icons</ExpandedItem>
+        </Expand>
+    </Type>
+
+    <Type Name="ui::common::AutoGridLayout">
+        <DisplayString>{{ count = {m_items.size()} }}</DisplayString>
+        <Expand>
+            <Item Name="[Expand]">m_expand</Item>
+            <ExpandedItem>m_items</ExpandedItem>
+        </Expand>
+    </Type>
+
+    <Type Name="ui::common::HexValidator">
+        <DisplayString>Min = {m_min}, Max = {m_max}</DisplayString>
+        <Expand HideRawView="true">
+            <Item Name="[Min]">m_min</Item>
+            <Item Name="[Max]">m_max</Item>
+        </Expand>
+    </Type>
+
+    <Type Name="ui::common::IpField">
+        <DisplayString>{m_proto,en}</DisplayString>
+        <Expand>
+            <Item Name="[Proto]">m_proto</Item>
+            <Synthetic Name="[Fields]">
+                <DisplayString>{m_fields}</DisplayString>
+                <Expand>
+                    <ExpandedItem>m_fields</ExpandedItem>
+                </Expand>
+            </Synthetic>
+        </Expand>
+    </Type>
+
+    <Type Name="ui::common::ToggleSwitch">
+        <DisplayString Condition="m_switch">Toggled On</DisplayString>
+        <DisplayString Condition="!m_switch">Toggled Off</DisplayString>
+    </Type>
+</AutoVisualizer>

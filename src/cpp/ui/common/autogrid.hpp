@@ -110,10 +110,32 @@ public:
     //////////////////////////////////////////////////////////////////////////////
     void setGeometry (const QRect& rect) override;
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Get minimum height of the layout for a given width
+    ///
+    /// @param[in]  width       Width to get height for
+    ///
+    /// @return     Minimum height for width
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     virtual int minimumHeightForWidth (int width) const override;
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Get the layout height for a given width
+    ///
+    /// @param[in]  width       Width to get height for
+    ///
+    /// @return     Height for width
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     virtual int heightForWidth (int width) const override { return minimumHeightForWidth (width); }
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Check if this layout resizes it's height to accomodate the width
+    ///
+    /// @return     True if this layout can be constrained by width
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     virtual bool hasHeightForWidth () const override { return EXPAND == m_numRowsOrColumns; }
 private:
     std::vector<QLayoutItem*>   m_items;            ///< List of the layout items
