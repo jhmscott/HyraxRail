@@ -100,7 +100,6 @@ MainWidget::~MainWidget ()
 
     settings.setValue ("NumControllers", numControllers);
 
-
     for (int ii = 0; ii < numControllers; ++ii)
         {
         utils::device::deviceInfo info  = (*m_controllers)[ii].getDeviceInfo ();

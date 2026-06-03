@@ -15,6 +15,7 @@
 
 namespace ui
 {
+
 ///////////////////////////////////////////////////////////////////////////////
 /// Main application window
 ///
@@ -36,7 +37,7 @@ public:
     /// Destructor
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    ~MainWindow();
+    ~MainWindow ();
 
 protected:
     ///////////////////////////////////////////////////////////////////////////////
@@ -57,14 +58,66 @@ protected:
     /// @return     true to stop QT handling of this event
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual bool nativeEvent (const QByteArray& eventType, void* message, qintptr* result);
+    virtual bool nativeEvent (const QByteArray& eventType,
+                              void*             message,
+                              qintptr*          result) override;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle the window close event
+    ///
+    /// @param[in]  event       Close event
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void closeEvent (QCloseEvent* event) override;
 
 private:
+    // Options for fast clock behaviour while app is not running
+    enum class clockShutdownType
+        {
+        PAUSE,  ///< Starts the fast clock where it was when you closed the app
+        RUN,    ///< On next startup, the time is extrapolated, as if the fast clock was left running
+        NOT_SET ///< Not set
+        };
+
+    clockShutdownType   m_clockShutdownType = clockShutdownType::NOT_SET;   ///< Clock behaviour while shutdown
+    bool                m_rememberType      = false;                        ///< True to remember the fast clock
+                                                                            ///  behaviour while shutdown
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the main window and application titles
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void setTitle ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handles a request to close the main window
+    ///
+    /// @return     True if the user allowed the cose
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool handleClose ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Save the fast clock settings to the user settings
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void saveFastClockSettings ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Restore the previous fast clock settings from user settings
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void restoreFastClockSettings ();
+
+private slots:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle the request from the session manager to commit data
+    ///
+    /// @param[in]  manager     Session manager
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void commitDataRequest (QSessionManager& manager);
+
     };
 
 } // namespace ui

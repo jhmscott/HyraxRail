@@ -75,32 +75,32 @@
 <context>
     <name>ui::MainWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="150"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="149"/>
         <source>Trains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="151"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="150"/>
         <source>Actuators</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="152"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="151"/>
         <source>Sensors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="153"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="152"/>
         <source>Routes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="154"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="153"/>
         <source>Fast Clock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="155"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="154"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -108,7 +108,38 @@
 <context>
     <name>ui::MainWindow</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="113"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="157"/>
+        <source>Shutdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="158"/>
+        <source>The Fast Clock is still running.
+Would you like to pause it or keep it running?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="162"/>
+        <source>Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="165"/>
+        <source>Always do this on shutdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="161"/>
+        <source>Run</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="163"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="141"/>
         <source>Hyrax Rail</source>
         <translation>Râle Daman</translation>
     </message>
