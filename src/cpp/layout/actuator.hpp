@@ -48,6 +48,7 @@ class ActuatorController;
 ///////////////////////////////////////////////////////////////////////////////
 class Actuator : public ComponentDerived<ActuatorController>
     {
+    Q_OBJECT
 public:
     using ComponentDerived<ActuatorController>::ComponentDerived;
 
@@ -183,6 +184,15 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void remove ();
+
+signals:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Signals the state of the actuator has changed
+    ///
+    /// @param[in]  state       New state
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void stateChanged (bool state);
 
 private:
     std::string         m_name;     ///< Friendly name

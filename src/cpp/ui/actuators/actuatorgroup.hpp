@@ -10,8 +10,10 @@
 
 #pragma once
 
+#include <control/automation/manager.hpp>
 #include <control/controllers/base.hpp>
 
+#include <ui/common/addbtn.hpp>
 #include <ui/common/autogrid.hpp>
 #include <ui/lang.hpp>
 
@@ -31,22 +33,26 @@ public:
     //////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
+    /// @param[in]  automations     List of automations
     /// @param[in]  controller      Controller to list actuators for
     /// @param[in]  parent          Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
-    ActuatorGroup (control::ControllerBase& controller, QWidget* parent);
+    ActuatorGroup (control::AutomationManager&  automations,
+                   control::ControllerBase&     controller,
+                   QWidget*                     parent);
 
 private:
-    control::ControllerBase*    m_controller;   ///< Controller this refers to
+    control::ControllerBase&    m_controller;   ///< Controller this refers to
+    control::AutomationManager& m_automations;  ///< List of automations
     common::AutoGridLayout*     m_gridLayout;   ///< Grid layout containing buttons for each actuator
-    QLabel*                     m_addLabel;     ///< "Add Switching Item" label
+    common::AddButton*          m_addLabel;     ///< "Add Switching Item" label
 
     //////////////////////////////////////////////////////////////////////////////
     /// Set the add label text
     ///
     //////////////////////////////////////////////////////////////////////////////
-    void setAddLabelText () { m_addLabel->setText (tr ("Add Switching Item")); }
+    void setAddLabelText () { m_addLabel->setLabelText (tr ("Add Switching Item")); }
 
     //////////////////////////////////////////////////////////////////////////////
     /// Add an actuator button to the grid

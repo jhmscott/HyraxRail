@@ -24,12 +24,14 @@ OptionalDropdown::OptionalDropdown (QWidget* parent) :
 
     layout->addWidget (m_singleItem);
     layout->addWidget (m_dropdown);
+    layout->setContentsMargins (0, 0, 0, 0);
 
     connect (m_dropdown,
             &QComboBox::currentIndexChanged,
              this,
             &OptionalDropdown::currentIndexChanged);
 
+    setContentsMargins (0, 0, 0, 0);
     setLayout (layout);
     }
 
@@ -41,15 +43,23 @@ void OptionalDropdown::insertItem (int idx, const QString& text, const QVariant&
     }
 
 
+void OptionalDropdown::setItemText (int index, const QString& text)
+    {
+    m_dropdown->setItemText (index, text);
+    refreshActiveWidget ();
+    }
+
+
 void OptionalDropdown::clear ()
     {
     m_dropdown->clear ();
     refreshActiveWidget ();
     }
 
+
 void OptionalDropdown::refreshActiveWidget ()
     {
-    if (count () >= 0)
+    if (count () <= 1)
         {
         if (0 == count ())
             {

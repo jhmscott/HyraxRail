@@ -1,0 +1,72 @@
+/**
+ * @file        common/daysofweek.hpp
+ * @brief       Set of checkboxes to select a set of days in a week
+ * @author      Justin Scott
+ * @date        2026-06-05
+ *
+ * @copyright   Copyright (c) 2026 Justin Scott
+ */
+
+#pragma once
+
+#include <ui/lang.hpp>
+
+#include <utils/time.hpp>
+
+#include <QCheckBox>
+
+#include <array>
+
+
+namespace ui::common
+{
+
+///////////////////////////////////////////////////////////////////////////////
+/// Set of check boxes to select a set of days in a week
+///
+///////////////////////////////////////////////////////////////////////////////
+class DaysOfWeekSelector : public QWidget
+    {
+    Q_OBJECT
+public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  parent      Parent widget
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    explicit DaysOfWeekSelector (QWidget* parent);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the selected days
+    ///
+    /// @param[in]  days        Days to select
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setDays (const utils::time::days& days);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the selected days
+    ///
+    /// @return     Days selected
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    utils::time::days getDays () const;
+
+signals:
+    void selectionChanged ();
+
+private:
+    std::array<QCheckBox*,  utils::time::NUM_DAYS> m_days;  ///< Day checkboxes
+    std::array<QLabel*,     utils::time::NUM_DAYS> m_labels;///< Day labels
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the day labels
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setLabels ();
+
+    UILANG_ON_CHANGE (QWidget, setLabels ());
+    };
+
+} // namespace ui::common

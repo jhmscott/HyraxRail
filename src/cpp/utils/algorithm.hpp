@@ -50,11 +50,11 @@ auto makePtrPred (const T* ptr)
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<class T, class Pred>
-void eraseIf (std::vector<T>& vec, Pred pred)
+void eraseIf (std::vector<T>& vec, Pred condition)
     {
     auto it = std::remove_if (vec.begin (),
                               vec.end (),
-                              pred);
+                              condition);
     vec.erase (it, vec.end ());
     }
 
@@ -109,7 +109,8 @@ void eraseByPtr (std::vector<std::unique_ptr<T>>& vec, const T* ptr)
 
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Find the first element in an vector of unique_ptr<> by the pointer address/value. Const version
+/// Find the first element in an vector of unique_ptr<> by the pointer address/value.
+/// Const version
 ///
 /// @tparam         T               Pointer type
 ///
@@ -144,6 +145,48 @@ auto findByPtr (const std::vector<std::unique_ptr<T>>& vec, const T* ptr)
     return std::find_if (vec.begin (),
                          vec.end (),
                          internal::makePtrPred (ptr));
+    }
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Create a std::bitset from a set of index values
+///
+/// @tparam     N       Size of the bitset
+/// @tparam     Args... Argument types (must be convertible to integer)
+///
+/// @param[out] bits    Bitset
+/// @param[in]  args... Indexes to set
+///
+///////////////////////////////////////////////////////////////////////////////
+template<size_t N, class... Args>
+void makeBitset (std::bitset<N>& bits, Args... args)
+    {
+    bits.reset ();
+
+    (void (bits[args] = true) , ...);
+    }
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Convert a std::bitset to a std::set containing the indexes that are set to
+/// true
+///
+/// @param[in]  bits        Bitset
+///
+/// @return     Set
+///
+///////////////////////////////////////////////////////////////////////////////
+template<size_t N>
+std::set<size_t> bitsetToSet (const std::bitset<N>& bits)
+    {
+    std::set<size_t> set;
+
+    for (size_t ii = 0; ii < N; ++ii)
+        {
+        if (bits[ii]) { set.emplace (ii); }
+        }
+
+    return set;
     }
 
 } // namespace utils::algorithm

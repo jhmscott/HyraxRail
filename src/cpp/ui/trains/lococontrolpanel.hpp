@@ -37,7 +37,7 @@ public:
     /// @param[in]  parent          Parent widget
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    explicit LocoControlPanel (control::ControllerManager*  controllers,
+    explicit LocoControlPanel (control::ControllerManager&  controllers,
                                vAlignment                   align,
                                QWidget*                     parent);
 

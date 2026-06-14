@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <control/automation/manager.hpp>
 #include <control/controllers/base.hpp>
 #include <control/controllers/manager.hpp>
 
@@ -48,10 +49,7 @@ public:
     ~MainWidget ();
 private:
     control::ControllerManager*     m_controllers;  ///< List of controllers
-    actuators::ActuatorPanel*       m_actuators;    ///< Actuator control widget
-    trains::DualControlWidget*      m_trains;       ///< Train control widget
-    config::ConfigPanel*            m_cfg;          ///< Main settings widget
-    routes::RoutePanel*             m_routes;       ///< Route control widget
+    control::AutomationManager*     m_automations;  ///< List of automations
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the tab tooltips

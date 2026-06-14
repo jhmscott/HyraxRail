@@ -150,6 +150,7 @@ IpField::IpField (QAbstractSocket::NetworkLayerProtocol proto, QWidget* parent) 
     m_copy->setEnabled (false);
 
     layout->addWidget (m_copy);
+    layout->setContentsMargins (0, 0, 0, 0);
 
     // Connections
 

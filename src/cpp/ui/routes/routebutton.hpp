@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <control/automation/manager.hpp>
+
 #include <layout/route.hpp>
 
 #include <ui/common/utils.hpp>
@@ -31,16 +33,14 @@ public:
     /// Constructor
     ///
     /// @param[in]  route       Route to control
+    /// @param[in]  automations List of automations
     /// @param[in]  parent      Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
-    RouteButton (const layout::Route& route, QWidget* parent);
+    RouteButton (const layout::Route&           route,
+                 control::AutomationManager&    automations,
+                 QWidget*                       parent);
 
-    //////////////////////////////////////////////////////////////////////////////
-    /// Destructor
-    ///
-    //////////////////////////////////////////////////////////////////////////////
-    ~RouteButton () { delete m_route; }
 
 signals:
     //////////////////////////////////////////////////////////////////////////////
@@ -50,8 +50,9 @@ signals:
     void routeDeleted ();
 
 private:
-    layout::Route*  m_route;    ///< Route being controlled
-    QLabel*         m_name;     ///< Name of the route
+    layout::Route               m_route;        ///< Route being controlled
+    control::AutomationManager& m_automations;
+    QLabel*                     m_name;         ///< Name of the route
 
     //////////////////////////////////////////////////////////////////////////////
     /// Update the tooltips to match the cuurrent route state

@@ -22,8 +22,8 @@
 namespace ui::config
 {
 
-ControllerGroup::ControllerGroup (control::ControllerManager* controllers,
-                                  QWidget*                   parent) :
+ControllerGroup::ControllerGroup (control::ControllerManager&   controllers,
+                                  QWidget*                      parent) :
     QGroupBox (parent),
     m_controllers (controllers)
     {
@@ -31,45 +31,28 @@ ControllerGroup::ControllerGroup (control::ControllerManager* controllers,
 
     setLayout (layout);
 
-    for (control::ControllerBase& controller : *controllers)
+    for (control::ControllerBase& controller : controllers)
         {
         addControllerInfo (controller);
         }
 
-    QHBoxLayout* addController  = new QHBoxLayout{ this };
-    QPushButton* plusIcon       = new common::PointedIconButton{ "misc/plus", this};
-    QFont        font           = QApplication::font ();
+    m_plusLabel = new common::AddButton{ this };
+    m_plusLabel->setFontSize (16);
 
-    m_plusLabel = new QLabel{ this };
-
-    font.setPixelSize (16);
-
-    plusIcon->setIconSize ((QSize{ 20, 20 }));
-    plusIcon->setSizePolicy (QSizePolicy::Maximum,
-                             QSizePolicy::Maximum);
-
-    m_plusLabel->setFont (font);
-
-    common::makeFrameless (*plusIcon);
-
-    addController->addWidget (plusIcon);
-    addController->addWidget (m_plusLabel);
-    addController->setAlignment (Qt::AlignLeft);
-
-    layout->addLayout (addController);
+    layout->addWidget (m_plusLabel);
     m_hasAddController = true;
 
     setLabels ();
 
-    connect (plusIcon,
-            &QPushButton::released,
+    connect (m_plusLabel,
+            &common::AddButton::addPressed,
              this,
             &ControllerGroup::addController);
 
-    connect (m_controllers,
-            &control::ControllerManager::controllerAdded,
-             this,
-            &ControllerGroup::addControllerInfo);
+    connect (&m_controllers,
+             &control::ControllerManager::controllerAdded,
+              this,
+             &ControllerGroup::addControllerInfo);
 
     setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Maximum);
     }
@@ -106,13 +89,13 @@ void ControllerGroup::addController ()
 
     if (QDialog::Accepted == dlg.exec ())
         {
-        m_controllers->append (dlg.createController ());
+        m_controllers.append (dlg.createController ());
         }
     }
 
 void ControllerGroup::setLabels ()
     {
-    m_plusLabel->setText (tr ("New Controller"));
+    m_plusLabel->setLabelText (tr ("New Controller"));
     setTitle (tr ("Controllers"));
     }
 
@@ -126,6 +109,6 @@ void ControllerGroup::onControllerDeleted (const control::ControllerBase& contro
     common::removeWidgetFromLayout (*layout (), idx + 1);
     common::removeWidgetFromLayout (*layout (), idx);
 
-    m_controllers->remove (controller);
+    m_controllers.remove (controller);
     }
 }

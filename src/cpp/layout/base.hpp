@@ -151,11 +151,21 @@ public:
         }
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Destructor. Deregisters this with the controller so it no longer recieves destory signals
+    /// Destructor. Deregisters this with the controller so it no longer recieves
+    /// destory signals
     ///
     ///////////////////////////////////////////////////////////////////////////////
     ~ComponentDerived ()
         { deregister (); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Signal to all instances of this component that it is being destroyed
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void destroyThis ()
+        {
+        m_controller->destroyComponent (*this);
+        }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Called by the controller when it is about to be destroyed
@@ -163,8 +173,8 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     void destroy ()
         {
-        emit destroyed ();
         m_controller = NULL;
+        emit destroyed ();
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -223,6 +233,21 @@ protected:
     template<class T, class ComponentT>
     void setAll (T ComponentT::* member, const identityType<T>& value)
         {  m_controller->setAll (m_id, member, value); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Call a member functions for all instances of this object with the same ID
+    ///
+    /// @tparam     ComponentT  Component type
+    /// @tparam     RetT        Member function return type
+    /// @param      Args...     Member function argument types
+    ///
+    /// @param[in]  member      Member function pointer
+    /// @param[in]  args        Arguments to call member with
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<class ComponentT, class RetT, class... Args>
+    void callAll (RetT (ComponentT::*func)(Args...), Args... args)
+        { m_controller->callAll (m_id, func, args...); }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// De-register this with the controller, so it no longer receives the destroyed signal
@@ -304,6 +329,59 @@ private:
                 {
                 component->*member = value;
                 }
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Call a member functions for all instances of a given object
+    ///
+    /// @tparam     ComponentT  Component type
+    /// @tparam     RetT        Member function return type
+    /// @param      Args...     Member function argument types
+    ///
+    /// @param[in]  id          ID of object to call function for
+    /// @param[in]  member      Member function pointer
+    /// @param[in]  args        Arguments to call member with
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<class ComponentT, class RetT, class... Args>
+    void callAll (size_t id, RetT (ComponentT::* func)(Args...), Args... args)
+        {
+        for (Component* component : m_components)
+            {
+            if (component->getId () == id)
+                {
+                (component->*func) (args...);
+                }
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Destroy all instances of a component
+    ///
+    /// @tparam     T                       Component derived type
+    ///
+    /// @param[in]  componentToDestroy      Component to destroy all instance of
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<class T>
+    void destroyComponent (T& componentToDestroy)
+        {
+        std::vector<Component*> toRemove;
+
+        for (Component* component : m_components)
+            {
+            if (component->getId () == componentToDestroy.getId ())
+                {
+                component->destroy ();
+                toRemove.push_back (component);
+                }
+            }
+
+        // do this outside the first loop to avoid iterator invalidation
+        for (Component* component : toRemove)
+            {
+            deregisterComponent (component);
             }
         }
 

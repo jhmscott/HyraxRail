@@ -16,7 +16,7 @@
 
 namespace ui::config
 {
-ConfigPanel::ConfigPanel (control::ControllerManager* controllers, QWidget* parent) :
+ConfigPanel::ConfigPanel (control::ControllerManager& controllers, QWidget* parent) :
     QWidget (parent)
     {
     QVBoxLayout* layout = new QVBoxLayout{ this };

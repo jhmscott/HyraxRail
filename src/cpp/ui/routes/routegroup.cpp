@@ -28,12 +28,14 @@ namespace ui::routes
 {
 
 
-RouteGroup::RouteGroup (control::ControllerBase& controller, QWidget* parent) :
+RouteGroup::RouteGroup (control::ControllerBase&    controller,
+                        control::AutomationManager& automations,
+                        QWidget*                    parent) :
     QGroupBox (controller.getFriendlyName ().c_str (), parent),
-    m_controller (&controller)
+    m_controller (controller),
+    m_automations (automations)
     {
     QVBoxLayout*    layout      = new QVBoxLayout{};
-    QHBoxLayout*    addLayout   = new QHBoxLayout{};
 
     m_gridLayout = new common::AutoGridLayout
         {
@@ -42,29 +44,21 @@ RouteGroup::RouteGroup (control::ControllerBase& controller, QWidget* parent) :
         NULL
         };
 
-    for (const layout::Route& route : m_controller->getRoutes ())
+    for (const layout::Route& route : m_controller.getRoutes ())
         {
         addRouteToGrid (route);
         }
 
     m_gridLayout->setAlignment (Qt::AlignTop | Qt::AlignLeft);
 
-    common::PointedIconButton* addBtn = new common::PointedIconButton{ "misc/plus", this };
-
-    common::makeFrameless (*addBtn);
-
-    addLayout->addWidget (addBtn, 0, Qt::AlignLeft);
-    addLayout->addWidget (m_addLabel = new QLabel{ this }, 0, Qt::AlignLeft);
-    addLayout->setAlignment (Qt::AlignLeft);
-
     layout->addItem (m_gridLayout);
     layout->addWidget (new common::Separator{ this });
-    layout->addLayout (addLayout);
+    layout->addWidget (m_addLabel = new common::AddButton{ this });
 
     setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Maximum);
 
-    connect (addBtn,
-            &QPushButton::released,
+    connect (m_addLabel,
+            &common::AddButton::addPressed,
              this,
             &RouteGroup::addRoute);
 
@@ -74,7 +68,7 @@ RouteGroup::RouteGroup (control::ControllerBase& controller, QWidget* parent) :
 
 void RouteGroup::addRouteToGrid (const layout::Route& route)
     {
-    RouteButton* btn = new RouteButton{ route, this };
+    RouteButton* btn = new RouteButton{ route, m_automations, this };
 
     m_gridLayout->addWidget (btn);
 
@@ -86,7 +80,7 @@ void RouteGroup::addRouteToGrid (const layout::Route& route)
 
 void RouteGroup::setLabels ()
     {
-    m_addLabel->setText (tr ("Add Route"));
+    m_addLabel->setLabelText (tr ("Add Route"));
     }
 
 void RouteGroup::removeRoute ()
@@ -96,7 +90,7 @@ void RouteGroup::removeRoute ()
 
     m_gridLayout->removeWidget (btn);
 
-    delete btn;
+    btn->deleteLater ();
 
     // Force a refresh
     m_gridLayout->setGeometry (geometry);
@@ -109,12 +103,12 @@ void RouteGroup::addRoute ()
     // Dialog box scope, it existing when we try to add the new
     // route interferes with the layout
     {
-    EditRouteDialog dlg{ *m_controller, this };
+    EditRouteDialog dlg{ m_controller, this };
 
     if (QDialog::Accepted == dlg.exec ())
         {
-        route = m_controller->createRoute (dlg.getName (),
-                                           dlg.getActuators ());
+        route = m_controller.createRoute (dlg.getName (),
+                                          dlg.getActuators ());
         }
     }
 

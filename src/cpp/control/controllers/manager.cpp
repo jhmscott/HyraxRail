@@ -11,6 +11,7 @@
 #include <control/controllers/manager.hpp>
 
 #include <utils/algorithm.hpp>
+#include "manager.hpp"
 
 namespace control
 {
@@ -57,5 +58,6 @@ ptrdiff_t ControllerManager::indexOf (const ControllerBase& controller) const
 
     return idx;
     }
+
 
 } // namespace control

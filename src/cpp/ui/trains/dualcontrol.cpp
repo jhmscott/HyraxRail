@@ -15,7 +15,7 @@
 
 namespace ui::trains
 {
-DualControlWidget::DualControlWidget (control::ControllerManager* controllers, QWidget* parent) :
+DualControlWidget::DualControlWidget (control::ControllerManager& controllers, QWidget* parent) :
     QWidget (parent)
     {
     QHBoxLayout* layout = new QHBoxLayout{ this };

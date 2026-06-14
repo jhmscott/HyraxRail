@@ -35,7 +35,7 @@ public:
     /// @param[in]  parent          Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
-    ConfigPanel (control::ControllerManager* controllers, QWidget* parent);
+    ConfigPanel (control::ControllerManager& controllers, QWidget* parent);
 
     };
 

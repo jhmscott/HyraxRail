@@ -86,6 +86,10 @@
     </ResourceCompile>
     <QtMoc>
       <QtMocFileName>%(RelativeDir)moc_%(Filename).cpp</QtMocFileName>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <OverrideClCompile>replace</OverrideClCompile>
     </QtMoc>
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
@@ -110,6 +114,10 @@
     </ResourceCompile>
     <QtMoc>
       <QtMocFileName>%(RelativeDir)moc_%(Filename).cpp</QtMocFileName>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <OverrideClCompile>replace</OverrideClCompile>
     </QtMoc>
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
@@ -160,6 +168,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cpp\control\automation\clock.cpp" />
+    <ClCompile Include="..\src\cpp\control\automation\item.cpp" />
+    <ClCompile Include="..\src\cpp\control\automation\manager.cpp" />
+    <ClCompile Include="..\src\cpp\control\automation\task.cpp" />
     <ClCompile Include="..\src\cpp\control\controllers\base.cpp" />
     <ClCompile Include="..\src\cpp\control\controllers\manager.cpp" />
     <ClCompile Include="..\src\cpp\control\controllers\marklincs1.cpp" />
@@ -171,10 +182,20 @@
     <ClCompile Include="..\src\cpp\ui\actuators\actuatorgroup.cpp" />
     <ClCompile Include="..\src\cpp\ui\actuators\actuatorpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\actuators\editactuator.cpp" />
+    <ClCompile Include="..\src\cpp\ui\clock\alarm.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\analogclock.cpp" />
+    <ClCompile Include="..\src\cpp\ui\clock\automation.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\clockpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\config.cpp" />
+    <ClCompile Include="..\src\cpp\ui\clock\editauto.cpp" />
+    <ClCompile Include="..\src\cpp\ui\clock\monthly.cpp" />
+    <ClCompile Include="..\src\cpp\ui\clock\task.cpp" />
+    <ClCompile Include="..\src\cpp\ui\clock\timer.cpp" />
+    <ClCompile Include="..\src\cpp\ui\clock\weekly.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\addbtn.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\autogrid.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\daysofweek.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\duration.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\formdialog.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\hexvalidator.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\hostentry.cpp" />
@@ -224,13 +245,29 @@
     <ClCompile Include="..\src\cpp\utils\os.cpp" />
     <ClCompile Include="..\src\cpp\utils\pinger.cpp" />
     <ClCompile Include="..\src\cpp\utils\resources.cpp" />
+    <ClCompile Include="..\src\cpp\utils\time.cpp" />
     <ClInclude Include="..\res\version.h" />
     <QtMoc Include="..\src\cpp\control\automation\clock.hpp" />
+    <QtMoc Include="..\src\cpp\control\automation\item.hpp" />
+    <QtMoc Include="..\src\cpp\control\automation\manager.hpp" />
+    <ClInclude Include="..\src\cpp\control\automation\condition.hpp" />
+    <QtMoc Include="..\src\cpp\control\automation\task.hpp" />
     <ClInclude Include="..\src\cpp\control\controllers\base.hpp" />
-    <ClInclude Include="..\src\cpp\utils\time.hpp" />
+    <QtMoc Include="..\src\cpp\ui\clock\automation.hpp" />
+    <QtMoc Include="..\src\cpp\ui\clock\editauto.hpp" />
+    <QtMoc Include="..\src\cpp\ui\common\addbtn.hpp" />
+    <QtMoc Include="..\src\cpp\ui\common\duration.hpp" />
+    <QtMoc Include="..\src\cpp\ui\clock\alarm.hpp" />
+    <QtMoc Include="..\src\cpp\ui\clock\condition.hpp" />
+    <QtMoc Include="..\src\cpp\ui\clock\timer.hpp" />
+    <QtMoc Include="..\src\cpp\ui\clock\weekly.hpp" />
+    <QtMoc Include="..\src\cpp\ui\clock\monthly.hpp" />
+    <ClInclude Include="..\src\cpp\ui\clock\task.hpp" />
+    <QtMoc Include="..\src\cpp\ui\common\daysofweek.hpp" />
+    <QtMoc Include="..\src\cpp\utils\time.hpp" />
     <QtMoc Include="..\src\cpp\control\controllers\manager.hpp" />
     <ClInclude Include="..\src\cpp\control\controllers\marklincs1.hpp" />
-    <ClInclude Include="..\src\cpp\layout\actuator.hpp" />
+    <QtMoc Include="..\src\cpp\layout\actuator.hpp" />
     <QtMoc Include="..\src\cpp\layout\base.hpp" />
     <QtMoc Include="..\src\cpp\layout\locomotive.hpp" />
     <ClInclude Include="..\src\cpp\layout\route.hpp" />

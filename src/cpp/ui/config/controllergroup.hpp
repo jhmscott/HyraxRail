@@ -12,6 +12,7 @@
 #include <control/controllers/base.hpp>
 #include <control/controllers/manager.hpp>
 
+#include <ui/common/addbtn.hpp>
 #include <ui/lang.hpp>
 
 #include <QGroupBox>
@@ -35,12 +36,12 @@ public:
     /// @param[in]  parent          Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
-    ControllerGroup (control::ControllerManager*    controllers,
+    ControllerGroup (control::ControllerManager&    controllers,
                      QWidget*                       parent);
 
 private:
-    control::ControllerManager* m_controllers;              ///< List of controllers
-    QLabel*                     m_plusLabel;                ///< Label for the plus/add button
+    control::ControllerManager& m_controllers;              ///< List of controllers
+    common::AddButton*          m_plusLabel;                ///< Label for the plus/add button
     bool                        m_hasAddController = false; ///< Set once the controller
                                                             ///  add widget has been added
 

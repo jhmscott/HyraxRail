@@ -219,8 +219,11 @@
     <ClInclude Include="..\src\cpp\ui\clock\analogclock.hpp">
       <Filter>Header Files\ui\clock</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\cpp\utils\time.hpp">
-      <Filter>Header Files\utils</Filter>
+    <ClInclude Include="..\src\cpp\control\automation\condition.hpp">
+      <Filter>Header Files\control\automation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\clock\task.hpp">
+      <Filter>Header Files\ui\clock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -395,6 +398,48 @@
     <ClCompile Include="..\src\cpp\ui\clock\config.cpp">
       <Filter>Source Files\ui\clock</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cpp\control\automation\manager.cpp">
+      <Filter>Source Files\control\automation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\control\automation\item.cpp">
+      <Filter>Source Files\control\automation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\clock\automation.cpp">
+      <Filter>Source Files\ui\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\control\automation\task.cpp">
+      <Filter>Source Files\control\automation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\clock\editauto.cpp">
+      <Filter>Source Files\ui\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\addbtn.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\utils\time.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\clock\timer.cpp">
+      <Filter>Source Files\ui\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\clock\alarm.cpp">
+      <Filter>Source Files\ui\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\daysofweek.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\duration.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\clock\task.cpp">
+      <Filter>Source Files\ui\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\clock\weekly.cpp">
+      <Filter>Source Files\ui\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\clock\monthly.cpp">
+      <Filter>Source Files\ui\clock</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\control\protocols\base.hpp">
@@ -438,9 +483,6 @@
     </ClInclude>
     <ClInclude Include="..\src\cpp\utils\math.hpp">
       <Filter>Header Files\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\cpp\layout\actuator.hpp">
-      <Filter>Header Files\layout</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cpp\ui\actuators\actuatorpanel.hpp">
       <Filter>Header Files\ui\actuators</Filter>
@@ -498,9 +540,6 @@
     <QtMoc Include="..\src\cpp\ui\routes\includebutton.hpp">
       <Filter>Header Files\ui\routes</Filter>
     </QtMoc>
-    <QtMoc Include="..\src\cpp\control\controllers\manager.hpp">
-      <Filter>Header Files\control\controllers</Filter>
-    </QtMoc>
     <QtMoc Include="..\src\cpp\ui\routes\routebutton.hpp">
       <Filter>Header Files\ui\routes</Filter>
     </QtMoc>
@@ -554,6 +593,54 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\control\automation\clock.hpp">
       <Filter>Header Files\control\automation</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\control\automation\task.hpp">
+      <Filter>Header Files\control\automation</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\clock\automation.hpp">
+      <Filter>Header Files\ui\clock</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\control\automation\item.hpp">
+      <Filter>Header Files\control\automation</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\clock\editauto.hpp">
+      <Filter>Header Files\ui\clock</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\common\addbtn.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\common\duration.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\clock\alarm.hpp">
+      <Filter>Header Files\ui\clock</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\clock\timer.hpp">
+      <Filter>Header Files\ui\clock</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\clock\weekly.hpp">
+      <Filter>Header Files\ui\clock</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\clock\monthly.hpp">
+      <Filter>Header Files\ui\clock</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\utils\time.hpp">
+      <Filter>Header Files\utils</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\common\daysofweek.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\clock\condition.hpp">
+      <Filter>Header Files\ui\clock</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\layout\actuator.hpp">
+      <Filter>Header Files\layout</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\control\automation\manager.hpp">
+      <Filter>Header Files\control\automation</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\control\controllers\manager.hpp">
+      <Filter>Header Files\control\controllers</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

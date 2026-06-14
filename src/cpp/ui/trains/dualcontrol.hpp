@@ -33,7 +33,7 @@ public:
     /// @param[in]  parent          Parent widget
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    DualControlWidget (control::ControllerManager* controllers, QWidget* parent);
+    DualControlWidget (control::ControllerManager& controllers, QWidget* parent);
 
 private:
     LocoControlPanel* m_left;   ///< Left control panel. Default if not enough room for two

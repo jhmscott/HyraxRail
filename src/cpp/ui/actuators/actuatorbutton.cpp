@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file        actuators/actuatorbutton.cpp
  * @brief       Layout switching device toggle button
  * @author      Justin Scott
@@ -17,10 +17,14 @@
 
 namespace ui::actuators
 {
-ActuatorButton::ActuatorButton (const layout::Actuator& actuator, QWidget* parent, bool dummy) :
+ActuatorButton::ActuatorButton (const layout::Actuator&     actuator,
+                                QWidget*                    parent,
+                                bool                        dummy,
+                                control::AutomationManager* automations) :
     QWidget (parent),
     m_actuator (actuator),
-    m_dummy (dummy)
+    m_dummy (dummy),
+    m_automations (automations)
     {
     auto icon = resources::getIconInfo (actuator.getIcon ());
 
@@ -55,6 +59,15 @@ ActuatorButton::ActuatorButton (const layout::Actuator& actuator, QWidget* paren
              this,
             &ActuatorButton::onToggle);
 
+    // If it's a dummy, this would be annoying to override the user's selection constantly
+    if (not dummy)
+        {
+        connect (&m_actuator,
+                 &layout::Actuator::stateChanged,
+                  m_button,
+                 &QPushButton::setChecked);
+        }
+
     setLayout (layout);
 
     if (not dummy)
@@ -84,10 +97,40 @@ void ActuatorButton::createMenu ()
 
 void ActuatorButton::removeActuator ()
     {
+    QString msg = tr ("Would you like to delete actuator \"%1\"?").
+                                    arg (m_actuator.getName ().c_str ());
+
+    if (NULL != m_automations)
+        {
+        std::vector<std::string> automations;
+
+        for (control::AutomationTask& task : *m_automations)
+            {
+            control::AutomationItem& item = *task.getItem ();
+
+            if (control::AutomationItem::type::ACTUATOR == item.getType () &&
+                m_actuator == item.getActuator ())
+                {
+                automations.push_back (item.name ());
+                }
+            }
+
+        if (automations.size () > 0)
+            {
+            msg += "\n\n";
+            msg += tr ("The following automations will also be deleted:");
+            msg += "\n";
+
+            for (const std::string& name : automations)
+                {
+                msg += QString{ " ● %1" }.arg (name);
+                }
+            }
+        }
+
     if (QMessageBox::Yes == QMessageBox::question (this,
                                                    tr ("Delete Actuator"),
-                                                   tr ("Would you like to delete actuator \"%1\"?").arg ( +
-                                                        m_actuator.getName ().c_str ())))
+                                                   msg))
         {
         m_actuator.remove ();
         emit actuatorDeleted ();
@@ -150,4 +193,5 @@ void ActuatorButton::onToggle (bool state)
         m_actuator.set (state);
         }
     }
-}
+
+} // namespace ui::actuators

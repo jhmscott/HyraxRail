@@ -60,7 +60,15 @@ void Actuator::setDuration (uint duration)
     setAll (&Actuator::m_duration, duration);
     }
 
-void Actuator::set (bool val) { m_controller->setActuator (m_id, val); }
+void Actuator::set (bool val)
+    {
+    if (m_state != val)
+        {
+        m_controller->setActuator (m_id, val);
+        setAll (&Actuator::m_state, val);
+        callAll (&Actuator::stateChanged, val);
+        }
+    }
 
 void Actuator::request () { m_controller->requestActuatorControl (m_id); }
 
@@ -69,6 +77,7 @@ void Actuator::release () { m_controller->releaseActuatorControl (m_id); }
 void Actuator::remove ()
     {
     m_controller->removeActuator (m_id);
+    destroyThis ();
     deregister ();
     }
 

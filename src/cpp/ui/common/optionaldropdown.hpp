@@ -96,6 +96,15 @@ public:
     QString itemText (int index) const { return m_dropdown->itemText (index); }
 
     //////////////////////////////////////////////////////////////////////////////
+    /// Set the text for a given item
+    ///
+    /// @param[in]  index       Item index
+    /// @param[in]  text        New item text
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void setItemText (int index, const QString& text);
+
+    //////////////////////////////////////////////////////////////////////////////
     /// Get the data for a given item
     ///
     /// @param[in]  index       Item index

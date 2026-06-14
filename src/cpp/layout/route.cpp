@@ -41,6 +41,7 @@ void Route::set ()
 void Route::remove ()
     {
     m_controller->removeRoute (m_id);
+    destroyThis ();
     deregister ();
     }
 

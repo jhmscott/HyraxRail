@@ -19,13 +19,14 @@
 
 namespace ui::actuators
 {
-ActuatorGroup::ActuatorGroup (control::ControllerBase&  controller,
-                              QWidget*                  parent) :
+ActuatorGroup::ActuatorGroup (control::AutomationManager&   automations,
+                              control::ControllerBase&      controller,
+                              QWidget*                      parent) :
     QGroupBox (controller.getFriendlyName ().c_str (), parent),
-    m_controller (&controller)
+    m_controller (controller),
+    m_automations (automations)
     {
-    QVBoxLayout*            layout      = new QVBoxLayout{ this };
-    QHBoxLayout*            addLayout   = new QHBoxLayout{ this };
+    QVBoxLayout* layout = new QVBoxLayout{ this };
 
     m_gridLayout  = new common::AutoGridLayout
                         {
@@ -34,7 +35,7 @@ ActuatorGroup::ActuatorGroup (control::ControllerBase&  controller,
                         this
                         };
 
-    for (const layout::Actuator& actuator : m_controller->getActuators ())
+    for (const layout::Actuator& actuator : m_controller.getActuators ())
         {
         if (layout::NO_ICON != actuator.getIcon ())
             {
@@ -46,26 +47,15 @@ ActuatorGroup::ActuatorGroup (control::ControllerBase&  controller,
 
     m_gridLayout->setAlignment (Qt::AlignTop | Qt::AlignLeft);
 
-    common::PointedIconButton* addBtn = new common::PointedIconButton
-                                        {
-                                        "misc/plus",
-                                        this
-                                        };
-
-    common::makeFrameless (*addBtn);
-
-    addLayout->addWidget (addBtn, 0, Qt::AlignLeft);
-    addLayout->addWidget (m_addLabel = new QLabel{ this }, 0, Qt::AlignLeft);
-    addLayout->setAlignment (Qt::AlignLeft);
-
-    setAddLabelText ();
 
     layout->addItem (m_gridLayout);
     layout->addWidget (new common::Separator{ this });
-    layout->addLayout (addLayout);
+    layout->addWidget (m_addLabel = new common::AddButton{ this });
 
-    connect (addBtn,
-            &QPushButton::released,
+    setAddLabelText ();
+
+    connect (m_addLabel,
+            &common::AddButton::addPressed,
              this,
             &ActuatorGroup::addActuator);
 
@@ -74,7 +64,7 @@ ActuatorGroup::ActuatorGroup (control::ControllerBase&  controller,
 
 void ActuatorGroup::addActuatorToGrid (const layout::Actuator& actuator)
     {
-    ActuatorButton* btn = new ActuatorButton{ actuator, this };
+    ActuatorButton* btn = new ActuatorButton{ actuator, this, false, &m_automations};
 
     btn->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
 
@@ -104,15 +94,15 @@ void ActuatorGroup::addActuator ()
     layout::Actuator actuator;
 
     {
-    EditActuatorDialog dlg{ *m_controller, this };
+    EditActuatorDialog dlg{ m_controller, this };
 
     if (QDialog::Accepted == dlg.exec ())
         {
-        actuator = m_controller->createActuator (dlg.getName (),
-                                                 dlg.getAddress (),
-                                                 dlg.getIcon (),
-                                                 dlg.getMode (),
-                                                 dlg.getDuration ());
+        actuator = m_controller.createActuator (dlg.getName (),
+                                                dlg.getAddress (),
+                                                dlg.getIcon (),
+                                                dlg.getMode (),
+                                                dlg.getDuration ());
         }
     }
 

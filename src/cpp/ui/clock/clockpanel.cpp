@@ -9,8 +9,10 @@
 
 
 #include <ui/clock/analogclock.hpp>
+#include <ui/clock/automation.hpp>
 #include <ui/clock/clockpanel.hpp>
 #include <ui/clock/config.hpp>
+
 
 #include <QGroupBox>
 #include <QBoxLayout>
@@ -19,7 +21,9 @@ namespace ui::clock
 {
 
 
-ClockPanel::ClockPanel (QWidget* parent) :
+ClockPanel::ClockPanel (control::ControllerManager& controllers,
+                        control::AutomationManager& automations,
+                        QWidget*                    parent) :
     QWidget (parent)
     {
     m_clockBox = new QGroupBox{ this };
@@ -33,7 +37,11 @@ ClockPanel::ClockPanel (QWidget* parent) :
     m_clockBox->setLayout (clockLayout);
 
     layout->addWidget (m_clockBox, 0, Qt::AlignTop);
+    layout->addWidget (new AutomationGroup{ controllers, automations, this }, 0, Qt::AlignTop);
 
+    layout->setAlignment (Qt::AlignTop);
+
+    setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Maximum);
     setTitles ();
     setLayout (layout);
     }
@@ -41,7 +49,7 @@ ClockPanel::ClockPanel (QWidget* parent) :
 
 void ClockPanel::setTitles ()
     {
-    m_clockBox->setTitle ("Clock Settings");
+    m_clockBox->setTitle (tr ("Clock Settings"));
     }
 
 } // namespace ui::clock

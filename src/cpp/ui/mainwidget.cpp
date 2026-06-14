@@ -25,7 +25,8 @@ namespace ui
 {
 MainWidget::MainWidget (QWidget* parent) :
     common::SchemeTabWidget (parent),
-    m_controllers (new control::ControllerManager{ this })
+    m_controllers (new control::ControllerManager{ this }),
+    m_automations (new control::AutomationManager{ this })
     {
     QSettings   settings{ QSettings::UserScope };
     int         numControllers = settings.value ("NumControllers", 0).toInt ();
@@ -76,17 +77,17 @@ MainWidget::MainWidget (QWidget* parent) :
 
     setUsesScrollButtons (false);
 
-    addTab (m_trains = new trains::DualControlWidget{ m_controllers, this },
+    addTab (new trains::DualControlWidget{ *m_controllers, this },
             "misc/train");
-    addTab (m_actuators = new actuators::ActuatorPanel{ m_controllers, this},
+    addTab (new actuators::ActuatorPanel{ *m_controllers, *m_automations, this},
             "misc/split");
     addTab (new sensors::SensorPanel{ this },
             "misc/train-track");
-    addTab (m_routes = new routes::RoutePanel{ m_controllers, this },
+    addTab (new routes::RoutePanel{ *m_controllers, *m_automations, this },
             "misc/path");
-    addTab (new clock::ClockPanel{ this },
+    addTab (new clock::ClockPanel{ *m_controllers, *m_automations, this },
             "misc/clock");
-    addTab (m_cfg = new config::ConfigPanel{ m_controllers, this},
+    addTab (new config::ConfigPanel{ *m_controllers, this},
             "misc/gear");
 
     setTooltips ();

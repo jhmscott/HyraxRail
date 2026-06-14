@@ -31,7 +31,7 @@ static const protocolInfo PROTOCOLS[] =
     { "misc/question",  ""                                      }
     };
 
-LocoControlPanel::LocoControlPanel (control::ControllerManager* controllers, vAlignment align, QWidget* parent) :
+LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers, vAlignment align, QWidget* parent) :
     QWidget (parent)
     {
 
@@ -39,13 +39,13 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager* controllers, vAl
     QHBoxLayout* controlLayout  = new QHBoxLayout{ this };
     QHBoxLayout* trainSelLayout = new QHBoxLayout{ this };
 
-    m_controllerInfo = new ControllerInfo (controllers->size () > 0 ? &((*controllers)[0]) : NULL, this, false);
+    m_controllerInfo = new ControllerInfo (controllers.size () > 0 ? &(controllers[0]) : NULL, this, false);
 
     m_locos = new common::SchemeComboBox{ this };
 
     m_locos->setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Maximum);
 
-    for (control::ControllerBase& controller : *controllers)
+    for (control::ControllerBase& controller : controllers)
         {
         add (controller);
         }
@@ -75,10 +75,10 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager* controllers, vAl
              this,
             &LocoControlPanel::onLocoChange);
 
-    connect (controllers,
-            &control::ControllerManager::controllerAdded,
-             this,
-            &LocoControlPanel::add);
+    connect (&controllers,
+             &control::ControllerManager::controllerAdded,
+              this,
+             &LocoControlPanel::add);
 
     m_speed = new SpeedControlWidget{ this };
     m_speed->setLocomotive (m_currentLoco);

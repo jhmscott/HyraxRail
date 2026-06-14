@@ -20,35 +20,38 @@
 namespace ui::routes
 {
 
-RoutePanel::RoutePanel (control::ControllerManager* controllers, QWidget* parent) :
+RoutePanel::RoutePanel (control::ControllerManager& controllers,
+                        control::AutomationManager& automations,
+                        QWidget*                    parent) :
     QWidget (parent),
-    m_controllers (controllers)
+    m_controllers (controllers),
+    m_automations (automations)
     {
     QVBoxLayout* layout = new QVBoxLayout{ this };
 
-    for (control::ControllerBase& controller : *controllers)
+    for (control::ControllerBase& controller : controllers)
         {
-        layout->addWidget (new RouteGroup{ controller, this });
+        layout->addWidget (new RouteGroup{ controller, automations, this });
         }
 
     layout->setAlignment (Qt::AlignTop);
 
-    connect (m_controllers,
-            &control::ControllerManager::controllerAdded,
-             this,
-            &RoutePanel::add);
+    connect (&m_controllers,
+             &control::ControllerManager::controllerAdded,
+              this,
+             &RoutePanel::add);
 
-    connect (m_controllers,
-            &control::ControllerManager::controllerDeleted,
-             this,
-            &RoutePanel::remove);
+    connect (&m_controllers,
+             &control::ControllerManager::controllerDeleted,
+              this,
+             &RoutePanel::remove);
 
     setLayout (layout);
     }
 
 void RoutePanel::remove (const control::ControllerBase& controller)
     {
-    ptrdiff_t idx = m_controllers->indexOf (controller);
+    ptrdiff_t idx = m_controllers.indexOf (controller);
 
     if (idx >= 0)
         {
@@ -60,6 +63,6 @@ void RoutePanel::add (control::ControllerBase& controller)
     {
     QVBoxLayout* myLayout = static_cast<QVBoxLayout*> (layout ());
 
-    myLayout->addWidget (new RouteGroup{ controller, this });
+    myLayout->addWidget (new RouteGroup{ controller, m_automations, this });
     }
 }

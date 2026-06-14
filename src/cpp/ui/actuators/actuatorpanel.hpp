@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <control/automation/manager.hpp>
 #include <control/controllers/base.hpp>
 #include <control/controllers/manager.hpp>
 
@@ -35,13 +36,17 @@ public:
     /// Actuator configuration tab
     ///
     /// @param[in]  controllers     Controller manager
+    /// @param[in]  automations     List of automations
     /// @param[in]  parent          Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
-    ActuatorPanel (control::ControllerManager* controllers, QWidget* parent);
+    ActuatorPanel (control::ControllerManager&  controllers,
+                   control::AutomationManager&  automations,
+                   QWidget*                     parent);
 
 private:
-    control::ControllerManager* m_controllers;  ///< Controller manager
+    control::ControllerManager& m_controllers;  ///< Controller manager
+    control::AutomationManager& m_automations;  ///< List of automations
 
 private slots:
 

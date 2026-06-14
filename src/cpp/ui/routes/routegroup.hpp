@@ -10,8 +10,10 @@
 
 #pragma once
 
+#include <control/automation/manager.hpp>
 #include <control/controllers/base.hpp>
 
+#include <ui/common/addbtn.hpp>
 #include <ui/common/autogrid.hpp>
 #include <ui/lang.hpp>
 
@@ -34,12 +36,15 @@ public:
     /// @param[in]  parent          Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
-    RouteGroup (control::ControllerBase& controller, QWidget* parent);
+    RouteGroup (control::ControllerBase&    controller,
+                control::AutomationManager& automations,
+                QWidget*                    parent);
 
 private:
-    control::ControllerBase*    m_controller;   ///< Controller
+    control::ControllerBase&    m_controller;   ///< Controller
+    control::AutomationManager& m_automations;  ///< List of automations
     common::AutoGridLayout*     m_gridLayout;   ///< Layout containing route buttons
-    QLabel*                     m_addLabel;
+    common::AddButton*          m_addLabel;     ///< Button to add a new route
 
     //////////////////////////////////////////////////////////////////////////////
     /// Add a route button to the grid layout

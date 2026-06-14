@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include <control/automation/item.hpp>
 #include <control/controllers/worker.hpp>
 #include <control/protocols/base.hpp>
 
@@ -195,13 +196,21 @@ public:
     virtual std::vector<layout::Actuator> getActuators () const = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Get the routes configured for this controller. A route is a group of actuators and associated state that
-    /// can be triggered
+    /// Get the routes configured for this controller. A route is a group of
+    /// actuators and associated state that can be triggered
     ///
     /// @return     List of routes
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual std::vector<layout::Route> getRoutes () const = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get a list of the items controlled by this controller than can be automated
+    ///
+    /// @return     List of automatable items
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::vector<AutomationItem> getAutomationItems () const;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Create a route on  the controller

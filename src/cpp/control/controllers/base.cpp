@@ -84,4 +84,24 @@ ControllerBase::ControllerBase (const std::string&              friendlyName,
     {
     }
 
+std::vector<AutomationItem> ControllerBase::getAutomationItems () const
+    {
+    std::vector<AutomationItem> items;
+
+    auto actuators  = getActuators ();
+    auto routes     = getRoutes ();
+
+    items.reserve (routes.size () + actuators.size ());
+
+    std::copy (actuators.begin (),
+               actuators.end (),
+               std::back_inserter (items));
+
+    std::copy (routes.begin (),
+               routes.end (),
+               std::back_inserter (items));
+
+    return items;
+    }
+
 } // namespace control

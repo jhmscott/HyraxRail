@@ -10,6 +10,9 @@
 
 #pragma once
 
+#include <control/automation/manager.hpp>
+#include <control/controllers/manager.hpp>
+
 #include <ui/lang.hpp>
 
 #include <QGroupBox>
@@ -29,10 +32,14 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
+    /// @param[in]  controllers List of controllers
+    /// @param[in]  automations List of automations
     /// @param[in]  parent      Parent widget
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    explicit ClockPanel (QWidget* parent);
+    explicit ClockPanel (control::ControllerManager&    controllers,
+                         control::AutomationManager&    automations,
+                         QWidget*                       parent);
 
 private:
     QGroupBox* m_clockBox;  ///< Group box containing the fast clock and it's settings

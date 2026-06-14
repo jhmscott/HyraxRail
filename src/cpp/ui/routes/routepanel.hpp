@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <control/automation/manager.hpp>
 #include <control/controllers/base.hpp>
 #include <control/controllers/manager.hpp>
 
@@ -33,13 +34,17 @@ public:
     /// Constructor
     ///
     /// @param[in]  controllers     List of controllers
+    /// @param[in]  automations     List of automations
     /// @param[in]  parent          Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
-    RoutePanel (control::ControllerManager* controllers, QWidget* parent);
+    RoutePanel (control::ControllerManager& controllers,
+                control::AutomationManager& automations,
+                QWidget*                    parent);
 
 private:
-    control::ControllerManager* m_controllers;  ///< List of controllers
+    control::ControllerManager& m_controllers;  ///< List of controllers
+    control::AutomationManager& m_automations;  ///< List of automations
 
 private slots:
     //////////////////////////////////////////////////////////////////////////////
