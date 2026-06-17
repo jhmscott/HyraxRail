@@ -23,21 +23,10 @@
 namespace ui::clock
 {
 AnalogClock::AnalogClock (QWidget* parent) :
-    QWidget (parent)
+    ClockWidget (parent)
     {
-    auto& clock = control::FastClock::instance ();
-
-    // Force a repaint on a clock tick...
-    connect (&clock,
-             &control::FastClock::tick,
-              this,
-              QOverload<>::of (&AnalogClock::update));
-
-    // ... or a manual update
-    connect (&clock,
-             &control::FastClock::timeChanged,
-             this,
-             QOverload<>::of (&AnalogClock::update));
+    m_font.setFamily ("Cascadia Mono");
+    m_font.setPixelSize (14);
     }
 
 void AnalogClock::paintEvent (QPaintEvent* event)
@@ -80,7 +69,20 @@ void AnalogClock::paintEvent (QPaintEvent* event)
     painter.translate (width () / 2, height () / 2);
     painter.scale (side / 200.0, side / 200.0);
 
-    QTime time = control::FastClock::qDateTime ().time ();
+    QDateTime   dateTime    = control::FastClock::qDateTime ();
+    QTime       time        = dateTime.time ();
+    QDate       date        = dateTime.date ();
+
+    // Draw the day/date window
+
+    painter.setFont (m_font);
+    painter.drawText (18,
+                      5,
+                      QString{ "%1|%2 "}.arg (
+                          utils::time::dayOfWeekAbreviation (
+                              static_cast<utils::time::dayOfTheWeek> (date.dayOfWeek () - 1)),
+                          QString::number (date.day ())));
+    painter.drawRoundedRect (QRect{ 15, -9, 55, 18 }, 3, 3);
 
     // Draw hour hand
 
@@ -132,9 +134,10 @@ void AnalogClock::paintEvent (QPaintEvent* event)
 
     for (int j = 0; j < 60; ++j)
         {
-        painter.drawLine(92, 0, 96, 0);
-        painter.rotate(6.0);
+        painter.drawLine (92, 0, 96, 0);
+        painter.rotate (6.0);
         }
+
     }
 
 } // namespace ui::clock

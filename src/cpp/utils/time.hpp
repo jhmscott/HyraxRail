@@ -19,6 +19,32 @@
 namespace utils::time
 {
 
+enum class dateFormat
+    {
+
+    };
+
+// Enumerated months of the year
+// Note that this starts at 0, while QDate::month() starts at 1
+//
+enum month
+    {
+    JANUARY,
+    FEBRUARY,
+    MARCH,
+    APRIL,
+    MAY,
+    JUNE,
+    JULY,
+    AUGUST,
+    SEPTEMBER,
+    OCTOBER,
+    NOVEMBER,
+    DECEMBER,
+
+    NUM_MONTHS
+    };
+
 // Enumerated days of the week
 // Note that this starts at 0, while QDate::dayOfWeek() starts at 1
 //
@@ -37,7 +63,6 @@ enum dayOfTheWeek
 
 // Bitset containing a set of days in an arbitrary week
 using days = std::bitset<NUM_DAYS>;
-
 
 enum unit
     {
@@ -162,6 +187,9 @@ inline QString dayOfWeekText (dayOfTheWeek day)
 ///
 /// @return     Day of the week abreviation
 ///
+/// @remarks    Unlike QLocale::dayName(), the translations are all three
+///             characters
+///
 ///////////////////////////////////////////////////////////////////////////////
 inline QString dayOfWeekAbreviation (dayOfTheWeek day)
     {
@@ -180,6 +208,41 @@ inline QString dayOfWeekAbreviation (dayOfTheWeek day)
     ASSERT_ARRAY_LENGTH (DAYS, NUM_DAYS);
 
     return DAYS[day];
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Get the translated abreviation for a month
+///
+/// @param[in]  mon     Month
+///
+/// @return     Month abreviation
+///
+/// @remarks    Unlike QLocale::monthName(), the translations are all three
+///             characters
+///
+///////////////////////////////////////////////////////////////////////////////
+inline QString monthAbreviation (month mon)
+    {
+    using namespace internal;
+
+    const QString MONTHS[] =
+        {
+        TimeStringConstants::tr ("Jan"),
+        TimeStringConstants::tr ("Feb"),
+        TimeStringConstants::tr ("Mar"),
+        TimeStringConstants::tr ("Apr"),
+        TimeStringConstants::tr ("May"),
+        TimeStringConstants::tr ("Jun"),
+        TimeStringConstants::tr ("Jul"),
+        TimeStringConstants::tr ("Aug"),
+        TimeStringConstants::tr ("Sep"),
+        TimeStringConstants::tr ("Oct"),
+        TimeStringConstants::tr ("Nov"),
+        TimeStringConstants::tr ("Dec")
+        };
+    ASSERT_ARRAY_LENGTH (MONTHS, NUM_MONTHS);
+
+    return MONTHS[mon];
     }
 
 ///////////////////////////////////////////////////////////////////////////////

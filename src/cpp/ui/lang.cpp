@@ -103,4 +103,13 @@ QLocale system ()
     return locale;
     }
 
+bool uses24HourFormat (const QLocale& locale)
+    {
+    QString timeFormat = locale.timeFormat (QLocale::ShortFormat);
+
+    // If it contains 'H' (0-23 format) or doesn't contain 'a'/'p' (AM/PM markers), it's 24h
+    return timeFormat.contains ('H') ||
+       not timeFormat.contains ('a', Qt::CaseInsensitive);
+    }
+
 } // namespace ui::lang

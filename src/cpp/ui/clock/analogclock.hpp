@@ -13,6 +13,8 @@
 
 #pragma once
 
+#include <ui/clock/clock.hpp>
+
 #include <QWidget>
 
 namespace ui::clock
@@ -22,7 +24,7 @@ namespace ui::clock
 /// Analog clock widget, renders the current state of the fast clock
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class AnalogClock : public QWidget
+class AnalogClock : public ClockWidget
     {
 public:
     ///////////////////////////////////////////////////////////////////////////////
@@ -43,6 +45,15 @@ protected:
     virtual void paintEvent (QPaintEvent* event) override;
 
 private:
+    QFont m_font;   ///< Font used for day window
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the widget's time
+    ///
+    /// @param[in]  time        Simulated time
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setTime (const control::FastClock::time_point& time) { update (); }
     };
 
 } // namespace ui::clock

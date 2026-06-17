@@ -1,5 +1,5 @@
 /**
- * @file        clock/task.hpp
+ * @file        clock/task.cpp
  * @brief       Timer condition form
  * @author      Justin Scott
  * @date        2026-06-05
@@ -14,6 +14,7 @@
 
 namespace ui::clock
 {
+
 TimerConditionForm::TimerConditionForm (QWidget* parent) :
     ConditionForm (parent)
     {
@@ -38,10 +39,12 @@ TimerConditionForm::TimerConditionForm (QWidget* parent) :
     setLayout (m_layout);
     }
 
+
 std::unique_ptr<control::AutomationCondition> TimerConditionForm::getCondition () const
     {
     return std::make_unique<control::AutomationTimer> (m_duration->getDuration ());
     }
+
 
 void TimerConditionForm::setCondition (const control::AutomationCondition& condition)
     {
@@ -49,6 +52,7 @@ void TimerConditionForm::setCondition (const control::AutomationCondition& condi
 
     m_duration->setDuration (timer->getDuration (), true);
     }
+
 
 void TimerConditionForm::setLabels ()
     {

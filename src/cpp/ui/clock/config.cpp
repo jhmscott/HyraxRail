@@ -25,7 +25,11 @@ ConfigForm::ConfigForm (QWidget* parent) :
     QHBoxLayout*ratioLayout = new QHBoxLayout;
     QDateTime   now         = clock.qDateTime ();
 
-    m_layout = new QFormLayout{ this };
+    m_style     = new QComboBox{ this };
+    m_layout    = new QFormLayout{ this };
+
+    m_style->addItem (tr ("Analog"), CLOCK_TYPE_ANALOG);
+    m_style->addItem (tr ("Digital"), CLOCK_TYPE_DIGITAL);
 
     ratioLayout->addWidget (new QLabel{ "1 :", this });
     ratioLayout->addWidget (m_ratio = new QSpinBox{ this });
@@ -39,6 +43,8 @@ ConfigForm::ConfigForm (QWidget* parent) :
     m_layout->addRow (new QLabel{ this }, m_ratioLayout = ratioLayout);
     m_layout->addRow (new QLabel{ this }, m_date        = new QDateEdit{ this });
     m_layout->addRow (new QLabel{ this }, m_time        = new QTimeEdit{ this });
+    m_layout->addRow (new QLabel{ this }, m_style);
+
 
     m_running->setFixedWidth (40);
 
@@ -75,6 +81,11 @@ ConfigForm::ConfigForm (QWidget* parent) :
              this,
             &ConfigForm::dateTimeChanged);
 
+    connect (m_style,
+            &QComboBox::currentIndexChanged,
+             this,
+            &ConfigForm::styleIndexChanged);
+
     setLabels ();
     }
 
@@ -85,6 +96,10 @@ void ConfigForm::setLabels ()
     common::setFormRowText (*m_layout, *m_ratioLayout,  tr ("Ratio"));
     common::setFormRowText (*m_layout, *m_date,         tr ("Date"));
     common::setFormRowText (*m_layout, *m_time,         tr ("Time"));
+    common::setFormRowText (*m_layout, *m_style,        tr ("Style"));
+
+    m_style->setItemText (0, tr ("Analog"));
+    m_style->setItemText (1, tr ("Digital"));
     }
 
 
@@ -115,6 +130,11 @@ void ConfigForm::dateTimeChanged ()
 
     clock.setTime (utils::time::toTP (m_date->date (),
                                       m_time->time ()));
+    }
+
+void ConfigForm::styleIndexChanged (int idx)
+    {
+    emit styleChanged (m_style->itemData (idx).value<clockStyle> ());
     }
 
 } // namespace ui::clock

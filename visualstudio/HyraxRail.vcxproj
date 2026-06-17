@@ -185,8 +185,10 @@
     <ClCompile Include="..\src\cpp\ui\clock\alarm.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\analogclock.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\automation.cpp" />
+    <ClCompile Include="..\src\cpp\ui\clock\clock.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\clockpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\config.cpp" />
+    <ClCompile Include="..\src\cpp\ui\clock\digitalclock.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\editauto.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\monthly.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\task.cpp" />
@@ -262,6 +264,8 @@
     <QtMoc Include="..\src\cpp\ui\clock\timer.hpp" />
     <QtMoc Include="..\src\cpp\ui\clock\weekly.hpp" />
     <QtMoc Include="..\src\cpp\ui\clock\monthly.hpp" />
+    <ClInclude Include="..\src\cpp\ui\clock\clock.hpp" />
+    <ClInclude Include="..\src\cpp\ui\clock\digitalclock.hpp" />
     <ClInclude Include="..\src\cpp\ui\clock\task.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\daysofweek.hpp" />
     <QtMoc Include="..\src\cpp\utils\time.hpp" />
@@ -346,6 +350,12 @@
     <QtRcc Include="..\res\HyraxRail.qrc" />
   </ItemGroup>
   <ItemGroup>
+    <Font Include="..\res\fonts\DSEG14-Classic\DSEG14Classic-Bold.ttf" />
+    <Font Include="..\res\fonts\DSEG14-Classic\DSEG14Classic-BoldItalic.ttf" />
+    <Font Include="..\res\fonts\DSEG14-Classic\DSEG14Classic-Italic.ttf" />
+    <Font Include="..\res\fonts\DSEG14-Classic\DSEG14Classic-Light.ttf" />
+    <Font Include="..\res\fonts\DSEG14-Classic\DSEG14Classic-LightItalic.ttf" />
+    <Font Include="..\res\fonts\DSEG14-Classic\DSEG14Classic-Regular.ttf" />
     <Font Include="..\res\fonts\DSEG7-Classic\DSEG7Classic-Bold.ttf" />
     <Font Include="..\res\fonts\DSEG7-Classic\DSEG7Classic-BoldItalic.ttf" />
     <Font Include="..\res\fonts\DSEG7-Classic\DSEG7Classic-LightItalic.ttf" />

@@ -137,7 +137,37 @@ inline QString formatOnOff (bool bl) { return bl ? QObject::tr ("On") : QObject:
 /// @return     Escaped string
 ///
 ///////////////////////////////////////////////////////////////////////////////
-static QString escape (QString str) { return str.replace ("&", "&&"); }
+inline QString escape (QString str) { return str.replace ("&", "&&"); }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Remove diacritics from a string
+///
+/// @praram[in] text        Text with diacritics
+///
+/// @return     Text without diacritics
+///
+/// @remarks    Avoid this whenever you can. This can change the meaning of
+///             localized strings. Only use when there is no other way to render
+///             the diacritics, like with the 7 and 14 seg displays
+///
+///////////////////////////////////////////////////////////////////////////////
+inline QString removeDiactrics (const QString& text)
+    {
+    // Decompose characters into base letters + standalone diacritics
+    QString formD = text.normalized (QString::NormalizationForm_D);
+    QString filtered;
+
+    filtered.reserve (formD.length ());
+
+    // Filter out the diacritc characters
+    std::copy_if (formD.begin (),
+                  formD.end (),
+                  std::back_inserter (filtered),
+                  [] (QChar ch) -> bool
+                  { return QChar::Mark_NonSpacing != ch.category (); });
+
+    return filtered;
+    }
 
 } // namespace utils::str
 

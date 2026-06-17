@@ -6,6 +6,11 @@
         <file>fonts/DSEG7-Classic/DSEG7Classic-LightItalic.ttf</file>
         <file>fonts/DSEG7-Classic/DSEG7Classic-Regular.ttf</file>
 
+        <file>fonts/DSEG14-Classic/DSEG14Classic-Bold.ttf</file>
+        <file>fonts/DSEG14-Classic/DSEG14Classic-BoldItalic.ttf</file>
+        <file>fonts/DSEG14-Classic/DSEG14Classic-LightItalic.ttf</file>
+        <file>fonts/DSEG14-Classic/DSEG14Classic-Regular.ttf</file>
+
         <!--Text-->
         <file>text/LICENSE_LUCIDE</file>
         <file>text/LICENSE_PHOSPHOR</file>

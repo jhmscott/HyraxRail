@@ -12,6 +12,7 @@
 
 #include <control/automation/clock.hpp>
 
+#include <ui/clock/clock.hpp>
 #include <ui/common/toggleswitch.hpp>
 #include <ui/lang.hpp>
 
@@ -40,12 +41,22 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     explicit ConfigForm (QWidget* parent);
 
+signals:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Signals the user has changed the clock style
+    ///
+    /// @param[in]  style       Clock style
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void styleChanged (clockStyle style);
+
 private:
     QFormLayout*            m_layout;       ///< Form layout
     QDateEdit*              m_date;         ///< Date field
     QTimeEdit*              m_time;         ///< Time field
     QSpinBox*               m_ratio;        ///< Time ratio field
     QLayout*                m_ratioLayout;  ///< Layout containing ratio field
+    QComboBox*              m_style;        ///< Clock style selection
     common::ToggleSwitch*   m_running;      ///< Running toggle
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -79,6 +90,14 @@ private slots:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void dateTimeChanged ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handles a change to the clock style combo box
+    ///
+    /// @param[in]  idx     Combo box index
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void styleIndexChanged (int idx);
     };
 
 } // namespace ui::clock

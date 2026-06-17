@@ -151,6 +151,9 @@
     <Filter Include="Source Files\ui\clock">
       <UniqueIdentifier>{fb4f1ed4-b8f2-41d8-b655-005f3cf0984e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\fonts\DSEG14-Classic">
+      <UniqueIdentifier>{142d9b3a-2aa7-4fb1-b205-2313e3e3f044}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\stdafx.h">
@@ -223,6 +226,12 @@
       <Filter>Header Files\control\automation</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cpp\ui\clock\task.hpp">
+      <Filter>Header Files\ui\clock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\clock\digitalclock.hpp">
+      <Filter>Header Files\ui\clock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\clock\clock.hpp">
       <Filter>Header Files\ui\clock</Filter>
     </ClInclude>
   </ItemGroup>
@@ -438,6 +447,12 @@
       <Filter>Source Files\ui\clock</Filter>
     </ClCompile>
     <ClCompile Include="..\src\cpp\ui\clock\monthly.cpp">
+      <Filter>Source Files\ui\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\clock\digitalclock.cpp">
+      <Filter>Source Files\ui\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\clock\clock.cpp">
       <Filter>Source Files\ui\clock</Filter>
     </ClCompile>
   </ItemGroup>
@@ -660,6 +675,24 @@
     </Font>
     <Font Include="..\res\fonts\DSEG7-Classic\DSEG7Classic-Regular.ttf">
       <Filter>Resource Files\fonts\DSEG7-Classic</Filter>
+    </Font>
+    <Font Include="..\res\fonts\DSEG14-Classic\DSEG14Classic-Bold.ttf">
+      <Filter>Resource Files\fonts\DSEG14-Classic</Filter>
+    </Font>
+    <Font Include="..\res\fonts\DSEG14-Classic\DSEG14Classic-BoldItalic.ttf">
+      <Filter>Resource Files\fonts\DSEG14-Classic</Filter>
+    </Font>
+    <Font Include="..\res\fonts\DSEG14-Classic\DSEG14Classic-Italic.ttf">
+      <Filter>Resource Files\fonts\DSEG14-Classic</Filter>
+    </Font>
+    <Font Include="..\res\fonts\DSEG14-Classic\DSEG14Classic-Light.ttf">
+      <Filter>Resource Files\fonts\DSEG14-Classic</Filter>
+    </Font>
+    <Font Include="..\res\fonts\DSEG14-Classic\DSEG14Classic-LightItalic.ttf">
+      <Filter>Resource Files\fonts\DSEG14-Classic</Filter>
+    </Font>
+    <Font Include="..\res\fonts\DSEG14-Classic\DSEG14Classic-Regular.ttf">
+      <Filter>Resource Files\fonts\DSEG14-Classic</Filter>
     </Font>
   </ItemGroup>
   <ItemGroup>
