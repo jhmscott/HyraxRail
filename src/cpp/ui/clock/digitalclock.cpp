@@ -58,6 +58,11 @@ DigitalClock::DigitalClock (QWidget* parent) :
     layout->addWidget (m_date, 0, Qt::AlignCenter);
     layout->addLayout (timeLayout);
 
+    connect (&control::FastClock::instance (),
+             &control::FastClock::stopped,
+              this,
+             &DigitalClock::stopped);
+
     setTime (control::FastClock::now ());
     setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
     setLayout (layout);
@@ -71,25 +76,32 @@ void DigitalClock::setTime (const control::FastClock::time_point& time)
     QTime       qTime       = dateTime.time ();
     QLocale     locale;
     bool        is24Hour    = ui::lang::uses24HourFormat (locale);
+    bool        showColon   = m_showColon ||
+                              not control::FastClock::instance ().isRunning ();
+    QString     timeStr;
 
     if (is24Hour)
         {
-        m_time->setText (QString::asprintf ("%02d:%02d",
-                                            qTime.hour (),
-                                            qTime.minute ()));
+        timeStr = QString::asprintf ("%02d%c%02d",
+                                     qTime.hour (),
+                                     showColon ? ':' : ' ',
+                                     qTime.minute ());
         m_amPm->hide ();
         }
     else
         {
         int hour = qTime.hour ();
 
-        m_time->setText (QString::asprintf ("%d:%02d",
-                                            hour % 12,
-                                            qTime.minute ()));
+        timeStr = QString::asprintf ("%d%c%02d",
+                                     hour % 12,
+                                     showColon ? ':' : ' ',
+                                     qTime.minute ());
+
         m_amPm->setText (hour > 12 ? locale.pmText () : locale.amText ());
         m_amPm->show ();
         }
 
+    m_time->setText (timeStr);
     m_seconds->setText (QString::asprintf ("%02d", qTime.second ()));
 
     // This font doesn't render accents so strip them off
@@ -105,6 +117,15 @@ void DigitalClock::setTime (const control::FastClock::time_point& time)
                                         month.toStdString ().c_str (),
                                         date.day (),
                                         dow.toStdString ().c_str ()));
+
+    m_showColon = not showColon;
+    }
+
+void DigitalClock::stopped (const control::FastClock::time_point& time)
+    {
+    // Stop it with the colon showing
+    m_showColon = true;
+    setTime (time);
     }
 
 } // namespace ui::clock

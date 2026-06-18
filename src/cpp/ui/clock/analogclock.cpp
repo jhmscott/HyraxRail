@@ -22,6 +22,76 @@
 
 namespace ui::clock
 {
+
+///////////////////////////////////////////////////////////////////////////////
+/// Draw a clock hand
+///
+/// @tparam     N       Number of hand points
+///
+/// @Param[in,out]  painter     Painter instance
+/// @param[in]      rotation    Hand rotation in degrees [0,360]
+/// @param[in]      offfset     Offset to apply to hand
+/// @param[in]      hand        Clock hand vector symbol
+/// @param[in]      lolipop     Draw a "lolipop" style hand, with a large
+///                             circle on the end
+///
+///////////////////////////////////////////////////////////////////////////////
+template<size_t N>
+static void drawHand (QPainter&     painter,
+                      double        rotation,
+                      const QPoint& offset,
+                      const QPoint(&hand)[N],
+                      bool          lolipop)
+    {
+    QPainterStateGuard guard{ &painter };
+
+    painter.rotate (rotation);
+    painter.translate (offset);
+    painter.drawConvexPolygon (hand, N);
+
+    if (lolipop)
+        {
+        painter.drawEllipse (-3, -3, 6, 6);
+        painter.drawEllipse (-5, -68, 10, 10);
+        }
+    }
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Draw a clock hand with a "shadow" to provide contrast with hands below it
+///
+/// @tparam     N       Number of hand points
+///
+/// @Param[in,out]  painter     Painter instance
+/// @param[in]      rotation    Hand rotation in degrees [0,360]
+/// @param[in]      handColor   Colour to draw hand in
+/// @param[in]      shadowColor Colour of hand shadow
+/// @param[in]      hand        Clock hand vector symbol
+/// @param[in]      lolipop     Draw a "lolipop" style hand, with a large
+///                             circle on the end
+///
+///////////////////////////////////////////////////////////////////////////////
+template<size_t N>
+static void drawHandWithShadow (QPainter&       painter,
+                                double          rotation,
+                                const QColor&   handColor,
+                                const QColor&   shadowColor,
+                                const QPoint  (&hand)[N],
+                                bool            lolipop = false)
+    {
+    painter.setPen (Qt::NoPen);
+    painter.setBrush (shadowColor);
+
+    drawHand (painter, rotation, {  0,  1 }, hand, lolipop);
+    drawHand (painter, rotation, {  0, -1 }, hand, lolipop);
+    drawHand (painter, rotation, {  1,  0 }, hand, lolipop);
+    drawHand (painter, rotation, { -1,  0 }, hand, lolipop);
+
+
+    painter.setBrush (handColor);
+    drawHand (painter, rotation, { 0, 0 }, hand, lolipop);
+    }
+
 AnalogClock::AnalogClock (QWidget* parent) :
     ClockWidget (parent)
     {
@@ -56,9 +126,10 @@ void AnalogClock::paintEvent (QPaintEvent* event)
             {  1, -89 }
         };
 
-    const QColor hourColor      = palette().color(QPalette::Text);
-    const QColor minuteColor    = palette().color(QPalette::Text);
-    const QColor secondsColor   = palette().color(QPalette::Accent);
+    const QColor hourColor      = palette ().color (QPalette::Text);
+    const QColor minuteColor    = palette ().color (QPalette::Text);
+    const QColor secondsColor   = palette ().color (QPalette::Accent);
+    const QColor shadowColor    = Qt::gray;
 
     int side = std::min (width(), height());
 
@@ -86,15 +157,11 @@ void AnalogClock::paintEvent (QPaintEvent* event)
 
     // Draw hour hand
 
-    painter.setPen (Qt::NoPen);
-    painter.setBrush (hourColor);
-
-    {
-    QPainterStateGuard guard{ &painter };
-
-    painter.rotate (30.0 * ((time.hour() + time.minute() / 60.0)));
-    painter.drawConvexPolygon (hourHand, std::size (hourHand));
-    }
+    drawHandWithShadow (painter,
+                        30.0 * ((time.hour () + time.minute () / 60.0)),
+                        hourColor,
+                        shadowColor,
+                        hourHand);
 
     // Draw hour indices
 
@@ -106,27 +173,20 @@ void AnalogClock::paintEvent (QPaintEvent* event)
 
     // Draw minute hand
 
-    painter.setBrush(minuteColor);
-
-    {
-    QPainterStateGuard guard{ &painter };
-
-    painter.rotate (6.0 * (time.minute () + time.second () / 60.0));
-    painter.drawConvexPolygon (minuteHand, std::size (minuteHand));
-    }
+    drawHandWithShadow (painter,
+                        6.0 * (time.minute () + time.second () / 60.0),
+                        minuteColor,
+                        shadowColor,
+                        minuteHand);
 
     // Draw seconds hands
 
-    painter.setBrush(secondsColor);
-
-    {
-    QPainterStateGuard guard{ &painter };
-
-    painter.rotate (6.0 * time.second());
-    painter.drawConvexPolygon (secondsHand, std::size (secondsHand));
-    painter.drawEllipse (-3, -3, 6, 6);
-    painter.drawEllipse (-5, -68, 10, 10);
-    }
+    drawHandWithShadow (painter,
+                        6.0 * time.second (),
+                        secondsColor,
+                        shadowColor,
+                        secondsHand,
+                        true);
 
     // Draw minute/second indices
 

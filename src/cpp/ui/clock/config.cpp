@@ -128,8 +128,12 @@ void ConfigForm::dateTimeChanged ()
     {
     auto& clock = control::FastClock::instance ();
 
-    clock.setTime (utils::time::toTP (m_date->date (),
-                                      m_time->time ()));
+    // Prevents a feedback loop
+    if (not clock.isRunning ())
+        {
+        clock.setTime (utils::time::toTP (m_date->date (),
+                                          m_time->time ()));
+        }
     }
 
 void ConfigForm::styleIndexChanged (int idx)

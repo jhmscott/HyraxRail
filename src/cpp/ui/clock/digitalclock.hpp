@@ -34,10 +34,11 @@ public:
     explicit DigitalClock (QWidget* parent);
 
 private:
-    QLabel* m_time;     ///< Time label (excluding seconds)
-    QLabel* m_seconds;  ///< Seconds label
-    QLabel* m_date;     ///< Date label
-    QLabel* m_amPm;     ///< AM/PM indicator
+    QLabel* m_time;             ///< Time label (excluding seconds)
+    QLabel* m_seconds;          ///< Seconds label
+    QLabel* m_date;             ///< Date label
+    QLabel* m_amPm;             ///< AM/PM indicator
+    bool    m_showColon = true; ///< Show the colon
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the widget's time
@@ -46,6 +47,15 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void setTime (const control::FastClock::time_point& time) override;
+
+private:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle the stop
+    ///
+    /// @param[in]  time        Simulated time we were stopped at
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void stopped (const control::FastClock::time_point& time);
     };
 
 } // namespace ui::clock

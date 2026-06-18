@@ -58,10 +58,11 @@ void FastClock::setRunning (bool running)
         m_startTimeSystem = std::chrono::system_clock::now ();
         }
 
-    if (not running and m_running)
+    if (not running && m_running)
         {
         // stopping, record the current time, so we can continue from there
         m_startTime = getTimeInternal ();
+        emit stopped (m_startTime);
         }
 
     m_running = running;
