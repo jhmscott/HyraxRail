@@ -154,6 +154,12 @@
     <Filter Include="Resource Files\fonts\DSEG14-Classic">
       <UniqueIdentifier>{142d9b3a-2aa7-4fb1-b205-2313e3e3f044}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ext">
+      <UniqueIdentifier>{f0edd527-3b7b-4e55-8f9a-0b49d302201b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ext">
+      <UniqueIdentifier>{629d2610-dd1d-44bd-91c5-2290f43370b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\stdafx.h">
@@ -233,6 +239,12 @@
     </ClInclude>
     <ClInclude Include="..\src\cpp\ui\clock\clock.hpp">
       <Filter>Header Files\ui\clock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\utils\poly.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ext\gpc.h">
+      <Filter>Header Files\ext</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -454,6 +466,12 @@
     </ClCompile>
     <ClCompile Include="..\src\cpp\ui\clock\clock.cpp">
       <Filter>Source Files\ui\clock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ext\gpc.c">
+      <Filter>Source Files\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\utils\poly.cpp">
+      <Filter>Source Files\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -980,5 +998,8 @@
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="HyraxRail.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="graphical-debugging.xml" />
   </ItemGroup>
 </Project>

@@ -37,6 +37,13 @@
 
 #define NULL nullptr
 
+#ifdef __cpp_conditional_explicit
+#define implicit explicit (false)
+#else
+#define implicit
+#endif
+
+
 //////////////////////////////////////////////////////////////////////////////
 // Static assert that an array is an expected length
 // Useful when array is tied to enum values

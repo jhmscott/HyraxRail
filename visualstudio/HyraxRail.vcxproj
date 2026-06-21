@@ -175,6 +175,10 @@
     <ClCompile Include="..\src\cpp\control\controllers\manager.cpp" />
     <ClCompile Include="..\src\cpp\control\controllers\marklincs1.cpp" />
     <ClCompile Include="..\src\cpp\control\protocols\base.cpp" />
+    <ClCompile Include="..\src\cpp\ext\gpc.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\src\cpp\layout\actuator.cpp" />
     <ClCompile Include="..\src\cpp\layout\locomotive.cpp" />
     <ClCompile Include="..\src\cpp\layout\route.cpp" />
@@ -246,6 +250,7 @@
     <ClCompile Include="..\src\cpp\utils\device.cpp" />
     <ClCompile Include="..\src\cpp\utils\os.cpp" />
     <ClCompile Include="..\src\cpp\utils\pinger.cpp" />
+    <ClCompile Include="..\src\cpp\utils\poly.cpp" />
     <ClCompile Include="..\src\cpp\utils\resources.cpp" />
     <ClCompile Include="..\src\cpp\utils\time.cpp" />
     <ClInclude Include="..\res\version.h" />
@@ -264,6 +269,7 @@
     <QtMoc Include="..\src\cpp\ui\clock\timer.hpp" />
     <QtMoc Include="..\src\cpp\ui\clock\weekly.hpp" />
     <QtMoc Include="..\src\cpp\ui\clock\monthly.hpp" />
+    <ClInclude Include="..\src\cpp\ext\gpc.h" />
     <ClInclude Include="..\src\cpp\ui\clock\clock.hpp" />
     <ClInclude Include="..\src\cpp\ui\clock\digitalclock.hpp" />
     <ClInclude Include="..\src\cpp\ui\clock\task.hpp" />
@@ -330,6 +336,7 @@
     <ClInclude Include="..\src\cpp\utils\math.hpp" />
     <ClInclude Include="..\src\cpp\utils\os.hpp" />
     <ClInclude Include="..\src\cpp\utils\pinger.hpp" />
+    <ClInclude Include="..\src\cpp\utils\poly.hpp" />
     <ClInclude Include="..\src\cpp\utils\pp.hpp" />
     <ClInclude Include="..\src\cpp\utils\resources.hpp" />
     <ClInclude Include="..\src\cpp\utils\string.hpp" />
@@ -464,6 +471,9 @@
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="HyraxRail.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="graphical-debugging.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

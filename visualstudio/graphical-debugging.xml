@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GraphicalDebugging>
+
+	<!-- QT Data Types -->
+
+	<Point Type="QPoint">
+		<Coordinates>
+			<X>xp.m_i</X>
+			<Y>yp.m_i</Y>
+		</Coordinates>
+	</Point>
+	<Point Type="QPointF">
+		<Coordinates>
+			<X>xp</X>
+			<Y>yp</Y>
+		</Coordinates>
+	</Point>
+	<Box Type="QRect">
+		<CoordinatesDimensions>
+			<MinX>x1.m_i</MinX>
+			<MinY>y1.m_i</MinY>
+			<MaxX>x2.m_i</MaxX>
+			<MaxY>y2.m_i</MaxY>
+		</CoordinatesDimensions>
+	</Box>
+	<Box Type="QRectF">
+		<CoordinatesDimensions>
+			<MinX>xp</MinX>
+			<MinY>yp</MinY>
+			<Width>w</Width>
+			<Height>h</Height>
+		</CoordinatesDimensions>
+	</Box>
+
+	<Container Type="QList&lt;*&gt;">
+		<Array>
+			<Pointer>d.ptr</Pointer>
+			<Size>d.size</Size>
+		</Array>
+	</Container>
+
+	<Ring Type="QPolygon">
+		<Points>
+			<Container>
+				<Name>(QList&lt;QPoint&gt;&amp;)(*this)</Name>
+			</Container>
+		</Points>
+	</Ring>
+
+	<Ring Type="QPolygonF">
+		<Points>
+			<Container>
+				<Name>(QList&lt;QPointF&gt;&amp;)(*this)</Name>
+			</Container>
+		</Points>
+	</Ring>
+
+	<!-- GPC (General Polygon Clipper) Types-->
+
+	<Point Type="_gpc_vertex">
+		<Coordinates>
+			<X>x</X>
+			<Y>y</Y>
+		</Coordinates>
+	</Point>
+
+	<Ring Type="_gpc_vertex_list">
+		<Points>
+			<Array>
+				<Pointer>vertex</Pointer>
+				<Size>num_vertices</Size>
+			</Array>
+		</Points>
+	</Ring>
+
+	<Container Type="_gpc_polygon">
+		<Array>
+			<Pointer>contour</Pointer>
+			<Size>num_contours</Size>
+		</Array>
+	</Container>
+
+	<!-- Hyrax Rail Data Types -->
+	<Polygon Type="utils::ComplexPolygon&lt;*&gt;">
+		<ExteriorRing>
+			<Name>exteriorRing</Name>
+		</ExteriorRing>
+		<InteriorRings>
+			<Container>
+				<Name>interiorRings</Name>
+			</Container>
+		</InteriorRings>
+	</Polygon>
+</GraphicalDebugging>

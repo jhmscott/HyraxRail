@@ -1,3 +1,6 @@
+
+#ifdef __cplusplus
+
 // STL containers
 #include <deque>
 #include <list>
@@ -27,3 +30,5 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QWidget>
+
+#endif // __cplusplus
