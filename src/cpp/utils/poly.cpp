@@ -87,12 +87,12 @@ static gpcVListManaged polyToGpc (const QPolygonF& pg)
 
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Convert a ComplexPolygon to a GPC Polygon
+/// Add a ComplexPolygon to a GPC Polygon
 ///
 /// @tparam     floating    True if polygon coordinates are floating point
 ///
-/// @param[in]  pg          Polygon to convert
-/// @param[out] gpc         GPC polygon
+/// @param[in]      pg          Polygon to convert
+/// @param[in,out]  gpc         GPC polygon to add it to
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<bool floating>
@@ -165,19 +165,25 @@ static void gpcToPoly (const gpc_vertex_list&   gpc,
 
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Convert a GPC polygon to a complex polygon
+/// Convert a GPC polygon to a multi polygon
 ///
 /// @tparam     floating    True if polygon coordinates are floating point
 ///
 /// @param[in]  gpc         Source GPC polygon
-/// @param[out] pg          Resulting complex polygon
+/// @param[out] pg          Resulting multi polygon
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<bool floating>
-static void gpcToComplexPoly (const gpc_polygon&        gpc,
-                              ComplexPolygon<floating>& pg)
+static void gpcToMultiPoly (const gpc_polygon&      gpc,
+                            MultiPolygon<floating>& pg)
     {
-    typename ComplexPolygon<floating>::Polygon temp;
+    using Multi     = MultiPolygon<floating>;
+    using Complex   = typename Multi::SubPolygon;
+    using Polygon   = typename Complex::Polygon;
+    using RingList  = typename Complex::RingList;
+
+    Polygon     temp;
+    RingList    interior;
 
     for (int ii = 0; ii < gpc.num_contours; ++ii)
         {
@@ -185,36 +191,55 @@ static void gpcToComplexPoly (const gpc_polygon&        gpc,
 
         if (0 == gpc.hole[ii])
             {
-            pg.exteriorRing = pg.exteriorRing.united (temp);
+            pg.push_back (std::move (temp));
             }
         else
             {
-            pg.interiorRings.push_back (std::move (temp));
+            interior.push_back (std::move (temp));
+            }
+        }
+
+    // Associate holes with their exterior rings
+    for (Complex& exterior : pg)
+        {
+        for (Polygon& hole : interior)
+            {
+            if (exterior.exteriorRing.intersects (hole))
+                {
+                exterior.interiorRings.push_back (std::move (hole));
+                }
             }
         }
     }
 
 template<bool floating1, bool floating2>
-ComplexPolygon<floating1 || floating2> operate (const ComplexPolygon<floating1>&    pg1,
-                                                const ComplexPolygon<floating2>&    pg2,
-                                                polyOp                              op)
+MultiPolygon<floating1 || floating2> operate (PolygonView<floating1>    pg1,
+                                              PolygonView<floating2>    pg2,
+                                              polyOp                    op)
     {
-    using Result = ComplexPolygon<floating1 || floating2>;
+    using Result = MultiPolygon<floating1 || floating2>;
 
     gpc_polygon gpc1{ 0 };
     gpc_polygon gpc2{ 0 };
     gpc_polygon gpcRes{ 0 };
     Result      res;
 
-    complexPolyToGpc (pg1, gpc1);
-    complexPolyToGpc (pg2, gpc2);
+    for (const auto& sub : pg1)
+        {
+        complexPolyToGpc (sub, gpc1);
+        }
+
+    for (const auto& sub : pg2)
+        {
+        complexPolyToGpc (sub, gpc2);
+        }
 
     gpc_polygon_clip (static_cast<gpc_op> (op),
                       &gpc1,
                       &gpc2,
                       &gpcRes);
 
-    gpcToComplexPoly (gpcRes, res);
+    gpcToMultiPoly (gpcRes, res);
 
     gpc_free_polygon (&gpc1);
     gpc_free_polygon (&gpc2);
@@ -224,24 +249,24 @@ ComplexPolygon<floating1 || floating2> operate (const ComplexPolygon<floating1>&
     }
 
 // Explicit template instatiation
-template ComplexPolygon<false>
-operate<false, false> (const ComplexPolygon<false>& pg1,
-                       const ComplexPolygon<false>& pg2,
-                       polyOp                       op);
+template MultiPolygon<false>
+operate<false, false> (PolygonView<false>   pg1,
+                       PolygonView<false>   pg2,
+                       polyOp               op);
 
-template ComplexPolygon<true>
-operate<true, false>  (const ComplexPolygon<true>&  pg1,
-                       const ComplexPolygon<false>& pg2,
-                       polyOp                       op);
+template MultiPolygon<true>
+operate<true, false>  (PolygonView<true>    pg1,
+                       PolygonView<false>   pg2,
+                       polyOp               op);
 
 
-template ComplexPolygon<true>
-operate<false, true>  (const ComplexPolygon<false>& pg1,
-                       const ComplexPolygon<true>&  pg2,
-                       polyOp                       op);
+template MultiPolygon<true>
+operate<false, true>  (PolygonView<false>   pg1,
+                       PolygonView<true>    pg2,
+                       polyOp               op);
 
-template ComplexPolygon<true>
-operate<true, true>   (const ComplexPolygon<true>&  pg1,
-                       const ComplexPolygon<true>&  pg2,
-                       polyOp                       op);
+template MultiPolygon<true>
+operate<true, true>   (PolygonView<true>    pg1,
+                       PolygonView<true>    pg2,
+                       polyOp               op);
 }
