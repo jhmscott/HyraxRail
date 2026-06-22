@@ -493,7 +493,7 @@ Would you like to pause it or keep it running?</source>
     <message>
         <location filename="../../src/cpp/ui/config/credits.hpp" line="31"/>
         <source>Third Party Licenses &amp; Credits</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/credits.cpp" line="43"/>
@@ -521,7 +521,7 @@ Would you like to pause it or keep it running?</source>
     <message>
         <location filename="../../src/cpp/ui/config/dialog.cpp" line="212"/>
         <source>Name</source>
-        <translation type="unfinished">Tên</translation>
+        <translation>Tên</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/dialog.cpp" line="213"/>
@@ -560,7 +560,7 @@ Would you like to pause it or keep it running?</source>
         <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="220"/>
         <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="253"/>
         <source>Help</source>
-        <translation type="unfinished">Giúp Đỡ</translation>
+        <translation>Giúp Đỡ</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="222"/>
@@ -599,13 +599,13 @@ Would you like to pause it or keep it running?</source>
         <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="35"/>
         <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="216"/>
         <source>IPv4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="39"/>
         <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="220"/>
         <source>IPv6</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="42"/>
@@ -623,7 +623,7 @@ Would you like to pause it or keep it running?</source>
         <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="209"/>
         <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="210"/>
         <source>Address</source>
-        <translation type="unfinished">Địa Chỉ</translation>
+        <translation>Địa Chỉ</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="212"/>
@@ -646,17 +646,17 @@ Would you like to pause it or keep it running?</source>
     <message>
         <location filename="../../src/cpp/ui/config/notifygroup.cpp" line="58"/>
         <source>Notifications</source>
-        <translation type="unfinished">Thông Báo</translation>
+        <translation>Thông Báo</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/notifygroup.cpp" line="60"/>
         <source>Global Stop</source>
-        <translation type="unfinished">Dừng Tất Cả Tàu</translation>
+        <translation>Dừng Tất Cả Tàu</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/config/notifygroup.cpp" line="61"/>
         <source>Sensors</source>
-        <translation type="unfinished">Cảm Biến</translation>
+        <translation>Cảm Biến</translation>
     </message>
 </context>
 <context>
@@ -664,17 +664,17 @@ Would you like to pause it or keep it running?</source>
     <message>
         <location filename="../../src/cpp/ui/routes/editroute.cpp" line="126"/>
         <source>Name:</source>
-        <translation type="unfinished">Tên:</translation>
+        <translation>Tên:</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/routes/editroute.cpp" line="135"/>
         <source>Add Route - %1</source>
-        <translation type="unfinished">Thêm Tuyến Đường - %1</translation>
+        <translation>Thêm Tuyến Đường - %1</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/routes/editroute.cpp" line="130"/>
         <source>Edit Route - %1</source>
-        <translation type="unfinished">Thay Đổi Tuyến Đường - %1</translation>
+        <translation>Thay Đổi Tuyến Đường - %1</translation>
     </message>
 </context>
 <context>
@@ -682,22 +682,22 @@ Would you like to pause it or keep it running?</source>
     <message>
         <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="79"/>
         <source>Delete</source>
-        <translation type="unfinished">Xóa</translation>
+        <translation>Xóa</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="80"/>
         <source>Edit</source>
-        <translation type="unfinished">Thay Đổi</translation>
+        <translation>Thay Đổi</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="64"/>
         <source>Actuators</source>
-        <translation type="unfinished">Bộ Truyền Động</translation>
+        <translation>Bộ Truyền Động</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="103"/>
         <source>The following automations will also be deleted:</source>
-        <translation type="unfinished"></translation>
+        <translation>Các quy trình tự động sau đây cũng sẽ bị xóa:</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="113"/>
@@ -715,7 +715,7 @@ Would you like to pause it or keep it running?</source>
     <message>
         <location filename="../../src/cpp/ui/routes/routegroup.cpp" line="83"/>
         <source>Add Route</source>
-        <translation type="unfinished">Thêm Tuyến Đường</translation>
+        <translation>Thêm Tuyến Đường</translation>
     </message>
 </context>
 <context>
@@ -742,253 +742,253 @@ Would you like to pause it or keep it running?</source>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="170"/>
         <source>Monday</source>
-        <translation type="unfinished">Thứ hai</translation>
+        <translation>Thứ hai</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="171"/>
         <source>Tuesday</source>
-        <translation type="unfinished">Thứ ba</translation>
+        <translation>Thứ ba</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="172"/>
         <source>Wednesday</source>
-        <translation type="unfinished">Thứ tư</translation>
+        <translation>Thứ tư</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="173"/>
         <source>Thursday</source>
-        <translation type="unfinished">Thứ năm</translation>
+        <translation>Thứ năm</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="174"/>
         <source>Friday</source>
-        <translation type="unfinished">Thứ sáu</translation>
+        <translation>Thứ sáu</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="175"/>
         <source>Saturday</source>
-        <translation type="unfinished">Thứ bảy</translation>
+        <translation>Thứ bảy</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="176"/>
         <source>Sunday</source>
-        <translation type="unfinished">Chủ nhật</translation>
+        <translation>Chủ nhật</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="200"/>
         <source>Mon</source>
-        <translation type="unfinished">2</translation>
+        <translation>2</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="201"/>
         <source>Tue</source>
-        <translation type="unfinished">3</translation>
+        <translation>3</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="202"/>
         <source>Wed</source>
-        <translation type="unfinished">4</translation>
+        <translation>4</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="203"/>
         <source>Thu</source>
-        <translation type="unfinished">5</translation>
+        <translation>5</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="204"/>
         <source>Fri</source>
-        <translation type="unfinished">6</translation>
+        <translation>6</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="205"/>
         <source>Sat</source>
-        <translation type="unfinished">7</translation>
+        <translation>7</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="206"/>
         <source>Sun</source>
-        <translation type="unfinished">CN</translation>
+        <translation>CN</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="230"/>
         <source>Jan</source>
-        <translation type="unfinished">1</translation>
+        <translation>1</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="231"/>
         <source>Feb</source>
-        <translation type="unfinished">2</translation>
+        <translation>2</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="232"/>
         <source>Mar</source>
-        <translation type="unfinished">3</translation>
+        <translation>3</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="233"/>
         <source>Apr</source>
-        <translation type="unfinished">4</translation>
+        <translation>4</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="234"/>
         <source>May</source>
-        <translation type="unfinished">5</translation>
+        <translation>5</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="235"/>
         <source>Jun</source>
-        <translation type="unfinished">6</translation>
+        <translation>6</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="236"/>
         <source>Jul</source>
-        <translation type="unfinished">7</translation>
+        <translation>7</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="237"/>
         <source>Aug</source>
-        <translation type="unfinished">8</translation>
+        <translation>8</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="238"/>
         <source>Sep</source>
-        <translation type="unfinished">9</translation>
+        <translation>9</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="239"/>
         <source>Oct</source>
-        <translation type="unfinished">10</translation>
+        <translation>10</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="240"/>
         <source>Nov</source>
-        <translation type="unfinished">11</translation>
+        <translation>11</translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="241"/>
         <source>Dec</source>
-        <translation type="unfinished">12</translation>
+        <translation>12</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/cpp/utils/time.hpp" line="262"/>
         <source>%n nanosecond(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n nano giây</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/cpp/utils/time.hpp" line="263"/>
         <source>%n microsecond(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n micro giây</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/cpp/utils/time.hpp" line="264"/>
         <source>%n millisecond(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n mili giây</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/cpp/utils/time.hpp" line="265"/>
         <source>%n second(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n giây</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/cpp/utils/time.hpp" line="266"/>
         <source>%n minute(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n phút</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/cpp/utils/time.hpp" line="267"/>
         <source>%n hour(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n giờ</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/cpp/utils/time.hpp" line="268"/>
         <source>%n day(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n ngày</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/cpp/utils/time.hpp" line="269"/>
         <source>%n week(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n tuần</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="290"/>
         <source>ns</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="291"/>
         <source>μs</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="292"/>
         <source>ms</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="293"/>
         <source>s</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="294"/>
         <source>min</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="295"/>
         <source>hrs</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="296"/>
         <source>days</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.hpp" line="297"/>
         <source>wks</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.cpp" line="52"/>
         <source>Weekdays</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.cpp" line="56"/>
         <source>Weekends</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.cpp" line="60"/>
         <source>Every other day</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.cpp" line="68"/>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../src/cpp/utils/time.cpp" line="76"/>
         <source>Everyday</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 </TS>

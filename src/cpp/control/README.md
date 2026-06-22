@@ -43,6 +43,19 @@ The controller meta class provides the following metadata about the controller m
 * Friendly name (used in UI)
 * Supported protocols
 
+## Automation
+
+This module adds the ability to automate [Layout](../layout/README.md) items based on the simulated time.
+
+Below are the defintions for terms used in this module:
+
+| Term          | Definition                                                            |
+|---------------|-----------------------------------------------------------------------|
+| Fast Clock    | Source of the simulated time, typically run faster than system clock  |
+| Condition     | Condition in terms of simulated time to trigger the automation        |
+| Item          | Item in the layout being automated                                    |
+| Task          | A single automation. Combines a condition and an item                 |
+
 ## <a name="utils"></a>Utilities
 
 The WorkerThread class provides a thread queue for network communication tasks with the controller. Currently this is the only utility, but more may be added, necesitating a dedicated utilities sub-module.

@@ -26,6 +26,26 @@ As the coding standard requires trimming of trailing whitespace, the following p
 | Visual Studio(2022/2026)  | [Trailing Whitespace Visualizer](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.TrailingWhitespace64)         | [Mads Kristensen](https://github.com/madskristensen) |
 | VS Code                   | [Trailing Spaces](https://marketplace.visualstudio.com/items?itemName=shardulm94.trailing-spaces)                                 | [Shardul Mahadik](https://github.com/shardulm94)     |
 
+### Other Useful Plugins
+
+#### VS Code
+
+| Plugin                                                                                                                            | Author                                               |
+|-----------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------|
+| [Markdown Lint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)                               | [David Anson](https://github.com/DavidAnson)         |
+| [Markdown Preview Enhanced](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced)              | [Yiyi Wang](https://github.com/shd101wyy)            |
+| [C/C++](https://github.com/microsoft/vscode-cpptools)                                                                             | [Microsoft](https://github.com/microsoft)            |
+
+#### Visual Studio IDE
+
+| Plugin                                                                                                                            | Author                                               |
+|-----------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------|
+| [Graphical Debugging](https://marketplace.visualstudio.com/items?itemName=AdamWulkiewicz.graphicaldebugging-vscode)               | [Adam Wulkiewicz](https://github.com/awulkiew)       |
+| [Markdown Editor v2](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.MarkdownEditor2)                          | [Mads Kristensen](https://github.com/madskristensen) |
+| [Markdown Lint](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.MarkdownLint)                                  | [Mads Kristensen](https://github.com/madskristensen) |
+| [Qt Visual Studio Tools](https://marketplace.visualstudio.com/items?itemName=TheQtCompany.QtVisualStudioTools2022)                | [Qt Group](https://github.com/qt)                    |
+| [SVG Viewer](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.SvgViewer)                                        | [Mads Kristensen](https://github.com/madskristensen) |
+
 ### Coding Style (C++)
 
 All c++ code should use the [Whitesmith](https://en.wikipedia.org/wiki/Indentation_style#Whitesmiths) brace style.
