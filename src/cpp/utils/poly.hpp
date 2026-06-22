@@ -12,6 +12,7 @@
 #include <common.hpp>
 
 #include <QPolygon>
+#include <QSpan>
 
 #include <functional>
 #include <vector>
@@ -28,6 +29,12 @@ enum polyOp
     POLY_UNION  ///< Take the union of two polygon
     };
 
+// Forward declarations
+template<bool floating>
+class MultiPolygon;
+
+template<bool floating>
+class PolygonView;
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Complex polygon class. Polygon with holes
@@ -82,9 +89,9 @@ public:
         exteriorRing.translate (offset);
         std::for_each (interiorRings.begin (),
                        interiorRings.end (),
-                       std::bind (&Polygon::translate,
-                                   std::placeholders::_1,
-                                   offset));
+                       std::bind (std::mem_fn (&Polygon::translate),
+                                  std::placeholders::_1,
+                                  offset));
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -115,9 +122,9 @@ public:
         std::transform (interiorRings.begin (),
                         interiorRings.end (),
                         std::back_inserter (newInterior),
-                        std::bind (&Polygon::translated,
-                                    std::placeholders::_1,
-                                    offset));
+                        std::bind (std::mem_fn (&Polygon::translated),
+                                   std::placeholders::_1,
+                                   offset));
 
         return ComplexPolygon{ newExterior, newInterior };
         }
@@ -147,10 +154,10 @@ public:
         return exteriorRing.containsPoint (pt, fill) &&
                std::none_of (interiorRings.begin (),
                              interiorRings.end (),
-                             std::bind (&Polygon::containsPoint,
-                                         std::placeholders::_1,
-                                         pt,
-                                         fill));
+                             std::bind (std::mem_fn (&Polygon::containsPoint),
+                                        std::placeholders::_1,
+                                        pt,
+                                        fill));
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -165,7 +172,7 @@ public:
               (interiorRings.empty () ||
                std::all_of (interiorRings.begin (),
                             interiorRings.end (),
-                            std::mem_fn (&Polygon::isEmpty ())));
+                            std::mem_fn (&Polygon::isEmpty)));
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -175,10 +182,433 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     operator bool () const { return not empty (); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Subtract one polygon from another
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to subtract
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator- (const ComplexPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Subtract one polygon from another
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to subtract
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator- (const MultiPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Subtract one polygon from another
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to subtract
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator- (const PolygonView<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the intersection of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to intersect
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator& (const ComplexPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the intersection of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to intersect
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator& (const MultiPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the intersection of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to intersect
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator& (const PolygonView<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the exclusive or of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to XOR with
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator^ (const ComplexPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the exclusive or of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to XOR with
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator^ (const MultiPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the exclusive or of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to XOR with
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto  operator^ (const PolygonView<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the union or of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to unite with
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto  operator| (const ComplexPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the union or of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to unite with
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator| (const MultiPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the union or of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to unite with
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator| (const PolygonView<otherFloating>& other) const;
     };
 
-// Floating point polygon
+// Floating point complex polygon
 using ComplexPolygonF = ComplexPolygon<true>;
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Set of polygons with holes
+///
+/// @tparam     floating        True if coordinates are floating point
+///
+///////////////////////////////////////////////////////////////////////////////
+template<bool floating = false>
+class MultiPolygon : public std::vector<ComplexPolygon<floating>>
+    {
+public:
+    using SubPolygon    = ComplexPolygon<floating>;
+    using Point         = typename SubPolygon::Point;
+
+    // using std::vector<SubPolygon>::vector<SubPolygon>;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Default constructor
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    MultiPolygon () = default;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Allow implicit copies from Complex Polygons
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    implicit MultiPolygon (const SubPolygon& poly)
+        { push_back (poly); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Check if a point falls within this polygon
+    ///
+    /// @param[in]  pt      Point to check
+    /// @param[in]  fill    Polygon fill rule
+    ///
+    /// @return     true if pt is within polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool containsPoint (const Point& pt, Qt::FillRule fill) const
+        {
+        return std::any_of (Base::begin (),
+                            Base::end (),
+                            std::bind (std::mem_fn (&SubPolygon::containsPoint),
+                                       std::placeholders::_1,
+                                       pt,
+                                       fill));
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Subtract one polygon from another
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to subtract
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator- (const ComplexPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Subtract one polygon from another
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to subtract
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator- (const MultiPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Subtract one polygon from another
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to subtract
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator- (const PolygonView<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the intersection of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to intersect
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator& (const ComplexPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the intersection of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to intersect
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator& (const MultiPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the intersection of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to intersect
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator& (const PolygonView<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the exclusive or of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to XOR with
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator^ (const ComplexPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the exclusive or of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to XOR with
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator^ (const MultiPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the exclusive or of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to XOR with
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto  operator^ (const PolygonView<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the union or of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to unite with
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto  operator| (const ComplexPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the union or of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to unite with
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator| (const MultiPolygon<otherFloating>& other) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Take the union or of two polygons
+    ///
+    /// @tparam     otherFloating   Floating point flag for other polygon
+    ///
+    /// @param[in]  other       Polygon to unite with
+    ///
+    /// @return     Resulting polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<bool otherFloating>
+    auto operator| (const PolygonView<otherFloating>& other) const;
+
+private:
+    using Base = std::vector<ComplexPolygon<floating>>;
+    };
+
+// Floating point multi-polygon
+using MultiPolygonF = MultiPolygon<true>;
+
+///////////////////////////////////////////////////////////////////////////////
+/// Non-owning read only copy of a polygon. Meant to be used in place of a
+/// const MultiPolygon<>& when you want the interface to accept ComplexPolygon<>s
+/// as well.
+///
+///////////////////////////////////////////////////////////////////////////////
+template<bool floating = false>
+class PolygonView : public QSpan<const ComplexPolygon<floating>>
+    {
+public:
+    using Multi = typename MultiPolygon<floating>;
+    using Sub   = typename Multi::SubPolygon;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Implicit copy constructor. Creates a reference to a complex polygon
+    ///
+    /// @param[in]  poly        Complex polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    implicit PolygonView (const Sub& poly) :
+        Base (&poly, 1)
+        {}
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Implicit copy constructor. Creates a reference to a multi-polygon
+    ///
+    /// @param[in]  poly        Multi polygon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    implicit PolygonView (const Multi& poly) :
+        Base (poly)
+        {}
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Explicit cast operator, allowing this to be static_cast<>ed to a MultiPolygon
+    ///
+    /// @return     Copy of the polygon this references
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    explicit operator Multi () const
+        {
+        Multi poly;
+
+        poly.reserve (Base::size ());
+
+        std::copy (Base::begin (),
+                   Base::end (),
+                   std::back_inserter (poly));
+
+        return poly;
+        }
+
+private:
+    using Base = QSpan<const ComplexPolygon<floating>>;
+    };
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Perform an operation on two polygon
@@ -194,9 +624,9 @@ using ComplexPolygonF = ComplexPolygon<true>;
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<bool floating1, bool floating2>
-ComplexPolygon<floating1 || floating2> operate (const ComplexPolygon<floating1>&    pg1,
-                                                const ComplexPolygon<floating2>&    pg2,
-                                                polyOp                              op);
+MultiPolygon<floating1 || floating2> operate (PolygonView<floating1>    pg1,
+                                              PolygonView<floating2>    pg2,
+                                              polyOp                    op);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Subtract one polygon from another
@@ -211,8 +641,8 @@ ComplexPolygon<floating1 || floating2> operate (const ComplexPolygon<floating1>&
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<bool floating1, bool floating2>
-auto operator- (const ComplexPolygon<floating1>& pg1,
-                const ComplexPolygon<floating2>& pg2)
+auto operator- (PolygonView<floating1>  pg1,
+                PolygonView<floating2>  pg2)
     {
     return operate (pg1, pg2, POLY_DIFF);
     }
@@ -230,8 +660,8 @@ auto operator- (const ComplexPolygon<floating1>& pg1,
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<bool floating1, bool floating2>
-auto operator& (const ComplexPolygon<floating1>& pg1,
-                const ComplexPolygon<floating2>& pg2)
+auto operator& (PolygonView<floating1>  pg1,
+                PolygonView<floating2>  pg2)
     {
     return operate (pg1, pg2, POLY_INT);
     }
@@ -249,8 +679,8 @@ auto operator& (const ComplexPolygon<floating1>& pg1,
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<bool floating1, bool floating2>
-auto operator^ (const ComplexPolygon<floating1>& pg1,
-                const ComplexPolygon<floating2>& pg2)
+auto operator^ (PolygonView<floating1>  pg1,
+                PolygonView<floating2>  pg2)
     {
     return operate (pg1, pg2, POLY_XOR);
     }
@@ -268,10 +698,185 @@ auto operator^ (const ComplexPolygon<floating1>& pg1,
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<bool floating1, bool floating2>
-auto operator| (const ComplexPolygon<floating1>& pg1,
-                const ComplexPolygon<floating2>& pg2)
+auto operator| (PolygonView<floating1>  pg1,
+                PolygonView<floating2>  pg2)
     {
     return operate (pg1, pg2, POLY_UNION);
+    }
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// OPERATOR IMPLEMENTATION
+///////////////////////////////////////////////////////////////////////////////
+
+
+template<bool floating>
+template<bool otherFloating>
+inline auto ComplexPolygon<floating>::operator-(const ComplexPolygon<otherFloating>& other) const
+    {
+    return PolygonView{ *this } - PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto ComplexPolygon<floating>::operator-(const MultiPolygon<otherFloating>& other) const
+    {
+    return PolygonView{ *this } - PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto ComplexPolygon<floating>::operator-(const PolygonView<otherFloating>&other) const
+    {
+    return PolygonView{ *this } - PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto ComplexPolygon<floating>::operator&(const ComplexPolygon<otherFloating>&other) const
+    {
+    return PolygonView{ *this } & PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto ComplexPolygon<floating>::operator&(const MultiPolygon<otherFloating>&other) const
+    {
+    return PolygonView{ *this } & PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto ComplexPolygon<floating>::operator&(const PolygonView<otherFloating>&other) const
+    {
+    return PolygonView{ *this } & PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto ComplexPolygon<floating>::operator^(const ComplexPolygon<otherFloating>&other) const
+    {
+    return PolygonView{ *this } ^ PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto ComplexPolygon<floating>::operator^(const MultiPolygon<otherFloating>&other) const
+    {
+    return PolygonView{ *this } ^ PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto ComplexPolygon<floating>::operator^(const PolygonView<otherFloating>&other) const
+    {
+    return PolygonView{ *this } ^ PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto ComplexPolygon<floating>::operator|(const ComplexPolygon<otherFloating>&other) const
+    {
+    return PolygonView{ *this } | PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto ComplexPolygon<floating>::operator|(const MultiPolygon<otherFloating>&other) const
+    {
+    return PolygonView{ *this } | PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto ComplexPolygon<floating>::operator|(const PolygonView<otherFloating>&other) const
+    {
+    return PolygonView{ *this } | PolygonView{ other };
+    }
+
+
+template<bool floating>
+template<bool otherFloating>
+inline auto MultiPolygon<floating>::operator-(const ComplexPolygon<otherFloating>& other) const
+    {
+    return PolygonView{ *this } - PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto MultiPolygon<floating>::operator-(const MultiPolygon<otherFloating>&other) const
+    {
+    return PolygonView{ *this } - PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto MultiPolygon<floating>::operator-(const PolygonView<otherFloating>&other) const
+    {
+    return PolygonView{ *this } - PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto MultiPolygon<floating>::operator&(const ComplexPolygon<otherFloating>&other) const
+    {
+    return PolygonView{ *this } & PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto MultiPolygon<floating>::operator&(const MultiPolygon<otherFloating>&other) const
+    {
+    return PolygonView{ *this } & PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto MultiPolygon<floating>::operator&(const PolygonView<otherFloating>&other) const
+    {
+    return PolygonView{ *this } & PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto MultiPolygon<floating>::operator^(const ComplexPolygon<otherFloating>&other) const
+    {
+    return PolygonView{ *this } ^ PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto MultiPolygon<floating>::operator^(const MultiPolygon<otherFloating>&other) const
+    {
+    return PolygonView{ *this } ^ PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto MultiPolygon<floating>::operator^(const PolygonView<otherFloating>&other) const
+    {
+    return PolygonView{ *this } ^ PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto MultiPolygon<floating>::operator|(const ComplexPolygon<otherFloating>&other) const
+    {
+    return PolygonView{ *this } | PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto MultiPolygon<floating>::operator|(const MultiPolygon<otherFloating>&other) const
+    {
+    return PolygonView{ *this } | PolygonView{ other };
+    }
+
+template<bool floating>
+template<bool otherFloating>
+inline auto MultiPolygon<floating>::operator|(const PolygonView<otherFloating>&other) const
+    {
+    return PolygonView{ *this } | PolygonView{ other };
     }
 
 } // namespace utils

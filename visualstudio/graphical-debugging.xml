@@ -39,6 +39,13 @@
 		</Array>
 	</Container>
 
+	<Container Type="QSpan&lt;*&gt;">
+		<Array>
+			<Pointer>m_data</Pointer>
+			<Size>m_size</Size>
+		</Array>
+	</Container>
+
 	<Ring Type="QPolygon">
 		<Points>
 			<Container>
@@ -91,4 +98,40 @@
 			</Container>
 		</InteriorRings>
 	</Polygon>
+
+	<!-- Because of the cast, these need to be duplicated -->
+
+	<MultiPolygon Type="utils::MultiPolygon&lt;0&gt;">
+		<Polygons>
+			<Container>
+				<Name>((std::vector&lt;utils::ComplexPolygon&lt;0&gt;,std::allocator&lt;utils::ComplexPolygon&lt;0&gt; &gt; &gt;&amp;)(*this))</Name>
+			</Container>
+		</Polygons>
+	</MultiPolygon>
+
+	<MultiPolygon Type="utils::MultiPolygon&lt;1&gt;">
+		<Polygons>
+			<Container>
+				<Name>((std::vector&lt;utils::ComplexPolygon&lt;1&gt;,std::allocator&lt;utils::ComplexPolygon&lt;1&gt; &gt; &gt;&amp;)(*this))</Name>
+			</Container>
+		</Polygons>
+	</MultiPolygon>
+
+	<!-- TODO: This isn't working yet
+	<MultiPolygon Type="utils::PolygonView&lt;0&gt;">
+		<Polygons>
+			<Container>
+				<Name>((QSpan&lt;utils::ComplexPolygon&lt;0&gt; const ,-1&gt;&amp;)(*this))</Name>
+			</Container>
+		</Polygons>
+	</MultiPolygon>
+
+	<MultiPolygon Type="utils::PolygonView&lt;1&gt;">
+		<Polygons>
+			<Container>
+				<Name>(QSpan&lt;utils::ComplexPolygon&lt;1&gt; const ,-1&gt;&amp;)(*this)</Name>
+			</Container>
+		</Polygons>
+	</MultiPolygon>
+	-->
 </GraphicalDebugging>

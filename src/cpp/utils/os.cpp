@@ -21,6 +21,7 @@
 #include <libloaderapi.h>
 #include <stringapiset.h>
 #include <Shobjidl.h>
+#include <shellapi.h>
 #endif // Q_OS_WIN
 
 #ifdef Q_OS_UNIX
