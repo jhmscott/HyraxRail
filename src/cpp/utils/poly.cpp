@@ -9,6 +9,7 @@
 
 #include <ext/gpc.h>
 
+#include <utils/math.hpp>
 #include <utils/poly.hpp>
 
 namespace utils
@@ -269,4 +270,175 @@ template MultiPolygon<true>
 operate<true, true>   (PolygonView<true>    pg1,
                        PolygonView<true>    pg2,
                        polyOp               op);
-}
+
+namespace poly
+{
+void rotate (QPolygonF& poly, double angle)
+    {
+    double cos0 = cos (angle * math::DEGRAD);
+    double sin0 = sin (angle * math::DEGRAD);
+
+    for (auto& pt : poly)
+        {
+        qreal x = pt.x ();
+        qreal y = pt.y ();
+        pt.rx () = x * cos0 - y * sin0;
+        pt.ry () = x * sin0 + y * cos0;
+        }
+    }
+
+void rotate (QPolygon& poly, double angle)
+    {
+    double cos0 = cos (angle * math::DEGRAD);
+    double sin0 = sin (angle * math::DEGRAD);
+
+    for (auto& pt : poly)
+        {
+        int x = pt.x ();
+        int y = pt.y ();
+
+        pt.rx () = math::roundToInt (x * cos0 - y * sin0);
+        pt.ry () = math::roundToInt (x * sin0 + y * cos0);
+        }
+    }
+
+void expand (QPolygonF& poly, double scale)
+    {
+    for (auto& pt : poly)
+        {
+        pt.rx () = pt.x () * scale;
+        pt.ry () = pt.y () * scale;
+        }
+    }
+
+void expand (QPolygon& poly, double scale)
+    {
+    for (auto& pt : poly)
+        {
+        pt.rx () = math::roundToInt (pt.x () * scale);
+        pt.ry () = math::roundToInt (pt.y () * scale);
+        }
+    }
+
+QPolygon roundedRect (const QRect& rect, int rx, int ry)
+    {
+    static constexpr int CORNER_RESOLUTION = 10;
+
+    QPolygon poly;
+
+    poly.reserve (8 + 4 * CORNER_RESOLUTION);
+
+    // Top edge
+    poly.emplace_back (rect.left () + rx, rect.top ());
+    poly.emplace_back (rect.right () - rx, rect.top ());
+
+    // Top right corner
+    for (double x = 0.0; x < rx; x += static_cast<double> (rx) / CORNER_RESOLUTION)
+        {
+        double y = ry  -sqrt (math::sqr (ry) * (1 - (math::sqr (x) / math::sqr (rx))));
+
+        poly.emplace_back (math::roundToInt (rect.right () - rx + x),
+                           math::roundToInt (rect.top () + y));
+        }
+
+    // right edge
+    poly.emplace_back (rect.right (), rect.top () + ry);
+    poly.emplace_back (rect.right (), rect.bottom () - ry);
+
+    // bottom right corner
+    for (double x = rx; x > 0.0; x -= static_cast<double> (rx) / CORNER_RESOLUTION)
+        {
+        double y = ry - sqrt (math::sqr (ry) * (1 - (math::sqr (x) / math::sqr (rx))));
+
+        poly.emplace_back (math::roundToInt (rect.right () - rx + x),
+                           math::roundToInt (rect.bottom () - y));
+        }
+
+    // bottom edge
+    poly.emplace_back (rect.right () - rx, rect.bottom ());
+    poly.emplace_back (rect.left () + rx, rect.bottom ());
+
+    // bottom left corner
+    for (double x = 0.0; x < rx; x += static_cast<double> (rx) / CORNER_RESOLUTION)
+        {
+        double y = ry - sqrt (math::sqr (ry) * (1 - (math::sqr (x) / math::sqr (rx))));
+        poly.emplace_back (math::roundToInt (rect.left () + rx - x),
+                           math::roundToInt (rect.bottom () - y));
+        }
+
+    // left edge
+    poly.emplace_back (rect.left (), rect.bottom () - ry);
+    poly.emplace_back (rect.left (), rect.top () + ry);
+
+    // top left edge
+    for (double x = rx; x > 0.0; x -= static_cast<double> (rx) / CORNER_RESOLUTION)
+        {
+        double y = ry - sqrt (math::sqr (ry) * (1 - (math::sqr (x) / math::sqr (rx))));
+        poly.emplace_back (math::roundToInt (rect.left () + rx - x),
+                           math::roundToInt (rect.top () + y));
+        }
+
+    return poly;
+    }
+
+
+QPolygonF roundedRect (const QRectF& rect, qreal rx, qreal ry)
+    {
+    static constexpr int CORNER_RESOLUTION = 40;
+
+    QPolygonF poly;
+
+    poly.reserve (8 + 4 * CORNER_RESOLUTION);
+
+    // Top edge
+    poly.emplace_back (rect.left () + rx, rect.top ());
+    poly.emplace_back (rect.right () - rx, rect.top ());
+
+    // Top right corner
+    for (double x = 0.0; x < rx; x += static_cast<double> (rx) / CORNER_RESOLUTION)
+        {
+        double y = ry  -sqrt (math::sqr (ry) * (1 - (math::sqr (x) / math::sqr (rx))));
+
+        poly.emplace_back (rect.right () - rx + x, rect.top () + y);
+        }
+
+    // right edge
+    poly.emplace_back (rect.right (), rect.top () + ry);
+    poly.emplace_back (rect.right (), rect.bottom () - ry);
+
+    // bottom right corner
+    for (double x = rx; x > 0.0; x -= static_cast<double> (rx) / CORNER_RESOLUTION)
+        {
+        double y = ry - sqrt (math::sqr (ry) * (1 - (math::sqr (x) / math::sqr (rx))));
+
+        poly.emplace_back (rect.right () - rx + x, rect.bottom () - y);
+        }
+
+    // bottom edge
+    poly.emplace_back (rect.right () - rx, rect.bottom ());
+    poly.emplace_back (rect.left () + rx, rect.bottom ());
+
+    // bottom left corner
+    for (double x = 0.0; x < rx; x += static_cast<double> (rx) / CORNER_RESOLUTION)
+        {
+        double y = ry - sqrt (math::sqr (ry) * (1 - (math::sqr (x) / math::sqr (rx))));
+        poly.emplace_back (rect.left () + rx - x, rect.bottom () - y);
+        }
+
+    // left edge
+    poly.emplace_back (rect.left (), rect.bottom () - ry);
+    poly.emplace_back (rect.left (), rect.top () + ry);
+
+    // top left edge
+    for (double x = rx; x > 0.0; x -= static_cast<double> (rx) / CORNER_RESOLUTION)
+        {
+        double y = ry - sqrt (math::sqr (ry) * (1 - (math::sqr (x) / math::sqr (rx))));
+        poly.emplace_back (rect.left () + rx - x, rect.top () + y);
+        }
+
+    return poly;
+    }
+
+} // namespace poly
+
+} // namespace utils

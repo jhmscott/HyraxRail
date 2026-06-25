@@ -246,6 +246,9 @@
     <ClInclude Include="..\src\cpp\ext\gpc.h">
       <Filter>Header Files\ext</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\cpp\utils\magnify.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cpp\control\controllers\base.cpp">

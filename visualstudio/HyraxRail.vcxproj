@@ -333,6 +333,7 @@
     <ClInclude Include="..\src\cpp\utils\algorithm.hpp" />
     <ClInclude Include="..\src\cpp\utils\device.hpp" />
     <ClInclude Include="..\src\cpp\utils\log.hpp" />
+    <ClInclude Include="..\src\cpp\utils\magnify.hpp" />
     <ClInclude Include="..\src\cpp\utils\math.hpp" />
     <ClInclude Include="..\src\cpp\utils\os.hpp" />
     <ClInclude Include="..\src\cpp\utils\pinger.hpp" />

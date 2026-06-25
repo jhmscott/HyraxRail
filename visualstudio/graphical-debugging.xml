@@ -16,12 +16,12 @@
 		</Coordinates>
 	</Point>
 	<Box Type="QRect">
-		<CoordinatesDimensions>
+		<Coordinates>
 			<MinX>x1.m_i</MinX>
 			<MinY>y1.m_i</MinY>
 			<MaxX>x2.m_i</MaxX>
 			<MaxY>y2.m_i</MaxY>
-		</CoordinatesDimensions>
+		</Coordinates>
 	</Box>
 	<Box Type="QRectF">
 		<CoordinatesDimensions>
