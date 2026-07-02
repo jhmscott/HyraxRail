@@ -121,6 +121,20 @@ public:
         {}
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Initializer list cnstructor
+    ///
+    /// @param[in]  pts     List of points
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    implicit ComplexPolygon (std::initializer_list<Point> pts)
+        {
+        exteriorRing.reserve (pts.size ());
+        std::copy (pts.begin (),
+                   pts.end (),
+                   std::back_inserter (exteriorRing));
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Translate this polygon
     ///
     /// @param[in]  offset      Ammount to offset polygon by
@@ -796,7 +810,7 @@ public:
     /// @param[in]  poly        Complex polygon
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    implicit PolygonView (const Sub& poly) :
+    implicit PolygonView (const ComplexPolygon<floating>& poly) :
         Base (&poly, 1)
         {}
 
@@ -806,7 +820,7 @@ public:
     /// @param[in]  poly        Multi polygon
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    implicit PolygonView (const Multi& poly) :
+    implicit PolygonView (const MultiPolygon<floating>& poly) :
         Base (poly)
         {}
 
@@ -938,6 +952,8 @@ private:
     using Base = QSpan<const ComplexPolygon<floating>>;
     };
 
+using PolygonViewF = PolygonView<true>;
+
 ///////////////////////////////////////////////////////////////////////////////
 /// Perform an operation on two polygon
 ///
@@ -1023,6 +1039,17 @@ QPolygon roundedRect (const QRect& rect, int rx, int ry);
 ///
 ///////////////////////////////////////////////////////////////////////////////
 QPolygonF roundedRect (const QRectF& rect, qreal rx, qreal ry);
+
+///////////////////////////////////////////////////////////////////////////////
+/// Create a polygon for a circle
+///
+/// @param[in]  center      Circle center point
+/// @param[in]  radius      Radius of circle
+///
+/// @return     Circle polygon
+///
+///////////////////////////////////////////////////////////////////////////////
+QPolygonF circle (const QPointF& center, qreal radius);
 
 } // namespace poly
 

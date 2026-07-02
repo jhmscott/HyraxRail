@@ -13,6 +13,7 @@
 #include <control/automation/clock.hpp>
 
 #include <ui/clock/clock.hpp>
+#include <ui/common/tiereddropdown.hpp>
 #include <ui/common/toggleswitch.hpp>
 #include <ui/lang.hpp>
 
@@ -56,7 +57,7 @@ private:
     QTimeEdit*              m_time;         ///< Time field
     QSpinBox*               m_ratio;        ///< Time ratio field
     QLayout*                m_ratioLayout;  ///< Layout containing ratio field
-    QComboBox*              m_style;        ///< Clock style selection
+    common::TieredDropdown* m_style;        ///< Clock style selection
     common::ToggleSwitch*   m_running;      ///< Running toggle
 
     ///////////////////////////////////////////////////////////////////////////////

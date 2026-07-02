@@ -439,6 +439,22 @@ QPolygonF roundedRect (const QRectF& rect, qreal rx, qreal ry)
     return poly;
     }
 
+QPolygonF circle (const QPointF& center, qreal radius)
+    {
+    QPolygonF poly;
+
+    poly.reserve (360);
+
+    for (double ang = 0.0; ang < 360.0; ang += 1.0)
+        {
+        poly.emplace_back (radius * cos (ang * math::DEGRAD),
+                           radius * sin (ang * math::DEGRAD));
+        poly.back () += center;
+        }
+
+    return poly;
+    }
+
 } // namespace poly
 
 } // namespace utils

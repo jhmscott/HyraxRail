@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GraphicalDebugging>
+	<!-- STL Data Types -->
+
+	<Container Type="std::initializer_list&lt;*&gt;">
+		<Array>
+			<Pointer>_First</Pointer>
+			<Size>_Last - _First</Size>
+		</Array>
+	</Container>
 
 	<!-- QT Data Types -->
 

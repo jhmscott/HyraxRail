@@ -158,7 +158,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
@@ -217,6 +217,7 @@
     <ClCompile Include="..\src\cpp\ui\common\shortcutlineedit.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\stringdialog.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\schemeicon.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\tiereddropdown.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\toggleswitch.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\cominfo.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\credits.cpp" />
@@ -248,6 +249,7 @@
     <ClCompile Include="..\src\cpp\ui\trains\lococontrolpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\speedcontrol.cpp" />
     <ClCompile Include="..\src\cpp\utils\device.cpp" />
+    <ClCompile Include="..\src\cpp\utils\draw.cpp" />
     <ClCompile Include="..\src\cpp\utils\os.cpp" />
     <ClCompile Include="..\src\cpp\utils\pinger.cpp" />
     <ClCompile Include="..\src\cpp\utils\poly.cpp" />
@@ -304,6 +306,7 @@
     <ClInclude Include="..\src\cpp\ui\common\stringdialog.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\toggleswitch.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\schemeicon.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\tiereddropdown.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\utils.hpp" />
     <QtMoc Include="..\src\cpp\ui\config\helpgroup.hpp" />
     <QtMoc Include="..\src\cpp\ui\config\configpanel.hpp" />
@@ -332,6 +335,7 @@
     <ClInclude Include="..\src\cpp\ui\trains\speedcontrol.hpp" />
     <ClInclude Include="..\src\cpp\utils\algorithm.hpp" />
     <ClInclude Include="..\src\cpp\utils\device.hpp" />
+    <ClInclude Include="..\src\cpp\utils\draw.hpp" />
     <ClInclude Include="..\src\cpp\utils\log.hpp" />
     <ClInclude Include="..\src\cpp\utils\magnify.hpp" />
     <ClInclude Include="..\src\cpp\utils\math.hpp" />

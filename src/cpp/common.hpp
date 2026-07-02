@@ -80,7 +80,8 @@ using identityType = typename _identityType<T>::type;
 enum userDataRole
     {
     genericData = Qt::UserRole, ///< Generic user data. Always leave this available to clients
-    schemeIcon                  ///< Icon without the color scheme applied
+    schemeIcon,                 ///< Icon without the color scheme applied
+    dropDownTier                ///< Which level of dopdown this is in a tiered dropdown
     };
 
 template<class T, size_t N>

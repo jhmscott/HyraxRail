@@ -15,13 +15,510 @@
 #include <control/automation/clock.hpp>
 
 #include <ui/clock/analogclock.hpp>
+#include <utils/draw.hpp>
+
+#include <utils/magnify.hpp>
+#include <utils/poly.hpp>
 
 #include <QPainter>
 #include <QPainterStateGuard>
+#include <QStyleHints>
 #include <QTime>
+
+
+namespace // anonymous
+{
+
+// Type of date window
+enum class dateWindowStyle
+    {
+    NONE,       ///< No date window
+    DAY,        ///< Day of week only
+    DATE,       ///< Date of month only
+    DAY_DATE,   ///< Day of week + date of month
+    MONTH_DATE  ///< Month string + date of month
+    };
+
+// Dial shape
+enum class dialStyle
+    {
+    ROUND,  ///< Circle
+    RECT    ///< Rectangle
+    };
+
+// Scheme dependent style
+struct styleInfoScheme
+    {
+    QColor  brush   = Qt::transparent;
+    QColor  pen     = Qt::transparent;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Apply this style to a painter
+    ///
+    /// @param[in,out]  painter     Painter to apply style to
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void apply (QPainter& painter)
+        {
+        painter.setBrush (brush);
+        painter.setPen (pen);
+        }
+    };
+
+// Style info for a item
+struct styleInfo
+    {
+    styleInfoScheme light;
+    styleInfoScheme dark;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Apply this style to a painter
+    ///
+    /// @param[in,out]  painter     Painter to apply style to
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void apply (QPainter& painter)
+        {
+        if (Qt::ColorScheme::Dark == qApp->styleHints ()->colorScheme ())
+            {
+            dark.apply (painter);
+            }
+        else
+            {
+            light.apply (painter);
+            }
+        }
+    };
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Abstract base class for Clock index
+///
+///////////////////////////////////////////////////////////////////////////////
+class Index
+    {
+public:
+    styleInfo style;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Draw this index to a painter
+    ///
+    /// @param[in,out]  painter     Painter to draw with
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void paint (QPainter& painter)
+        {
+        style.apply (painter);
+        draw (painter);
+        }
+
+private:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Internal drawing logic. Implement in derived class
+    ///
+    /// @param[in,out]  painter     Painter to draw with
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void draw (QPainter& painter) = 0;
+    };
+
+///////////////////////////////////////////////////////////////////////////////
+/// Rectangular index
+///
+///////////////////////////////////////////////////////////////////////////////
+class RectIndex : public Index
+    {
+public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  rect    Index rect
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    explicit RectIndex (const QRect& rect) :
+        m_rect (rect)
+        {}
+
+private:
+    QRect m_rect;   ///< Index rect
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Draw this index
+    ///
+    /// @param[in,out]  painter     Painter to draw with
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void draw (QPainter& painter) override
+        { painter.drawRect (m_rect); }
+
+    };
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Circular index
+///
+///////////////////////////////////////////////////////////////////////////////
+class CircleIndex : public Index
+    {
+public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  offset      Radial offset from the center of the clock face
+    /// @param[in]  radius      Radius of the index
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    CircleIndex (qreal offset, qreal radius) :
+        m_offset (offset),
+        m_radius (radius)
+        {}
+
+private:
+    qreal m_offset; ///< Radial offset from the center of the clock face
+    qreal m_radius; ///< Radius of the index
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Draw this index
+    ///
+    /// @param[in,out]  painter     Painter to draw with
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void draw (QPainter& painter) override
+        { painter.drawEllipse ({ m_offset, 0, }, m_radius, m_radius); }
+
+    };
+
+///////////////////////////////////////////////////////////////////////////////
+/// Arabic numeral index
+///
+///////////////////////////////////////////////////////////////////////////////
+class NumberIndex : public Index
+    {
+public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  idx     Index number
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    explicit NumberIndex (uint idx) :
+        m_idx (QString::number (idx))
+        {}
+
+private:
+    QString m_idx;  ///< Index number
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Draw this index
+    ///
+    /// @param[in,out]  painter     Painter to draw with
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void draw (QPainter& painter) override
+        { painter.drawText (QPoint{0, 0}, m_idx); }
+
+    };
+
+///////////////////////////////////////////////////////////////////////////////
+/// Polygon index
+///
+///////////////////////////////////////////////////////////////////////////////
+class PolyIndex : public Index
+    {
+public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  pts     List of polygon points
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    explicit PolyIndex (std::initializer_list<QPoint> pts) :
+        m_poly (pts)
+        {}
+
+private:
+    QPolygon m_poly;    ///< Polygon to render
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Draw this index
+    ///
+    /// @param[in,out]  painter     Painter to draw with
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void draw (QPainter& painter) override
+        { painter.drawPolygon (m_poly); }
+    };
+
+
+// Represents a set of hands to draw over the dial
+struct hands
+    {
+    utils::MultiPolygonF                hour;           ///< Hour hand
+    utils::MultiPolygonF                minute;         ///< Minute hand
+    std::optional<utils::MultiPolygonF> second;         ///< Second hand
+
+    std::optional<QPoint>               hourCenter;     ///< Center point for the hour and minute hands,
+                                                        ///  Defaults to dial center
+    std::optional<QPoint>               secondCenter;   ///< Center point for the second hand,
+                                                        ///  Defaults to dial center
+    };
+
+// Clock face indices
+using indexArray = std::array<std::unique_ptr<Index>, 12>;
+
+// Dial style info
+struct dial
+    {
+    indexArray  indices;                        ///< Major indices (every hour/5 minutes
+    bool        subIndices  = true;             ///< True for sub-indices every minute
+    dialStyle   style       = dialStyle::ROUND; ///< Dial shape
+    double      dialRatio   = 1.0;              ///< Height to width ratio
+    };
+
+// Day/date window
+struct dateWindow
+    {
+    dateWindowStyle                         style;  ///< Style of window
+    std::optional<utils::Magnifier<true>>   cyclops;///< "Cyclops" magnification lens
+    };
+
+// Clock face
+struct clockFace
+    {
+    hands       hands;  ///< Clock hands
+    dial        dial;   ///< Clock dial
+    dateWindow  window; ///< Day/date window
+    };
+
+
+} // anonymous namespace
 
 namespace ui::clock
 {
+
+///////////////////////////////////////////////////////////////////////////////
+/// Make an array of the same kind of index
+///
+/// @tparam     T       Index type
+///
+/// @param[in]  index   Index to copy for all 12 indices
+/// @param[in]  style   Style info for indices
+///
+/// @return     Array of 12 indices
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T>
+static indexArray makeUniformIndexArray (T                  index,
+                                         const styleInfo&   style)
+    {
+    static_assert (std::is_base_of_v<Index, T>, "Must be index type");
+
+    index.style = style;
+
+    indexArray indices;
+
+    for (size_t ii = 0; ii < std::size (indices); ++ii)
+        {
+        indices[ii] = std::make_unique<T> (index);
+        }
+
+    return indices;
+    }
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Make an array of uniform indices with special "key" indices at 6, 9 and 12
+///
+/// @tparam     T       Main index type
+/// @tparam     U       6/9 index type
+/// @tparam     V       12 index type
+///
+/// @param[in]  index   Main index
+/// @param[in]  key1    6/9 index
+/// @param[in]  key2    12 index
+/// @param[in]  style   Index style info
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T, class U, class V>
+static indexArray makeKeyIndexArray (const T&           index,
+                                     const U&           key1,
+                                     const V&           key2,
+                                     const styleInfo&   style)
+    {
+    static_assert (std::is_base_of_v<Index, T>, "Must be index type");
+
+    indexArray indices;
+
+    for (size_t ii = 0; ii < std::size (indices); ++ii)
+        {
+        if (0 == ii)
+            {
+            // Skip day index
+            continue;
+            }
+        else if (3 == ii || 6 == ii)
+            {
+            indices[ii] = std::make_unique<U> (key1);
+            }
+        else if (9 == ii)
+            {
+            indices[ii] = std::make_unique<V> (key2);
+            }
+        else
+            {
+            indices[ii] = std::make_unique<T> (index);
+            }
+
+        indices[ii]->style = style;
+        }
+
+    return indices;
+    }
+
+static const clockFace FACES[] =
+    {
+        {
+        hands
+            {
+            // .hour =
+            utils::ComplexPolygonF
+                {
+                QPointF{  5,  14 },
+                QPointF{ -5,  14 },
+                QPointF{ -4, -71 },
+                QPointF{  4, -71 }
+                },
+            // .minutes =
+            utils::ComplexPolygonF
+                {
+                QPointF{  4,  14 },
+                QPointF{ -4,  14 },
+                QPointF{ -3, -89 },
+                QPointF{  3, -89 }
+                },
+            // .seconds =
+            utils::ComplexPolygonF
+                {
+                QPointF{  1,  14 },
+                QPointF{ -1,  14 },
+                QPointF{ -1, -89 },
+                QPointF{  1, -89 }
+                }
+            },
+        dial
+            {
+            /* .indices = */ makeUniformIndexArray (RectIndex{ QRect{73, -3, 16, 6} },
+                                                    styleInfo
+                                                        {
+                                                            { Qt::black, Qt::black },
+                                                            { Qt::white, Qt::white },
+                                                        })
+            },
+        dateWindow { /* .style = */ dateWindowStyle::DAY_DATE}
+        },
+    // Sub style
+        {
+        hands
+            {
+            // .hour =
+         (((utils::ComplexPolygonF
+                {
+                QPointF{ -6,  0 },
+
+                QPointF{ -6, -45 },
+                QPointF{  0, -60 },
+                QPointF{  6, -45 },
+
+
+                QPointF{  6,  0 }
+                } -
+            utils::ComplexPolygonF
+                {
+                QPointF{ -3,  -8 },
+                QPointF{ -3,  -45 },
+                QPointF{  0,  -51 },
+                QPointF{  3,  -45 },
+                QPointF{  3,  -8 },
+                }) |
+            utils::ComplexPolygonF{ utils::poly::circle (QPointF{ 0.0, 0.0 }, 8) } |
+            utils::ComplexPolygonF{ utils::poly::circle (QPointF{ 0.0, -33 }, 12) }) -
+            utils::ComplexPolygonF{ utils::poly::circle (QPointF{ 0.0, -33 }, 9) }) |
+            utils::ComplexPolygonF
+                {
+                QPointF{  2.0, -23.0 },
+                QPointF{  2.0, -31.0 },
+                QPointF{  9.0, -38.0 },
+                QPointF{  7.0, -40.0 },
+                QPointF{  0.0, -34.0 },
+                QPointF{ -7.0, -40.0 },
+                QPointF{ -9.0, -38.0 },
+                QPointF{ -2.0, -31.0 },
+                QPointF{ -2.0, -23.0 }
+                },
+
+            // .minutes =
+           (utils::ComplexPolygonF
+                {
+                QPointF{ -2,   0 },
+                QPointF{ -2,  -4 },
+                QPointF{ -4,  -6 },
+
+                QPointF{ -4, -71 },
+                QPointF{  0, -89 },
+                QPointF{  4, -71 },
+
+
+                QPointF{  4, -6 },
+                QPointF{  2, -4 },
+                QPointF{  2,  0 },
+                } -
+            utils::ComplexPolygonF
+                {
+                QPointF{ -2,  -8 },
+                QPointF{ -2,  -69 },
+                QPointF{  2,  -69 },
+                QPointF{  2,  -8 },
+                }) |
+            utils::ComplexPolygonF{ utils::poly::circle (QPointF{ 0.0, 0.0 }, 4) },
+            // .seconds =
+            utils::ComplexPolygonF
+                {
+                QPointF{  1,  30 },
+                QPointF{ -1,  30 },
+                QPointF{ -1, -89 },
+                QPointF{  1, -89 }
+                } |
+            utils::ComplexPolygonF{ utils::poly::circle ({ 0,  30 }, 4) } |
+            utils::ComplexPolygonF{ utils::poly::circle ({ 0,   0 }, 3) } |
+            utils::ComplexPolygonF{ utils::poly::circle ({ 0, -55 }, 5) }
+            },
+        dial
+            {
+            /* .indices = */ makeKeyIndexArray (CircleIndex{ 78, 7 },
+                                                RectIndex{ QRect{ 62, -5, 28, 10 } },
+                                                PolyIndex
+                                                    {
+                                                    QPoint{ 60,   0 },
+                                                    QPoint{ 88,  10 },
+                                                    QPoint{ 88, -10 },
+                                                    },
+                                                styleInfo
+                                                    {
+                                                        { Qt::transparent, Qt::black },
+                                                        { Qt::transparent, Qt::white }
+                                                    })
+            },
+        dateWindow
+            {
+            /* .style   = */ dateWindowStyle::DAY,
+            /* .cylcops = */ utils::Magnifier<true>{
+                                utils::ComplexPolygonF{
+                                    utils::poly::roundedRect (
+                                        QRectF{ 40, -18, 50, 40 }, 12, 16) }, 2.5 }
+            }
+        }
+    };
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Draw a clock hand
@@ -36,31 +533,18 @@ namespace ui::clock
 ///                             circle on the end
 ///
 ///////////////////////////////////////////////////////////////////////////////
-template<size_t N>
 static void drawHand (QPainter&     painter,
-                      double        rotation,
                       const QPoint& offset,
-                      const QPoint(&hand)[N],
-                      bool          lolipop)
+                      const utils::PolygonViewF& hand)
     {
-    QPainterStateGuard guard{ &painter };
-
-    painter.rotate (rotation);
     painter.translate (offset);
-    painter.drawConvexPolygon (hand, N);
 
-    if (lolipop)
-        {
-        painter.drawEllipse (-3, -3, 6, 6);
-        painter.drawEllipse (-5, -68, 10, 10);
-        }
+    utils::draw::polygon (painter, hand);
     }
 
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Draw a clock hand with a "shadow" to provide contrast with hands below it
-///
-/// @tparam     N       Number of hand points
 ///
 /// @Param[in,out]  painter     Painter instance
 /// @param[in]      rotation    Hand rotation in degrees [0,360]
@@ -71,25 +555,28 @@ static void drawHand (QPainter&     painter,
 ///                             circle on the end
 ///
 ///////////////////////////////////////////////////////////////////////////////
-template<size_t N>
 static void drawHandWithShadow (QPainter&       painter,
                                 double          rotation,
                                 const QColor&   handColor,
                                 const QColor&   shadowColor,
-                                const QPoint  (&hand)[N],
-                                bool            lolipop = false)
+                                const utils::MultiPolygonF&   hand,
+                                const std::optional<utils::Magnifier<true>>&   lens)
     {
-    painter.setPen (Qt::NoPen);
-    painter.setBrush (shadowColor);
+    QPainterStateGuard guard{ &painter };
 
-    drawHand (painter, rotation, {  0,  1 }, hand, lolipop);
-    drawHand (painter, rotation, {  0, -1 }, hand, lolipop);
-    drawHand (painter, rotation, {  1,  0 }, hand, lolipop);
-    drawHand (painter, rotation, { -1,  0 }, hand, lolipop);
+    utils::MultiPolygonF handRotated = hand;
+
+    handRotated.rotate (rotation);
+
+    if (lens.has_value ())
+        {
+        handRotated = lens->magnify (handRotated);
+        }
 
 
+    painter.setPen (QPen{ shadowColor, 0.5 });
     painter.setBrush (handColor);
-    drawHand (painter, rotation, { 0, 0 }, hand, lolipop);
+    drawHand (painter, { 0, 0 }, handRotated);
     }
 
 AnalogClock::AnalogClock (QWidget* parent) :
@@ -99,33 +586,27 @@ AnalogClock::AnalogClock (QWidget* parent) :
     m_font.setPixelSize (14);
     }
 
+void AnalogClock::setStyle (clockStyle newStyle)
+    {
+    const clockFace& face = FACES[newStyle];
+
+    m_style = static_cast<style> (newStyle);
+
+    if (face.window.cyclops.has_value ())
+        {
+        m_font.setPixelSize (
+            face.window.cyclops->getPoly ().boundingRect ().height () - 20);
+        }
+    else
+        {
+        m_font.setPixelSize (14);
+        }
+
+    update ();
+    }
+
 void AnalogClock::paintEvent (QPaintEvent* event)
     {
-
-    static const QPoint hourHand[4] =
-        {
-            {  5,  14 },
-            { -5,  14 },
-            { -4, -71 },
-            {  4, -71 }
-        };
-
-    static const QPoint minuteHand[4] =
-        {
-            {  4,  14 },
-            { -4,  14 },
-            { -3, -89 },
-            {  3, -89 }
-        };
-
-    static const QPoint secondsHand[4] =
-        {
-            {  1,  14 },
-            { -1,  14 },
-            { -1, -89 },
-            {  1, -89 }
-        };
-
     const QColor hourColor      = palette ().color (QPalette::Text);
     const QColor minuteColor    = palette ().color (QPalette::Text);
     const QColor secondsColor   = palette ().color (QPalette::Accent);
@@ -134,6 +615,9 @@ void AnalogClock::paintEvent (QPaintEvent* event)
     int side = std::min (width(), height());
 
     QPainter painter{ this };
+    // utils::draw::ScopedDebugDraw debugger{ *this };
+
+    const clockFace& face = FACES[m_style];
 
     // Setup painting parameters
     painter.setRenderHint (QPainter::Antialiasing);
@@ -145,31 +629,82 @@ void AnalogClock::paintEvent (QPaintEvent* event)
     QDate       date        = dateTime.date ();
 
     // Draw the day/date window
-
     painter.setFont (m_font);
-    painter.drawText (18,
-                      5,
-                      QString{ "%1|%2 "}.arg (
-                          utils::time::dayOfWeekAbreviation (
-                              static_cast<utils::time::dayOfTheWeek> (date.dayOfWeek () - 1)),
-                          QString::number (date.day ())));
-    painter.drawRoundedRect (QRect{ 15, -9, 55, 18 }, 3, 3);
+
+    switch (face.window.style)
+        {
+        case dateWindowStyle::MONTH_DATE:
+        case dateWindowStyle::DAY_DATE:
+            {
+            QString text;
+
+            if (dateWindowStyle::MONTH_DATE == face.window.style)
+                {
+                text = utils::time::monthAbreviation (
+                            static_cast<utils::time::month> (date.month () - 1));
+                }
+            else // (dateWindowStyle::DAY_DATE == face.window.style)
+                {
+                text = utils::time::dayOfWeekAbreviation (
+                            static_cast<utils::time::dayOfTheWeek> (date.dayOfWeek () - 1));
+                }
+
+            m_font.setPixelSize (14);
+
+            painter.drawText (18,
+                              5,
+                              QString{ "%1|%2 "}.arg (
+                                  text, QString::number (date.day ())));
+
+            painter.drawRoundedRect (QRect{ 15, -9, 55, 18 }, 3, 3);
+            break;
+            }
+        case dateWindowStyle::DAY:
+            {
+            QRectF windowRect{ 49, -9, 30, 20 };
+
+
+            if (face.window.cyclops.has_value ())
+                {
+                windowRect = face.window.cyclops->getPoly ().boundingRect ();
+
+                windowRect.adjust (10, 8, -10, -8);
+                }
+
+            painter.setFont (m_font);
+            painter.drawText (windowRect, Qt::AlignCenter, QString::number (date.day ()));
+            painter.drawRect (windowRect);
+            break;
+            }
+
+        }
 
     // Draw hour hand
 
     drawHandWithShadow (painter,
-                        30.0 * ((time.hour () + time.minute () / 60.0)),
+                        30.0 * ((time.hour () % 12 +
+                                 time.minute () / 60.0 +
+                                 time.second () / 3600.0)),
                         hourColor,
                         shadowColor,
-                        hourHand);
+                        face.hands.hour,
+                        face.window.cyclops);
 
     // Draw hour indices
+    {
+    QPainterStateGuard grd{ &painter };
 
     for (int i = 0; i < 12; ++i)
         {
-        painter.drawRect (73, -3, 16, 6);
+        if (NULL != face.dial.indices[i])
+            {
+            face.dial.indices[i]->paint (painter);
+            }
+
         painter.rotate (30.0);
         }
+
+    }
 
     // Draw minute hand
 
@@ -177,27 +712,40 @@ void AnalogClock::paintEvent (QPaintEvent* event)
                         6.0 * (time.minute () + time.second () / 60.0),
                         minuteColor,
                         shadowColor,
-                        minuteHand);
+                        face.hands.minute,
+                        face.window.cyclops);
 
     // Draw seconds hands
 
-    drawHandWithShadow (painter,
-                        6.0 * time.second (),
-                        secondsColor,
-                        shadowColor,
-                        secondsHand,
-                        true);
+    if (face.hands.second)
+        {
+        drawHandWithShadow (painter,
+                            6.0 * time.second (),
+                            secondsColor,
+                            shadowColor,
+                            face.hands.second.value (),
+                            face.window.cyclops);
+        }
+
+    if (face.window.cyclops.has_value ())
+        {
+        painter.setPen (Qt::black);
+        painter.setBrush (Qt::transparent);
+        painter.drawPolygon (face.window.cyclops->getPoly ()[0].exteriorRing);
+        }
 
     // Draw minute/second indices
 
-    painter.setPen (minuteColor);
-
-    for (int j = 0; j < 60; ++j)
+    if (face.dial.subIndices)
         {
-        painter.drawLine (92, 0, 96, 0);
-        painter.rotate (6.0);
-        }
+        painter.setPen (minuteColor);
 
+        for (int j = 0; j < 60; ++j)
+            {
+            painter.drawLine (92, 0, 96, 0);
+            painter.rotate (6.0);
+            }
+        }
     }
 
 } // namespace ui::clock

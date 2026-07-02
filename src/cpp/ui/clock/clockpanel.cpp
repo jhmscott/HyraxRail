@@ -63,25 +63,31 @@ void ClockPanel::setTitles ()
 
 void ClockPanel::styleChanged (clockStyle style)
     {
-    ClockWidget* newClock = NULL;
-    QWidget*     oldClock = m_clockLayout->itemAt (0)->widget ();
+    ClockWidget* newClock   = NULL;
+    ClockWidget* oldClock   = static_cast<ClockWidget*> (m_clockLayout->itemAt (0)->widget ());
+    bool         nowAnalog  = isAnalog (style);
+    bool         wasAnalog  = isAnalog (oldClock->getStyle ());
 
-    switch (style)
+    if (nowAnalog && wasAnalog)
         {
-        case CLOCK_TYPE_DIGITAL:
-            {
-            newClock = new DigitalClock{ this };
-            break;
-            }
-        case CLOCK_TYPE_ANALOG:
+        oldClock->setStyle (style);
+        }
+    else
+        {
+        if (nowAnalog)
             {
             newClock = new AnalogClock{ this };
-            break;
             }
+        else
+            {
+            newClock = new DigitalClock{ this };
+            }
+
+        newClock->setStyle (style);
+
+        m_clockLayout->replaceWidget (oldClock, newClock);
+
+        delete oldClock;
         }
-
-    m_clockLayout->replaceWidget (oldClock, newClock);
-
-    delete oldClock;
     }
 } // namespace ui::clock

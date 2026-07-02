@@ -21,11 +21,23 @@ namespace ui::clock
 // Clock widget style
 enum clockStyle
     {
-    CLOCK_TYPE_ANALOG,  ///< Analog clock
-    CLOCK_TYPE_DIGITAL, ///< Digital clock
+    CLOCK_TYPE_ANALOG_BASIC,    ///< Analog clock
+    CLOCK_TYPE_ANALOG_SUB,      ///< Analog clock
 
-    NUM_CLOCK_TYPES     ///< Delimiter only
+    NUM_ANALOG_TYPES,           ///< Delimeter only
+
+    CLOCK_TYPE_DIGITAL_BASIC =  ///< Digital clock
+                    NUM_ANALOG_TYPES,
+
+    NUM_CLOCK_TYPES             ///< Delimiter only
     };
+
+constexpr bool isAnalog (clockStyle style)
+    {
+    return style >= CLOCK_TYPE_ANALOG_BASIC &&
+           style <  NUM_ANALOG_TYPES;
+    }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Base class for clock widgets
@@ -41,6 +53,22 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     explicit ClockWidget (QWidget* parent);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get this clock's style
+    ///
+    /// @return     Clock style
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual clockStyle getStyle () const = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the clock style
+    ///
+    /// @param[in]  newStyle    New clock style
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setStyle (clockStyle style) = 0;
 
 private:
     ///////////////////////////////////////////////////////////////////////////////
