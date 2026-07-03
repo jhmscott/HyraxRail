@@ -131,5 +131,6 @@
         <!--Translations-->
         <file>translations/HyraxRail_vi_VN.qm</file>
         <file>translations/HyraxRail_fr.qm</file>
+        <file>translations/HyraxRail_nl_NL.qm</file>
     </qresource>
 </RCC>

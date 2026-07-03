@@ -472,6 +472,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtTranslation Include="..\res\translations\HyraxRail_fr.ts" />
+    <QtTranslation Include="..\res\translations\HyraxRail_nl_NL.ts" />
     <QtTranslation Include="..\res\translations\HyraxRail_vi_VN.ts" />
   </ItemGroup>
   <ItemGroup>

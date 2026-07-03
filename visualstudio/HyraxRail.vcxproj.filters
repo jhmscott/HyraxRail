@@ -1010,6 +1010,9 @@
     <QtTranslation Include="..\res\translations\HyraxRail_fr.ts">
       <Filter>Resource Files\translations</Filter>
     </QtTranslation>
+    <QtTranslation Include="..\res\translations\HyraxRail_nl_NL.ts">
+      <Filter>Resource Files\translations</Filter>
+    </QtTranslation>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="HyraxRail.natvis" />
