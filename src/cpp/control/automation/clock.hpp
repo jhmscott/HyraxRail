@@ -25,6 +25,8 @@ namespace control
 /// Simulated "Fast Clock" singleton class. Provides a single instance to
 /// obtain the simulated time, and signals for the simulated clock tick
 ///
+/// @ingroup    SINGLETON
+///
 ///////////////////////////////////////////////////////////////////////////////
 class FastClock : public QObject
     {

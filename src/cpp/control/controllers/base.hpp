@@ -19,12 +19,16 @@
 #include <layout/route.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Add this macro the defintion of your controller class to associate with a meta class, giving this module
-/// the ability to construct it programatically
+/// Add this macro the defintion of your controller class to associate with a
+/// meta class, giving this modules the ability to construct it programmatically
 ///
-/// @param[in]  type                      The controller type. This becoms the unique key for the controller
-/// @param[in]  friendlyName    The name you wish to use for this controller in the UI
-/// @param[in]  ...                         Variadic llist of protocol types this supports
+/// @param[in]  type            The controller type. This becomes the unique
+///                             key for the controller
+/// @param[in]  friendlyName    The name you wish to use for this controller
+///                             in the UI
+/// @param[in]  ...             Variadic list of protocol types this supports
+///
+/// @ingroup    META_CLASS_MACRO
 ///
 ///////////////////////////////////////////////////////////////////////////////
 #define CONTROLLER_DEFINE(type, friendlyName, ...) \
@@ -67,8 +71,10 @@ class ControllerBase;
 
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Controller meta class abstract base class. Meta class is templated, so this provides a concrete type
-/// with the meta class interface
+/// Controller meta class abstract base class. Meta class is templated, so
+/// this provides a concrete type with the meta class interface
+///
+/// @ingroup    META_CLASS
 ///
 ///////////////////////////////////////////////////////////////////////////////
 class ControllerMetaClassBase
@@ -123,6 +129,8 @@ public:
 ///
 /// @tparam     T           Controller type. Must derive from ControllerBase
 ///
+/// @ingroup    META_CLASS
+///
 ///////////////////////////////////////////////////////////////////////////////
 template<class T>
 class ControllerMetaClass : public ControllerMetaClassBase
@@ -135,9 +143,9 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Create an instance of this controller type
     ///
-    /// @param[in]  friendlyName      Name of this controller instance to use in the UI
-    /// @param[in]  protocol               Name of the protocol type
-    /// @param[in]  info                        Used to create the device to communicate with the controller
+    /// @param[in]  friendlyName    Name of this controller instance to use in the UI
+    /// @param[in]  protocol        Name of the protocol type
+    /// @param[in]  info            Used to create the device to communicate with the controller
     ///
     /// @return     unique_ptr instance of the requested controller
     ///             nullptr if the controller could not be created

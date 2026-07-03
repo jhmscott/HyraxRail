@@ -34,6 +34,7 @@
         base::changeEvent (event);                      \
         }
 
+// Language utilities
 namespace ui::lang
 {
 
@@ -53,6 +54,8 @@ QLocale system ();
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Singleton to manage the app translators
+///
+/// @ingroup    SINGLETON
 ///
 ///////////////////////////////////////////////////////////////////////////////
 class Translator

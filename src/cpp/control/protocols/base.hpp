@@ -19,15 +19,20 @@
 #include <memory>
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Add this macro the defintion of your protocol class to associate with a meta class, giving this module
-/// the ability to construct it programatically
+/// Add this macro the defintion of your protocol class to associate with a
+/// meta class, giving this module the ability to construct it programmatically
 ///
-/// @param[in]  type                      The controller type. This becoms the unique key for the controller
-/// @param[in]  friendlyName    The name you wish to use for this controller in the UI
-/// @param[in]  defaultType       Default device type (utils::device::type)
-/// @param[in]  defaultPort       Default port number. Use NO_DEFAULT_PORT to not populate this
-///                           automatically in the UI. N/A for COM porte
-/// @param[in]  ...                         Variadic llist of supported device types (utils::device::type)
+/// @param[in]  type            The controller type. This becomes the unique
+///                             key for the controller
+/// @param[in]  friendlyName    The name you wish to use for this controller
+///                             in the UI
+/// @param[in]  defaultType     Default device type (utils::device::type)
+/// @param[in]  defaultPort     Default port number. Use NO_DEFAULT_PORT to
+///                             not populate this automatically in the UI.
+///                             N/A for COM ports
+/// @param[in]  ...             Variadic list of supported device types (utils::device::type)
+///
+/// @ingroup    META_CLASS_MACRO
 ///
 ///////////////////////////////////////////////////////////////////////////////
 #define PROTOCOL_DEFINE(type, friendlyName, defaultType, defaultPort, ...) \
@@ -77,6 +82,8 @@ class ProtocolBase;
 ///////////////////////////////////////////////////////////////////////////////
 /// Protocol meta class base. Meta class is templated as it has type dependent logic. This provides a
 /// concrete type we can store pointers to
+///
+/// @ingroup    META_CLASS
 ///
 ///////////////////////////////////////////////////////////////////////////////
 class ProtocolMetaClassBase
@@ -131,6 +138,8 @@ public:
 /// Protocol meta clas type. Derived and templated version
 ///
 /// @tparam     T           Protocol type
+///
+/// @ingroup    META_CLASS
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<class T>

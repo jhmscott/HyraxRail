@@ -271,6 +271,7 @@
     <QtMoc Include="..\src\cpp\ui\clock\timer.hpp" />
     <QtMoc Include="..\src\cpp\ui\clock\weekly.hpp" />
     <QtMoc Include="..\src\cpp\ui\clock\monthly.hpp" />
+    <ClInclude Include="..\src\cpp\docs.hpp" />
     <ClInclude Include="..\src\cpp\ext\gpc.h" />
     <ClInclude Include="..\src\cpp\ui\clock\clock.hpp" />
     <ClInclude Include="..\src\cpp\ui\clock\digitalclock.hpp" />

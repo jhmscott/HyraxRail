@@ -16,6 +16,10 @@
 #include <algorithm>
 #include <type_traits>
 
+// Only include this for intellisense tools and doxygen generation
+#if defined (__INTELLISENSE__) || defined (DOXYGEN)
+#include <docs.hpp>
+#endif // defined (__INTELLISENSE__) || defined (DOXYGEN)
 
 #ifdef _MSVC_LANG
 #define CPP_VERSION _MSVC_LANG
@@ -139,3 +143,4 @@ struct version
 
 
 }
+
