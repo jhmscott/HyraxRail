@@ -31,6 +31,7 @@ ConfigForm::ConfigForm (QWidget* parent) :
     m_style->addParentItem (tr ("Analog"),  "misc/clock");
     m_style->addChildItem  (tr ("Basic"),   CLOCK_TYPE_ANALOG_BASIC);
     m_style->addChildItem  (tr ("Sub"),     CLOCK_TYPE_ANALOG_SUB);
+    m_style->addChildItem  (tr ("Snowbank"),CLOCK_TYPE_ANALOG_SNOWBANK);
 
     m_style->addParentItem (tr ("Digital"), "misc/binary");
     m_style->addChildItem  (tr ("Basic"),   CLOCK_TYPE_DIGITAL_BASIC);
@@ -107,8 +108,9 @@ void ConfigForm::setLabels ()
     m_style->setItemText (0, tr ("Analog"));
     m_style->setItemText (1, tr ("Basic"));
     m_style->setItemText (2, tr ("Sub"));
-    m_style->setItemText (3, tr ("Digital"));
-    m_style->setItemText (4, tr ("Basic"));
+    m_style->setItemText (3, tr ("Snowbank"));
+    m_style->setItemText (4, tr ("Digital"));
+    m_style->setItemText (5, tr ("Basic"));
     }
 
 

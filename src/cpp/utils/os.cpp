@@ -10,6 +10,7 @@
 #include <qglobal.h>
 
 #include <res/version.h>
+#include <utils/log.hpp>
 #include <utils/os.hpp>
 
 #include <QNetworkInterface>
@@ -199,5 +200,108 @@ bool isIPv6Available ()
 
     return hasIpv6;
     }
+
+namespace win32
+{
+
+
+WindowClass::WindowClass (const wchar_t* classname, LRESULT (*wndProc)(HWND, UINT, WPARAM, LPARAM)) :
+    m_classname (classname)
+    {
+    WNDCLASSEX wndclass{ 0 };
+
+    wndclass.cbSize = sizeof (WNDCLASSEX);
+    wndclass.lpszClassName = classname;
+    wndclass.lpfnWndProc = wndProc;
+    wndclass.hInstance = GetModuleHandle (NULL);
+
+    if (NULL == (m_atom = RegisterClassEx (&wndclass)))
+        {
+        logWinWarning (RegisterClassEx, classname);
+        }
+    }
+
+
+NativeWindow::NativeWindow (HWND hwnd) :
+    m_hwnd (hwnd)
+    {
+    if (NULL == m_hwnd)
+        {
+        logWinWarning (CreateWindowEx);
+        throw std::runtime_error ("CreateWindowEx() failed");
+        }
+    else
+        {
+        SetWindowLongPtr (m_hwnd,
+                          GWLP_USERDATA,
+                          reinterpret_cast<LONG_PTR> (this));
+        }
+    }
+
+NativeWindow::NativeWindow (NativeWindow&& other) noexcept :
+    m_hwnd (NULL)
+    { std::swap (m_hwnd, other.m_hwnd); }
+
+
+NativeWindow& NativeWindow::operator=(NativeWindow&& other) noexcept
+    {
+    if (&other != this)
+        {
+        close ();
+        std::swap (other.m_hwnd, m_hwnd);
+        }
+
+    return *this;
+    }
+
+LRESULT NativeWindow::wndProc (HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+    {
+    LRESULT         res = FALSE;
+    NativeWindow*   wnd = reinterpret_cast<NativeWindow*>
+                                (GetWindowLongPtr (hwnd, GWLP_USERDATA));
+
+    if (NULL != wnd)
+        {
+        res = wnd->message (hwnd, msg, wParam, lParam);
+        }
+    else
+        {
+        res = DefWindowProc (hwnd, msg, wParam, lParam);
+        }
+
+    return res;
+    }
+
+void NativeWindow::close ()
+    {
+    if (NULL != m_hwnd)
+        {
+        SetWindowLongPtr (m_hwnd,
+                          GWLP_USERDATA,
+                          NULL);
+
+        DestroyWindow (m_hwnd);
+        m_hwnd = NULL;
+        }
+    }
+
+
+MessageOnlyWindow::MessageOnlyWindow () :
+    NativeWindow (CreateWindowEx (0,     // EX Style
+                                  reinterpret_cast<WCHAR*> (getWindowClass ().atom ()),
+                                  L"Message only window",
+                                  0,     // Style
+                                  0,     // X
+                                  0,     // Y
+                                  0,     // Width
+                                  0,     // Height
+                                  HWND_MESSAGE,
+                                  NULL,  // hMenu
+                                  GetModuleHandle (NULL),
+                                  NULL)) // lpParam
+    {}
+
+
+} // namespace win32
 
 } // namespace utils::os

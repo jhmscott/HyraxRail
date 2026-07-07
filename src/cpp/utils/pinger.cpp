@@ -45,6 +45,8 @@
 namespace utils
 {
 
+namespace // anonymous
+{
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Pinger implementation base class. Defines interface only, as actual implementation is dependent on
@@ -73,7 +75,7 @@ public:
 
 // Platform and version dependent implementations
 
-#ifdef Q_OS_WIN
+#ifdef Q_OS_WIN || defined (DOXYGEN)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Common implementation of pinger for windows between IPv4 and IPv6
@@ -257,9 +259,9 @@ private:
     sockaddr_in6 m_ip;  ///< IPv6 address
     };
 
-#endif // Q_OS_WIN
+#endif // deifned (Q_OS_WIN) || defined (DOXYGEN)
 
-#ifdef Q_OS_UNIX
+#if defined (Q_OS_UNIX)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// POSIX IPv4 Pinger implementation
@@ -408,7 +410,9 @@ class IPv6Pinger : public PingerImpl
     };
 
 
-#endif // Q_OS_UNIX
+#endif // defined (Q_OS_UNIX)
+
+} // namespace anonymous
 
 // Exported class functions
 

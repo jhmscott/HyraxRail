@@ -16,8 +16,11 @@
 namespace utils
 {
 
+namespace
+{
 // Implementation class for pimpl pattern
 class PingerImpl;
+} // namespace anonymous
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Utility to ping an address

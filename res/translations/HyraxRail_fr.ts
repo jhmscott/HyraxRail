@@ -307,53 +307,59 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::clock::ConfigForm</name>
     <message>
-        <location filename="../../src/cpp/ui/clock/config.cpp" line="35"/>
-        <location filename="../../src/cpp/ui/clock/config.cpp" line="110"/>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="36"/>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="112"/>
         <source>Digital</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/clock/config.cpp" line="31"/>
-        <location filename="../../src/cpp/ui/clock/config.cpp" line="107"/>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="108"/>
         <source>Analog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/clock/config.cpp" line="32"/>
-        <location filename="../../src/cpp/ui/clock/config.cpp" line="36"/>
-        <location filename="../../src/cpp/ui/clock/config.cpp" line="108"/>
-        <location filename="../../src/cpp/ui/clock/config.cpp" line="111"/>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="37"/>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="109"/>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="113"/>
         <source>Basic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/clock/config.cpp" line="33"/>
-        <location filename="../../src/cpp/ui/clock/config.cpp" line="109"/>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="110"/>
         <source>Sub</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/config.cpp" line="101"/>
-        <source>Running</source>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="34"/>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="111"/>
+        <source>Snowbank</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/clock/config.cpp" line="102"/>
-        <source>Ratio</source>
+        <source>Running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/clock/config.cpp" line="103"/>
-        <source>Date</source>
+        <source>Ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/clock/config.cpp" line="104"/>
-        <source>Time</source>
+        <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/clock/config.cpp" line="105"/>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="106"/>
         <source>Style</source>
         <translation type="unfinished"></translation>
     </message>

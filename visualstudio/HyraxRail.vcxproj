@@ -248,6 +248,7 @@
     <ClCompile Include="..\src\cpp\ui\trains\functionpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\lococontrolpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\speedcontrol.cpp" />
+    <ClCompile Include="..\src\cpp\utils\battery.cpp" />
     <ClCompile Include="..\src\cpp\utils\device.cpp" />
     <ClCompile Include="..\src\cpp\utils\draw.cpp" />
     <ClCompile Include="..\src\cpp\utils\os.cpp" />
@@ -335,6 +336,7 @@
     <QtMoc Include="..\src\cpp\ui\trains\lococontrolpanel.hpp" />
     <ClInclude Include="..\src\cpp\ui\trains\speedcontrol.hpp" />
     <ClInclude Include="..\src\cpp\utils\algorithm.hpp" />
+    <QtMoc Include="..\src\cpp\utils\battery.hpp" />
     <ClInclude Include="..\src\cpp\utils\device.hpp" />
     <ClInclude Include="..\src\cpp\utils\draw.hpp" />
     <ClInclude Include="..\src\cpp\utils\log.hpp" />

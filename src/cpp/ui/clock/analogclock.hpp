@@ -34,6 +34,7 @@ public:
         {
         STYLE_BASIC,    ///< Basic clock style
         STYLE_SUB,      ///< Sub style dive watch
+        STYL_SNOWBANK,
 
         NUM_STYLES      ///< Delimiter only
         };

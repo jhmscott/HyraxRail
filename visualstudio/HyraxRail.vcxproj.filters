@@ -491,6 +491,9 @@
     <ClCompile Include="..\src\cpp\ui\common\tiereddropdown.cpp">
       <Filter>Source Files\ui\common</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cpp\utils\battery.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\control\protocols\base.hpp">
@@ -692,6 +695,9 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\control\controllers\manager.hpp">
       <Filter>Header Files\control\controllers</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\utils\battery.hpp">
+      <Filter>Header Files\utils</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

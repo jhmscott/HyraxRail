@@ -23,6 +23,7 @@ enum clockStyle
     {
     CLOCK_TYPE_ANALOG_BASIC,    ///< Analog clock
     CLOCK_TYPE_ANALOG_SUB,      ///< Analog clock
+    CLOCK_TYPE_ANALOG_SNOWBANK, ///< Analog clock
 
     NUM_ANALOG_TYPES,           ///< Delimeter only
 

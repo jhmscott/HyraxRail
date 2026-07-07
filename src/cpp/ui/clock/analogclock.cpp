@@ -15,9 +15,11 @@
 #include <control/automation/clock.hpp>
 
 #include <ui/clock/analogclock.hpp>
-#include <utils/draw.hpp>
 
+#include <utils/battery.hpp>
+#include <utils/draw.hpp>
 #include <utils/magnify.hpp>
+#include <utils/math.hpp>
 #include <utils/poly.hpp>
 
 #include <QPainter>
@@ -249,6 +251,22 @@ private:
         { painter.drawPolygon (m_poly); }
     };
 
+// Clock face indices
+using indexArray = std::array<std::unique_ptr<Index>, 12>;
+
+// Variable number of indices, for other indicators
+using indexVector = std::vector<std::unique_ptr<Index>>;
+
+// Main spring power indicator. Maps to the device battery
+struct powerIndicator
+    {
+    QPoint                  pos;    ///< Center position
+    double                  start;  ///< Start angle in degrees
+    double                  end;    ///< End angle in degrees
+    int                     radius; ///< Radius of the dial
+    indexVector             indices;///< Power indicator indices
+    utils::MultiPolygonF    hand;   ///< Power indicaror hand
+    };
 
 // Represents a set of hands to draw over the dial
 struct hands
@@ -263,8 +281,6 @@ struct hands
                                                         ///  Defaults to dial center
     };
 
-// Clock face indices
-using indexArray = std::array<std::unique_ptr<Index>, 12>;
 
 // Dial style info
 struct dial
@@ -285,9 +301,10 @@ struct dateWindow
 // Clock face
 struct clockFace
     {
-    hands       hands;  ///< Clock hands
-    dial        dial;   ///< Clock dial
-    dateWindow  window; ///< Day/date window
+    hands                           hands;          ///< Clock hands
+    dial                            dial;           ///< Clock dial
+    dateWindow                      window;         ///< Day/date window
+    std::optional<powerIndicator>   powerIndicator;
     };
 
 
@@ -320,6 +337,37 @@ static indexArray makeUniformIndexArray (T                  index,
     for (size_t ii = 0; ii < std::size (indices); ++ii)
         {
         indices[ii] = std::make_unique<T> (index);
+        }
+
+    return indices;
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Make a vector of uniform indices
+///
+/// @tparam     T       Index type
+///
+/// @param[in]  index   Index to copy for all indices
+/// @param[in]  style   Style info for indices
+/// @param[in]  count   Number of copies to make of index
+///
+/// @return     Vector of [count] indices
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T>
+static indexVector makeUniformIndexVector (T                index,
+                                           const styleInfo& style,
+                                           size_t           count)
+    {
+    static_assert (std::is_base_of_v<Index, T>, "Must be index type");
+
+    index.style = style;
+
+    indexVector indices;
+
+    for (size_t ii = 0; ii < count; ++ii)
+        {
+        indices.emplace_back (std::make_unique<T> (index));
         }
 
     return indices;
@@ -375,8 +423,10 @@ static indexArray makeKeyIndexArray (const T&           index,
     return indices;
     }
 
+// List of clock faces/styles
 static const clockFace FACES[] =
     {
+    // Basic
         {
         hands
             {
@@ -516,8 +566,88 @@ static const clockFace FACES[] =
                                     utils::poly::roundedRect (
                                         QRectF{ 40, -18, 50, 40 }, 12, 16) }, 2.5 }
             }
+        },
+    // Snowbank
+        {
+        hands
+            {
+            // .hour =
+            utils::ComplexPolygonF
+                {
+                QPointF{  0,  15 },
+                QPointF{ -8,  0 },
+                QPointF{  0, -70 },
+                QPointF{  8,  0 }
+                },
+            // .minutes =
+            utils::ComplexPolygonF
+                {
+                QPointF{  0, 15 },
+                QPointF{ -5,  0 },
+                QPointF{ -0, -90 },
+                QPointF{  5,  0 }
+                },
+            // .seconds =
+            utils::ComplexPolygonF
+                {
+                QPointF{  2,  20 },
+                QPointF{  0, -90 },
+                QPointF{ -2,  20 }
+                } |
+            utils::ComplexPolygonF{ utils::poly::circle ({ 0, 0 }, 3) }
+            },
+        dial
+            {
+            /* .indices = */ makeKeyIndexArray (RectIndex{ QRect{ 62, -2, 28, 4 } },
+                                                PolyIndex
+                                                    {
+                                                    QPoint{ 60,   3 },
+                                                    QPoint{ 60,  -3 },
+                                                    QPoint{ 88,  -5 },
+                                                    QPoint{ 88,   5 },
+                                                    },
+                                                PolyIndex
+                                                    {
+                                                    QPoint{ 60,   4 },
+                                                    QPoint{ 60,  -4 },
+                                                    QPoint{ 88,  -8 },
+                                                    QPoint{ 88,   8 },
+                                                    },
+                                                styleInfo
+                                                    {
+                                                        { Qt::transparent, Qt::black },
+                                                        { Qt::transparent, Qt::white }
+                                                    })
+            },
+        dateWindow
+            {
+            /* .style   = */ dateWindowStyle::DAY
+            },
+        powerIndicator
+            {
+            QPoint{ -15, 40 },
+            270.0,
+            360.0,
+            35,
+            makeUniformIndexVector (RectIndex{ QRect{ 25, -1, 8, 2 } },
+                                    styleInfo
+                                        {
+                                            { Qt::black, Qt::black },
+                                            { Qt::white, Qt::white }
+                                        },
+                                    2),
+            utils::ComplexPolygonF
+                {
+                QPointF{  0, 2 },
+                QPointF{ 30, 0 },
+                QPointF{  0,-2 },
+                } |
+            utils::ComplexPolygonF{ utils::poly::circle ({ 0, 0 }, 3) }
+            }
         }
     };
+
+ASSERT_ARRAY_LENGTH (FACES, AnalogClock::NUM_STYLES);
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -555,12 +685,12 @@ static void drawHand (QPainter&     painter,
 ///                             circle on the end
 ///
 ///////////////////////////////////////////////////////////////////////////////
-static void drawHandWithShadow (QPainter&       painter,
-                                double          rotation,
-                                const QColor&   handColor,
-                                const QColor&   shadowColor,
-                                const utils::MultiPolygonF&   hand,
-                                const std::optional<utils::Magnifier<true>>&   lens)
+static void drawHandWithShadow (QPainter&                                   painter,
+                                double                                      rotation,
+                                const QColor&                               handColor,
+                                const QColor&                               shadowColor,
+                                const utils::MultiPolygonF&                 hand,
+                                const std::optional<utils::Magnifier<true>>&lens = std::nullopt)
     {
     QPainterStateGuard guard{ &painter };
 
@@ -573,7 +703,6 @@ static void drawHandWithShadow (QPainter&       painter,
         handRotated = lens->magnify (handRotated);
         }
 
-
     painter.setPen (QPen{ shadowColor, 0.5 });
     painter.setBrush (handColor);
     drawHand (painter, { 0, 0 }, handRotated);
@@ -584,6 +713,12 @@ AnalogClock::AnalogClock (QWidget* parent) :
     {
     m_font.setFamily ("Cascadia Mono");
     m_font.setPixelSize (14);
+
+    connect (&utils::Battery::instance (),
+             &utils::Battery::batteryPercentageChange,
+              this,
+              QOverload<>::of
+                (&AnalogClock::update));
     }
 
 void AnalogClock::setStyle (clockStyle newStyle)
@@ -627,6 +762,7 @@ void AnalogClock::paintEvent (QPaintEvent* event)
     QDateTime   dateTime    = control::FastClock::qDateTime ();
     QTime       time        = dateTime.time ();
     QDate       date        = dateTime.date ();
+    int         battery     = utils::Battery::instance ().getBatteryPercent ().value_or (100);
 
     // Draw the day/date window
     painter.setFont (m_font);
@@ -676,8 +812,51 @@ void AnalogClock::paintEvent (QPaintEvent* event)
             painter.drawRect (windowRect);
             break;
             }
-
         }
+
+    // Draw power indicator
+
+    if (face.powerIndicator.has_value ())
+        {
+        const auto&         indicator = *face.powerIndicator;
+        QPainterStateGuard  grd{ &painter };
+
+        // drawPie() quirks:
+        //  - 0 degrees is 3 O'clock
+        //  - negative spanAngle is clockwise
+        double              start   = indicator.start - 90;
+        double              end     = indicator.end - 90;
+        double              span    = start - end;
+
+        painter.translate (indicator.pos);
+
+        painter.drawPie (QRect
+                            {
+                            QPoint{ -indicator.radius,  indicator.radius },
+                            QPoint{  indicator.radius, -indicator.radius}
+                            },
+                         utils::math::roundToInt (start * 16),
+                         utils::math::roundToInt (span  * 16));
+
+        double spacing  = (end - start) / (indicator.indices.size () - 1);
+        double ang      = start;
+
+        for (size_t ii = 0; ii < indicator.indices.size (); ang += spacing, ++ii)
+            {
+            QPainterStateGuard grd{ &painter };
+
+            painter.rotate (ang);
+            indicator.indices[ii]->paint (painter);
+            }
+
+        drawHandWithShadow (painter,
+                            indicator.end - 90.0 -
+                            (indicator.end - indicator.start) * battery / 100.0,
+                            hourColor,
+                            shadowColor,
+                            indicator.hand);
+        }
+
 
     // Draw hour hand
 
