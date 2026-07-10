@@ -89,6 +89,11 @@ void AutomationItem::doAction (action action)
                 actuator.set (not actuator.get ());
                 break;
                 }
+            case NUM_ACTIONS:
+                {
+                // ignore delimiter
+                break;
+                }
             }
         }
     else

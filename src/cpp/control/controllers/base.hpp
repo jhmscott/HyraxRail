@@ -179,13 +179,19 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
-    /// @param[in]  friendlyName       Name of thi controller in UI
-    /// @param[in]  proto                       Protocol to use. Controller takes ownership
+    /// @param[in]  friendlyName        Name of thi controller in UI
+    /// @param[in]  proto               Protocol to use. Controller takes ownership
     ///
     /// @remarks    Derived classes must have the same function signature for their constructors
     ///
     ///////////////////////////////////////////////////////////////////////////////
     ControllerBase (const std::string& friendlyName, std::unique_ptr<ProtocolBase>&& proto);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Virtual destructor
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual ~ControllerBase () {}
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the locomotives under the control of this controller

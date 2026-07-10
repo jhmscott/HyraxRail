@@ -35,6 +35,7 @@ namespace utils::os
 
 // local helper functions
 
+#ifdef Q_OS_WIN
 ///////////////////////////////////////////////////////////////////////////////
 /// Convert a UTF-8 encoded char string to a UTF-16 encoded wide char string
 ///
@@ -61,6 +62,7 @@ static bool utf8ToWString (std::string_view string, wchar_t (&wString)[N])
 
     return bytes > 0;
     }
+#endif // Q_OS_WIN
 
 // Exported functions
 
@@ -89,16 +91,6 @@ void setThreadName (std::string_view name, std::thread::native_handle_type handl
         SetThreadDescription (handle, wThreadName);
         }
 
-#ifdef _DEBUG
-    // Older versions of visual studio don't support SetThreadDesciption()
-    // Check what version we are using
-    //
-    if (TRUE == IsDebuggerPresent ())
-        {
-
-        }
-#endif // _DEBUG
-
 #endif // Q_OS_WIN
 
 #ifdef Q_OS_UNIX
@@ -110,7 +102,15 @@ void setThreadName (std::string_view name, std::thread::native_handle_type handl
              numToCopy);
     truncated[numToCopy] = '\0';
 
-    pthread_setname_np (hanle, name);
+
+#ifdef Q_OS_MAC
+    if (pthread_self () == handle)
+        {
+        pthread_setname_np (truncated);
+        }
+#else
+    pthread_setname_np (handle, truncated);
+#endif // Q_OS_MAC
 #endif // Q_OS_UNIX
 
     }
@@ -200,6 +200,9 @@ bool isIPv6Available ()
 
     return hasIpv6;
     }
+
+
+#ifdef Q_OS_WIN
 
 namespace win32
 {
@@ -303,5 +306,7 @@ MessageOnlyWindow::MessageOnlyWindow () :
 
 
 } // namespace win32
+
+#endif // Q_OS_WIN
 
 } // namespace utils::os

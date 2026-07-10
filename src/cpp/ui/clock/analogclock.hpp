@@ -83,7 +83,7 @@ private:
     /// @param[in]  time        Simulated time
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual void setTime (const control::FastClock::time_point& time) { update (); }
+    virtual void setTime (const control::FastClock::time_point& time) override { update (); }
     };
 
 } // namespace ui::clock

@@ -65,6 +65,11 @@ Copyright: (C) Advanced Interfaces Group,
 
 #define INVERT_TRISTRIPS   FALSE
 
+// fscanf_s() is only on windows
+#ifndef _WIN32
+#define fscanf_s    fscanf
+#endif // _WIN32
+
 
 /*
 ===========================================================================

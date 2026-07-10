@@ -43,7 +43,7 @@ public:
     /// @return     True if all fields have acceptable input
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual bool hasAcceptableInput () const { return m_month->hasAcceptableInput (); }
+    virtual bool hasAcceptableInput () const override { return m_month->hasAcceptableInput (); }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Create a monthly alarm condition from the form fields

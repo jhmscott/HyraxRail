@@ -45,6 +45,11 @@ ProtocolBase::ProtocolBase (const utils::device::deviceInfo& deviceInfo, int tim
             m_device = std::make_unique<QUdpSocket> ();
             break;
             }
+        default:
+            {
+            throw std::runtime_error ("Invalide device type");
+            break;
+            }
         }
     }
 

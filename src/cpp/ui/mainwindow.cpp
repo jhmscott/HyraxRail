@@ -82,6 +82,12 @@ void MainWindow::changeEvent (QEvent* event)
             setTitle ();
             break;
             }
+
+        default:
+            {
+            // Don't care
+            break;
+            }
         }
 
     QMainWindow::changeEvent (event);
@@ -194,6 +200,11 @@ bool MainWindow::handleClose ()
                 allowClose = false;
                 break;
                 }
+            default:
+                {
+                qWarning () << "Unexpected button result";
+                break;
+                }
             }
         }
 
@@ -251,7 +262,7 @@ void MainWindow::restoreFastClockSettings ()
                 }
             }
 
-        if (m_rememberType = settings.value ("Clock/remember").toBool ())
+        if ((m_rememberType = settings.value ("Clock/remember").toBool ()))
             {
             m_clockShutdownType = type;
             }

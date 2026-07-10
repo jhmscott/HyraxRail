@@ -21,6 +21,11 @@ QHostAddress HostInfo::toAddress () const
 
     switch (getType ())
         {
+        case type::EMPTY:
+            {
+            // no-op, return emppty address
+            break;
+            }
         case type::IP:
             {
             addr = std::get<QHostAddress> (m_value);
@@ -75,6 +80,11 @@ QString HostInfo::toString () const
 
     switch (getType ())
         {
+        case type::EMPTY:
+            {
+            // no-op, return emppty string
+            break;
+            }
         case type::IP:
             {
             string = std::get<QHostAddress> (m_value).toString ();
@@ -96,6 +106,12 @@ HostInfo HostInfo::fromString (const QString& string, type type)
 
     switch (type)
         {
+
+        case type::EMPTY:
+            {
+            // no-op, nothing to build
+            break;
+            }
         case type::IP:
             {
             info.m_value = QHostAddress{ string };

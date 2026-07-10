@@ -30,6 +30,8 @@
                 body;                                   \
                 break;                                  \
                 }                                       \
+            default:                                    \
+                break;                                  \
             }                                           \
         base::changeEvent (event);                      \
         }

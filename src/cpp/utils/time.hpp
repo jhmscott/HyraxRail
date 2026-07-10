@@ -12,6 +12,7 @@
 #include <common.hpp>
 
 #include <QDateTime>
+#include <QTimeZone>
 
 #include <bitset>
 #include <chrono>

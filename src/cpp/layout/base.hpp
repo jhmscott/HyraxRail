@@ -53,7 +53,7 @@ template<class Controller>
 class ComponentDerived : public ComponentBase
     {
 public:
-    using controller_t  = typename Controller;
+    using controller_t  = Controller;
 
     // TODO: get this compiler check working
 #if 0
@@ -286,10 +286,10 @@ template<class Component>
 class ControllerBase
     {
 public:
-    using component_t       = typename Component;
-    using componentBase_t   = typename ComponentDerived<typename component_t::controller_t>;
+    using component_t       = Component;
+    using componentBase_t   = ComponentDerived<typename component_t::controller_t>;
 
-    friend class componentBase_t;
+    friend componentBase_t;
 
     static_assert (std::is_base_of_v<componentBase_t, Component>,
                    "Component must derive from ComponentBase");

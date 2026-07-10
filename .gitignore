@@ -48,9 +48,13 @@
 visualstudio/intermediate/
 *.aps
 
+# Qt Creator Temp files
+.qtcreator/
+
 # Output files
 runtime/
 docs/
+build/
 
 # MacOS DS Store file
 .DS_Store

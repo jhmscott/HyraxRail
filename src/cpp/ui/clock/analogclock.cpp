@@ -35,7 +35,6 @@ namespace // anonymous
 enum class dateWindowStyle
     {
     NONE,       ///< No date window
-    DAY,        ///< Day of week only
     DATE,       ///< Date of month only
     DAY_DATE,   ///< Day of week + date of month
     MONTH_DATE  ///< Month string + date of month
@@ -114,6 +113,7 @@ public:
         draw (painter);
         }
 
+    virtual ~Index () {}
 private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Internal drawing logic. Implement in derived class
@@ -560,7 +560,7 @@ static const clockFace FACES[] =
             },
         dateWindow
             {
-            /* .style   = */ dateWindowStyle::DAY,
+            /* .style   = */ dateWindowStyle::DATE,
             /* .cylcops = */ utils::Magnifier<true>{
                                 utils::ComplexPolygonF{
                                     utils::poly::roundedRect (
@@ -621,7 +621,7 @@ static const clockFace FACES[] =
             },
         dateWindow
             {
-            /* .style   = */ dateWindowStyle::DAY
+            /* .style   = */ dateWindowStyle::DATE
             },
         powerIndicator
             {
@@ -795,7 +795,7 @@ void AnalogClock::paintEvent (QPaintEvent* event)
             painter.drawRoundedRect (QRect{ 15, -9, 55, 18 }, 3, 3);
             break;
             }
-        case dateWindowStyle::DAY:
+        case dateWindowStyle::DATE:
             {
             QRectF windowRect{ 49, -9, 30, 20 };
 
@@ -810,6 +810,11 @@ void AnalogClock::paintEvent (QPaintEvent* event)
             painter.setFont (m_font);
             painter.drawText (windowRect, Qt::AlignCenter, QString::number (date.day ()));
             painter.drawRect (windowRect);
+            break;
+            }
+        case dateWindowStyle::NONE:
+            {
+            // no-op
             break;
             }
         }

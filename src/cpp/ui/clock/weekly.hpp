@@ -40,7 +40,7 @@ public:
     /// @return     True if all fields have acceptable input
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual bool hasAcceptableInput () const { return m_days->getDays ().any (); }
+    virtual bool hasAcceptableInput () const override { return m_days->getDays ().any (); }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Create a condition from the values in the form field

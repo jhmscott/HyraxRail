@@ -41,7 +41,7 @@ public:
     /// @return     True if all fields have been filled correctly
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual bool hasAcceptableInput () const { return true; }
+    virtual bool hasAcceptableInput () const override { return true; }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Create a condition from the current fields

@@ -34,7 +34,7 @@ struct routeMember
     ///////////////////////////////////////////////////////////////////////////////
     bool operator== (const routeMember& other) const
         {
-        return state    == other.state;
+        return state    == other.state &&
                actuator == other.actuator;
         }
 

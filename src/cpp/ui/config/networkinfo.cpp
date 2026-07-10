@@ -120,6 +120,11 @@ void NetworkDeviceInfoWidget::setInfo (const utils::device::deviceInfo::info_t& 
             common::setComboBoxIndexByUserData (*m_network, proto);
             break;
             }
+        case utils::device::HostInfo::type::EMPTY:
+            {
+            qWarning () << "Attempt to set empty host info";
+            break;
+            }
         }
 
     networkProtoChanged (m_network->currentIndex ());
@@ -164,6 +169,11 @@ QString NetworkDeviceInfoWidget::getErrorString () const
                 error = tr ("Host \"%1\" does not exist").arg (m_hostname->text ());
                 break;
                 }
+            case validity::VALID:
+                {
+                // Valid, no error message
+                break;
+                }
             }
         }
 
@@ -196,6 +206,11 @@ void NetworkDeviceInfoWidget::networkProtoChanged (int idx)
             m_layout->setRowVisible (m_addressV6, false);
             m_layout->setRowVisible (m_hostname, true);
             m_activeIp = m_hostname;
+            break;
+            }
+        default:
+            {
+            qWarning () << "Unexpected layer protocol";
             break;
             }
         }

@@ -40,6 +40,13 @@
 
 #endif //  Q_OS_UNIX
 
+#ifdef Q_OS_LINUX
+#include <icmp.h>
+#endif // Q_OS_LINUX
+
+#ifdef Q_OS_MAC
+#include <netinet/ip_icmp.h>
+#endif // Q_OS_MAC
 
 
 namespace utils
@@ -75,7 +82,7 @@ public:
 
 // Platform and version dependent implementations
 
-#ifdef Q_OS_WIN || defined (DOXYGEN)
+#if defined (Q_OS_WIN) || defined (DOXYGEN)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Common implementation of pinger for windows between IPv4 and IPv6
@@ -113,7 +120,7 @@ protected:
 /// @ingroup    PIMPL
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class IpV4Pinger : public PingerWin
+class IPv4Pinger : public PingerWin
     {
 public:
     ///////////////////////////////////////////////////////////////////////////////
@@ -122,7 +129,7 @@ public:
     /// @param[in]  ip      IPv4 address (TODO: what endianess was this)
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    explicit IpV4Pinger (quint32 ip) :
+    explicit IPv4Pinger (quint32 ip) :
         PingerWin (IcmpCreateFile ()),
         m_ip (_byteswap_ulong (ip))
         {}
@@ -184,14 +191,14 @@ private:
 /// @ingroup    PIMPL
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class IpV6Pinger : public PingerWin
+class IPv6Pinger : public PingerWin
     {
 public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Pv6 pinger constructor
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    explicit IpV6Pinger (Q_IPV6ADDR ip) :
+    explicit IPv6Pinger (Q_IPV6ADDR ip) :
         PingerWin (Icmp6CreateFile ()),
         m_ip ({ 0 })
         {
@@ -269,15 +276,15 @@ private:
 /// @ingroup    PIMPL
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class IpV4Pinger : public PingerImpl
+class IPv4Pinger : public PingerImpl
     {
 public:
     ///////////////////////////////////////////////////////////////////////////////
     /// IPv4 pinger constructor
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    explicit IpV4Pinger (quint32 ip):
-        m_ip (__builtin_bswap32 (ip))
+    explicit IPv4Pinger (quint32 ip):
+        m_ip ({ __builtin_bswap32 (ip) })
         {}
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -290,7 +297,11 @@ public:
         {
         Pinger::result      res;
 
+#ifdef Q_OS_MAC
+        struct icmp         icmpHdr;
+#else
         struct icmphdr      icmpHdr;
+#endif
         struct sockaddr_in  addr;
         int                 sequence = 0;
         int                 sock = socket (AF_INET, SOCK_DGRAM, IPPROTO_ICMP);
@@ -300,15 +311,20 @@ public:
         addr.sin_family = AF_INET;
         addr.sin_addr   = m_ip;
 
-        memset (&icmpHdr, 0, sizeof icmpHdr);
+        memset (&icmpHdr, 0, sizeof (icmpHdr));
 
+#ifdef Q_OS_MAC
+        icmpHdr.icmp_type   = ICMP_ECHO;
+        icmpHdr.icmp_id     = 1234;
+#else
         icmpHdr.type        = ICMP_ECHO;
         icmpHdr.un.echo.id  = 1234;//arbitrary id
+#endif
 
 
         if (sock < 0)
             {
-            qWarn () << "Failed to open socket";
+            qWarning () << "Failed to open socket";
             }
         else
             {
@@ -319,9 +335,18 @@ public:
                 struct timeval  timeout = { 3, 0 }; //wait max 3 seconds for a reply
                 fd_set          read_set;
                 socklen_t       slen;
-                struct icmphdr  rcv_hdr;
+#ifdef Q_OS_MAC
+                struct icmp     rcv_hdr;
+#else
+                icmphdr         rcv_hdr;
+#endif
 
-                icmpHdr.un.echo.sequence = sequence++;
+#ifdef Q_OS_MAC
+                icmpHdr.icmp_seq =
+#else
+                icmpHdr.un.echo.sequence =
+#endif
+                    sequence++;
 
                 memcpy (data, &icmpHdr, sizeof (icmpHdr));
                 memcpy (data + sizeof (icmpHdr), "hello", 5); //icmp payload
@@ -333,7 +358,7 @@ public:
                              data,
                              sizeof (icmpHdr) + 5,
                              0,
-                             static_cast <struct sockaddr*> (&addr),
+                             reinterpret_cast <struct sockaddr*> (&addr),
                              sizeof (addr));
                 if (rc <= 0)
                     {
@@ -369,9 +394,16 @@ public:
 
                 memcpy (&rcv_hdr, data, sizeof (rcv_hdr));
 
-                if (ICMP_ECHOREPLY == rcv_hdr.type)
+                if (
+#ifdef Q_OS_MAC
+                    ICMP_ECHOREPLY == rcv_hdr.icmp_type
+#else
+                    ICMP_ECHOREPLY == rcv_hdr.type
+#endif
+                    )
                     {
-                    res.roundtrip   = std::chrono::system_clock::now () - sentTime;
+                    res.roundtrip   = std::chrono::duration_cast<std::chrono::milliseconds> (
+                                                    std::chrono::system_clock::now () - sentTime);
                     res.flags       = 0;
                     res.status      = 0;
                     res.ttl         = 64;
@@ -397,7 +429,7 @@ private:
 class IPv6Pinger : public PingerImpl
     {
     public:
-        explicit IpV6Pinger (Q_IPV6ADDR ip)
+        explicit IPv6Pinger (Q_IPV6ADDR ip)
             {
             std::copy (ip.c,
                        ip.c + std::size (ip.c),
@@ -422,11 +454,11 @@ Pinger::Pinger (const QHostAddress& ip)
 
     if (QHostAddress::IPv4Protocol == ip.protocol ())
         {
-        m_impl = new IpV4Pinger{ ip.toIPv4Address (&ok) };
+        m_impl = new IPv4Pinger{ ip.toIPv4Address (&ok) };
         }
     else // (QHostAddress::IPv6Protocol == ip.protocol ())
         {
-        m_impl = new IpV6Pinger{ ip.toIPv6Address () };
+        // m_impl = new IPv6Pinger{ ip.toIPv6Address () };
         }
 
     if (not ok)

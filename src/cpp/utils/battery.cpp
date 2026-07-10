@@ -134,6 +134,19 @@ private:
 
 #endif // defined (Q_OS_WIN) || defined (DOXYGEN)
 
+
+#ifdef Q_OS_MAC
+class BatteryImpl
+    {
+public:
+    explicit BatteryImpl (Battery* battery)
+        {}
+
+    int getBatteryPercent () const { return 100; }
+    };
+
+#endif // Q_OS_MAC
+
 } // namespace anonymous
 
 

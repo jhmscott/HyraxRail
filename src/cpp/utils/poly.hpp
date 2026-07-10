@@ -801,7 +801,7 @@ template<bool floating = false>
 class PolygonView : public QSpan<const ComplexPolygon<floating>>
     {
 public:
-    using Multi = typename MultiPolygon<floating>;
+    using Multi = MultiPolygon<floating>;
     using Sub   = typename Multi::SubPolygon;
 
     ///////////////////////////////////////////////////////////////////////////////

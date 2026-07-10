@@ -13,6 +13,7 @@
 
 #include <chrono>
 #include <mutex>
+#include <thread>
 
 #include <QDateTime>
 #include <QObject>

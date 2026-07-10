@@ -126,6 +126,11 @@ MainWidget::~MainWidget ()
                 transport = "UDP";
                 break;
                 }
+            default:
+                {
+                qWarning () << "Unexpected device type";
+                break;
+                }
             }
 
         settings.setValue (controller + "/type",

@@ -72,7 +72,7 @@ private:
     /// @return     True if all fields are filled correctly
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual bool hasAcceptableInput () const;
+    virtual bool hasAcceptableInput () const override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the dialog box labels
