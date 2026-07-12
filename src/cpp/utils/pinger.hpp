@@ -32,11 +32,12 @@ public:
     // result of a ping operation
     struct result
         {
-        std::chrono::milliseconds   roundtrip;  ///< Ping roundtrip time in milliseconds
-        ulong                       status;     ///< Status code
-        uchar                       ttl;        ///< IP header TTL value (time to live)
-        uchar                       tos;        ///< IP header TOS value (type of service)
-        uchar                       flags;      ///< IP header flags field
+        std::chrono::milliseconds   roundtrip;          ///< Ping roundtrip time in milliseconds
+        ulong                       status;             ///< Status code
+        uchar                       ttl;                ///< IP header TTL value (time to live)
+        uchar                       tos;                ///< IP header TOS value (type of service)
+        uchar                       flags;              ///< IP header flags field
+        bool                        success = false;    ///< True if succeeded
         };
 
     ///////////////////////////////////////////////////////////////////////////////

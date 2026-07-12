@@ -313,6 +313,8 @@ struct clockFace
 namespace ui::clock
 {
 
+static const char* const DATE_FONT = "Cascadia Mono";
+
 ///////////////////////////////////////////////////////////////////////////////
 /// Make an array of the same kind of index
 ///
@@ -711,7 +713,7 @@ static void drawHandWithShadow (QPainter&                                   pain
 AnalogClock::AnalogClock (QWidget* parent) :
     ClockWidget (parent)
     {
-    m_font.setFamily ("Cascadia Mono");
+    m_font.setFamily (DATE_FONT);
     m_font.setPixelSize (14);
 
     connect (&utils::Battery::instance (),

@@ -24,20 +24,43 @@
 namespace ui::trains
 {
 
+static constexpr int MAX_SLIDER_GROOVE_WIDTH = 20;
+
+namespace // anonymous
+{
+///////////////////////////////////////////////////////////////////////////////
+/// Slider bar widget, with positive/negative values with the 0 position at the
+/// center, and the progress drawn from this origin point
+///
+///////////////////////////////////////////////////////////////////////////////
 class CenteredSlider : public QSlider
     {
 public:
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  ornt        Orientation (vertical or horizontal)
+    /// @param[in]  parent      Parent widget
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     CenteredSlider (Qt::Orientation ornt, QWidget* parent) :
         QSlider (ornt, parent)
         {}
 protected:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Draw the slider bar widget
+    ///
+    /// @param[in]  event       Paint event
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     virtual void paintEvent (QPaintEvent* event) override
         {
         QPainter painter (this);
         painter.setRenderHint (QPainter::Antialiasing, true);
 
         QStyleOptionSlider option;
-        option.initFrom (this);
+        initStyleOption (&option);
 
         QRect   grooveRect;
         QRect   handleRect;
@@ -81,18 +104,29 @@ protected:
             option.orientation = Qt::Vertical;
             grooveRect = style ()->subControlRect (QStyle::CC_Slider,
                                                    &option,
-                                                   QStyle::SC_SliderGroove,
-                                                   this);
+                                                   QStyle::SC_SliderGroove);
             handleRect = style ()->subControlRect (QStyle::CC_Slider,
                                                    &option,
-                                                   QStyle::SC_SliderHandle,
-                                                   this);
+                                                   QStyle::SC_SliderHandle);
 
             int centerNudge = widgetRect.center ().x () - grooveRect.center ().x ();
 
             grooveRect.moveLeft (centerNudge);
             handleRect.moveLeft (centerNudge);
+
             grooveRect.adjust (0, 5, 0, -5);
+
+            // On Mac the groove expands to fill the space
+            // This makes it look more reasonable
+#ifdef Q_OS_MACOS
+            if (grooveRect.width() > MAX_SLIDER_GROOVE_WIDTH)
+                {
+                int delta = grooveRect.width() - MAX_SLIDER_GROOVE_WIDTH;
+
+                grooveRect.adjust (delta / 2, 0, -delta / 2, 0);
+                handleRect.adjust (delta / 2, 0, -delta / 2, 0);
+                }
+#endif // Q_OS_MACOS
 
             QPoint grooveCenter = grooveRect.center ();
             progressRect = grooveRect;
@@ -167,6 +201,8 @@ protected:
 private:
 
     };
+
+} // namespace anonymous
 
 SpeedControlWidget::SpeedControlWidget (QWidget* parent) :
     QWidget (parent)

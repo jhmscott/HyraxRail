@@ -32,7 +32,7 @@ ActuatorGroup::ActuatorGroup (control::AutomationManager&   automations,
                         {
                         common::AutoGridLayout::expand::ROW_FIRST,
                         common::AutoGridLayout::EXPAND,
-                        this
+                        NULL
                         };
 
     for (const layout::Actuator& actuator : m_controller.getActuators ())

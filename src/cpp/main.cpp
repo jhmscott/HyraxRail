@@ -8,6 +8,7 @@
  */
 
 #include <QtWidgets/QApplication>
+#include <QFontDatabase>
 
 #include <control/protocols/ecos.hpp>
 
@@ -44,6 +45,8 @@ int main (int argc, char *argv[])
     QApplication::setOrganizationDomain (COMPANY_DOMAIN);
     QApplication::setApplicationVersion (VERSION_STRING);
     QApplication::setWindowIcon         (QIcon{ ":/icons/app/conductor-hyrax.ico" });
+
+    QFontDatabase::addApplicationFont (":/fonts/CascadiaMono.ttf");
 
     int rc;
 

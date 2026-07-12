@@ -92,6 +92,11 @@ MainWidget::MainWidget (QWidget* parent) :
 
     setTooltips ();
     setIconSize ({ 24, 24 });
+
+    // Mac tab button sizing is a bit big for my taste
+#ifdef Q_OS_MACOS
+    setStyleSheet("QTabBar::tab { width: 28px; height: 28px; }");
+#endif // Q_OS_MACOS
     }
 
 MainWidget::~MainWidget ()

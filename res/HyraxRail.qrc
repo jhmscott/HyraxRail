@@ -11,6 +11,8 @@
         <file>fonts/DSEG14-Classic/DSEG14Classic-LightItalic.ttf</file>
         <file>fonts/DSEG14-Classic/DSEG14Classic-Regular.ttf</file>
 
+        <file>fonts/CascadiaMono.ttf</file>
+
         <!--Text-->
         <file>text/LICENSE_LUCIDE</file>
         <file>text/LICENSE_PHOSPHOR</file>

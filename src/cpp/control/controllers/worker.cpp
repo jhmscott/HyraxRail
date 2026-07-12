@@ -93,7 +93,11 @@ void ConnectionWorkerThread::loop ()
                     {
                     auto res = m_pinger->ping ();
 
-                    if (res.roundtrip <= 1ms)
+                    if (not res.success)
+                        {
+                        newHealth.level = HEALTH_DEAD;
+                        }
+                    else if (res.roundtrip <= 1ms)
                         {
                         newHealth.level = HEALTH_FULL;
                         }

@@ -36,8 +36,8 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers, vAl
     {
 
     QVBoxLayout* mainLayout     = new QVBoxLayout{ this };
-    QHBoxLayout* controlLayout  = new QHBoxLayout{ this };
-    QHBoxLayout* trainSelLayout = new QHBoxLayout{ this };
+    QHBoxLayout* controlLayout  = new QHBoxLayout;
+    QHBoxLayout* trainSelLayout = new QHBoxLayout;
 
     m_controllerInfo = new ControllerInfo (controllers.size () > 0 ? &(controllers[0]) : NULL, this, false);
 

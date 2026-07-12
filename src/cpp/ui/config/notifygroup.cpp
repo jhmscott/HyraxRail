@@ -27,7 +27,7 @@ NotifyGroup::NotifyGroup (QWidget* parent) :
 
     font.setPixelSize (16);
 
-    QHBoxLayout*    stopNotify  = new QHBoxLayout{ this };
+    QHBoxLayout*    stopNotify  = new QHBoxLayout;
 
     m_stopLabel   = new QLabel{ this };
 
@@ -36,7 +36,7 @@ NotifyGroup::NotifyGroup (QWidget* parent) :
     stopNotify->addWidget (m_stopLabel, 0, Qt::AlignLeft);
     stopNotify->addWidget (new common::ToggleSwitch{ this }, 0, Qt::AlignRight);
 
-    QHBoxLayout*    sensorNotify    = new QHBoxLayout{ this };
+    QHBoxLayout*    sensorNotify    = new QHBoxLayout;
 
     m_sensorLabel     = new QLabel{ this };
 
