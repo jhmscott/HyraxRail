@@ -60,7 +60,13 @@ protected:
         painter.setRenderHint (QPainter::Antialiasing, true);
 
         QStyleOptionSlider option;
+
+#ifdef Q_OS_WIN
+        option.initFrom (this);
+#else
         initStyleOption (&option);
+#endif // Q_OS_WIN
+
 
         QRect   grooveRect;
         QRect   handleRect;
@@ -71,7 +77,7 @@ protected:
         QRect   widgetRect  = rect ();
         bool    darkMode    = Qt::ColorScheme::Dark == qApp->styleHints ()->colorScheme ();
 
-        if (orientation () == Qt::Horizontal)
+        if (Qt::Horizontal == orientation ())
             {
             QRect grooveRect = style ()->subControlRect (QStyle::CC_Slider,
                                                          &option,
@@ -99,7 +105,7 @@ protected:
             //to the handle's position
             progressRect.setRight (handlePoint.x ());
             }
-        else
+        else // (Qt::Vertical == orientation ())
             {
             option.orientation = Qt::Vertical;
             grooveRect = style ()->subControlRect (QStyle::CC_Slider,
