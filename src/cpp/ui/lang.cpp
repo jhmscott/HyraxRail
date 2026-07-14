@@ -13,11 +13,16 @@
 
 #include <QApplication>
 #include <QLibraryInfo>
+#include <Qtimer>
 
 #ifdef Q_OS_WIN
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #endif // Q_OS_WIN
+
+#ifdef Q_OS_MACOS
+#include <../objective-c/lang.hpp>
+#endif // Q_OS_MACOS
 
 namespace ui::lang
 {
@@ -82,10 +87,19 @@ void Translator::setLocale (const QLocale& locale)
             }
         }
     }
+#ifdef Q_OS_MACOS
+void Translator::onLanguageChanged ()
+    {
+    // Introduce a delay, because sometimes the locale returns the old value initially
+    QTimer::singleShot (1000,
+                        [this] () -> void
+                        { setLocale (); });
+    }
+#endif // Q_OS_MACOS
 
 QLocale system ()
     {
-    QLocale locale = QLocale::system ();
+    QLocale locale;
 
 #ifdef Q_OS_WIN
     wchar_t name[LOCALE_NAME_MAX_LENGTH];
@@ -93,12 +107,17 @@ QLocale system ()
     if (0 == GetUserDefaultLocaleName (name, std::size (name)))
         {
         logWinWarning (GetUserDefaultLocaleName);
+        locale  = QLocale::system ();
         }
     else
         {
         locale = QLocale{ name };
         }
 #endif // Q_OS_WIN
+
+#ifdef Q_OS_MACOS
+    locale = QLocale{ apple::systemLocale ().c_str () };
+#endif // Q_OS_MACOS
 
     return locale;
     }

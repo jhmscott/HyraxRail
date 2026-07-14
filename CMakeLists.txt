@@ -1,10 +1,16 @@
 # Top level configuration and variables
 cmake_minimum_required(VERSION 3.19)
-project(HyraxRail LANGUAGES C CXX)
+project(HyraxRail LANGUAGES C CXX OBJCXX)
 
 set(CMAKE_MACOSX_DEPLOYMENT_TARGET 10.15)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 11)
+set(CMAKE_OBJCXX_STANDARD 17)
+
+
+# External libraries
+find_library(FOUNDATION_FRAMEWORK Foundation REQUIRED)
+find_library(COCOA_FRAMEWORK Cocoa REQUIRED)
 
 # QT init
 
@@ -27,7 +33,10 @@ file(GLOB_RECURSE C_SOURCES "src/cpp/*.c")
 file(GLOB_RECURSE CPP_HEADERS "src/cpp/*.hpp")
 file(GLOB_RECURSE C_HEADERS "src/cpp/*.h")
 
-set(SOURCES ${CPP_HEADERS} ${C_HEADERS} ${CPP_SOURCES} ${C_SOURCES})
+file(GLOB_RECURSE O_CPP_SOURCES "src/objective-c/*.mm")
+file(GLOB_RECURSE O_CPP_HEADERS "src/objective-c/*.hpp")
+
+set(SOURCES ${CPP_HEADERS} ${C_HEADERS} ${CPP_SOURCES} ${C_SOURCES} ${O_CPP_SOURCES} ${O_CPP_HEADERS})
 
 # Setup translation files
 
@@ -37,8 +46,12 @@ qt_add_translations(HyraxRail
     TS_FILES ${TRANSLATIONS}
     SOURCES ${SOURCES}
     QM_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/res/translations)
-# Runs lupdate and lrelease wit each builc
-add_custom_target(ALL DEPENDS HyraxRail_lupdate HyraxRail_lrelease)
+
+# Runs lupdate and lrelease with each build
+add_custom_target(ALL DEPENDS
+# TODO: For now, leave lupdate to windows
+#    HyraxRail_lupdate
+    HyraxRail_lrelease)
 
 # Build resource files
 
