@@ -21,7 +21,8 @@ find_package(Qt6 6.11
     Gui
     Network
     SerialPort
-    LinguistTools)
+    LinguistTools
+)
 
 qt_standard_project_setup()
 
@@ -57,10 +58,16 @@ add_custom_target(ALL DEPENDS
 
 qt_add_resources(SOURCES res/HyraxRail.qrc)
 
+# Add Mac App icon
+set(MACOSX_BUNDLE_ICON_FILE conductor-hyrax.icns)
+set(APP_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/res/icons/app/${MACOSX_BUNDLE_ICON_FILE}")
+set_source_files_properties(${APP_ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+
 # create target
 qt_add_executable(HyraxRail
     WIN32 MACOSX_BUNDLE
     ${SOURCES}
+    ${APP_ICON_PATH}
 )
 
 target_include_directories(HyraxRail

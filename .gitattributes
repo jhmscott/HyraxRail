@@ -3,6 +3,8 @@
 *.TTF filter=lfs diff=lfs merge=lfs -text
 *.ico filter=lfs diff=lfs merge=lfs -text
 *.ICO filter=lfs diff=lfs merge=lfs -text
+*.icns filter=lfs diff=lfs merge=lfs -text
+*.ICNS filter=lfs diff=lfs merge=lfs -text
 
 # UTF-16 encoded files
 *.rc working-tree-encoding=UTF-16

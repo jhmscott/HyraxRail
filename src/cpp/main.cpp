@@ -21,7 +21,7 @@
 
 #include <QDebug>
 #include <QTranslator>
-
+#include <QImageReader>
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Main application entry point
@@ -44,8 +44,11 @@ int main (int argc, char *argv[])
     QApplication::setOrganizationName   (COMPANY_NAME);
     QApplication::setOrganizationDomain (COMPANY_DOMAIN);
     QApplication::setApplicationVersion (VERSION_STRING);
+#ifdef Q_OS_MACOS
+    QApplication::setWindowIcon         (QIcon{ ":/icons/app/conductor-hyrax.icns" });
+#else
     QApplication::setWindowIcon         (QIcon{ ":/icons/app/conductor-hyrax.ico" });
-
+#endif
     QFontDatabase::addApplicationFont (":/fonts/CascadiaMono.ttf");
 
     int rc;
