@@ -19,6 +19,7 @@ namespace utils
 {
 namespace // anonymous
 {
+// forward declare
 class BatteryImpl;
 }
 

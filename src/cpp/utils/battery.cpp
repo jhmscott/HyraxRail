@@ -11,6 +11,11 @@
 #include <utils/log.hpp>
 #include <utils/os.hpp>
 
+#ifdef Q_OS_MACOS
+#include <IOKit/ps/IOPowerSources.h>
+#include <IOKit/ps/IOPSKeys.h>
+#endif // Q_OS_MACOS
+
 namespace utils
 {
 
@@ -136,13 +141,123 @@ private:
 
 
 #ifdef Q_OS_MACOS
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Query the charge of the main system battery in percent
+///
+/// @return     Current battery percentage [0,100]
+///
+///////////////////////////////////////////////////////////////////////////////
+static int getBatteryPercentage ()
+    {
+    int         percent     = -1;
+    CFTypeRef   info        = IOPSCopyPowerSourcesInfo ();
+    CFArrayRef  sources     = IOPSCopyPowerSourcesList (info);
+
+    if (CFArrayGetCount (sources) > 0)
+        {
+        const void* value;
+        int         maxCapacity;
+        int         curCapacity;
+
+        CFTypeRef       type = CFArrayGetValueAtIndex (sources, 0);
+        CFDictionaryRef dict = static_cast<CFDictionaryRef> (IOPSGetPowerSourceDescription (info, type));
+
+
+        value = CFDictionaryGetValue (dict, CFSTR (kIOPSCurrentCapacityKey));
+        CFNumberGetValue (static_cast<CFNumberRef> (value),
+                          kCFNumberSInt32Type,
+                         &curCapacity);
+
+        value = CFDictionaryGetValue (dict, CFSTR (kIOPSMaxCapacityKey));
+        CFNumberGetValue (static_cast<CFNumberRef> (value),
+                          kCFNumberSInt32Type,
+                         &maxCapacity);
+
+        percent = curCapacity * 100 / maxCapacity;
+        }
+
+    CFRelease (sources);
+    CFRelease (info);
+
+    return percent;
+    }
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Apple battery implementation. Adds a run loop source to the main run loop
+/// that recieves notifications about battery changes
+///
+/// @ingroup    PIMPL
+///
+///////////////////////////////////////////////////////////////////////////////
 class BatteryImpl
     {
 public:
-    explicit BatteryImpl (Battery* battery)
-        {}
+    explicit BatteryImpl (Battery* battery) :
+        m_battery (battery)
+        {
+        CFRunLoopRef mainRunLoop = CFRunLoopGetMain();
 
-    int getBatteryPercent () const { return 100; }
+        m_percent = getBatteryPercentage ();
+        m_ref = IOPSNotificationCreateRunLoopSource (&BatteryImpl::batteryStateChanged,
+                                                      this);
+
+        CFRunLoopAddSource (mainRunLoop,
+                            m_ref,
+                            kCFRunLoopCommonModes);
+        }
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Destructor
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    ~BatteryImpl ()
+        {
+        CFRunLoopSourceInvalidate (m_ref);
+        CFRelease (m_ref);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the battery percentage
+    ///
+    /// @return     Battery precentage [0,100]
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::optional<int> getBatteryPercent ()  const
+        {
+        std::optional<int> rc;
+
+        if (-1 != m_percent)
+            {
+            rc = m_percent;
+            }
+
+        return rc;
+        }
+
+private:
+    Battery*            m_battery;  ///< Battery instance to recieve notifications
+    CFRunLoopSourceRef  m_ref;      ///< Reference to the run source that is registered with the main loop
+    int                 m_percent;  ///< Battery percentage [0,100]
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Callback registered to recieve power notifications
+    ///
+    /// @param[in]  ud  User data passed in IOPSNotificationCreateRunLoopSource()
+    ///                 Pointer to the BatteryImpl instance
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    static void batteryStateChanged (void* ud)
+        {
+        BatteryImpl& self = *static_cast<BatteryImpl*> (ud);
+
+        self.m_percent = getBatteryPercentage ();
+        emit self.m_battery->batteryPercentageChange (self.m_percent);
+        }
+
     };
 
 #endif // Q_OS_MACOS

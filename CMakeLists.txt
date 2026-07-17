@@ -1,6 +1,8 @@
 # Top level configuration and variables
 cmake_minimum_required(VERSION 3.19)
-project(HyraxRail LANGUAGES C CXX OBJCXX)
+project(HyraxRail
+    VERSION 0.1
+    LANGUAGES C CXX OBJCXX)
 
 set(CMAKE_MACOSX_DEPLOYMENT_TARGET 10.15)
 set(CMAKE_CXX_STANDARD 17)
