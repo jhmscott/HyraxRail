@@ -744,10 +744,12 @@ void AnalogClock::setStyle (clockStyle newStyle)
 
 void AnalogClock::paintEvent (QPaintEvent* event)
     {
-    const QColor hourColor      = palette ().color (QPalette::Text);
-    const QColor minuteColor    = palette ().color (QPalette::Text);
-    const QColor secondsColor   = palette ().color (QPalette::Accent);
-    const QColor shadowColor    = Qt::gray;
+    // Use the app palette, the widget pallette isn't updated dynamically
+    const QPalette  myPalette       = qApp->palette ();
+    const QColor    hourColor       = myPalette.color (QPalette::Text);
+    const QColor    minuteColor     = myPalette.color (QPalette::Text);
+    const QColor    secondsColor    = myPalette.color (QPalette::Accent);
+    const QColor    shadowColor     = Qt::gray;
 
     int side = std::min (width(), height());
 
@@ -768,6 +770,7 @@ void AnalogClock::paintEvent (QPaintEvent* event)
 
     // Draw the day/date window
     painter.setFont (m_font);
+    painter.setPen (myPalette.color (QPalette::Text));
 
     switch (face.window.style)
         {

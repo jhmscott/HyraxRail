@@ -25,7 +25,9 @@ DurationField::DurationField (const utils::time::units& units, QWidget* parent) 
     QHBoxLayout* layout = new QHBoxLayout{ this };
 
     m_num   = new QSpinBox{ this };
-    m_unit = new QComboBox{ this };
+    m_unit  = new QComboBox{ this };
+
+    refreshStyleSheetOnColorSchemeChange (*m_unit);
 
     for (size_t ii : utils::algorithm::bitsetToSet (units))
         {

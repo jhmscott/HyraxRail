@@ -17,10 +17,12 @@ OptionalDropdown::OptionalDropdown (QWidget* parent) :
     {
     QHBoxLayout* layout = new QHBoxLayout{ this };
 
-    m_singleItem = new QLabel{ this };
-    m_dropdown = new QComboBox{ this };
+    m_singleItem    = new QLabel{ this };
+    m_dropdown      = new QComboBox{ this };
 
     m_dropdown->setVisible (false);
+
+    refreshStyleSheetOnColorSchemeChange (*m_dropdown);
 
     layout->addWidget (m_singleItem);
     layout->addWidget (m_dropdown);

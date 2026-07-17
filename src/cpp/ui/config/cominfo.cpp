@@ -23,6 +23,9 @@ ComPortInfoWidget::ComPortInfoWidget (QWidget* parent) :
     m_comport   = new QComboBox{ this };
     m_baud      = new QComboBox{ this };
 
+    common::refreshStyleSheetOnColorSchemeChange (*m_comport);
+    common::refreshStyleSheetOnColorSchemeChange (*m_baud);
+
     for (auto& comPort : QSerialPortInfo::availablePorts ())
         {
         m_comport->addItem (comPort.portName (),

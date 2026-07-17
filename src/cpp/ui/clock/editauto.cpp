@@ -75,6 +75,8 @@ EditAutoDialog::EditAutoDialog (control::ControllerManager& controllers,
     m_layout->addRow (new QLabel{ this }, m_doOnce      = new QCheckBox{ this });
     m_layout->addRow (new QLabel{ this }, m_enabled     = new QCheckBox{ this });
 
+    common::refreshStyleSheetOnColorSchemeChange (*m_conditions);
+
     for (auto& controller : controllers)
         {
         for (auto& item : controller.getAutomationItems ())

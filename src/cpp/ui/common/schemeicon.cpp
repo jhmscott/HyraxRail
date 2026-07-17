@@ -9,6 +9,7 @@
  */
 
 #include <ui/common/schemeicon.hpp>
+#include <ui/common/utils.hpp>
 
 #include <QApplication>
 #include <QStyleHints>
@@ -107,6 +108,8 @@ void SchemeDialog::colorSchemeChanged (Qt::ColorScheme scheme)
 SchemeComboBox::SchemeComboBox (QWidget* parent) :
     QComboBox (parent)
     {
+    refreshStyleSheetOnColorSchemeChange (*this);
+
     connect (qApp->styleHints (),
             &QStyleHints::colorSchemeChanged,
              this,

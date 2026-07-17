@@ -32,6 +32,8 @@ NetworkDeviceInfoWidget::NetworkDeviceInfoWidget (QWidget* parent, utils::device
     m_hostname  = new common::HostEntryField{ this };
     m_port      = new QLineEdit{ this };
 
+    common::refreshStyleSheetOnColorSchemeChange (*m_network);
+
     m_network->addItem (tr ("IPv4"),     QVariant::fromValue (QHostAddress::IPv4Protocol));
 
     if (utils::os::isIPv6Available ())

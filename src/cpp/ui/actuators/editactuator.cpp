@@ -39,6 +39,9 @@ EditActuatorDialog::EditActuatorDialog (control::ControllerBase&    controller,
     m_form->addRow (new QLabel{ this }, m_mode      = new QComboBox{ this });
     m_form->addRow (new QLabel{ this }, m_duration  = new QComboBox{ this });
 
+    common::refreshStyleSheetOnColorSchemeChange (*m_mode);
+    common::refreshStyleSheetOnColorSchemeChange (*m_duration);
+
     setLabels ();
 
     setWindowIcon ("misc/split");
