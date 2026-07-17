@@ -4,42 +4,42 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="113"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="119"/>
         <source>Every %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="182"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="188"/>
         <source>Each day at %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="253"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="259"/>
         <source>%1 at %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="323"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="329"/>
         <source>Day % of every month at %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="357"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="363"/>
         <source>Timer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="358"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="364"/>
         <source>Daily Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="359"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="365"/>
         <source>Weekly Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="360"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="366"/>
         <source>Monthly Alarm</source>
         <translation type="unfinished"></translation>
     </message>
@@ -130,32 +130,32 @@
 <context>
     <name>ui::MainWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="150"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="160"/>
         <source>Trains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="151"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="161"/>
         <source>Actuators</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="152"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="162"/>
         <source>Sensors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="153"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="163"/>
         <source>Routes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="154"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="164"/>
         <source>Fast Clock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="155"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="165"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -163,38 +163,38 @@
 <context>
     <name>ui::MainWindow</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="148"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="154"/>
         <source>Hyrax Rail</source>
         <translation>Klipdas Spoorwegen</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="165"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="171"/>
         <source>Shutdown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="166"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="172"/>
         <source>The Fast Clock is still running.
 Would you like to pause it or keep it running?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="169"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="175"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="170"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="176"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="171"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="177"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="173"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="179"/>
         <source>Always do this on shutdown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -238,39 +238,39 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::actuators::EditActuatorDialog</name>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="57"/>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="108"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="60"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="111"/>
         <source>Switch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="58"/>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="109"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="61"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="112"/>
         <source>Pulse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="116"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="119"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="117"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="120"/>
         <source>Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="118"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="121"/>
         <source>Icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="119"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="122"/>
         <source>Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="120"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="123"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -367,42 +367,42 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::clock::EditAutoDialog</name>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="186"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="188"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="187"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="189"/>
         <source>Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="188"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="190"/>
         <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="189"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="191"/>
         <source>Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="190"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="192"/>
         <source>Do Once</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="191"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="193"/>
         <source>Enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="213"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="215"/>
         <source>Edit Automation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="217"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="219"/>
         <source>Add Automation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -467,12 +467,12 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::config::ComPortInfoWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/config/cominfo.cpp" line="78"/>
+        <location filename="../../src/cpp/ui/config/cominfo.cpp" line="81"/>
         <source>Baud Rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/cominfo.cpp" line="79"/>
+        <location filename="../../src/cpp/ui/config/cominfo.cpp" line="82"/>
         <source>COM Port</source>
         <translation type="unfinished"></translation>
     </message>
@@ -598,47 +598,47 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::config::NetworkDeviceInfoWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="35"/>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="216"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="37"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="233"/>
         <source>IPv4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="39"/>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="220"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="41"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="237"/>
         <source>IPv6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="42"/>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="211"/>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="223"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="44"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="228"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="240"/>
         <source>Host Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="159"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="166"/>
         <source>Invalid host name format &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="164"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="171"/>
         <source>Host &quot;%1&quot; does not exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="208"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="225"/>
         <source>Network Protocol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="209"/>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="210"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="226"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="227"/>
         <source>Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="212"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="229"/>
         <source>Port</source>
         <translation type="unfinished"></translation>
     </message>
@@ -767,137 +767,137 @@ Would you like to pause it or keep it running?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="170"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="171"/>
         <source>Monday</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="171"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="172"/>
         <source>Tuesday</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="172"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="173"/>
         <source>Wednesday</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="173"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="174"/>
         <source>Thursday</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="174"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="175"/>
         <source>Friday</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="175"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="176"/>
         <source>Saturday</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="176"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="177"/>
         <source>Sunday</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="200"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="201"/>
         <source>Mon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="201"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="202"/>
         <source>Tue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="202"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="203"/>
         <source>Wed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="203"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="204"/>
         <source>Thu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="204"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="205"/>
         <source>Fri</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="205"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="206"/>
         <source>Sat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="206"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="207"/>
         <source>Sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="230"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="231"/>
         <source>Jan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="231"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="232"/>
         <source>Feb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="232"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="233"/>
         <source>Mar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="233"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="234"/>
         <source>Apr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="234"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="235"/>
         <source>May</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="235"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="236"/>
         <source>Jun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="236"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="237"/>
         <source>Jul</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="237"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="238"/>
         <source>Aug</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="238"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="239"/>
         <source>Sep</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="239"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="240"/>
         <source>Oct</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="240"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="241"/>
         <source>Nov</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="241"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="242"/>
         <source>Dec</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="262"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="263"/>
         <source>%n nanosecond(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -905,7 +905,7 @@ Would you like to pause it or keep it running?</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="263"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="264"/>
         <source>%n microsecond(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -913,7 +913,7 @@ Would you like to pause it or keep it running?</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="264"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="265"/>
         <source>%n millisecond(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -921,7 +921,7 @@ Would you like to pause it or keep it running?</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="265"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="266"/>
         <source>%n second(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -929,7 +929,7 @@ Would you like to pause it or keep it running?</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="266"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="267"/>
         <source>%n minute(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -937,7 +937,7 @@ Would you like to pause it or keep it running?</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="267"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="268"/>
         <source>%n hour(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -945,7 +945,7 @@ Would you like to pause it or keep it running?</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="268"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="269"/>
         <source>%n day(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -953,7 +953,7 @@ Would you like to pause it or keep it running?</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="269"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="270"/>
         <source>%n week(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -961,42 +961,42 @@ Would you like to pause it or keep it running?</source>
         </translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="290"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="291"/>
         <source>ns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="291"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="292"/>
         <source>μs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="292"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="293"/>
         <source>ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="293"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="294"/>
         <source>s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="294"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="295"/>
         <source>min</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="295"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="296"/>
         <source>hrs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="296"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="297"/>
         <source>days</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="297"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="298"/>
         <source>wks</source>
         <translation type="unfinished"></translation>
     </message>

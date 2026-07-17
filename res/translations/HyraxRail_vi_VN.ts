@@ -60,42 +60,42 @@
         <translation>Chuyển</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="113"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="119"/>
         <source>Every %1</source>
         <translation>Mỗi %1</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="182"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="188"/>
         <source>Each day at %1</source>
         <translation>Mỗi Ngày Tại %1</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="253"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="259"/>
         <source>%1 at %2</source>
         <translation>%1 tại %2</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="323"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="329"/>
         <source>Day % of every month at %2</source>
         <translation>Ngày % ở mỗi tháng tại %2</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="357"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="363"/>
         <source>Timer</source>
         <translation>Hẹn giờ</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="358"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="364"/>
         <source>Daily Alarm</source>
         <translation>Báo thức hàng ngày</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="359"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="365"/>
         <source>Weekly Alarm</source>
         <translation>Báo thức hàng tuần</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="360"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="366"/>
         <source>Monthly Alarm</source>
         <translation>Báo thức hàng tháng</translation>
     </message>
@@ -136,28 +136,28 @@
 <context>
     <name>ui::MainWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="150"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="160"/>
         <source>Trains</source>
         <translation>Tàu</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="151"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="161"/>
         <source>Actuators</source>
         <translatorcomment>actuators</translatorcomment>
         <translation>Bộ Truyền Động</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="152"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="162"/>
         <source>Sensors</source>
         <translation>Cảm Biến Điện Tử</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="153"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="163"/>
         <source>Routes</source>
         <translation>Tuyến Đường</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="154"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="164"/>
         <source>Fast Clock</source>
         <translation>Đồng Hồ Nhanh</translation>
     </message>
@@ -166,7 +166,7 @@
         <translation type="obsolete">Lập Trình</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="155"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="165"/>
         <source>Settings</source>
         <translation>Cài Đặt</translation>
     </message>
@@ -174,38 +174,38 @@
 <context>
     <name>ui::MainWindow</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="165"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="171"/>
         <source>Shutdown</source>
         <translation>Tắt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="166"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="172"/>
         <source>The Fast Clock is still running.
 Would you like to pause it or keep it running?</source>
         <translation>Đồng hồ nhanh đang chạy. Bạn muốn dừng hay tắc đồng hồ?</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="170"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="176"/>
         <source>Pause</source>
         <translation>Dừng</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="173"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="179"/>
         <source>Always do this on shutdown</source>
         <translation>Luôn thực hiện thao tác này khi tắt máy</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="169"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="175"/>
         <source>Run</source>
         <translation>Chạy</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="171"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="177"/>
         <source>Cancel</source>
         <translation>Hủy</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="148"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="154"/>
         <source>Hyrax Rail</source>
         <translation>Đường sắt Hyrax</translation>
     </message>
@@ -249,39 +249,39 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::actuators::EditActuatorDialog</name>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="116"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="119"/>
         <source>Name</source>
         <translation>Tên</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="117"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="120"/>
         <source>Address</source>
         <translation>Địa Chỉ</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="118"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="121"/>
         <source>Icon</source>
         <translation>Biểu Tượng</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="119"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="122"/>
         <source>Mode</source>
         <translation>Chế Độ</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="120"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="123"/>
         <source>Duration</source>
         <translation>Thời Hạn</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="57"/>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="108"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="60"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="111"/>
         <source>Switch</source>
         <translation>Bật Công Tắc</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="58"/>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="109"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="61"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="112"/>
         <source>Pulse</source>
         <translation>Mở Nhanh</translation>
     </message>
@@ -385,42 +385,42 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::clock::EditAutoDialog</name>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="186"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="188"/>
         <source>Name</source>
         <translation>Tên</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="187"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="189"/>
         <source>Item</source>
         <translation>Tiết mục</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="188"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="190"/>
         <source>Action</source>
         <translation>Hành động</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="189"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="191"/>
         <source>Condition</source>
         <translation>Tình trạng</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="190"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="192"/>
         <source>Do Once</source>
         <translation>Làm một lần</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="191"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="193"/>
         <source>Enabled</source>
         <translation>Đã bật</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="213"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="215"/>
         <source>Edit Automation</source>
         <translation>Thay đổi quy trình tự động</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="217"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="219"/>
         <source>Add Automation</source>
         <translation>Thêm quy trình tự động</translation>
     </message>
@@ -485,12 +485,12 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::config::ComPortInfoWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/config/cominfo.cpp" line="78"/>
+        <location filename="../../src/cpp/ui/config/cominfo.cpp" line="81"/>
         <source>Baud Rate</source>
         <translation>Tỷ lệ Baud</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/cominfo.cpp" line="79"/>
+        <location filename="../../src/cpp/ui/config/cominfo.cpp" line="82"/>
         <source>COM Port</source>
         <translation></translation>
     </message>
@@ -616,47 +616,47 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::config::NetworkDeviceInfoWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="35"/>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="216"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="37"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="233"/>
         <source>IPv4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="39"/>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="220"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="41"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="237"/>
         <source>IPv6</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="42"/>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="211"/>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="223"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="44"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="228"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="240"/>
         <source>Host Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="208"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="225"/>
         <source>Network Protocol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="209"/>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="210"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="226"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="227"/>
         <source>Address</source>
         <translation>Địa Chỉ</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="212"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="229"/>
         <source>Port</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="159"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="166"/>
         <source>Invalid host name format &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="164"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="171"/>
         <source>Host &quot;%1&quot; does not exist</source>
         <translation type="unfinished"></translation>
     </message>
@@ -760,228 +760,228 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>utils::time::internal::TimeStringConstants</name>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="170"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="171"/>
         <source>Monday</source>
         <translation>Thứ hai</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="171"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="172"/>
         <source>Tuesday</source>
         <translation>Thứ ba</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="172"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="173"/>
         <source>Wednesday</source>
         <translation>Thứ tư</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="173"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="174"/>
         <source>Thursday</source>
         <translation>Thứ năm</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="174"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="175"/>
         <source>Friday</source>
         <translation>Thứ sáu</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="175"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="176"/>
         <source>Saturday</source>
         <translation>Thứ bảy</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="176"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="177"/>
         <source>Sunday</source>
         <translation>Chủ nhật</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="200"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="201"/>
         <source>Mon</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="201"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="202"/>
         <source>Tue</source>
         <translation>3</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="202"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="203"/>
         <source>Wed</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="203"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="204"/>
         <source>Thu</source>
         <translation>5</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="204"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="205"/>
         <source>Fri</source>
         <translation>6</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="205"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="206"/>
         <source>Sat</source>
         <translation>7</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="206"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="207"/>
         <source>Sun</source>
         <translation>CN</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="230"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="231"/>
         <source>Jan</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="231"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="232"/>
         <source>Feb</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="232"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="233"/>
         <source>Mar</source>
         <translation>3</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="233"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="234"/>
         <source>Apr</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="234"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="235"/>
         <source>May</source>
         <translation>5</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="235"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="236"/>
         <source>Jun</source>
         <translation>6</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="236"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="237"/>
         <source>Jul</source>
         <translation>7</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="237"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="238"/>
         <source>Aug</source>
         <translation>8</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="238"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="239"/>
         <source>Sep</source>
         <translation>9</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="239"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="240"/>
         <source>Oct</source>
         <translation>10</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="240"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="241"/>
         <source>Nov</source>
         <translation>11</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="241"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="242"/>
         <source>Dec</source>
         <translation>12</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="262"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="263"/>
         <source>%n nanosecond(s)</source>
         <translation>
             <numerusform>%n nano giây</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="263"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="264"/>
         <source>%n microsecond(s)</source>
         <translation>
             <numerusform>%n micro giây</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="264"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="265"/>
         <source>%n millisecond(s)</source>
         <translation>
             <numerusform>%n mili giây</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="265"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="266"/>
         <source>%n second(s)</source>
         <translation>
             <numerusform>%n giây</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="266"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="267"/>
         <source>%n minute(s)</source>
         <translation>
             <numerusform>%n phút</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="267"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="268"/>
         <source>%n hour(s)</source>
         <translation>
             <numerusform>%n giờ</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="268"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="269"/>
         <source>%n day(s)</source>
         <translation>
             <numerusform>%n ngày</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/cpp/utils/time.hpp" line="269"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="270"/>
         <source>%n week(s)</source>
         <translation>
             <numerusform>%n tuần</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="290"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="291"/>
         <source>ns</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="291"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="292"/>
         <source>μs</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="292"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="293"/>
         <source>ms</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="293"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="294"/>
         <source>s</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="294"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="295"/>
         <source>min</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="295"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="296"/>
         <source>hrs</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="296"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="297"/>
         <source>days</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/time.hpp" line="297"/>
+        <location filename="../../src/cpp/utils/time.hpp" line="298"/>
         <source>wks</source>
         <translation></translation>
     </message>
