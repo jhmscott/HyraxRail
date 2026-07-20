@@ -68,7 +68,7 @@ static bool utf8ToWString (std::string_view string, wchar_t (&wString)[N])
 
 void setThreadName (std::string_view name, std::thread::native_handle_type handle)
     {
-    if (NULL == handle)
+    if (null_handle == handle)
         {
 #ifdef Q_OS_WIN
         handle = GetCurrentThread ();

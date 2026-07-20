@@ -136,28 +136,28 @@
 <context>
     <name>ui::MainWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="160"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="169"/>
         <source>Trains</source>
         <translation>Tàu</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="161"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="170"/>
         <source>Actuators</source>
         <translatorcomment>actuators</translatorcomment>
         <translation>Bộ Truyền Động</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="162"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="171"/>
         <source>Sensors</source>
         <translation>Cảm Biến Điện Tử</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="163"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="172"/>
         <source>Routes</source>
         <translation>Tuyến Đường</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="164"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="173"/>
         <source>Fast Clock</source>
         <translation>Đồng Hồ Nhanh</translation>
     </message>
@@ -166,7 +166,7 @@
         <translation type="obsolete">Lập Trình</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="165"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="174"/>
         <source>Settings</source>
         <translation>Cài Đặt</translation>
     </message>
@@ -462,22 +462,22 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::common::IpField</name>
     <message>
-        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="223"/>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="229"/>
         <source>Paste</source>
         <translation>Dán</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="228"/>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="234"/>
         <source>Copy</source>
         <translation>Sao chép</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="233"/>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="239"/>
         <source>Cut</source>
         <translation>Cắt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="149"/>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="155"/>
         <source>Copy IP Address to Clipboard</source>
         <translation>Sao Chép Địa Chỉ IP Vào Clipboard</translation>
     </message>

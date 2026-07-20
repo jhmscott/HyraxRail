@@ -30,6 +30,7 @@ HostEntryField::HostEntryField (QWidget* parent) :
     m_timer = new QTimer{ this };
 
     setValidator (new QRegularExpressionValidator{ RFC_1123_FQDN_REGEX, this });
+    setInputMethodHints (Qt::ImhUrlCharactersOnly);
 
     m_timer->callOnTimeout (this, &HostEntryField::inputStable);
 

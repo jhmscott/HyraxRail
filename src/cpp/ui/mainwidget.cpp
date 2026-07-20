@@ -19,6 +19,7 @@
 #include <utils/os.hpp>
 
 #include <QApplication>
+#include <QKeyEvent>
 #include <QStyleHints>
 
 namespace ui
@@ -30,6 +31,10 @@ MainWidget::MainWidget (QWidget* parent) :
     {
     QSettings   settings{ QSettings::UserScope };
     int         numControllers = settings.value ("NumControllers", 0).toInt ();
+
+#ifdef Q_OS_ANDROID
+    setTabPosition (QTabWidget::South);
+#endif // Q_OS_ANDROID
 
     for (int ii = 0; ii < numControllers; ++ii)
         {
@@ -91,8 +96,12 @@ MainWidget::MainWidget (QWidget* parent) :
             "misc/gear");
 
     setTooltips ();
-    setIconSize ({ 24, 24 });
 
+#ifdef Q_OS_ANDROID
+    tabBar ()->setExpanding (true);
+#else
+    setIconSize ({ 24, 24 });
+#endif
     // Mac tab button sizing is a bit big for my taste
 #ifdef Q_OS_MACOS
     setStyleSheet("QTabBar::tab { width: 28px; height: 28px; }");

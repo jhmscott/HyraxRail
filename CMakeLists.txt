@@ -2,17 +2,21 @@
 cmake_minimum_required(VERSION 3.19)
 project(HyraxRail
     VERSION 0.1
-    LANGUAGES C CXX OBJCXX)
+    LANGUAGES C CXX)
 
 set(CMAKE_MACOSX_DEPLOYMENT_TARGET 10.15)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 11)
-set(CMAKE_OBJCXX_STANDARD 17)
 
+if(APPLE)
+    enable_language(OBJCXX)
+    set(CMAKE_OBJCXX_STANDARD 17)
 
-# External libraries
-find_library(FOUNDATION_FRAMEWORK Foundation REQUIRED)
-find_library(COCOA_FRAMEWORK Cocoa REQUIRED)
+    # External libraries
+    find_library(FOUNDATION_FRAMEWORK Foundation REQUIRED)
+    find_library(COCOA_FRAMEWORK Cocoa REQUIRED)
+endif()
+
 
 # QT init
 
@@ -28,6 +32,10 @@ find_package(Qt6 6.11
 
 qt_standard_project_setup()
 
+if (ANDROID)
+    set(QT_ANDROID_GENERATE_JAVA_QTQUICKVIEW_CONTENTS FALSE)
+endif()
+
 # Scan src/cpp for headers and source
 
 file(GLOB_RECURSE CPP_SOURCES "src/cpp/*.cpp")
@@ -36,10 +44,15 @@ file(GLOB_RECURSE C_SOURCES "src/cpp/*.c")
 file(GLOB_RECURSE CPP_HEADERS "src/cpp/*.hpp")
 file(GLOB_RECURSE C_HEADERS "src/cpp/*.h")
 
-file(GLOB_RECURSE O_CPP_SOURCES "src/objective-c/*.mm")
-file(GLOB_RECURSE O_CPP_HEADERS "src/objective-c/*.hpp")
+set(SOURCES ${CPP_HEADERS} ${C_HEADERS} ${CPP_SOURCES} ${C_SOURCES})
 
-set(SOURCES ${CPP_HEADERS} ${C_HEADERS} ${CPP_SOURCES} ${C_SOURCES} ${O_CPP_SOURCES} ${O_CPP_HEADERS})
+if(APPLE)
+    file(GLOB_RECURSE O_CPP_SOURCES "src/objective-c/*.mm")
+    file(GLOB_RECURSE O_CPP_HEADERS "src/objective-c/*.hpp")
+
+    list (APPEND SOURCES ${O_CPP_SOURCES} ${O_CPP_HEADERS})
+endif()
+
 
 # Setup translation files
 
@@ -60,10 +73,13 @@ add_custom_target(ALL DEPENDS
 
 qt_add_resources(SOURCES res/HyraxRail.qrc)
 
-# Add Mac App icon
-set(MACOSX_BUNDLE_ICON_FILE conductor-hyrax.icns)
-set(APP_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/res/icons/app/${MACOSX_BUNDLE_ICON_FILE}")
-set_source_files_properties(${APP_ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+if(APPLE)
+    # Add Mac App icon
+    set(MACOSX_BUNDLE_ICON_FILE conductor-hyrax.icns)
+    set(APP_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/res/icons/app/${MACOSX_BUNDLE_ICON_FILE}")
+    set_source_files_properties(${APP_ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+endif()
+
 
 # create target
 qt_add_executable(HyraxRail
@@ -76,14 +92,20 @@ target_include_directories(HyraxRail
     PRIVATE src/cpp ${CMAKE_SOURCE_DIR})
 target_precompile_headers(HyraxRail PRIVATE src/cpp/stdafx.h)
 
+
+set(DEPENDENCIES
+    Qt::Core
+    Qt::Widgets
+    Qt::Gui
+    Qt6::Network
+    Qt6::SerialPort)
+
+if (ANDROID)
+    list(APPEND DEPENDENCIES android log)
+endif ()
+
 target_link_libraries(HyraxRail
-    PRIVATE
-        Qt::Core
-        Qt::Widgets
-        Qt::Gui
-        Qt6::Network
-        Qt6::SerialPort
-)
+    PRIVATE ${DEPENDENCIES})
 
 install(TARGETS HyraxRail
     BUNDLE  DESTINATION .

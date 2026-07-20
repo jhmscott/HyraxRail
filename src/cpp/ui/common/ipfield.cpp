@@ -95,12 +95,17 @@ IpField::IpField (QAbstractSocket::NetworkLayerProtocol proto, QWidget* parent) 
         if (useHex (proto))
             {
             width = fm.horizontalAdvance ("FF");
+
             m_fields[ii]->setValidator (new common::HexValidator{ 0, 255, this });
+            m_fields[ii]->setInputMethodHints (Qt::ImhDigitsOnly |
+                                               Qt::ImhUppercaseOnly);
             }
         else
             {
             width = fm.horizontalAdvance ("255");
+
             m_fields[ii]->setValidator (new QIntValidator{ 0, 255, this });
+            m_fields[ii]->setInputMethodHints (Qt::ImhDigitsOnly);
             }
 
         m_fields[ii]->setFixedWidth (width + 2 * padding);

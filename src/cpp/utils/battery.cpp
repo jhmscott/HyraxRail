@@ -262,6 +262,24 @@ private:
 
 #endif // Q_OS_MACOS
 
+
+#ifdef Q_OS_ANDROID
+
+class BatteryImpl
+    {
+public:
+    explicit BatteryImpl (Battery* battery) :
+        m_battery (battery)
+        {}
+
+    std::optional<int> getBatteryPercent () const { return 100; }
+
+private:
+    Battery*            m_battery;
+    };
+
+#endif
+
 } // namespace anonymous
 
 

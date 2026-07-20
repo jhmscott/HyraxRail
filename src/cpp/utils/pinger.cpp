@@ -39,9 +39,6 @@
 
 #endif //  Q_OS_UNIX
 
-#ifdef Q_OS_LINUX
-#include <icmp.h>
-#endif // Q_OS_LINUX
 
 
 namespace utils
@@ -327,7 +324,7 @@ public:
     virtual Pinger::result ping () override
         {
         Pinger::result      res;
-\
+
         struct icmp         icmpHdr;
         struct sockaddr_in  addr;
         int                 sock = socket (AF_INET, SOCK_DGRAM, IPPROTO_ICMP);
@@ -337,7 +334,9 @@ public:
 
         addr.sin_family = AF_INET;
         addr.sin_addr   = m_ip;
+#ifndef Q_OS_LINUX
         addr.sin_len    = sizeof (addr);
+#endif // Q_OS_LINUX
 
         memset (&icmpHdr, 0, sizeof (icmpHdr));
 
@@ -425,7 +424,13 @@ public:
                         {
                         memcpy (&rcv_hdr, data, sizeof (rcv_hdr));
 
-                        if ('E' == rcv_hdr.icmp_type)
+                        if (
+#ifdef Q_OS_MACOS
+                                       'E' == rcv_hdr.icmp_type
+#else
+                            ICMP_ECHOREPLY == rcv_hdr.icmp_type
+#endif
+                            )
                             {
                             res.roundtrip   = std::chrono::duration_cast<std::chrono::milliseconds> (
                                                             std::chrono::system_clock::now () - sentTime);

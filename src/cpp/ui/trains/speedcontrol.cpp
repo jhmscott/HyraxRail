@@ -115,12 +115,15 @@ protected:
                                                    &option,
                                                    QStyle::SC_SliderHandle);
 
+            // Already centered on android
+#ifndef Q_OS_ANDROID
             int centerNudge = widgetRect.center ().x () - grooveRect.center ().x ();
 
             grooveRect.moveLeft (centerNudge);
             handleRect.moveLeft (centerNudge);
 
             grooveRect.adjust (0, 5, 0, -5);
+#endif
 
             // On Mac the groove expands to fill the space
             // This makes it look more reasonable

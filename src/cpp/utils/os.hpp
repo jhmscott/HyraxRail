@@ -21,6 +21,10 @@
 namespace utils::os
 {
 
+
+
+inline constexpr auto null_handle = static_cast<std::thread::native_handle_type> (0);
+
 ///////////////////////////////////////////////////////////////////////////////
 /// Set the name of a thread by the native OS handle
 ///
@@ -28,7 +32,7 @@ namespace utils::os
 /// @param[in]  handle        Native OS thread handle. If NULL, this names the current thread
 ///
 ///////////////////////////////////////////////////////////////////////////////
-void setThreadName (std::string_view name, std::thread::native_handle_type handle = NULL);
+void setThreadName (std::string_view name, std::thread::native_handle_type handle = null_handle);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Set the name of a  std::thread
