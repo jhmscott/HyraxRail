@@ -462,22 +462,22 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::common::IpField</name>
     <message>
-        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="229"/>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="228"/>
         <source>Paste</source>
         <translation>Dán</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="234"/>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="233"/>
         <source>Copy</source>
         <translation>Sao chép</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="239"/>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="238"/>
         <source>Cut</source>
         <translation>Cắt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="155"/>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="154"/>
         <source>Copy IP Address to Clipboard</source>
         <translation>Sao Chép Địa Chỉ IP Vào Clipboard</translation>
     </message>
@@ -616,47 +616,47 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::config::NetworkDeviceInfoWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="37"/>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="233"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="39"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="235"/>
         <source>IPv4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="41"/>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="237"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="43"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="239"/>
         <source>IPv6</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="44"/>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="228"/>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="240"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="46"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="230"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="242"/>
         <source>Host Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="225"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="227"/>
         <source>Network Protocol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="226"/>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="227"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="228"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="229"/>
         <source>Address</source>
         <translation>Địa Chỉ</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="229"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="231"/>
         <source>Port</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="166"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="168"/>
         <source>Invalid host name format &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="171"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="173"/>
         <source>Host &quot;%1&quot; does not exist</source>
         <translation type="unfinished"></translation>
     </message>

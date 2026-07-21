@@ -58,3 +58,6 @@ build/
 
 # MacOS DS Store file
 .DS_Store
+
+# Gradle cache
+.gradle/

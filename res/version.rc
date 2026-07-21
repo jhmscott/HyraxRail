@@ -64,12 +64,24 @@ BEGIN
             VALUE "LegalCopyright",  "Droit D'Auteur " COPYRIGHT_SYMBOL " 2026 Justin H. Scott"
             VALUE "OriginalFilename", "HyraxRail.exe"
         END
+        // Dutch
+        BLOCK "041304B0"
+        BEGIN
+            VALUE "CompanyName", COMPANY_NAME
+            VALUE "FileDescription", "Klipdas Spoorwegen"
+            VALUE "FileVersion", VERSION_STRING
+            VALUE "ProductName", "Klipdas Spoorwegen"
+            VALUE "ProductVersion", VERSION_STRING
+            VALUE "LegalCopyright",  "Droit D'Auteur " COPYRIGHT_SYMBOL " 2026 Justin H. Scott"
+            VALUE "OriginalFilename", "HyraxRail.exe"
+        END
     END
     BLOCK "VarFileInfo"
     BEGIN
         VALUE "Translation",
         0x409, 0x4B0,   // English (US)
         0x42A, 0x4B0,   // Vietnamese
-        0x40C, 0x4B0    // French
+        0x40C, 0x4B0,   // French
+        0x413, 0x4B0    // Dutch
     END
 END

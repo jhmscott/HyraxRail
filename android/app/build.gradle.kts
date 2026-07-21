@@ -40,6 +40,11 @@ android {
     buildFeatures {
         compose = true
     }
+    sourceSets {
+        getByName("main") {
+            java.srcDir("../../src/java")
+        }
+    }
 }
 
 dependencies {

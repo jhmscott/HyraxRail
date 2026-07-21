@@ -16,6 +16,14 @@
 #include <IOKit/ps/IOPSKeys.h>
 #endif // Q_OS_MACOS
 
+#ifdef Q_OS_ANDROID
+#include <jni.h>
+
+#include <QJniObject>
+#endif // Q_OS_ANDROID
+
+
+
 namespace utils
 {
 
@@ -262,23 +270,65 @@ private:
 
 #endif // Q_OS_MACOS
 
-
 #ifdef Q_OS_ANDROID
 
+
+///////////////////////////////////////////////////////////////////////////////
+/// Android battery implementation to recieve battery notification
+///
+///////////////////////////////////////////////////////////////////////////////
 class BatteryImpl
     {
 public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  battery     Battery interface object
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     explicit BatteryImpl (Battery* battery) :
-        m_battery (battery)
-        {}
+        m_battery (battery),
+        m_mainActivity (QNativeInterface::QAndroidApplication::context())
+        {
+        m_mainActivity.callMethod<void>("registerBatteryHandler",
+                                        reinterpret_cast<jlong> (this));
+        }
 
-    std::optional<int> getBatteryPercent () const { return 100; }
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Destructor
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    ~BatteryImpl ()
+        {
+        m_mainActivity.callMethod<void>("unregisterBatteryHandler");
+        }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    ///  Get the battery percentage
+    ///
+    /// @return     Battery percentage [0,100]
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::optional<int> getBatteryPercent () const { return m_percent; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the battery percentage
+    ///
+    /// @param[in]  pct     Battery percentage
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setBatteryPercent (int pct)
+        {
+        m_percent = pct;
+
+        emit m_battery->batteryPercentageChange (pct);
+        }
 private:
-    Battery*            m_battery;
+    Battery*            m_battery;      ///< Battery instance to recieve notifications
+    QJniObject          m_mainActivity; ///< Main application activity
+    std::optional<int>  m_percent;      ///< Battery percentage [0,100]
     };
-
-#endif
+#endif // Q_OS_ANDROID
 
 } // namespace anonymous
 
@@ -298,3 +348,32 @@ Battery::~Battery ()
     }
 
 } // namespace utils
+
+
+#ifdef Q_OS_ANDROID
+extern "C"
+{
+
+///////////////////////////////////////////////////////////////////////////////
+/// Java "Native" function called by the java battery class when recieving a
+/// a battery notifification
+///
+/// @param[in]  env         (unused) JNI environment
+/// @param[in]  thisObj     (unused) Battery java object
+/// @param[in]  instancePtr Pointer to the BatteryImpl clas
+/// @param[in]  pct         Battery percentage [0,100]
+///
+///////////////////////////////////////////////////////////////////////////////
+JNIEXPORT
+void JNICALL Java_ca_justinlab_hyraxrail_Battery_batteryStatusChanged (JNIEnv*  env,
+                                                                       jobject  thisObj,
+                                                                       jlong    instancePtr,
+                                                                       jint     pct)
+    {
+    utils::BatteryImpl& battery = *reinterpret_cast<utils::BatteryImpl*> (instancePtr);
+
+    battery.setBatteryPercent (pct);
+    }
+
+}
+#endif // Q_OS_ANDROID
