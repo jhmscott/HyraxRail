@@ -20,10 +20,69 @@
 
 #include <QApplication>
 #include <QKeyEvent>
+#include <QPainter>
+#include <QProxyStyle>
 #include <QStyleHints>
+#include <QStyleOptionTab>
 
 namespace ui
 {
+namespace // anonymous
+{
+
+///////////////////////////////////////////////////////////////////////////////
+/// Style class that ensures tab icons are centered and expand to fill the tab.
+/// Used on android with the expanding tab style
+///
+///////////////////////////////////////////////////////////////////////////////
+class CenterTabStyle : public QProxyStyle
+    {
+public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Draw a tab bar sub-control
+    ///
+    /// @param[in]  element     Which control to draw
+    /// @param[in]  option      Style options
+    /// @param[in]  painter     Qt Painter
+    /// @param[in]  widget      Tab bar widget
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void drawControl (ControlElement        element,
+                      const QStyleOption*   option,
+                      QPainter*             painter,
+                      const QWidget*        widget) const override
+        {
+        if (CE_TabBarTabLabel == element)
+            {
+            const QStyleOptionTab* tabOption;
+
+            if (NULL == (tabOption = qstyleoption_cast<const QStyleOptionTab*>(option)))
+                {
+                qDebug () << "Failed to cast style option to tab";
+                }
+            else
+                {
+                QRect   rect    = tabOption->rect;
+                QSize   size    = rect.size ();
+                int     extent  = std::min (size.width (), size.height ()) - 12;
+                QPixmap icon    = tabOption->icon.pixmap (extent);
+
+                rect.setSize (QSize{ extent, extent });
+                rect.moveCenter (tabOption->rect.center ());
+
+                painter->drawPixmap (rect, icon);
+                }
+            }
+        else
+            {
+            // Allow all other UI components to draw normally
+            QProxyStyle::drawControl (element, option, painter, widget);
+            }
+        }
+    };
+} // namespace anonymous
+
+
 MainWidget::MainWidget (QWidget* parent) :
     common::SchemeTabWidget (parent),
     m_controllers (new control::ControllerManager{ this }),
@@ -97,11 +156,20 @@ MainWidget::MainWidget (QWidget* parent) :
 
     setTooltips ();
 
+
 #ifdef Q_OS_ANDROID
+    setIconSize ({ 36, 36 });
+
+    // Fill available space
     tabBar ()->setExpanding (true);
+    // needed for expanding to do anything
+    tabBar ()->setDocumentMode (true);
+    // Document mode left aligns icons, this ensures they're centered
+    tabBar ()->setStyle (new CenterTabStyle);
 #else
     setIconSize ({ 24, 24 });
-#endif
+#endif // Q_OS_ANDROID
+
     // Mac tab button sizing is a bit big for my taste
 #ifdef Q_OS_MACOS
     setStyleSheet("QTabBar::tab { width: 28px; height: 28px; }");

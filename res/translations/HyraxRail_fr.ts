@@ -130,32 +130,32 @@
 <context>
     <name>ui::MainWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="169"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="213"/>
         <source>Trains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="170"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="214"/>
         <source>Actuators</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="171"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="215"/>
         <source>Sensors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="172"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="216"/>
         <source>Routes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="173"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="217"/>
         <source>Fast Clock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="174"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="218"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -480,12 +480,12 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::config::ControllerGroup</name>
     <message>
-        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="99"/>
+        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="98"/>
         <source>Controllers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="98"/>
+        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="97"/>
         <source>New Controller</source>
         <translation type="unfinished"></translation>
     </message>

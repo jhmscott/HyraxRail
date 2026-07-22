@@ -17,6 +17,14 @@
 namespace utils::resources
 {
 
+inline constexpr int FONT_SIZE_LARGE =
+#ifdef Q_OS_ANDROID
+    24;
+#else
+    16;
+#endif // Q_OS_ANDROID
+
+
 // Resource type
 enum type
     {

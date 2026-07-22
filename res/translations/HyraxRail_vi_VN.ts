@@ -136,28 +136,28 @@
 <context>
     <name>ui::MainWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="169"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="213"/>
         <source>Trains</source>
         <translation>Tàu</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="170"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="214"/>
         <source>Actuators</source>
         <translatorcomment>actuators</translatorcomment>
         <translation>Bộ Truyền Động</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="171"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="215"/>
         <source>Sensors</source>
         <translation>Cảm Biến Điện Tử</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="172"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="216"/>
         <source>Routes</source>
         <translation>Tuyến Đường</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="173"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="217"/>
         <source>Fast Clock</source>
         <translation>Đồng Hồ Nhanh</translation>
     </message>
@@ -166,7 +166,7 @@
         <translation type="obsolete">Lập Trình</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="174"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="218"/>
         <source>Settings</source>
         <translation>Cài Đặt</translation>
     </message>
@@ -498,12 +498,12 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::config::ControllerGroup</name>
     <message>
-        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="99"/>
+        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="98"/>
         <source>Controllers</source>
         <translation>Bộ Điều Khiển</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="98"/>
+        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="97"/>
         <source>New Controller</source>
         <translation>Bộ điều khiển mới</translation>
     </message>

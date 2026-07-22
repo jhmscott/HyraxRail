@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "HyraxRail"
+rootProject.name = "Hyrax Rail"
 include(":app")
  

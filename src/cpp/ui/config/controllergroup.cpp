@@ -37,7 +37,6 @@ ControllerGroup::ControllerGroup (control::ControllerManager&   controllers,
         }
 
     m_plusLabel = new common::AddButton{ this };
-    m_plusLabel->setFontSize (16);
 
     layout->addWidget (m_plusLabel);
     m_hasAddController = true;

@@ -36,6 +36,12 @@ AddButton::AddButton (QWidget* parent) :
     layout->setAlignment (Qt::AlignLeft);
 
 
+    QFont font = QApplication::font ();
+
+    font.setPixelSize (utils::resources::FONT_SIZE_LARGE);
+
+    m_plusLabel->setFont (font);
+
     connect (plusIcon,
             &QPushButton::released,
              this,
@@ -43,11 +49,5 @@ AddButton::AddButton (QWidget* parent) :
     layout->setContentsMargins (0, 0, 0, 0);
     setContentsMargins (0, 0, 0, 0);
     setLayout (layout);
-    }
-void AddButton::setFontSize (int size)
-    {
-    QFont font = QApplication::font ();
-    font.setPixelSize (16);
-    m_plusLabel->setFont (font);
     }
 }

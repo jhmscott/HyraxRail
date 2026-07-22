@@ -143,7 +143,7 @@ static void styleButton (QPushButton& btn)
     {
     QFont font = QApplication::font ();
 
-    font.setPixelSize (16);
+    font.setPixelSize (utils::resources::FONT_SIZE_LARGE);
 
     btn.setFont (font);
     btn.setSizePolicy (QSizePolicy::Maximum,

@@ -25,7 +25,7 @@ NotifyGroup::NotifyGroup (QWidget* parent) :
     QVBoxLayout*    layout  = new QVBoxLayout{ this };
     QFont           font    = QApplication::font ();
 
-    font.setPixelSize (16);
+    font.setPixelSize (utils::resources::FONT_SIZE_LARGE);
 
     QHBoxLayout*    stopNotify  = new QHBoxLayout;
 
