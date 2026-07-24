@@ -29,6 +29,34 @@ namespace utils
 
 namespace // anonymous
 {
+
+///////////////////////////////////////////////////////////////////////////////
+/// Battery implementation base class. Defines interface only, as actual
+/// implementation is dependent on platform
+///
+/// @ingroup    PIMPL
+///
+/// @see        utils::Battery
+///
+///////////////////////////////////////////////////////////////////////////////
+class BatteryImpl
+    {
+public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Virtual destructor
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual ~BatteryImpl () {}
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the battery percentage
+    ///
+    /// @return     Battery percentage [0,100]
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual std::optional<int> getBatteryPercent () const = 0;
+    };
+
 #if defined (Q_OS_WIN) || defined (DOXYGEN)
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -38,7 +66,9 @@ namespace // anonymous
 /// @ingroup    PIMPL
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class BatteryImpl : protected os::win32::MessageOnlyWindow
+class BatteryImplWindows :
+    public BatteryImpl,
+    protected os::win32::MessageOnlyWindow
     {
 public:
     ///////////////////////////////////////////////////////////////////////////////
@@ -47,7 +77,7 @@ public:
     /// @param[in]  battery     Battery instance to send notifications to
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    explicit BatteryImpl (Battery* battery) :
+    explicit BatteryImplWindows (Battery* battery) :
         m_battery (battery)
         {
         m_handle = RegisterPowerSettingNotification (getHandle (),
@@ -71,7 +101,7 @@ public:
     /// Destructor
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    ~BatteryImpl ()
+    ~BatteryImplWindows ()
         {
         UnregisterPowerSettingNotification (m_handle);
         }
@@ -82,7 +112,7 @@ public:
     /// @return     Battery precentage [0,100]
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    std::optional<int> getBatteryPercent () const
+    virtual std::optional<int> getBatteryPercent () const override
         {
         std::optional<int> rc;
 
@@ -148,7 +178,7 @@ private:
 #endif // defined (Q_OS_WIN) || defined (DOXYGEN)
 
 
-#ifdef Q_OS_MACOS
+#if defined (Q_OS_MACOS) || defined (DOXYGEN)
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -200,10 +230,10 @@ static int getBatteryPercentage ()
 /// @ingroup    PIMPL
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class BatteryImpl
+class BatteryImplApple : public BatteryImpl
     {
 public:
-    explicit BatteryImpl (Battery* battery) :
+    explicit BatteryImplApple (Battery* battery) :
         m_battery (battery)
         {
         CFRunLoopRef mainRunLoop = CFRunLoopGetMain();
@@ -222,7 +252,7 @@ public:
     /// Destructor
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    ~BatteryImpl ()
+    ~BatteryImplApple ()
         {
         CFRunLoopSourceInvalidate (m_ref);
         CFRelease (m_ref);
@@ -234,7 +264,7 @@ public:
     /// @return     Battery precentage [0,100]
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    std::optional<int> getBatteryPercent ()  const
+    virtual std::optional<int> getBatteryPercent () const override
         {
         std::optional<int> rc;
 
@@ -268,16 +298,18 @@ private:
 
     };
 
-#endif // Q_OS_MACOS
+#endif // defined (Q_OS_MACOS) || defined (DOXYGEN)
 
-#ifdef Q_OS_ANDROID
+#if defined (Q_OS_ANDROID)  || defined (DOXYGEN)
 
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Android battery implementation to recieve battery notification
 ///
+/// @ingroup    PIMPL
+///
 ///////////////////////////////////////////////////////////////////////////////
-class BatteryImpl
+class BatteryImplAndroid : public BatteryImpl
     {
 public:
     ///////////////////////////////////////////////////////////////////////////////
@@ -286,30 +318,30 @@ public:
     /// @param[in]  battery     Battery interface object
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    explicit BatteryImpl (Battery* battery) :
+    explicit BatteryImplAndroid (Battery* battery) :
         m_battery (battery),
-        m_mainActivity (QNativeInterface::QAndroidApplication::context())
+        m_mainActivity (QNativeInterface::QAndroidApplication::context ())
         {
-        m_mainActivity.callMethod<void>("registerBatteryHandler",
-                                        reinterpret_cast<jlong> (this));
+        m_mainActivity.callMethod<void> ("registerBatteryHandler",
+                                         reinterpret_cast<jlong> (this));
         }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Destructor
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    ~BatteryImpl ()
+    ~BatteryImplAndroid ()
         {
-        m_mainActivity.callMethod<void>("unregisterBatteryHandler");
+        m_mainActivity.callMethod<void> ("unregisterBatteryHandler");
         }
 
     ///////////////////////////////////////////////////////////////////////////////
-    ///  Get the battery percentage
+    /// Get the battery percentage
     ///
     /// @return     Battery percentage [0,100]
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    std::optional<int> getBatteryPercent () const { return m_percent; }
+    virtual std::optional<int> getBatteryPercent () const override { return m_percent; }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the battery percentage
@@ -328,7 +360,17 @@ private:
     QJniObject          m_mainActivity; ///< Main application activity
     std::optional<int>  m_percent;      ///< Battery percentage [0,100]
     };
-#endif // Q_OS_ANDROID
+#endif // defined (Q_OS_ANDROID)  || defined (DOXYGEN)
+
+// Alias the native type
+#if defined (Q_OS_WINDOWS) || defined (DOXYGEN)
+using BatteryImplNative = BatteryImplWindows;
+#elif defined (Q_OS_MACOS)
+using BatteryImplNative = BatteryImplApple;
+#elif defined (Q_OS_ANDROID)
+using BatteryImplNative = BatteryImplAndroid;
+#endif
+
 
 } // namespace anonymous
 
@@ -339,7 +381,7 @@ std::optional<int> Battery::getBatteryPercent () const
     }
 
 Battery::Battery () :
-    m_impl (new BatteryImpl{ this })
+    m_impl (new BatteryImplNative{ this })
     {}
 
 Battery::~Battery ()
@@ -350,7 +392,7 @@ Battery::~Battery ()
 } // namespace utils
 
 
-#ifdef Q_OS_ANDROID
+#if defined (Q_OS_ANDROID) || defined (DOXYGEN)
 extern "C"
 {
 
@@ -363,6 +405,10 @@ extern "C"
 /// @param[in]  instancePtr Pointer to the BatteryImpl clas
 /// @param[in]  pct         Battery percentage [0,100]
 ///
+/// @see        ca.justinlab.hyraxrail.Battery.batteryStatusChanged()
+///
+/// @ingroup    JNI_FUNC
+///
 ///////////////////////////////////////////////////////////////////////////////
 JNIEXPORT
 void JNICALL Java_ca_justinlab_hyraxrail_Battery_batteryStatusChanged (JNIEnv*  env,
@@ -370,10 +416,10 @@ void JNICALL Java_ca_justinlab_hyraxrail_Battery_batteryStatusChanged (JNIEnv*  
                                                                        jlong    instancePtr,
                                                                        jint     pct)
     {
-    utils::BatteryImpl& battery = *reinterpret_cast<utils::BatteryImpl*> (instancePtr);
+    utils::BatteryImplAndroid& battery = *reinterpret_cast<utils::BatteryImplAndroid*> (instancePtr);
 
     battery.setBatteryPercent (pct);
     }
+} // extern "C"
 
-}
-#endif // Q_OS_ANDROID
+#endif // defined (Q_OS_ANDROID) || defined (DOXYGEN)

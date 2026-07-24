@@ -50,10 +50,51 @@ MainWindow::MainWindow (QWidget *parent) :
     setCentralWidget (new ui::MainWidget{ this });
     setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Minimum);
 
+#ifdef Q_OS_ANDROID
+    // Qt doesn't seem to set a palette for dark mode, keeping it the same as light mode
+    // Below matches the default dark pallete on other platforms
+    //
+    // see:         https://forum.qt.io/topic/164433/qt-6.10.2-android-qt-quick-apps-ignore-dark-mode
+    // Based on :   https://medo64.com/posts/dark-mode-for-qt-application
+    m_lightPalette = qApp->palette ();
+
+    m_darkPalette.setColor (QPalette::Window,           QColor( 37,  37,  37));
+    m_darkPalette.setColor (QPalette::WindowText,       QColor(212, 212, 212));
+    m_darkPalette.setColor (QPalette::Base,             QColor( 60,  60,  60));
+    m_darkPalette.setColor (QPalette::AlternateBase,    QColor( 45,  45,  45));
+    m_darkPalette.setColor (QPalette::PlaceholderText,  QColor(127, 127, 127));
+    m_darkPalette.setColor (QPalette::Text,             QColor(212, 212, 212));
+    m_darkPalette.setColor (QPalette::Button,           QColor( 45,  45,  45));
+    m_darkPalette.setColor (QPalette::ButtonText,       QColor(212, 212, 212));
+    m_darkPalette.setColor (QPalette::BrightText,       QColor(240, 240, 240));
+    m_darkPalette.setColor (QPalette::Highlight,        QColor( 38,  79, 120));
+    m_darkPalette.setColor (QPalette::HighlightedText,  QColor(240, 240, 240));
+
+    m_darkPalette.setColor (QPalette::Light,            QColor( 60,  60,  60));
+    m_darkPalette.setColor (QPalette::Midlight,         QColor( 52,  52,  52));
+    m_darkPalette.setColor (QPalette::Dark,             QColor( 30,  30,  30) );
+    m_darkPalette.setColor (QPalette::Mid,              QColor( 37,  37,  37));
+    m_darkPalette.setColor (QPalette::Shadow,           QColor( 0,    0,   0));
+
+    setPalette (qApp->styleHints ()->colorScheme ());
+
+    connect (qApp->styleHints (),
+            &QStyleHints::colorSchemeChanged,
+             this,
+            &MainWindow::setPalette);
+#endif // Q_OS_ANDROID
+
+
     connect (qApp,
             &QGuiApplication::commitDataRequest,
              this,
             &MainWindow::commitDataRequest,
+             Qt::DirectConnection);
+
+    connect (qApp,
+            &QGuiApplication::applicationStateChanged,
+             this,
+            &MainWindow::applicationStateChanged,
              Qt::DirectConnection);
     }
 
@@ -265,6 +306,34 @@ void MainWindow::restoreFastClockSettings ()
         if ((m_rememberType = settings.value ("Clock/remember").toBool ()))
             {
             m_clockShutdownType = type;
+            }
+        }
+    }
+
+
+void MainWindow::applicationStateChanged (Qt::ApplicationState state)
+    {
+    switch (state)
+        {
+        case Qt::ApplicationSuspended:
+            {
+            qDebug () << "App suspended";
+            break;
+            }
+        case Qt::ApplicationHidden:
+            {
+            qDebug () << "App suspended";
+            break;
+            }
+        case Qt::ApplicationInactive:
+            {
+            qDebug () << "App inactive";
+            break;
+            }
+        case Qt::ApplicationActive:
+            {
+            qDebug () << "App active";
+            break;
             }
         }
     }

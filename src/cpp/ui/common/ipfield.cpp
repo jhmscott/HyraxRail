@@ -97,8 +97,6 @@ IpField::IpField (QAbstractSocket::NetworkLayerProtocol proto, QWidget* parent) 
             width = fm.horizontalAdvance ("FF");
 
             m_fields[ii]->setValidator (new common::HexValidator{ 0, 255, this });
-            m_fields[ii]->setInputMethodHints (Qt::ImhDigitsOnly |
-                                               Qt::ImhUppercaseOnly);
             }
         else
             {

@@ -130,32 +130,32 @@
 <context>
     <name>ui::MainWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="213"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="237"/>
         <source>Trains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="214"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="238"/>
         <source>Actuators</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="215"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="239"/>
         <source>Sensors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="216"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="240"/>
         <source>Routes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="217"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="241"/>
         <source>Fast Clock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="218"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="242"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -163,38 +163,38 @@
 <context>
     <name>ui::MainWindow</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="154"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="195"/>
         <source>Hyrax Rail</source>
         <translation>Klipdas Spoorwegen</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="171"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="212"/>
         <source>Shutdown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="172"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="213"/>
         <source>The Fast Clock is still running.
 Would you like to pause it or keep it running?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="175"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="216"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="176"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="217"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="177"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="218"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="179"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="220"/>
         <source>Always do this on shutdown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -444,22 +444,22 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::common::IpField</name>
     <message>
-        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="154"/>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="152"/>
         <source>Copy IP Address to Clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="228"/>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="226"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="233"/>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="231"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="238"/>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="236"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>

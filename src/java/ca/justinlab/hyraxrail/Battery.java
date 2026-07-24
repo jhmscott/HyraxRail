@@ -58,11 +58,12 @@ public class Battery extends BroadcastReceiver
         }
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Notify native code the battery status has changed. Implemented by
-    /// Java_ca_justinlab_hyraxrail_Battery_batteryStatusChanged in battery.cpp
+    /// Notify native code the battery status has changed.
     ///
-    /// @param nativeObjPtr     Pointer to the BatteryImpl class instance
-    /// @param pct              Battery charge in percentage [0,100]
+    /// @param  nativeObjPtr    Pointer to the BatteryImpl class instance
+    /// @param  pct             Battery charge in percentage [0,100]
+    ///
+    /// @see    Java_ca_justinlab_hyraxrail_Battery_batteryStatusChanged()
     ///
     ///////////////////////////////////////////////////////////////////////////////
     private native void batteryStatusChanged (long nativeObjPtr, int pct);

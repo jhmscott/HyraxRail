@@ -19,6 +19,7 @@
 /// @defgroup   META_CLASS_MACRO    Meta-Class Macros
 /// @defgroup   SINGLETON           Singletons
 /// @defgroup   PIMPL               PImpl Implementation Classes
+/// @defgroup   JNI_FUNC            Java Native Interface Functions
 ///
 ///////////////////////////////////////////////////////////////////////////////
 

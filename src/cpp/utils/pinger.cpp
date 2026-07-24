@@ -53,6 +53,8 @@ namespace // anonymous
 ///
 /// @ingroup    PIMPL
 ///
+/// @see        utils::Pinger
+///
 ///////////////////////////////////////////////////////////////////////////////
 class PingerImpl
     {
@@ -112,7 +114,7 @@ protected:
 /// @ingroup    PIMPL
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class IPv4Pinger : public PingerWin
+class IPv4PingerWin : public PingerWin
     {
 public:
     ///////////////////////////////////////////////////////////////////////////////
@@ -121,7 +123,7 @@ public:
     /// @param[in]  ip      IPv4 address (TODO: what endianess was this)
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    explicit IPv4Pinger (quint32 ip) :
+    explicit IPv4PingerWin (quint32 ip) :
         PingerWin (IcmpCreateFile ()),
         m_ip (_byteswap_ulong (ip))
         {}
@@ -184,14 +186,14 @@ private:
 /// @ingroup    PIMPL
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class IPv6Pinger : public PingerWin
+class IPv6PingerWin : public PingerWin
     {
 public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Pv6 pinger constructor
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    explicit IPv6Pinger (Q_IPV6ADDR ip) :
+    explicit IPv6PingerWin (Q_IPV6ADDR ip) :
         PingerWin (Icmp6CreateFile ()),
         m_ip ({ 0 })
         {
@@ -262,7 +264,7 @@ private:
 
 #endif // deifned (Q_OS_WIN) || defined (DOXYGEN)
 
-#if defined (Q_OS_UNIX)
+#if defined (Q_OS_UNIX) || defined (DOXYGEN)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Calculate the ICMP checksum
@@ -304,14 +306,14 @@ static ushort calculateChecksum (const void* b, int len)
 /// @ingroup    PIMPL
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class IPv4Pinger : public PingerImpl
+class IPv4PingerPosix : public PingerImpl
     {
 public:
     ///////////////////////////////////////////////////////////////////////////////
     /// IPv4 pinger constructor
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    explicit IPv4Pinger (quint32 ip):
+    explicit IPv4PingerPosix (quint32 ip):
         m_ip ({  htonl (ip) })
         {}
 
@@ -453,10 +455,10 @@ private:
     };
 
 // TODO: IPv6 POSIX implementation
-class IPv6Pinger : public PingerImpl
+class IPv6PingerPosix : public PingerImpl
     {
     public:
-        explicit IPv6Pinger (Q_IPV6ADDR ip)
+        explicit IPv6PingerPosix (Q_IPV6ADDR ip)
             {
             std::copy (ip.c,
                        ip.c + std::size (ip.c),
@@ -469,7 +471,16 @@ class IPv6Pinger : public PingerImpl
     };
 
 
-#endif // defined (Q_OS_UNIX)
+#endif // defined (Q_OS_UNIX) || defined (DOXYGEN)
+
+
+#if defined (Q_OS_WIN) || defined (DOXYGEN)
+using IPv4Pinger = IPv4PingerWin;
+using IPv6Pinger = IPv6PingerWin;
+#elif defined (Q_OS_UNIX)
+using IPv4Pinger = IPv4PingerPosix;
+using IPv6Pinger = IPv6PingerPosix;
+#endif
 
 } // namespace anonymous
 

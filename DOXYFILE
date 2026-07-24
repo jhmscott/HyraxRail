@@ -184,7 +184,8 @@ FILE_PATTERNS          = *.c \
                          *.vhdl \
                          *.ucf \
                          *.qsf \
-                         *.ice
+                         *.ice \
+                         *.mm
 RECURSIVE              = YES
 EXCLUDE                =
 EXCLUDE_SYMLINKS       = NO

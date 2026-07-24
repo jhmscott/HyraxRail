@@ -9,6 +9,9 @@
 
 #pragma once
 
+#include <string>
+
+// Apple implementation of language utilities
 namespace ui::lang::apple
 {
 
@@ -21,6 +24,8 @@ class LanguageClientImpl;
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Abstract Class to recieve language change events
+///
+/// @see        ui::lang::Translator
 ///
 ///////////////////////////////////////////////////////////////////////////////
 class LanguageClient
@@ -54,6 +59,8 @@ private:
 /// Get the current system locale string
 ///
 /// @return     System locale string
+///
+/// @see        ui::lang::system()
 ///
 ///////////////////////////////////////////////////////////////////////////////
 std::string systemLocale();

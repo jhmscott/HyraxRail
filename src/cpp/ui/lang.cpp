@@ -24,6 +24,12 @@
 #include <../objective-c/lang.hpp>
 #endif // Q_OS_MACOS
 
+#ifdef Q_OS_ANDROID
+#include <jni.h>
+#include <QJniObject>
+#endif // Q_OS_ANDROID
+
+
 namespace ui::lang
 {
 
@@ -119,6 +125,15 @@ QLocale system ()
     locale = QLocale{ apple::systemLocale ().c_str () };
 #endif // Q_OS_MACOS
 
+#ifdef Q_OS_ANDROID
+    QJniObject  mainActivity = QNativeInterface::QAndroidApplication::context ();
+    QJniObject  localeStrObj = mainActivity.callMethod<jstring> ("getLocale");
+    QString     localeStr    = localeStrObj.toString ();
+
+    locale = QLocale{ localeStr };
+#endif // Q_OS_ANDROID
+
+
     return locale;
     }
 
@@ -131,4 +146,33 @@ bool uses24HourFormat (const QLocale& locale)
        not timeFormat.contains ('a', Qt::CaseInsensitive);
     }
 
+
+
 } // namespace ui::lang
+
+#if defined (Q_OS_ANDROID) || defined (DOXYGEN)
+
+extern "C"
+{
+
+///////////////////////////////////////////////////////////////////////////////
+/// Native function, called by Java to notify the app of a locale change on
+/// android
+///
+/// @param[in]  env     (unused) JNI environment
+/// @param[in]  thisObj (unused) MainActivity java object
+///
+/// @see        ca.justinlab.hyraxrail.MainActivity.handleLocaleChange()
+///
+/// @ingroup    JNI_FUNC
+///
+///////////////////////////////////////////////////////////////////////////////
+JNIEXPORT
+void JNICALL Java_ca_justinlab_hyraxrail_MainActivity_handleLocaleChange (JNIEnv*   env,
+                                                                          jobject   thisObj)
+    {
+    ui::lang::Translator::instance ().setLocale ();
+    }
+} // extern "C"
+
+#endif //  defined (Q_OS_ANDROID) || defined (DOXYGEN)

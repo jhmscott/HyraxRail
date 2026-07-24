@@ -30,11 +30,17 @@ ConnectionWorkerThread::ConnectionWorkerThread (std::string_view                
 
     if (m_proto->isNetworkConnection ())
         {
-        m_pinger = new utils::Pinger{ m_proto->getIpAddress () };
+        m_pinger.reset (new utils::Pinger{ m_proto->getIpAddress () });
         }
 
     m_cv.notify_all ();
 
+    m_stateConnection =
+        QObject::connect (qApp,
+                         &QGuiApplication::applicationStateChanged,
+                          std::bind (&ConnectionWorkerThread::applicationStateChanged,
+                                      this,
+                                      std::placeholders::_1));
     }
 
 ConnectionWorkerThread::~ConnectionWorkerThread ()
@@ -58,10 +64,7 @@ ConnectionWorkerThread::~ConnectionWorkerThread ()
         // Have to swallow this exception because it's a destructor
         }
 
-    if (NULL != m_pinger)
-        {
-        delete m_pinger;
-        }
+    QObject::disconnect (m_stateConnection);
     }
 
 void ConnectionWorkerThread::loop ()
@@ -85,7 +88,11 @@ void ConnectionWorkerThread::loop ()
 
         health                  newHealth       = m_health;
 
-        if (m_proto->maintainConnection ())
+        if (m_suspended)
+            {
+            // Avoid doing network work while suspended
+            }
+        else if (m_proto->maintainConnection ())
             {
             if (NULL != m_pinger)
                 {
@@ -160,6 +167,23 @@ void ConnectionWorkerThread::loop ()
             m_health = newHealth;
             m_healthChange.notify_all ();
             }
+        }
+    }
+
+void ConnectionWorkerThread::applicationStateChanged (Qt::ApplicationState state)
+    {
+    std::lock_guard lk{ m_mtx };
+
+    if (Qt::ApplicationSuspended == state)
+        {
+        m_suspended = true;
+        }
+    // If was suspended and isn't anymore
+    // wake up the main thread to process
+    else if (m_suspended)
+        {
+        m_suspended = false;
+        m_cv.notify_all ();
         }
     }
 

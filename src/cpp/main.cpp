@@ -44,12 +44,11 @@ int main (int argc, char *argv[])
     QApplication::setOrganizationName   (COMPANY_NAME);
     QApplication::setOrganizationDomain (COMPANY_DOMAIN);
     QApplication::setApplicationVersion (VERSION_STRING);
+
 #ifdef Q_OS_MACOS
     QApplication::setWindowIcon         (QIcon{ ":/icons/app/conductor-hyrax.icns" });
-#elif defined (Q_OS_WIN)
-    QApplication::setWindowIcon         (QIcon{ ":/icons/app/conductor-hyrax.ico" });
 #else
-    QApplication::setWindowIcon         (QIcon{ ":/icons/app/conductor-hyrax.svg" });
+    QApplication::setWindowIcon         (QIcon{ ":/icons/app/conductor-hyrax.ico" });
 #endif
 
 #ifdef Q_OS_ANDROID

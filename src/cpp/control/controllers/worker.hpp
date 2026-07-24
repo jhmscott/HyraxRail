@@ -375,15 +375,24 @@ private:
     mutable std::mutex                      m_healthLock;       ///< Protects the connection health status
     std::condition_variable                 m_healthChange;     ///< Signals the health as changed
     std::atomic_bool                        m_continue = true;  ///< Continue flag, set to false to signal shutdown
-
-    utils::Pinger*                          m_pinger = NULL;    ///< Connection pinger instance
+    bool                                    m_suspended = false;///< If the app is suspended
+    std::unique_ptr<utils::Pinger>          m_pinger = NULL;    ///< Connection pinger instance
     health                                  m_health = { HEALTH_DEAD,  std::chrono::milliseconds{ 0 } };
+    QMetaObject::Connection                 m_stateConnection;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Worker thread loop function
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void loop ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle a change in the application state
+    ///
+    /// @param[in]  state       New state
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void applicationStateChanged (Qt::ApplicationState state);
     };
 
 }

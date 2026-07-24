@@ -83,6 +83,12 @@ private:
     bool                m_rememberType      = false;                        ///< True to remember the fast clock
                                                                             ///  behaviour while shutdown
 
+    // Android colour scheme palettes
+#if defined (Q_OS_ANDROID) || defined (DOXYGEN)
+    QPalette            m_darkPalette;      ///< Dark mode
+    QPalette            m_lightPalette;     ///< Light mode
+#endif // defined (Q_OS_ANDROID) || defined (DOXYGEN)
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the main window and application titles
     ///
@@ -118,6 +124,25 @@ private slots:
     ///////////////////////////////////////////////////////////////////////////////
     void commitDataRequest (QSessionManager& manager);
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle a change in the application state. Just logs it for debuggging
+    ///
+    /// @param[in]  state       New state
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void applicationStateChanged (Qt::ApplicationState state);
+
+#if defined (Q_OS_ANDROID) || defined (DOXYGEN)
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Defined on android to account for Qt not updating the palette in dark mode.
+    /// Uses a palette based on the default from other platforms
+    ///
+    /// @param[in]  scheme      Colour scheme
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setPalette (Qt::ColorScheme scheme)
+        { qApp->setPalette (Qt::ColorScheme::Dark == scheme ? m_darkPalette : m_lightPalette); }
+#endif //  defined (Q_OS_ANDROID) || defined (DOXYGEN)
     };
 
 } // namespace ui
