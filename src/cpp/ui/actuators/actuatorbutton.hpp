@@ -11,6 +11,7 @@
 
 #include <control/automation/manager.hpp>
 
+#include <ui/common/gesture.hpp>
 #include <ui/common/icontoggle.hpp>
 #include <ui/common/utils.hpp>
 #include <ui/lang.hpp>
@@ -26,7 +27,7 @@ namespace ui::actuators
 /// Button to set the state of an actuator
 ///
 //////////////////////////////////////////////////////////////////////////////
-class ActuatorButton : public QWidget
+class ActuatorButton : public common::HoldToOpenMenu<QWidget>
     {
     Q_OBJECT
 public:

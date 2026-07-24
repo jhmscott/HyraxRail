@@ -21,7 +21,7 @@ ActuatorButton::ActuatorButton (const layout::Actuator&     actuator,
                                 QWidget*                    parent,
                                 bool                        dummy,
                                 control::AutomationManager* automations) :
-    QWidget (parent),
+    common::HoldToOpenMenu<QWidget> (parent),
     m_actuator (actuator),
     m_dummy (dummy),
     m_automations (automations)

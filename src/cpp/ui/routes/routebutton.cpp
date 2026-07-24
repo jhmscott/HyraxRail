@@ -28,7 +28,7 @@ namespace ui::routes
 RouteButton::RouteButton (const layout::Route&          route,
                           control::AutomationManager&   automations,
                           QWidget*                      parent) :
-    QWidget (parent),
+    common::HoldToOpenMenu<QWidget> (parent),
     m_route (layout::Route{ route }),
     m_automations (automations)
     {

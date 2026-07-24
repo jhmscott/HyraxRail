@@ -13,6 +13,7 @@
 
 #include <layout/route.hpp>
 
+#include <ui/common/gesture.hpp>
 #include <ui/common/utils.hpp>
 #include <ui/lang.hpp>
 
@@ -25,7 +26,7 @@ namespace ui::routes
 /// Button to control a route
 ///
 //////////////////////////////////////////////////////////////////////////////
-class RouteButton : public QWidget
+class RouteButton : public common::HoldToOpenMenu<QWidget>
     {
     Q_OBJECT
 public:

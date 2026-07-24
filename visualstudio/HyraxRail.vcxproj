@@ -295,6 +295,7 @@
     <QtMoc Include="..\src\cpp\ui\clock\config.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\autogrid.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\formdialog.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\gesture.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\hexvalidator.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\hovericon.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\hostentry.hpp" />
