@@ -245,7 +245,7 @@ public:
         CFRunLoopRef mainRunLoop = CFRunLoopGetMain();
 
         m_percent = getBatteryPercentage ();
-        m_ref = IOPSNotificationCreateRunLoopSource (&BatteryImpl::batteryStateChanged,
+        m_ref = IOPSNotificationCreateRunLoopSource (&BatteryImplApple::batteryStateChanged,
                                                       this);
 
         CFRunLoopAddSource (mainRunLoop,
@@ -296,7 +296,7 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     static void batteryStateChanged (void* ud)
         {
-        BatteryImpl& self = *static_cast<BatteryImpl*> (ud);
+        BatteryImplApple& self = *static_cast<BatteryImplApple*> (ud);
 
         self.m_percent = getBatteryPercentage ();
         emit self.m_battery->batteryPercentageChange (self.m_percent);
