@@ -29,6 +29,11 @@
 #include <pthread.h>
 #endif // Q_OS_UNIX
 
+#ifdef Q_OS_ANDROID
+#include <QJniObject>
+#endif // Q_OS_ANDROID
+
+
 
 namespace utils::os
 {
@@ -164,6 +169,20 @@ void notify (std::string_view title, std::string_view description)
         }
 
 #endif // Q_OS_WIN
+    }
+
+void hapticFeedback (vibrationEffect vibrate)
+    {
+#ifdef Q_OS_ANDROID
+    QNativeInterface::QAndroidApplication::runOnAndroidMainThread (
+        [vibrate] () -> void
+        {
+        QNativeInterface::
+            QAndroidApplication::
+                context ().callMethod<void> ("hapticFeedback",
+                                             static_cast<jint> (vibrate));
+        });
+#endif // Q_OS_ANDROID
     }
 
 bool isIPv6Available ()

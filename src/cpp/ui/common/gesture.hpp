@@ -9,9 +9,13 @@
 
 #pragma once
 
+
+#include <utils/os.hpp>
+
 #include <QContextMenuEvent>
 #include <QGestureEvent>
 #include <QGraphicsItem>
+#include <QGraphicsView>
 #include <QWidget>
 
 namespace ui::common
@@ -64,23 +68,15 @@ protected:
             {
             case QEvent::Gesture:
                 {
-                QGesture* gesture;
-
-                if (NULL != (gesture =
-                                static_cast<QGestureEvent*> (event)->
-                                    gesture (Qt::TapAndHoldGesture)))
+                if constexpr (is_widget)
                     {
-                    QTapAndHoldGesture* hold = static_cast<QTapAndHoldGesture*> (gesture);
-
-                    openContextMenu (hold->position ().toPoint ());
-
-                    rc = true;
-                    break;
+                    if ((rc = gestureEvent (static_cast<QGestureEvent*> (event))))
+                        {
+                        break;
+                        }
                     }
-                else
-                    {
-                    [[fallthrough]];
-                    }
+
+                [[fallthrough]];
                 }
             default:
                 {
@@ -92,7 +88,71 @@ protected:
         return rc;
         }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle a scene event
+    ///
+    /// @param[in]  event       Event to handle
+    ///
+    /// @return     true if handled
+    ///
+    /// @remarks    Only used if this is a Graphics Object, hence why this is not
+    ///             declared override
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool sceneEvent (QEvent* event) // override
+        {
+        bool rc = false;
+
+        if constexpr (is_graphics_object)
+            {
+            switch (event->type ())
+                {
+                case QEvent::Gesture:
+                    {
+                    if ((rc = gestureEvent (static_cast<QGestureEvent*> (event))))
+                        {
+                        break;
+                        }
+
+                    [[fallthrough]];
+                    }
+                default:
+                    {
+                    rc = Widget::sceneEvent (event);
+                    break;
+                    }
+                }
+            }
+
+        return rc;
+        }
+
 private:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle a gesture event
+    ///
+    /// @param[in]  event       Gesture event to handle
+    ///
+    /// @return     true if handled
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool gestureEvent (QGestureEvent* event)
+        {
+        QGesture*   gesture;
+        bool        rc = false;
+
+        if (NULL != (gesture = event->gesture (Qt::TapAndHoldGesture)))
+            {
+            QTapAndHoldGesture* hold = static_cast<QTapAndHoldGesture*> (gesture);
+
+            openContextMenu (hold->position ().toPoint ());
+
+            rc = true;
+            }
+
+        return rc;
+        }
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Open the context menu at a given location
     ///
@@ -104,6 +164,8 @@ private:
         QContextMenuEvent   event{ QContextMenuEvent::Mouse,
                                    pt,
                                    localToGlobalPoint (pt) };
+
+        utils::os::hapticFeedback (utils::os::VIBRATE_LONG_CLCIK);
 
         QCoreApplication::sendEvent (this, &event);
         }

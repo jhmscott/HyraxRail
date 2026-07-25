@@ -16,6 +16,8 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 
 import org.qtproject.qt.android.bindings.QtActivity;
 
@@ -30,6 +32,12 @@ public class MainActivity extends QtActivity
     private Battery m_battery;  ///< Battery notification client
     private Locale  m_locale;   ///< Current system locale
 
+    private static final int VIBRATE_TICK           = 0;
+    private static final int VIBRATE_CLICK          = 1;
+    private static final int VIBRATE_LONG_CLICK     = 2;
+    private static final int VIBRATE_DOUBLE_CLICK   = 3;
+
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Called on application creation
     ///
@@ -40,10 +48,11 @@ public class MainActivity extends QtActivity
     public void onCreate (Bundle savedInstanceState)
         {
         // save the initial locale
-        m_locale = Resources.getSystem ().getConfiguration ().getLocales ().get (0);
+        m_locale = Resources.getSystem().getConfiguration().getLocales().get(0);
 
-        super.onCreate(savedInstanceState);
+        super.onCreate (savedInstanceState);
         }
+
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Handle a configuration change
@@ -56,13 +65,16 @@ public class MainActivity extends QtActivity
         {
         super.onConfigurationChanged (newConfig);
 
-        Locale newLocale = newConfig.getLocales ().get (0);
-
-        // Detect changes to the locale and native native code
-        if (newLocale != m_locale)
+        synchronized (m_locale)
             {
-            m_locale = newLocale;
-            handleLocaleChange ();
+            Locale newLocale = newConfig.getLocales().get(0);
+
+            // Detect changes to the locale and native native code
+            if (newLocale != m_locale)
+                {
+                m_locale = newLocale;
+                handleLocaleChange();
+                }
             }
         }
 
@@ -99,7 +111,47 @@ public class MainActivity extends QtActivity
     ///////////////////////////////////////////////////////////////////////////////
     public String getLocale ()
         {
-        return m_locale.getLanguage();
+        synchronized (m_locale)
+            {
+            return m_locale.getLanguage();
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Trigger haptic feedback
+    ///
+    /// @param  vibrate     Vibration type
+    ///////////////////////////////////////////////////////////////////////////////
+    public void hapticFeedback (int vibrate)
+        {
+        int effect = -1;
+
+        switch (vibrate)
+            {
+            case VIBRATE_TICK:
+                {
+                effect = VibrationEffect.EFFECT_TICK;
+                break;
+                }
+            case VIBRATE_CLICK:
+                {
+                effect = VibrationEffect.EFFECT_CLICK;
+                break;
+                }
+            case VIBRATE_LONG_CLICK:
+                {
+                effect = VibrationEffect.EFFECT_HEAVY_CLICK;
+                break;
+                }
+            case VIBRATE_DOUBLE_CLICK:
+                {
+                effect = VibrationEffect.EFFECT_DOUBLE_CLICK;
+                break;
+                }
+            }
+
+        Vibrator vibrator = getApplicationContext ().getSystemService (Vibrator.class);
+        vibrator.vibrate (VibrationEffect.createPredefined (effect));
         }
 
     ///////////////////////////////////////////////////////////////////////////////

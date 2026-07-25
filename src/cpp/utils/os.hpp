@@ -21,7 +21,14 @@
 namespace utils::os
 {
 
-
+// Vibration effect type
+enum vibrationEffect
+    {
+    VIBRATE_TICK = 0,
+    VIBRATE_CLICK,
+    VIBRATE_LONG_CLCIK,
+    VIBRATE_DOUBLE_CLICK
+    };
 
 inline constexpr auto null_handle = static_cast<std::thread::native_handle_type> (0);
 
@@ -68,6 +75,14 @@ inline void setThreadName (std::string_view name, std::jthread& thread)
 ///
 ///////////////////////////////////////////////////////////////////////////////
 void notify (std::string_view title, std::string_view description);
+
+///////////////////////////////////////////////////////////////////////////////
+/// Provide haptic feedback to the user
+///
+/// @param[in]  vibrate     Vibration effect to use
+///
+///////////////////////////////////////////////////////////////////////////////
+void hapticFeedback (vibrationEffect vibrate);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Check if IPv6 is available on this machine
