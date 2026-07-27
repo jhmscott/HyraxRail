@@ -26,7 +26,7 @@ enum vibrationEffect
     {
     VIBRATE_TICK = 0,
     VIBRATE_CLICK,
-    VIBRATE_LONG_CLCIK,
+    VIBRATE_LONG_CLICK,
     VIBRATE_DOUBLE_CLICK
     };
 
@@ -116,7 +116,7 @@ public:
     /// @param[in]  wndProc     Window proc function pointer
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    WindowClass (const wchar_t* classname, LRESULT (*wndProc) (HWND, UINT, WPARAM, LPARAM));
+    WindowClass (const wchar_t* classname, WNDPROC wndProc);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the registered class name

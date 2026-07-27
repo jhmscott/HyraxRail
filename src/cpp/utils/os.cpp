@@ -13,8 +13,9 @@
 #include <utils/log.hpp>
 #include <utils/os.hpp>
 
-#include <QNetworkInterface>
 #include <QHostAddress>
+#include <QNetworkInterface>
+#include <QTimer>
 
 #ifdef Q_OS_WIN
 #include <debugapi.h>
@@ -23,6 +24,11 @@
 #include <stringapiset.h>
 #include <Shobjidl.h>
 #include <shellapi.h>
+
+#include <winrt/Windows.Devices.Haptics.h>
+#include <winrt/Windows.Foundation.h>
+
+#pragma comment (lib, "windowsapp")
 #endif // Q_OS_WIN
 
 #ifdef Q_OS_UNIX
@@ -183,6 +189,50 @@ void hapticFeedback (vibrationEffect vibrate)
                                              static_cast<jint> (vibrate));
         });
 #endif // Q_OS_ANDROID
+
+#ifdef Q_OS_WIN
+    using namespace winrt::Windows::Devices::Haptics;
+
+    auto hapticsManagerStatics = winrt::try_get_activation_factory<InputHapticsManager,
+                                                                   IInputHapticsManagerStatics> ();
+
+    if (hapticsManagerStatics.IsSupported ())
+        {
+        InputHapticsManager manager = hapticsManagerStatics.GetForCurrentThread ();
+
+        auto sendWaveform = [manager] (uint16_t waveform) -> void
+            {
+            manager.TrySendHapticWaveform (waveform, 0);
+            };
+
+        switch (vibrate)
+            {
+            case VIBRATE_TICK:
+            case VIBRATE_CLICK:
+                {
+                sendWaveform (KnownSimpleHapticsControllerWaveforms::Click ());
+                break;
+                }
+
+            case VIBRATE_LONG_CLICK:
+                {
+                sendWaveform (KnownSimpleHapticsControllerWaveforms::Press ());
+                break;
+                }
+            case VIBRATE_DOUBLE_CLICK:
+                {
+                sendWaveform (KnownSimpleHapticsControllerWaveforms::Click ());
+                // Second click after 50 ms
+                QTimer::singleShot (50,
+                                    std::bind (sendWaveform,
+                                               KnownSimpleHapticsControllerWaveforms::Click ()));
+                break;
+                }
+            }
+
+        }
+#endif // Q_OS_WIN
+
     }
 
 bool isIPv6Available ()
@@ -227,15 +277,15 @@ namespace win32
 {
 
 
-WindowClass::WindowClass (const wchar_t* classname, LRESULT (*wndProc)(HWND, UINT, WPARAM, LPARAM)) :
+WindowClass::WindowClass (const wchar_t* classname, WNDPROC wndProc) :
     m_classname (classname)
     {
     WNDCLASSEX wndclass{ 0 };
 
-    wndclass.cbSize = sizeof (WNDCLASSEX);
-    wndclass.lpszClassName = classname;
-    wndclass.lpfnWndProc = wndProc;
-    wndclass.hInstance = GetModuleHandle (NULL);
+    wndclass.cbSize         = sizeof (WNDCLASSEX);
+    wndclass.lpszClassName  = classname;
+    wndclass.lpfnWndProc    = wndProc;
+    wndclass.hInstance      = GetModuleHandle (NULL);
 
     if (NULL == (m_atom = RegisterClassEx (&wndclass)))
         {
