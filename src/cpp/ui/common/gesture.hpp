@@ -165,7 +165,7 @@ private:
                                    pt,
                                    localToGlobalPoint (pt) };
 
-        utils::os::hapticFeedback (utils::os::VIBRATE_LONG_CLCIK);
+        utils::os::hapticFeedback (utils::os::VIBRATE_LONG_CLICK);
 
         QCoreApplication::sendEvent (this, &event);
         }

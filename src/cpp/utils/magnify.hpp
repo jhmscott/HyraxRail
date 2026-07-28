@@ -31,8 +31,8 @@ public:
     /// @param[in]  scale       Lens magnifcation
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    Magnifier (PolygonView<floating> poly, double scale) :
-        m_lens (static_cast<MultiPolygon<floating>> (poly)),
+    Magnifier (BasicPolygonView<floating> poly, double scale) :
+        m_lens (static_cast<BasicMultiPolygon<floating>> (poly)),
         m_scale (scale)
         {}
 
@@ -44,12 +44,12 @@ public:
     /// @return     Magnified polygon
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    MultiPolygon<floating> magnify (PolygonView<floating> poly) const
+    BasicMultiPolygon<floating> magnify (BasicPolygonView<floating> poly) const
         {
-        using Point = typename MultiPolygon<floating>::Point;
+        using Point = typename BasicMultiPolygon<floating>::Point;
 
         // Find the intersection with our magnfying lens
-        MultiPolygon<floating>  intersection    = m_lens & poly;
+        BasicMultiPolygon<floating>  intersection    = m_lens & poly;
         Point                   center          = m_lens.boundingRect ().center ();
 
         // Magnify the intersection
@@ -82,7 +82,7 @@ public:
     double getScale () const { return m_scale; }
 
 private:
-    MultiPolygon<floating>  m_lens;
+    BasicMultiPolygon<floating>  m_lens;
     double                  m_scale;
     };
 

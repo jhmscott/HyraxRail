@@ -37,8 +37,8 @@ Hyrax Rail is a cross platform model train controller app, based on QT 6, using 
 ## Operating System Support
 
 * Windows : _Done_
-* Mac OS : _In progress_
-* Android : _In progress_
+* Mac OS : _Done_
+* Android : _Done_
 * Linux : _Planned_
 
 ## Getting Started

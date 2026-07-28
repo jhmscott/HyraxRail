@@ -97,10 +97,10 @@ static gpcVListManaged polyToGpc (const QPolygonF& pg)
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<bool floating>
-static void complexPolyToGpc (const ComplexPolygon<floating>&   pg,
-                              gpc_polygon&                      gpc)
+static void complexPolyToGpc (const BasicComplexPolygon<floating>&  pg,
+                              gpc_polygon&                          gpc)
     {
-    using Result = typename ComplexPolygon<floating>::Polygon;
+    using Result = typename BasicComplexPolygon<floating>::Polygon;
 
     gpcPolygonManaged contours;
 
@@ -176,9 +176,9 @@ static void gpcToPoly (const gpc_vertex_list&   gpc,
 ///////////////////////////////////////////////////////////////////////////////
 template<bool floating>
 static void gpcToMultiPoly (const gpc_polygon&      gpc,
-                            MultiPolygon<floating>& pg)
+                            BasicMultiPolygon<floating>& pg)
     {
-    using Multi     = MultiPolygon<floating>;
+    using Multi     = BasicMultiPolygon<floating>;
     using Complex   = typename Multi::SubPolygon;
     using Polygon   = typename Complex::Polygon;
     using RingList  = typename Complex::RingList;
@@ -214,11 +214,11 @@ static void gpcToMultiPoly (const gpc_polygon&      gpc,
     }
 
 template<bool floating1, bool floating2>
-MultiPolygon<floating1 || floating2> operate (PolygonView<floating1>    pg1,
-                                              PolygonView<floating2>    pg2,
+BasicMultiPolygon<floating1 || floating2> operate (BasicPolygonView<floating1>    pg1,
+                                              BasicPolygonView<floating2>    pg2,
                                               polyOp                    op)
     {
-    using Result = MultiPolygon<floating1 || floating2>;
+    using Result = BasicMultiPolygon<floating1 || floating2>;
 
     gpc_polygon gpc1{ 0 };
     gpc_polygon gpc2{ 0 };
@@ -250,25 +250,25 @@ MultiPolygon<floating1 || floating2> operate (PolygonView<floating1>    pg1,
     }
 
 // Explicit template instatiation
-template MultiPolygon<false>
-operate<false, false> (PolygonView<false>   pg1,
-                       PolygonView<false>   pg2,
+template BasicMultiPolygon<false>
+operate<false, false> (BasicPolygonView<false>   pg1,
+                       BasicPolygonView<false>   pg2,
                        polyOp               op);
 
-template MultiPolygon<true>
-operate<true, false>  (PolygonView<true>    pg1,
-                       PolygonView<false>   pg2,
+template BasicMultiPolygon<true>
+operate<true, false>  (BasicPolygonView<true>    pg1,
+                       BasicPolygonView<false>   pg2,
                        polyOp               op);
 
 
-template MultiPolygon<true>
-operate<false, true>  (PolygonView<false>   pg1,
-                       PolygonView<true>    pg2,
+template BasicMultiPolygon<true>
+operate<false, true>  (BasicPolygonView<false>   pg1,
+                       BasicPolygonView<true>    pg2,
                        polyOp               op);
 
-template MultiPolygon<true>
-operate<true, true>   (PolygonView<true>    pg1,
-                       PolygonView<true>    pg2,
+template BasicMultiPolygon<true>
+operate<true, true>   (BasicPolygonView<true>    pg1,
+                       BasicPolygonView<true>    pg2,
                        polyOp               op);
 
 namespace poly

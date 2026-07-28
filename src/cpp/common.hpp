@@ -48,6 +48,12 @@
 #endif
 
 
+#if defined (Q_OS_LINUX) && !defined (Q_OS_ANDROID)
+// Defined for versions of linux that aren't android
+#define NON_DROID_LINUX
+#endif
+
+
 //////////////////////////////////////////////////////////////////////////////
 // Static assert that an array is an expected length
 // Useful when array is tied to enum values

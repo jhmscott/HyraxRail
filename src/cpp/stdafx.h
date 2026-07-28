@@ -1,3 +1,4 @@
+#include <QtSystemDetection>
 
 // Standard C-Library includes
 #include <stdio.h>
@@ -8,16 +9,32 @@
 #include <time.h>
 
 // Windows libraries
-#ifdef _WIN32
+
+#ifdef Q_OS_WIN
+#define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #undef WIN32_LEAN_AND_MEAN
-#endif // _WIN32
+#endif // Q_OS_WIN
 
 // POSIX libraries
-#if defined (__unix__) || (defined (__APPLE__) && defined (__MACH__))
+
+#if Q_OS_UNIX
 #include <unistd.h>
-#endif
+#endif // Q_OS_UNIX
+
+// Android libraries
+
+#ifdef Q_OS_ANDROID
+#include <jni.h>
+#endif // Q_OS_ANDROID
+
+// Start Objective-C imports
+
+#ifdef __OBJC__
+#import <Foundation/Foundation.h>
+#endif // __OBJC__
+
 
 // Start C++ includes
 
@@ -38,19 +55,35 @@
 #include <algorithm>
 #include <functional>
 #include <memory>
+#include <type_traits>
 #include <utility>
 
 // QT Core
 #include <QList>
 #include <QObject>
 #include <QString>
+#include <QTimer>
 #include <QVariant>
 #include <QVector>
 
 // QT GUI
+#include <QAction>
 #include <QApplication>
+#include <QBoxLayout>
+#include <QCheckBox>
+#include <QComboBox>
 #include <QLabel>
+#include <QLineEdit>
 #include <QPushButton>
+#include <QPainter>
+#include <QStyle>
 #include <QWidget>
+
+// Platform specific QT modules
+
+
+#ifdef Q_OS_ANDROID
+#include <QJniObject>
+#endif // Q_OS_ANDROID
 
 #endif // __cplusplus
