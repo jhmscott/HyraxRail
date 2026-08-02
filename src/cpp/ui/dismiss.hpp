@@ -1,0 +1,60 @@
+/**
+ * @file        dismiss.hpp
+ * @brief       Modal dialog dismiss animation
+ * @author      Justin Scott
+ * @date        2026-07-31
+ *
+ * @copyright   Copyright (c) 2026 Justin Scott
+ */
+
+
+#pragma once
+
+#include <QDialog>
+#include <QGraphicsOpacityEffect>
+
+namespace ui
+{
+
+///////////////////////////////////////////////////////////////////////////////
+/// Modal dialog dismiss animation
+///
+///////////////////////////////////////////////////////////////////////////////
+class DismissAnimation : public QObject
+    {
+public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  modal       Modal dialog to apply animation
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    explicit DismissAnimation (QDialog& modal);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Destructor
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    ~DismissAnimation ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the animation progress
+    ///
+    /// @param[in]  progress        Animation progresss [0.0,1.0]
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setProgress (double progress) { m_effect->setOpacity (1.0 - progress * 2.0); }
+
+private:
+    QDialog*                m_dialog;       ///< Dialog this effect is applied to (non owning copy)
+    QGraphicsOpacityEffect* m_effect;       ///< Graphics effect, owned by this object
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handles the destruction of the dialog by NULL-ing our non-owning copy to
+    /// prevent dangling pointer
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void dialogDestroyed () { m_dialog = NULL;  }
+    };
+
+} // namespace ui

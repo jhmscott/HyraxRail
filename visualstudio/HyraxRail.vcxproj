@@ -230,6 +230,7 @@
     <ClCompile Include="..\src\cpp\ui\config\networkinfo.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\notifygroup.cpp" />
     <ClCompile Include="..\src\cpp\ui\controllerinfo.cpp" />
+    <ClCompile Include="..\src\cpp\ui\dismiss.cpp" />
     <ClCompile Include="..\src\cpp\ui\lang.cpp" />
     <ClCompile Include="..\src\cpp\ui\mainwidget.cpp" />
     <ClCompile Include="..\src\cpp\ui\mainwindow.cpp" />
@@ -329,6 +330,7 @@
     <QtMoc Include="..\src\cpp\ui\routes\routegroup.hpp" />
     <QtMoc Include="..\src\cpp\ui\config\networkinfo.hpp" />
     <QtMoc Include="..\src\cpp\ui\config\cominfo.hpp" />
+    <ClInclude Include="..\src\cpp\ui\dismiss.hpp" />
     <ClInclude Include="..\src\cpp\ui\lang.hpp" />
     <ClInclude Include="..\src\cpp\ui\routes\routepanel.hpp" />
     <ClInclude Include="..\src\cpp\ui\sensors\sensorbar.hpp" />

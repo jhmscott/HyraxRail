@@ -32,6 +32,11 @@
 #include <Windows.h>    // Needed for windows native events
 #endif // Q_OS_WIN
 
+#ifdef Q_OS_ANDROID
+#include <jni.h>
+#include <QJniObject>
+#endif // Q_OS_ANDROID
+
 
 using namespace std::chrono_literals;
 
@@ -82,8 +87,16 @@ MainWindow::MainWindow (QWidget *parent) :
             &QStyleHints::colorSchemeChanged,
              this,
             &MainWindow::setPalette);
-#endif // Q_OS_ANDROID
 
+    QNativeInterface::QAndroidApplication::runOnAndroidMainThread (
+        [this] () -> void
+        {
+        QNativeInterface::
+            QAndroidApplication::
+                context ().callMethod<void> ("registerMainWindow",
+                                             reinterpret_cast<jlong> (this));
+        });
+#endif // Q_OS_ANDROID
 
     connect (qApp,
             &QGuiApplication::commitDataRequest,
@@ -102,8 +115,18 @@ MainWindow::MainWindow (QWidget *parent) :
 MainWindow::~MainWindow ()
     {
     saveFastClockSettings ();
-    }
 
+#ifdef Q_OS_ANDROID
+    QNativeInterface::QAndroidApplication::runOnAndroidMainThread (
+        [this] () -> void
+        {
+        QNativeInterface::
+            QAndroidApplication::
+                context ().callMethod<void> ("unregisterMainWindow");
+        }).waitForFinished ();
+#endif // Q_OS_ANDROID
+
+    }
 
 void MainWindow::changeEvent (QEvent* event)
     {
@@ -310,6 +333,14 @@ void MainWindow::restoreFastClockSettings ()
         }
     }
 
+QDialog* MainWindow::getModal ()
+    {
+    // Currently all dialog we use are modal
+    // In the future, this may change and we should update this logic
+    //
+    return findChild<QDialog*> ();
+    }
+
 
 void MainWindow::applicationStateChanged (Qt::ApplicationState state)
     {
@@ -338,6 +369,49 @@ void MainWindow::applicationStateChanged (Qt::ApplicationState state)
         }
     }
 
+void MainWindow::dismissModalAnimation (double progress)
+    {
+    if (NULL != m_dismiss)
+        {
+        m_dismiss->setProgress (progress);
+        }
+    }
+
+void MainWindow::dismissModalStart ()
+    {
+    QDialog* modal = getModal ();
+
+    if (NULL != modal)
+        {
+        m_dismiss.reset (new DismissAnimation{ *modal });
+        }
+    }
+
+void MainWindow::dismissModalCancel ()
+    {
+    m_dismiss.reset ();
+    }
+
+bool MainWindow::backPress ()
+    {
+    bool        allowBack;
+    QDialog*    dialog = getModal ();
+
+    if (NULL == dialog)
+        {
+        allowBack = true;
+        }
+    else
+        {
+        m_dismiss.reset ();
+        dialog->reject ();
+
+        allowBack = false;
+        }
+
+    return allowBack;
+    }
+
 
 void MainWindow::commitDataRequest (QSessionManager& manager)
     {
@@ -354,3 +428,113 @@ void MainWindow::commitDataRequest (QSessionManager& manager)
         }
     }
 }
+
+
+#if defined (Q_OS_ANDROID) || defined (DOXYGEN)
+extern "C"
+{
+
+///////////////////////////////////////////////////////////////////////////////
+/// Callled when the back animation progresses
+///
+/// @param[in]  env             (unused) JNI environment
+/// @param[in]  thisObj         (unused) Back animation java object
+/// @param[in]  mainWindowPtr   Pointer to the MainWindow object
+/// @param[in]  progress        Animation progress
+///
+/// @see        ca.justinlab.hyraxrail.BackAnimation.backProgressed()
+///
+/// @ingroup    JNI_FUNC
+///
+///////////////////////////////////////////////////////////////////////////////
+JNIEXPORT
+void JNICALL Java_ca_justinlab_hyraxrail_BackAnimation_backProgressed (JNIEnv*  env,
+                                                                       jobject  thisObj,
+                                                                       jlong    mainWindowPtr,
+                                                                       jfloat   progress)
+    {
+    QMetaObject::invokeMethod (reinterpret_cast<ui::MainWindow*> (mainWindowPtr),
+                              &ui::MainWindow::dismissModalAnimation,
+                               progress);
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Callled when the back animation starts
+///
+/// @param[in]  env             (unused) JNI environment
+/// @param[in]  thisObj         (unused) Back animation java object
+/// @param[in]  mainWindowPtr   Pointer to the MainWindow object
+///
+/// @see        ca.justinlab.hyraxrail.BackAnimation.backStarted()
+///
+/// @ingroup    JNI_FUNC
+///
+///////////////////////////////////////////////////////////////////////////////
+JNIEXPORT
+void JNICALL Java_ca_justinlab_hyraxrail_BackAnimation_backStarted (JNIEnv*     env,
+                                                                    jobject     thisObj,
+                                                                    jlong       mainWindowPtr)
+    {
+    QMetaObject::invokeMethod (reinterpret_cast<ui::MainWindow*> (mainWindowPtr),
+                              &ui::MainWindow::dismissModalStart);
+    }
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Callled when the user cancels the cback operation
+///
+/// @param[in]  env             (unused) JNI environment
+/// @param[in]  thisObj         (unused) Back animation java object
+/// @param[in]  mainWindowPtr   Pointer to the MainWindow object
+///
+/// @see        ca.justinlab.hyraxrail.BackAnimation.backCancelled()
+///
+/// @ingroup    JNI_FUNC
+///
+///////////////////////////////////////////////////////////////////////////////
+JNIEXPORT
+void JNICALL Java_ca_justinlab_hyraxrail_BackAnimation_backCancelled (JNIEnv*   env,
+                                                                      jobject   thisObj,
+                                                                      jlong     mainWindowPtr)
+    {
+    QMetaObject::invokeMethod (reinterpret_cast<ui::MainWindow*> (mainWindowPtr),
+                              &ui::MainWindow::dismissModalCancel);
+    }
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Callled when the back is completed
+///
+/// @param[in]  env             (unused) JNI environment
+/// @param[in]  thisObj         (unused) Back animation java object
+/// @param[in]  mainWindowPtr   Pointer to the MainWindow object
+///
+/// @see        ca.justinlab.hyraxrail.BackAnimation.backPressed()
+///
+/// @ingroup    JNI_FUNC
+///
+///////////////////////////////////////////////////////////////////////////////
+JNIEXPORT
+void JNICALL Java_ca_justinlab_hyraxrail_BackAnimation_backPressed (JNIEnv*     env,
+                                                                    jobject     thisObj,
+                                                                    jlong       mainWindowPtr)
+    {
+    ui::MainWindow*     mainWindow = reinterpret_cast<ui::MainWindow*> (mainWindowPtr);
+    bool                allowClose = false;
+
+    QMetaObject::invokeMethod (mainWindow,
+                              &ui::MainWindow::backPress,
+                               Qt::BlockingQueuedConnection,
+                              &allowClose);
+    if (allowClose)
+        {
+        QNativeInterface::
+            QAndroidApplication::
+                context ().callMethod<jboolean> ("moveTaskToBack",
+                                                 static_cast<jboolean> (JNI_TRUE));
+        }
+    }
+}
+
+#endif // defined (Q_OS_ANDROID) || defined (DOXYGEN)

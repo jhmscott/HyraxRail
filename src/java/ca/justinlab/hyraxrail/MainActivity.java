@@ -18,7 +18,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.window.OnBackInvokedDispatcher;
 
+import org.qtproject.qt.android.UsedFromNativeCode;
 import org.qtproject.qt.android.bindings.QtActivity;
 
 import java.util.Locale;
@@ -29,8 +31,9 @@ import java.util.Locale;
 ///////////////////////////////////////////////////////////////////////////////
 public class MainActivity extends QtActivity
     {
-    private Battery m_battery;  ///< Battery notification client
-    private Locale  m_locale;   ///< Current system locale
+    private Battery         m_battery;  ///< Battery notification client
+    private Locale          m_locale;   ///< Current system locale
+    private BackAnimation   m_backAnimation;
 
     private static final int VIBRATE_TICK           = 0;
     private static final int VIBRATE_CLICK          = 1;
@@ -85,6 +88,7 @@ public class MainActivity extends QtActivity
     ///                         receiving the notifications
     ///
     ///////////////////////////////////////////////////////////////////////////////
+    @UsedFromNativeCode
     public void registerBatteryHandler (long nativeObjPtr)
         {
         m_battery = new Battery (nativeObjPtr);
@@ -97,6 +101,7 @@ public class MainActivity extends QtActivity
     /// De-register the battery notification handle
     ///
     ///////////////////////////////////////////////////////////////////////////////
+    @UsedFromNativeCode
     public void unregisterBatteryHandler ()
         {
         unregisterReceiver (m_battery);
@@ -109,6 +114,7 @@ public class MainActivity extends QtActivity
     /// @return Locale string
     ///
     ///////////////////////////////////////////////////////////////////////////////
+    @UsedFromNativeCode
     public String getLocale ()
         {
         synchronized (m_locale)
@@ -122,6 +128,7 @@ public class MainActivity extends QtActivity
     ///
     /// @param  vibrate     Vibration type
     ///////////////////////////////////////////////////////////////////////////////
+    @UsedFromNativeCode
     public void hapticFeedback (int vibrate)
         {
         int effect = -1;
@@ -152,6 +159,32 @@ public class MainActivity extends QtActivity
 
         Vibrator vibrator = getApplicationContext ().getSystemService (Vibrator.class);
         vibrator.vibrate (VibrationEffect.createPredefined (effect));
+        }
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Register the main window
+    ///
+    /// @param objPtr   Main window object pointer
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    @UsedFromNativeCode
+    void registerMainWindow (long objPtr)
+        {
+        getOnBackInvokedDispatcher().
+                registerOnBackInvokedCallback (OnBackInvokedDispatcher.PRIORITY_OVERLAY,
+                                               m_backAnimation = new BackAnimation (objPtr));
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// De-register the main window
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    @UsedFromNativeCode
+    void unregisterMainWindow ()
+        {
+        getOnBackInvokedDispatcher().unregisterOnBackInvokedCallback (m_backAnimation);
+        m_backAnimation = null;
         }
 
     ///////////////////////////////////////////////////////////////////////////////

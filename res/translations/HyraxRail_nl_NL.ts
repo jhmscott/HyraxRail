@@ -163,38 +163,38 @@
 <context>
     <name>ui::MainWindow</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="195"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="240"/>
         <source>Hyrax Rail</source>
         <translation>Klipdas Spoorwegen</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="212"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="257"/>
         <source>Shutdown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="213"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="258"/>
         <source>The Fast Clock is still running.
 Would you like to pause it or keep it running?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="216"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="261"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="217"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="262"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="218"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="263"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="220"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="265"/>
         <source>Always do this on shutdown</source>
         <translation type="unfinished"></translation>
     </message>

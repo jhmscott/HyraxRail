@@ -1,4 +1,3 @@
-
 /**
  * @file        mainwindow.hpp
  * @brief       Hyrax rail main application window
@@ -11,7 +10,12 @@
 
 #pragma once
 
+#include <ui/dismiss.hpp>
+
 #include <QtWidgets/QMainWindow>
+
+
+#include <future>
 
 namespace ui
 {
@@ -39,6 +43,34 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     ~MainWindow ();
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle a back press
+    ///
+    /// @return     True if the back press should trigger a close
+    ///             False if the back triggered something internally
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool backPress ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Progress the modal dismiss animation
+    ///
+    /// @param[in]  progress        Animation progress [0.0,1.0]
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void dismissModalAnimation (double progress);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Start dismissing the current modal dialog
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void dismissModalStart ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Cancel the modal dismiss action
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void dismissModalCancel ();
 protected:
     ///////////////////////////////////////////////////////////////////////////////
     /// Handle a change event
@@ -82,6 +114,7 @@ private:
     clockShutdownType   m_clockShutdownType = clockShutdownType::NOT_SET;   ///< Clock behaviour while shutdown
     bool                m_rememberType      = false;                        ///< True to remember the fast clock
                                                                             ///  behaviour while shutdown
+    std::unique_ptr<DismissAnimation> m_dismiss = NULL; ///< Dismiss animation
 
     // Android colour scheme palettes
 #if defined (Q_OS_ANDROID) || defined (DOXYGEN)
@@ -114,6 +147,15 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void restoreFastClockSettings ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the currently open modal dialog
+    ///
+    /// @return     Modal dialog, if one is open
+    ///             NULL if not
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    QDialog* getModal ();
 
 private slots:
     ///////////////////////////////////////////////////////////////////////////////

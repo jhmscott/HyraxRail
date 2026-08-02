@@ -261,6 +261,9 @@
     <ClInclude Include="..\src\cpp\ui\common\gesture.hpp">
       <Filter>Header Files\ui\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\dismiss.hpp">
+      <Filter>Header Files\ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cpp\control\controllers\base.cpp">
@@ -496,6 +499,9 @@
     </ClCompile>
     <ClCompile Include="..\src\cpp\utils\battery.cpp">
       <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\dismiss.cpp">
+      <Filter>Source Files\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

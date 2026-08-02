@@ -16,6 +16,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.BatteryManager;
 
+import androidx.annotation.IntRange;
+
 ///////////////////////////////////////////////////////////////////////////////
 /// Battery notification receiver
 ///
@@ -66,5 +68,6 @@ public class Battery extends BroadcastReceiver
     /// @see    Java_ca_justinlab_hyraxrail_Battery_batteryStatusChanged()
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    private native void batteryStatusChanged (long nativeObjPtr, int pct);
+    private native void batteryStatusChanged (long                                  nativeObjPtr,
+                                              @IntRange (from = 0, to = 100) int    pct);
     }

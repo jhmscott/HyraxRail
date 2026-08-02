@@ -19,7 +19,7 @@
 
 // POSIX libraries
 
-#if Q_OS_UNIX
+#ifdef Q_OS_UNIX
 #include <unistd.h>
 #endif // Q_OS_UNIX
 
