@@ -222,7 +222,7 @@ public:
     health getConnectionHealth () const { std::lock_guard lk{ m_healthLock }; return m_health; }
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Check if the thread has successfuly connected to the host
+    /// Check if the thread has successfully connected to the host
     ///
     /// @return     True if connected
     ///

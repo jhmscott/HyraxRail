@@ -74,7 +74,6 @@ void ConnectionWorkerThread::loop ()
     const std::chrono::duration pingInterval     = 5000ms;
     const std::chrono::duration queueTimeout     = 1000ms;
 
-    std::unique_lock lk (m_mtx);
 
     std::chrono::time_point<std::chrono::system_clock> lastPing;
     std::chrono::time_point<std::chrono::system_clock> lastEvent;
@@ -84,7 +83,10 @@ void ConnectionWorkerThread::loop ()
         std::chrono::duration   eventInterval   = m_proto->getEventPollInterval ();
         std::chrono::duration   waitInterval    = std::min (eventInterval, queueTimeout);
 
+        {
+        std::unique_lock lk (m_mtx);
         m_cv.wait_for (lk, waitInterval);
+        }
 
         health                  newHealth       = m_health;
 
@@ -138,8 +140,15 @@ void ConnectionWorkerThread::loop ()
 
             while (!m_taskQueue.empty ())
                 {
-                m_taskQueue.front ()->callContained (*m_proto);
+                std::unique_ptr<TaskBase> task;
+
+                {
+                std::lock_guard lk{ m_mtx };
+                task = std::move (m_taskQueue.front ());
                 m_taskQueue.pop ();
+                }
+
+                task->callContained (*m_proto);
                 }
             }
         else
@@ -153,12 +162,16 @@ void ConnectionWorkerThread::loop ()
                 newHealth = { HEALTH_DEAD, std::chrono::milliseconds{ 0 } };
                 }
 
+            {
+            std::lock_guard lk{ m_mtx };
+
             while (not m_taskQueue.empty () &&
                    std::chrono::system_clock::now () -
                    m_taskQueue.front ()->getCreationTime () > queueTimeout)
                 {
                 m_taskQueue.pop ();
                 }
+            }
             }
 
         if (newHealth != m_health)

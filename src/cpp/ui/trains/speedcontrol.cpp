@@ -9,14 +9,12 @@
 
 
 #include <QApplication>
-#include <QPainter>
-#include <QFontDatabase>
-#include <QStyleOption>
 #include <QBoxLayout>
+#include <QFontDatabase>
+#include <QPainter>
 #include <QPushButton>
-#include <QStyle>
-#include <QStyleHints>
 
+#include <ui/common/centeredslider.hpp>
 #include <ui/common/pointedwidget.hpp>
 #include <ui/common/utils.hpp>
 #include <ui/trains/speedcontrol.hpp>
@@ -24,194 +22,6 @@
 namespace ui::trains
 {
 
-static constexpr int MAX_SLIDER_GROOVE_WIDTH = 20;
-
-namespace // anonymous
-{
-///////////////////////////////////////////////////////////////////////////////
-/// Slider bar widget, with positive/negative values with the 0 position at the
-/// center, and the progress drawn from this origin point
-///
-///////////////////////////////////////////////////////////////////////////////
-class CenteredSlider : public QSlider
-    {
-public:
-
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Constructor
-    ///
-    /// @param[in]  ornt        Orientation (vertical or horizontal)
-    /// @param[in]  parent      Parent widget
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    CenteredSlider (Qt::Orientation ornt, QWidget* parent) :
-        QSlider (ornt, parent)
-        {}
-protected:
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Draw the slider bar widget
-    ///
-    /// @param[in]  event       Paint event
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    virtual void paintEvent (QPaintEvent* event) override
-        {
-        QPainter painter (this);
-        painter.setRenderHint (QPainter::Antialiasing, true);
-
-        QStyleOptionSlider option;
-
-#ifdef Q_OS_WIN
-        option.initFrom (this);
-#else
-        initStyleOption (&option);
-#endif // Q_OS_WIN
-
-
-        QRect   grooveRect;
-        QRect   handleRect;
-        QRect   progressRect;
-
-        QPoint  handlePoint;
-        int     handlePos   = 0;
-        QRect   widgetRect  = rect ();
-        bool    darkMode    = Qt::ColorScheme::Dark == qApp->styleHints ()->colorScheme ();
-
-        if (Qt::Horizontal == orientation ())
-            {
-            QRect grooveRect = style ()->subControlRect (QStyle::CC_Slider,
-                                                         &option,
-                                                         QStyle::SC_SliderGroove,
-                                                         this);
-            QRect handleRect = style ()->subControlRect (QStyle::CC_Slider,
-                                                         &option,
-                                                         QStyle::SC_SliderHandle,
-                                                         this);
-
-            QPoint grooveCenter = grooveRect.center ();
-            QRect progressRect = grooveRect;
-
-            handlePos = grooveRect.left () +
-                        ((grooveRect.width () - handleRect.width ()) *
-                         (-value () - minimum ()) /
-                         (maximum () - minimum ()));
-
-
-            handlePoint = QPoint (handlePos, grooveCenter.y ());
-            handleRect.moveLeft (handlePoint.x ());
-
-            //from the center
-            progressRect.setLeft (grooveCenter.x ());
-            //to the handle's position
-            progressRect.setRight (handlePoint.x ());
-            }
-        else // (Qt::Vertical == orientation ())
-            {
-            option.orientation = Qt::Vertical;
-            grooveRect = style ()->subControlRect (QStyle::CC_Slider,
-                                                   &option,
-                                                   QStyle::SC_SliderGroove);
-            handleRect = style ()->subControlRect (QStyle::CC_Slider,
-                                                   &option,
-                                                   QStyle::SC_SliderHandle);
-
-            // Already centered on android
-#ifndef Q_OS_ANDROID
-            int centerNudge = widgetRect.center ().x () - grooveRect.center ().x ();
-
-            grooveRect.moveLeft (centerNudge);
-            handleRect.moveLeft (centerNudge);
-
-            grooveRect.adjust (0, 5, 0, -5);
-#endif
-
-            // On Mac the groove expands to fill the space
-            // This makes it look more reasonable
-#ifdef Q_OS_MACOS
-            if (grooveRect.width() > MAX_SLIDER_GROOVE_WIDTH)
-                {
-                int delta = grooveRect.width() - MAX_SLIDER_GROOVE_WIDTH;
-
-                grooveRect.adjust (delta / 2, 0, -delta / 2, 0);
-                handleRect.adjust (delta / 2, 0, -delta / 2, 0);
-                }
-#endif // Q_OS_MACOS
-
-            QPoint grooveCenter = grooveRect.center ();
-            progressRect = grooveRect;
-
-            handlePos = grooveRect.top () +
-                        ((grooveRect.height () - handleRect.height ()) *
-                         (-value () - minimum ()) / (maximum () - minimum ()));
-
-            handlePoint = QPoint (grooveCenter.x (), handlePos);
-            handleRect.moveTop (handlePoint.y ());
-            handleRect.adjust (-5, 0, 5, 0);
-
-            //from the center
-            progressRect.setTop (grooveCenter.y ());
-            //to the handle's position
-            progressRect.setBottom (handlePoint.y ());
-            }
-
-        //draw groove
-        painter.setBrush (Qt::lightGray);
-        painter.setPen (Qt::darkGray);
-        painter.drawRoundedRect (grooveRect, 5, 5);
-
-        //draw progress
-        painter.setBrush (Qt::cyan);
-        painter.setPen (Qt::darkGray);
-        painter.drawRect (progressRect);
-
-        //draw handle
-        painter.setBrush (Qt::gray);
-        painter.setPen (Qt::darkGray);
-        painter.drawRoundedRect (handleRect, 3, 3);
-
-        if (0 != tickInterval ())
-            {
-            // Draw ticks
-            const double    stepSpacing = grooveRect.height () /
-                                          static_cast<double> (maximum () - minimum ());
-            const int       minTick     = minimum () + ((tickInterval () - (minimum () % tickInterval ())) % tickInterval ());
-            const int       maxTick     = maximum () - (maximum () % tickInterval ());
-
-            painter.setPen (darkMode ? Qt::white : Qt::black);
-
-            for (int ii = minimum (); ii < maximum (); ++ii)
-                {
-                const int posAbsolute   = static_cast<int> (round ((ii - minimum ()) * stepSpacing));
-                const int width         = 0 == ii || minTick == ii || maxTick == ii ? 10 : 4;
-
-                if (0 == (ii % tickInterval ()))
-                    {
-                    // if (0 == (tickPosition () & TicksLeft))
-                        {
-                        painter.drawLine (grooveRect.left () - 10,
-                                          grooveRect.top () + posAbsolute,
-                                          grooveRect.left () - 10 - width,
-                                          grooveRect.top () + posAbsolute);
-                        }
-
-
-                    // if (0 == (tickPosition () & TicksRight))
-                        {
-
-                        painter.drawLine (grooveRect.right () + 10,
-                                          grooveRect.top () + posAbsolute,
-                                          grooveRect.right () + 10 + width,
-                                          grooveRect.top () + posAbsolute);
-                        }
-                    }
-                }
-            }
-        }
-private:
-
-    };
-
-} // namespace anonymous
 
 SpeedControlWidget::SpeedControlWidget (QWidget* parent) :
     QWidget (parent)
@@ -227,7 +37,7 @@ SpeedControlWidget::SpeedControlWidget (QWidget* parent) :
     m_stop->setIconSize (QSize{ 50, 50 });
     common::makeFrameless (*m_stop);
 
-    m_slider    = new CenteredSlider{ Qt::Vertical, this };
+    m_slider    = new common::CenteredSlider{ Qt::Vertical, this };
     m_label     = new QLabel{ "00", this};
 
     m_slider->setMinimumSize (100, 200);
@@ -257,7 +67,8 @@ SpeedControlWidget::SpeedControlWidget (QWidget* parent) :
     connect (m_slider,
             &QSlider::valueChanged,
              this,
-            &SpeedControlWidget::onSliderChange);
+            &SpeedControlWidget::onSliderChange,
+             Qt::QueuedConnection);
 
     connect (m_stop,
             &QPushButton::released,
@@ -286,4 +97,5 @@ void SpeedControlWidget::clear ()
     m_stop  ->setDisabled (true);
     m_label ->setDisabled (true);
     }
-}
+
+} // namespace ui::trains
