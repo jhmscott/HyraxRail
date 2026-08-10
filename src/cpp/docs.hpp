@@ -20,6 +20,7 @@
 /// @defgroup   SINGLETON           Singletons
 /// @defgroup   PIMPL               PImpl Implementation Classes
 /// @defgroup   JNI_FUNC            Java Native Interface Functions
+/// @defgroup   UNIT_TEST           Unit Test Suites
 ///
 ///////////////////////////////////////////////////////////////////////////////
 

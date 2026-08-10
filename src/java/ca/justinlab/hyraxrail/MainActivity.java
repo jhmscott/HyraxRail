@@ -161,7 +161,6 @@ public class MainActivity extends QtActivity
         vibrator.vibrate (VibrationEffect.createPredefined (effect));
         }
 
-
     ///////////////////////////////////////////////////////////////////////////////
     /// Register the main window
     ///

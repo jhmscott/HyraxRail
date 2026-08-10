@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <common.hpp>
+
 #include <bitset>
 #include <variant>
 
@@ -63,7 +65,7 @@ public:
         {
         IP,         ///< IPv4 or IPv6
         HOSTNAME,   ///< DNS host name
-        EMPTY       ///< Emty object
+        EMPTY       ///< Empty object
         };
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -78,7 +80,7 @@ public:
     /// @param[in]  addr        Host IP address
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    HostInfo (const QHostAddress& addr) :
+    implicit HostInfo (const QHostAddress& addr) :
         m_value (addr)
         {}
 
@@ -154,7 +156,7 @@ struct deviceInfo
     type    type;       ///< Device type
     info_t  info;       ///< Device info
                         ///  socketInfo if type == TYPE_TCP or type == TYPE_UDP
-                        ///  serialInfo   if type == TYPE_SERIAL
+                        ///  serialInfo if type == TYPE_SERIAL
     };
 
 ///////////////////////////////////////////////////////////////////////////////

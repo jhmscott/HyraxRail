@@ -106,12 +106,12 @@ HostInfo HostInfo::fromString (const QString& string, type type)
 
     switch (type)
         {
-
         case type::EMPTY:
             {
             // no-op, nothing to build
             break;
             }
+
         case type::IP:
             {
             info.m_value = QHostAddress{ string };

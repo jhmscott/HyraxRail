@@ -24,9 +24,9 @@ namespace internal
 ///////////////////////////////////////////////////////////////////////////////
 /// Creates a predicate functor to compare a unique_ptr<> to a dumb pointer value
 ///
-/// @tparam     T           Pointer type
+/// @tparam     T       Pointer type
 ///
-/// @param[in]  ptr       Pointer to compare against in predicate
+/// @param[in]  ptr     Pointer to compare against in predicate
 ///
 /// @return     Predicate functor
 ///
@@ -42,10 +42,10 @@ auto makePtrPred (const T* ptr)
 ///////////////////////////////////////////////////////////////////////////////
 /// Erase all elements in a vector that fulfill a predicate. Basically std::erase_if() from c++20
 ///
-/// @tparam         T           Vector element type
+/// @tparam         T       Vector element type
 /// @tparam         Pred    Predicate type
 ///
-/// @param[in,out]  vec      Vector to erase elements from
+/// @param[in,out]  vec     Vector to erase elements from
 /// @param[in]      pred    Predicate
 ///
 ///////////////////////////////////////////////////////////////////////////////
@@ -61,11 +61,11 @@ void eraseIf (std::vector<T>& vec, Pred condition)
 ///////////////////////////////////////////////////////////////////////////////
 /// Erase all elements from a vector equal to a value
 ///
-/// @tparam         T               Vector element type
-/// @tparam         U               Value to remove. T{}==U{} must be defined
+/// @tparam         T           Vector element type
+/// @tparam         U           Value to remove. T{}==U{} must be defined
 ///
-/// @param[in,out]  vec           Vector to remove elements from
-/// @param[in]      val           Value to look for
+/// @param[in,out]  vec         Vector to remove elements from
+/// @param[in]      val         Value to look for
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<class T, class U>
@@ -80,10 +80,10 @@ void erase (std::vector<T>& vec, const U& val)
 ///////////////////////////////////////////////////////////////////////////////
 /// Removes elements from a vector of unique_ptr<> by the pointer address/value. Const version
 ///
-/// @tparam         T               Pointer type
+/// @tparam         T           Pointer type
 ///
-/// @param[in,out]  vec           Vector to remove elements from
-/// @param[in]      ptr           Value to remove
+/// @param[in,out]  vec         Vector to remove elements from
+/// @param[in]      ptr         Value to remove
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<class T>
@@ -95,10 +95,10 @@ void eraseByPtr (std::vector<const std::unique_ptr<T>>& vec, const T* ptr)
 ///////////////////////////////////////////////////////////////////////////////
 /// Removes elements from a vector of unique_ptr<> by the pointer address/value. Non-const version
 ///
-/// @tparam         T               Pointer type
+/// @tparam         T           Pointer type
 ///
-/// @param[in,out]  vec           Vector to remove elements from
-/// @param[in]      ptr           Value to remove
+/// @param[in,out]  vec         Vector to remove elements from
+/// @param[in]      ptr         Value to remove
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<class T>
@@ -112,10 +112,10 @@ void eraseByPtr (std::vector<std::unique_ptr<T>>& vec, const T* ptr)
 /// Find the first element in an vector of unique_ptr<> by the pointer address/value.
 /// Const version
 ///
-/// @tparam         T               Pointer type
+/// @tparam         T           Pointer type
 ///
-/// @param[in,out]  vec           Vector to search
-/// @param[in]      ptr           Value to search
+/// @param[in,out]  vec         Vector to search
+/// @param[in]      ptr         Value to search
 ///
 /// @return         Iterator to first instance of ptr in vec. vec.end() if none exist
 ///
@@ -131,10 +131,10 @@ auto findByPtr (const std::vector<const std::unique_ptr<T>>& vec, const T* ptr)
 ///////////////////////////////////////////////////////////////////////////////
 /// Find the first element in an vector of unique_ptr<> by the pointer address/value. Non-const version
 ///
-/// @tparam         T               Pointer type
+/// @tparam         T           Pointer type
 ///
-/// @param[in,out]  vec           Vector to search
-/// @param[in]      ptr           Value to search
+/// @param[in,out]  vec         Vector to search
+/// @param[in]      ptr         Value to search
 ///
 /// @return         Iterator to first instance of ptr in vec. vec.end() if none exist
 ///

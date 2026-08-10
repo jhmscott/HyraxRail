@@ -19,16 +19,16 @@
 namespace utils::math
 {
 
-inline constexpr double DEGRAD = (M_PI / 180.0);
-inline constexpr double RADDEG = (180.0 / M_PI);
+inline constexpr double DEGRAD = (M_PI / 180.0);    ///< Convert degrees to radians
+inline constexpr double RADDEG = (180.0 / M_PI);    ///< Convert radians to degrees
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Perform a division operation and round upt the result
+/// Perform a division operation and round up the result
 ///
 /// @tparam     T           Numeric type
 ///
 /// @param[in]  dividend    Dividend/numerator
-/// @param[in]  divider     Divider/denomenator
+/// @param[in]  divider     Divider/denominator
 ///
 /// @return     Division result
 ///
@@ -51,7 +51,7 @@ T divCeil (const T& dividend, const identityType<T>& divider)
 ///////////////////////////////////////////////////////////////////////////////
 /// Round a floating point value to the nearest integer
 ///
-/// @tparam     T       (optiona) Integer type, defaults to int
+/// @tparam     T       (optional) Integer type, defaults to int
 ///
 /// @param[in]  dbl     Floating point double to round
 ///

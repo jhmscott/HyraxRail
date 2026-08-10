@@ -258,4 +258,5 @@ void CenteredSlider::paintEvent (QPaintEvent* event)
             }
         }
     }
-}
+
+} // namespace ui::common

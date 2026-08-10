@@ -264,6 +264,12 @@
     <ClInclude Include="..\src\cpp\ui\dismiss.hpp">
       <Filter>Header Files\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\touchslider.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\centeredslider.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cpp\control\controllers\base.cpp">
@@ -502,6 +508,12 @@
     </ClCompile>
     <ClCompile Include="..\src\cpp\ui\dismiss.cpp">
       <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\touchslider.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\centeredslider.cpp">
+      <Filter>Source Files\ui\common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

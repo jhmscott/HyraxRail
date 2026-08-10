@@ -9,11 +9,16 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Test|x64">
+      <Configuration>Test</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0ED23473-B2F8-4C1C-A4A5-641C5E79AF9E}</ProjectGuid>
     <Keyword>QtVS_v304</Keyword>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.28000.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)'=='Test|x64'">10.0.28000.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.28000.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
     <ProjectName>HyraxRail</ProjectName>
@@ -21,6 +26,12 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v143</PlatformToolset>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
@@ -43,6 +54,13 @@
     <QtLinkNatvisFile>true</QtLinkNatvisFile>
     <QtDeployNoVirtualKeyboard>true</QtDeployNoVirtualKeyboard>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'" Label="QtSettings">
+    <QtInstall>6.11.0</QtInstall>
+    <QtModules>core;gui;network;widgets;serialport</QtModules>
+    <QtBuildConfig>debug</QtBuildConfig>
+    <QtLinkNatvisFile>true</QtLinkNatvisFile>
+    <QtDeployNoVirtualKeyboard>true</QtDeployNoVirtualKeyboard>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>6.11.0</QtInstall>
     <QtModules>core;gui;network;widgets;serialport</QtModules>
@@ -59,6 +77,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(QtMsBuild)\Qt.props" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(QtMsBuild)\Qt.props" />
@@ -66,13 +88,46 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <OutDir>$(SolutionDir)..\runtime\</OutDir>
-    <IntDir>$(ProjectDir)intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)intermediate\$(Platform)-$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'">
+    <OutDir>$(SolutionDir)..\runtime\</OutDir>
+    <IntDir>$(SolutionDir)intermediate\$(Platform)-$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutDir>$(SolutionDir)..\runtime\</OutDir>
-    <IntDir>$(ProjectDir)intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)intermediate\$(Platform)-$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UseStandardPreprocessor>true</UseStandardPreprocessor>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\src\cpp;$(ProjectDir)..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <QtMoc>
+      <QtMocFileName>%(RelativeDir)moc_%(Filename).cpp</QtMocFileName>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <OverrideClCompile>replace</OverrideClCompile>
+    </QtMoc>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <QtTranslation>
+      <BuildAction>lupdate_lrelease</BuildAction>
+      <QmOutputFile>%(RelativeDir)%(Filename).qm</QmOutputFile>
+      <IncludePath>$(SolutionDir)..\src\cpp;%(IncludePath)</IncludePath>
+    </QtTranslation>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>_UNICODE;UNICODE;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -147,6 +202,23 @@
       <PrependInclude>stdafx.h;%(PrependInclude)</PrependInclude>
     </QtMoc>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'" Label="Configuration">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <QtMoc>
+      <PrependInclude>stdafx.h;%(PrependInclude)</PrependInclude>
+    </QtMoc>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
     <ClCompile>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -179,6 +251,7 @@
     <ClCompile Include="..\src\cpp\control\protocols\base.cpp" />
     <ClCompile Include="..\src\cpp\ext\gpc.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\src\cpp\layout\actuator.cpp" />
@@ -202,6 +275,7 @@
     <ClCompile Include="..\src\cpp\ui\clock\weekly.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\addbtn.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\autogrid.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\centeredslider.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\daysofweek.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\duration.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\formdialog.cpp" />
@@ -211,7 +285,9 @@
     <ClCompile Include="..\src\cpp\ui\common\icontoggle.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\ipfield.cpp">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Test|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Test|x64'">%(Filename).moc</QtMocFileName>
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
@@ -221,6 +297,7 @@
     <ClCompile Include="..\src\cpp\ui\common\schemeicon.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\tiereddropdown.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\toggleswitch.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\touchslider.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\cominfo.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\credits.cpp" />
     <ClCompile Include="..\src\cpp\ui\config\helpgroup.cpp" />
@@ -236,7 +313,9 @@
     <ClCompile Include="..\src\cpp\ui\mainwindow.cpp" />
     <ClCompile Include="..\src\cpp\ui\routes\editroute.cpp">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Test|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Test|x64'">%(Filename).moc</QtMocFileName>
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
@@ -297,6 +376,7 @@
     <QtMoc Include="..\src\cpp\ui\clock\clockpanel.hpp" />
     <QtMoc Include="..\src\cpp\ui\clock\config.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\autogrid.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\centeredslider.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\formdialog.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\gesture.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\hexvalidator.hpp" />
@@ -313,6 +393,7 @@
     <QtMoc Include="..\src\cpp\ui\common\toggleswitch.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\schemeicon.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\tiereddropdown.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\touchslider.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\utils.hpp" />
     <QtMoc Include="..\src\cpp\ui\config\helpgroup.hpp" />
     <QtMoc Include="..\src\cpp\ui\config\configpanel.hpp" />
@@ -363,6 +444,7 @@
     <ClInclude Include="..\src\cpp\stdafx.h" />
     <ClCompile Include="..\src\cpp\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>

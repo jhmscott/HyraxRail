@@ -1,23 +1,47 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35828.75 d17.13
+VisualStudioVersion = 17.13.35828.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HyraxRail", "HyraxRail.vcxproj", "{0ED23473-B2F8-4C1C-A4A5-641C5E79AF9E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math", "tests\math.vcxproj", "{4C9EE778-F764-4513-832E-CF32274CA846}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utils", "utils", "{E7603EE2-0F6A-4991-9C02-5C69E3D99F69}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "device", "tests\device.vcxproj", "{D2EA20FB-C6A8-4C47-847F-F3B09A7F41F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Release|x64 = Release|x64
+		Test|x64 = Test|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0ED23473-B2F8-4C1C-A4A5-641C5E79AF9E}.Debug|x64.ActiveCfg = Debug|x64
 		{0ED23473-B2F8-4C1C-A4A5-641C5E79AF9E}.Debug|x64.Build.0 = Debug|x64
 		{0ED23473-B2F8-4C1C-A4A5-641C5E79AF9E}.Release|x64.ActiveCfg = Release|x64
 		{0ED23473-B2F8-4C1C-A4A5-641C5E79AF9E}.Release|x64.Build.0 = Release|x64
+		{0ED23473-B2F8-4C1C-A4A5-641C5E79AF9E}.Test|x64.ActiveCfg = Test|x64
+		{0ED23473-B2F8-4C1C-A4A5-641C5E79AF9E}.Test|x64.Build.0 = Test|x64
+		{4C9EE778-F764-4513-832E-CF32274CA846}.Debug|x64.ActiveCfg = Debug|x64
+		{4C9EE778-F764-4513-832E-CF32274CA846}.Release|x64.ActiveCfg = Release|x64
+		{4C9EE778-F764-4513-832E-CF32274CA846}.Test|x64.ActiveCfg = Test|x64
+		{4C9EE778-F764-4513-832E-CF32274CA846}.Test|x64.Build.0 = Test|x64
+		{D2EA20FB-C6A8-4C47-847F-F3B09A7F41F0}.Debug|x64.ActiveCfg = Debug|x64
+		{D2EA20FB-C6A8-4C47-847F-F3B09A7F41F0}.Release|x64.ActiveCfg = Release|x64
+		{D2EA20FB-C6A8-4C47-847F-F3B09A7F41F0}.Test|x64.ActiveCfg = Test|x64
+		{D2EA20FB-C6A8-4C47-847F-F3B09A7F41F0}.Test|x64.Build.0 = Test|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4C9EE778-F764-4513-832E-CF32274CA846} = {E7603EE2-0F6A-4991-9C02-5C69E3D99F69}
+		{E7603EE2-0F6A-4991-9C02-5C69E3D99F69} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{D2EA20FB-C6A8-4C47-847F-F3B09A7F41F0} = {E7603EE2-0F6A-4991-9C02-5C69E3D99F69}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4ACFF0E3-DFF5-489E-866F-8829724F0C54}
