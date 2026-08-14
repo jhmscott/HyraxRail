@@ -29,12 +29,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/string.hpp" line="130"/>
+        <location filename="../../src/cpp/utils/string.hpp" line="81"/>
         <source>On</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/string.hpp" line="130"/>
+        <location filename="../../src/cpp/utils/string.hpp" line="81"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>

@@ -27,7 +27,7 @@
 /// @param[in]  arg2            Second token
 ///
 /// @return     Conactenation of two tokens
-/// 
+///
 ///////////////////////////////////////////////////////////////////////////////
 #define UTILPP_CONCAT(arg1, arg2)           __UTILPP_CONCAT_IMPL (arg1, arg2)
 

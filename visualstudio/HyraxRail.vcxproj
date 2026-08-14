@@ -337,6 +337,7 @@
     <ClCompile Include="..\src\cpp\utils\pinger.cpp" />
     <ClCompile Include="..\src\cpp\utils\poly.cpp" />
     <ClCompile Include="..\src\cpp\utils\resources.cpp" />
+    <ClCompile Include="..\src\cpp\utils\string.cpp" />
     <ClCompile Include="..\src\cpp\utils\time.cpp" />
     <ClInclude Include="..\res\version.h" />
     <QtMoc Include="..\src\cpp\control\automation\clock.hpp" />

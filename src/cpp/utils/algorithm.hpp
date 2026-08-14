@@ -12,6 +12,7 @@
 #pragma once
 
 #include <memory>
+#include <set>
 #include <vector>
 
 #include <common.hpp>
@@ -40,7 +41,8 @@ auto makePtrPred (const T* ptr)
 } // namespace internal
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Erase all elements in a vector that fulfill a predicate. Basically std::erase_if() from c++20
+/// Erase all elements in a vector that fulfill a predicate.
+/// Basically std::erase_if() from c++20
 ///
 /// @tparam         T       Vector element type
 /// @tparam         Pred    Predicate type

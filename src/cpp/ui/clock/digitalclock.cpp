@@ -105,10 +105,10 @@ void DigitalClock::setTime (const control::FastClock::time_point& time)
     m_seconds->setText (QString::asprintf ("%02d", qTime.second ()));
 
     // This font doesn't render accents so strip them off
-    auto month  = utils::str::removeDiactrics (
+    auto month  = utils::str::removeDiacritics (
                     utils::time::monthAbreviation (
                         static_cast<utils::time::month> (date.month () - 1)));
-    auto dow    = utils::str::removeDiactrics (
+    auto dow    = utils::str::removeDiacritics (
                     utils::time::dayOfWeekAbreviation (
                         static_cast<utils::time::dayOfTheWeek> (date.dayOfWeek () - 1)));
 

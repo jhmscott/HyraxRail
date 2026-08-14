@@ -30,13 +30,13 @@
         <translation>Công Tắc Thẳng/Phải</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/string.hpp" line="130"/>
+        <location filename="../../src/cpp/utils/string.hpp" line="81"/>
         <source>On</source>
         <translatorcomment>Bật</translatorcomment>
         <translation>Bật</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/utils/string.hpp" line="130"/>
+        <location filename="../../src/cpp/utils/string.hpp" line="81"/>
         <source>Off</source>
         <translatorcomment>Tắt</translatorcomment>
         <translation>Tắt</translation>
