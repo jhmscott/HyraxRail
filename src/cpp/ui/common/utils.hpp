@@ -210,7 +210,7 @@ inline void removeAllActions (QWidget& wdgt)
     }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Set the label for a gievn text row in a form layout
+/// Set the label for a given text row in a form layout
 ///
 /// @tparam         Field       Field type (QWidget or QLayout)
 ///
@@ -224,7 +224,8 @@ void setFormRowText (QFormLayout&   layout,
                      Field&         field,
                      const QString& text)
     {
-    static_assert (std::is_base_of_v<QWidget, Field> || std::is_same_v<QLayout, Field>,
+    static_assert (std::is_base_of_v<QWidget, Field> ||
+                   std::is_base_of_v<QLayout, Field>,
                    "Field must be a QWidget or QLayout");
 
     QWidget* label = layout.labelForField (&field);

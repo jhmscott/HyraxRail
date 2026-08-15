@@ -515,6 +515,9 @@
     <ClCompile Include="..\src\cpp\ui\common\centeredslider.cpp">
       <Filter>Source Files\ui\common</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cpp\utils\string.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\control\protocols\base.hpp">

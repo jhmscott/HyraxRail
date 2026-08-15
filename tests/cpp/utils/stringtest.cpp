@@ -12,6 +12,7 @@
 #include <QRegularExpression>
 #include <QtTest>
 
+using namespace std::string_literals;
 using namespace std::string_view_literals;
 using namespace utils::str;
 
@@ -29,6 +30,98 @@ class StringTest : public QObject
     {
     Q_OBJECT
 private slots:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for tokenizeTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void tokenizeTest_data ()
+        {
+        QTest::addColumn<std::string> ("string");
+        QTest::addColumn<std::string> ("sep");
+
+        // Basic cases
+        QTest::newRow ("Space") << "Space separated text"s   << " "s;
+        QTest::newRow ("Comma") << "Comma,separated,text"s   << ","s;
+        QTest::newRow ("Pipe")  << "Pipe|separated|text"s    << "|"s;
+        QTest::newRow ("LF")    << "Line\nfeed\ntext"s       << "\n"s;
+        QTest::newRow ("Equal") << "Equal==separated==text"s << "=="s;
+
+        // Edge cases
+        QTest::newRow ("End")       << "Separator on end "s   << " "s;
+        QTest::newRow ("Start")     << " Separator at start"s << " "s;
+        QTest::newRow ("Repeated")  << "Repeated,,separator"s << ","s;
+        QTest::newRow ("All")       << "Oops all separator"s  << "Oops all separator"s;
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test tokenize() by comparing it's results to qTokenize()
+    ///
+    /// @see    utils::str::tokenize()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void tokenizeTest ()
+        {
+        QFETCH (std::string, string);
+        QFETCH (std::string, sep);
+
+        QString qString = string.c_str ();
+        QString qSep    = sep.c_str ();
+
+        auto tokenized  = tokenize (string, sep);
+        auto qTokenized = qTokenize (qString, qSep);
+
+        auto it = tokenized.begin ();
+        auto jt = qTokenized.begin ();
+
+        for (; it != tokenized.end () && jt != qTokenized.end (); ++it, ++jt)
+            {
+            QCOMPARE (*it, *jt);
+            }
+
+        // Make sure we've hit the end of both at the same time
+        // i.e. tokenized results are the same size
+        //
+        QCOMPARE (it, tokenized.end ());
+        QCOMPARE (jt, qTokenized.end ());
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for extractTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void extractTest_data ()
+        {
+        QTest::addColumn<std::string> ("string");
+        QTest::addColumn<std::string> ("start");
+        QTest::addColumn<std::string> ("end");
+        QTest::addColumn<std::string> ("expected");
+
+        QTest::newRow ("Basic")     << "=<To Extract>="s << "=<"s << ">="s << "To Extract"s;
+        QTest::newRow ("No Start")  << "To Extract>="s   << "=<"s << ">="s << ""s;
+        QTest::newRow ("No End")    << "=<To Extract"s   << "=<"s << ">="s << ""s;
+        QTest::newRow ("Wrapped")   << "abc=<To Extract>=def"s
+                                    << "=<"s << ">="s << "To Extract"s;
+
+        QTest::newRow ("No Start")  << "--(Extract this)----(Not this)--"s
+                                    << "--("s << ")--"s << "Extract this"s;
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Tests the string extract() function
+    ///
+    /// @see    utils::str::extract()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void extractTest ()
+        {
+        QFETCH (std::string, string);
+        QFETCH (std::string, start);
+        QFETCH (std::string, end);
+        QFETCH (std::string, expected);
+
+        QCOMPARE (extract (string, start, end), expected);
+        }
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Test data for emptyRegexTest()
     ///
