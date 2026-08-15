@@ -333,6 +333,7 @@
     <ClCompile Include="..\src\cpp\utils\battery.cpp" />
     <ClCompile Include="..\src\cpp\utils\device.cpp" />
     <ClCompile Include="..\src\cpp\utils\draw.cpp" />
+    <ClCompile Include="..\src\cpp\utils\log.cpp" />
     <ClCompile Include="..\src\cpp\utils\os.cpp" />
     <ClCompile Include="..\src\cpp\utils\pinger.cpp" />
     <ClCompile Include="..\src\cpp\utils\poly.cpp" />

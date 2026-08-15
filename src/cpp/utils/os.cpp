@@ -56,6 +56,7 @@ namespace utils::os
 /// @param[out] sWstring        UTF-16 string
 ///
 /// @return     true if the string could be converted
+///
 ///////////////////////////////////////////////////////////////////////////////
 template<size_t N>
 static bool utf8ToWString (std::string_view string, wchar_t (&wString)[N])
@@ -75,31 +76,45 @@ static bool utf8ToWString (std::string_view string, wchar_t (&wString)[N])
     }
 #endif // Q_OS_WIN
 
+
+///////////////////////////////////////////////////////////////////////////////
+/// Get the native handle for the current thread
+///
+/// @return     Thread native handle
+///
+///////////////////////////////////////////////////////////////////////////////
+static std::thread::native_handle_type getCurrentThreadHandle ()
+    {
+#ifdef Q_OS_WIN
+    return GetCurrentThread ();
+#endif // Q_OS_WIN
+
+#ifdef Q_OS_UNIX
+    return pthread_self ();
+#endif // Q_OS_UNIX
+    }
+
+
 // Exported functions
 
 void setThreadName (std::string_view name, std::thread::native_handle_type handle)
     {
     if (null_handle == handle)
         {
-#ifdef Q_OS_WIN
-        handle = GetCurrentThread ();
-#endif // Q_OS_WIN
-
-#ifdef Q_OS_UNIX
-        handle = pthread_self ();
-#endif // Q_OS_UNIX
+        handle = getCurrentThreadHandle ();
         }
 
 #ifdef Q_OS_WIN
     wchar_t wThreadName[255];
+    HRESULT hr;
 
     if (not utf8ToWString (name, wThreadName))
         {
         // ERROR Handling
         }
-    else
+    else if (FAILED (hr = SetThreadDescription (handle, wThreadName)))
         {
-        SetThreadDescription (handle, wThreadName);
+        logHrWarning (SetThreadDescription, hr);
         }
 
 #endif // Q_OS_WIN
@@ -124,6 +139,49 @@ void setThreadName (std::string_view name, std::thread::native_handle_type handl
 #endif // Q_OS_MACOS
 #endif // Q_OS_UNIX
 
+    }
+
+std::string getThreadName (std::thread::native_handle_type handle)
+    {
+    std::string name;
+
+    if (null_handle == handle)
+        {
+        handle = getCurrentThreadHandle ();
+        }
+
+#ifdef Q_OS_WIN
+    HRESULT     hr;
+    wchar_t*    wThreadName;
+
+    if (FAILED (hr = GetThreadDescription (handle, &wThreadName)))
+        {
+        logHrWarning (GetThreadDescription, hr);
+        }
+    else
+        {
+        name = QString::fromWCharArray (wThreadName).toStdString ();
+
+        LocalFree (wThreadName);
+        }
+#endif // Q_OS_WIN
+
+#ifdef Q_OS_UNIX
+    char buffer[16];
+
+    if (0 != pthread_getname_np (pthread_self (),
+                                 buffer,
+                                 std::size (buffer)))
+        {
+        qWarning () << "pthread_getname_np() failed";
+        }
+    else
+        {
+        name = buffer;
+        }
+#endif // Q_OS_UNIX
+
+    return name;
     }
 
 void notify (std::string_view title, std::string_view description)

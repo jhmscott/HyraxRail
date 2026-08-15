@@ -13,21 +13,15 @@
 #include <QDebug>
 #include <qlogging.h>
 
-
-#ifdef Q_OS_WIN
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#undef WIN32_LEAN_AND_MEAN
-#endif
-
 #include <string>
 
-
 #ifdef Q_OS_WIN
+
+#include <errhandlingapi.h>
 
 // Internal macro logic, do not use directly
 #define __logWinInternal(level, func, ...) \
-    (level() << #func "(" << utils::log::internal::passOptionalParameter (__VA_ARGS__) << \
+    (utils::log::internal::prepStream (level()) << #func "(" << utils::log::internal::passOptionalParameter (__VA_ARGS__) << \
     ") failed: " << utils::log::internal::getLastErrorAsString () << "(" << GetLastError () << ")")
 
 // Log the last windows error code (GetLastError())
@@ -35,8 +29,19 @@
 #define logWinDebug(func, ...)      (__logWinInternal (qDebug,      func, __VA_ARGS__))
 #define logWinInfo(func, ...)       (__logWinInternal (qInfo,       func, __VA_ARGS__))
 #define logWinWarning(func, ...)    (__logWinInternal (qWarning,    func, __VA_ARGS__))
-#define logWinCrtical(func, ...)    (__logWinInternal (qCritical,   func, __VA_ARGS__))
+#define logWinCritical(func, ...)   (__logWinInternal (qCritical,   func, __VA_ARGS__))
 #define logWinFatal(func, ...)      (__logWinInternal (qFatal,      func, __VA_ARGS__))
+
+#define __logHrInternal(level, func, hr, ...) \
+    (utils::log::internal::prepStream (level()) << #func "(" << utils::log::internal::passOptionalParameter (__VA_ARGS__) << \
+    ") failed: " << utils::log::internal::hresultToString (hr) << "(" << hr << ")")
+
+
+#define logHrDebug(func, hr, ...)      (__logHrInternal (qDebug,      func, hr, __VA_ARGS__))
+#define logHrInfo(func, hr, ...)       (__logHrInternal (qInfo,       func, hr, __VA_ARGS__))
+#define logHrWarning(func, hr, ...)    (__logHrInternal (qWarning,    func, hr, __VA_ARGS__))
+#define logHrCritical(func, hr, ...)   (__logHrInternal (qCritical,   func, hr, __VA_ARGS__))
+#define logHrFatal(func, hr, ...)      (__logHrInternal (qFatal,      func, hr, __VA_ARGS__))
 
 #endif // Q_OS_WIN
 
@@ -54,41 +59,29 @@ namespace internal
 /// @return     String error message for GetLastError ()
 ///
 ///////////////////////////////////////////////////////////////////////////////
-inline std::string getLastErrorAsString ()
-    {        //Get the error message ID, if any.
-    DWORD       errorMessageID  = GetLastError ();
-    LPSTR       messageBuffer   = NULL;
-    std::string message;
+QString getLastErrorAsString ();
 
-    //Ask Win32 to give us the string version of that message ID.
-    //The parameters we pass in, tell Win32 to create the buffer that holds the message for us (because we don't yet know how long the message string will be).
-    size_t size = FormatMessageA (FORMAT_MESSAGE_ALLOCATE_BUFFER |
-                                  FORMAT_MESSAGE_FROM_SYSTEM |
-                                  FORMAT_MESSAGE_IGNORE_INSERTS,
-                                  NULL,
-                                  errorMessageID,
-                                  MAKELANGID (LANG_NEUTRAL, SUBLANG_DEFAULT),
-                                  reinterpret_cast<LPSTR> (&messageBuffer),
-                                  0,
-                                  NULL);
+///////////////////////////////////////////////////////////////////////////////
+/// Get the string error message for an HRESULT
+///
+/// @param[in]  hr      HRESULT error code
+///
+/// @return     String error message
+///
+///////////////////////////////////////////////////////////////////////////////
+QString hresultToString (HRESULT hr);
 
-    if (NULL != messageBuffer)
-        {
-        // Remove the trailing \r\n
-        messageBuffer[size - 1] = '\0';
-
-         //Copy the error message into a std::string.
-        message = { messageBuffer, size - 2 };
-
-
-        //Free the Win32's string's buffer.
-        LocalFree (messageBuffer);
-        }
-
-    return message;
-    }
 #endif // Q_OS_WIN
 
+///////////////////////////////////////////////////////////////////////////////
+/// Apply settings to a debug stream for formatting logWin*() and logHr*()
+///
+/// @param[in]  stream      Un-prepared stream
+///
+/// @return     Stream with settings
+///
+///////////////////////////////////////////////////////////////////////////////
+QDebug prepStream (QDebug stream);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Returns an empty string. Used to format the error message if no parameter is passed
@@ -96,25 +89,20 @@ inline std::string getLastErrorAsString ()
 /// @return     Empty string
 ///
 ///////////////////////////////////////////////////////////////////////////////
-inline const char* passOptionalParameter ()
-    {
-    return "";
-    }
+inline const char* passOptionalParameter () { return ""; }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///  Pass a value for formatting
 ///
-/// @tparam     T             Value type
+/// @tparam     T       Value type
 ///
-/// @param[in]  val         Value to pass
+/// @param[in]  val     Value to pass
 ///
 /// @return     val, unchanged
+///
 ///////////////////////////////////////////////////////////////////////////////
 template<class T>
-T passOptionalParameter (T val)
-    {
-    return val;
-    }
+T passOptionalParameter (T val) { return val; }
 } // namespace internal
 
 } // namespace utils::log
