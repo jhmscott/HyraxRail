@@ -493,22 +493,22 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::config::CreditsDialog</name>
     <message>
-        <location filename="../../src/cpp/ui/config/credits.cpp" line="43"/>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="44"/>
         <source>App icon by Rose Spencer-Spreeuw </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/credits.cpp" line="54"/>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="55"/>
         <source>Long Dương (%1) : Vietnamese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/credits.cpp" line="79"/>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="80"/>
         <source>Third Party Software Notices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/credits.cpp" line="80"/>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="81"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>

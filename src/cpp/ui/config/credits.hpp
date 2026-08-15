@@ -45,6 +45,7 @@ private:
         SWLIC_LUCIDE,   ///< Lucide Icons
         SWLIC_POSPHUR,  ///< Phosphur Icons
         SWLIC_DSEG,     ///< DSEG font
+        SWLIC_FAKEIT,   ///< FakeIt Mocking Framework
 
         NUM_SW_LICENSES ///< Delimiter only
         };

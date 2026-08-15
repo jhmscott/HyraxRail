@@ -62,7 +62,7 @@ class LogTest : public QObject
     Q_OBJECT
 private slots:
 
-#ifdef Q_OS_WIN
+#if defined (Q_OS_WIN) || defined (DOXYGEN)
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Test data for logWinTest() test case

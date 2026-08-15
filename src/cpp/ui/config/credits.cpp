@@ -29,7 +29,8 @@ static const char* const SOFTWARE_NAMES[] =
     {
     "Luicde Icons",
     "Posphur Icons",
-    "DSEG Font Family"
+    "DSEG Font Family",
+    "FakeIt Mock Framework"
     };
 
 
@@ -250,7 +251,8 @@ void CreditsDialog::openLicense (swLicense lic)
         {
         ":/text/LICENSE_LUCIDE",
         ":/text/LICENSE_PHOSPHOR",
-        ":/text/DSEG-LICENSE.txt"
+        ":/text/DSEG-LICENSE.txt",
+        ":/text/LICENSE_FAKEIT",
         };
     ASSERT_ARRAY_LENGTH (LICENSE_FILES, NUM_SW_LICENSES);
 

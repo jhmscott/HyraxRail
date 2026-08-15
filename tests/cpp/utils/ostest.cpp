@@ -7,6 +7,8 @@
  * @copyright   Copyright (c) 2026 Justin Scott
  */
 
+#include <testutils/ext/fakeit.hpp>
+
 #include <utils/os.hpp>
 
 #include <QtTest>
@@ -14,6 +16,21 @@
 using namespace utils::os;
 
 static const char* const THREAD_NAME = "Test thread";
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Fake message only window class, needed to provide a concrete instance to call
+/// a constructor for
+///
+///////////////////////////////////////////////////////////////////////////////
+class FakeMsgOnlyWindow : public win32::MessageOnlyWindow
+    {
+private:
+    virtual LRESULT message (HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+        {
+        return 0;
+        }
+    };
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Test suite for the OS utility library
@@ -46,7 +63,7 @@ private slots:
 
     // This isn't possible on Mac
     // Shakes fist at apple
-#ifndef Q_OS_MACOS
+#if !defind (Q_OS_MACOS) || defined (DOXYGEN)
     ///////////////////////////////////////////////////////////////////////////////
     /// Test setting a std::thread name
     ///
@@ -76,6 +93,34 @@ private slots:
         th.join ();
         }
 #endif // Q_OS_MACOS
+
+
+#if defined (Q_OS_WIN) || defined (DOXYGEN)
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Tests the message only window class can receive messages via SendMessage()
+    ///
+    /// @see    utils::os::win32::MessageOnlyWindow
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void messageOnlyWindowTest ()
+        {
+        using MockedWindow = fakeit::Mock<win32::MessageOnlyWindow>;
+
+        FakeMsgOnlyWindow   fake;
+        MockedWindow        windowMock{ fake };
+
+        fakeit::When (Method (windowMock, message)).Return (TRUE);
+
+        HWND hwnd = windowMock.get ().getHandle ();
+
+        SendMessage (hwnd,
+                     WM_ACTIVATE,
+                     0,
+                     0);
+
+        fakeit::Verify (Method (windowMock, message).Using (hwnd, WM_ACTIVATE, 0, 0));
+        }
+#endif // Q_OS_WIN
 
     };
 
