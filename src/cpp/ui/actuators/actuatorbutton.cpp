@@ -76,6 +76,14 @@ ActuatorButton::ActuatorButton (const layout::Actuator&     actuator,
         }
     }
 
+ActuatorButton::~ActuatorButton ()
+    {
+    if (not m_dummy)
+        {
+        m_actuator.release ();
+        }
+    }
+
 void ActuatorButton::setState (bool state)
     {
     m_button->setChecked (state);

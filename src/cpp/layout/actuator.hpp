@@ -14,6 +14,10 @@
 
 #include <string>
 
+#ifdef LAYOUT_TEST_CLASS
+class LAYOUT_TEST_CLASS;
+#endif // LAYOUT_TEST_CLASS
+
 namespace layout
 {
 // Symbol to use for the actuator in the UI
@@ -210,6 +214,10 @@ private:
 class ActuatorController : public ControllerBase<Actuator>
     {
     friend class Actuator;
+
+#ifdef LAYOUT_TEST_CLASS
+    friend class ::LAYOUT_TEST_CLASS;
+#endif // LAYOUT_TEST_CLASS
 
     // private, so only the actuator can call this
 private:

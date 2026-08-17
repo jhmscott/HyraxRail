@@ -519,7 +519,7 @@
       <Filter>Source Files\utils</Filter>
     </ClCompile>
     <ClCompile Include="..\src\cpp\utils\log.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -202,27 +202,27 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::actuators::ActuatorButton</name>
     <message>
-        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="93"/>
+        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="101"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="94"/>
+        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="102"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="121"/>
+        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="129"/>
         <source>The following automations will also be deleted:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="132"/>
+        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="140"/>
         <source>Delete Actuator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="100"/>
+        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="108"/>
         <source>Would you like to delete actuator &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -493,22 +493,22 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::config::CreditsDialog</name>
     <message>
-        <location filename="../../src/cpp/ui/config/credits.cpp" line="44"/>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="45"/>
         <source>App icon by Rose Spencer-Spreeuw </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/credits.cpp" line="55"/>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="56"/>
         <source>Long Dương (%1) : Vietnamese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/credits.cpp" line="80"/>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="81"/>
         <source>Third Party Software Notices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/credits.cpp" line="81"/>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="82"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>

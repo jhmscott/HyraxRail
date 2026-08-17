@@ -46,6 +46,7 @@ private:
         SWLIC_POSPHUR,  ///< Phosphur Icons
         SWLIC_DSEG,     ///< DSEG font
         SWLIC_FAKEIT,   ///< FakeIt Mocking Framework
+        SWLIC_GPC,
 
         NUM_SW_LICENSES ///< Delimiter only
         };

@@ -1,6 +1,6 @@
 /**
  * @file        common/shortcutlineedit.hpp
- * @brief       Simple line to visually seprate sections/widgets with back and
+ * @brief       Simple line to visually separate sections/widgets with back and
  *              forward signals, specified by a specific character shortcut
  * @author      Justin Scott
  * @date        2026-03-07
@@ -16,7 +16,7 @@ namespace ui::common
 {
 
 //////////////////////////////////////////////////////////////////////////////
-/// Simple line to visually seprate sections/widgets with back and forward
+/// Simple line to visually separate sections/widgets with back and forward
 /// signals, specified by a specific character shortcut
 ///
 //////////////////////////////////////////////////////////////////////////////

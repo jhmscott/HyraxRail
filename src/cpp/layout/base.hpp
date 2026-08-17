@@ -298,7 +298,7 @@ public:
     /// Destructor. Signals to all its components it is being destroyed
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    ~ControllerBase ()
+    virtual ~ControllerBase ()
         {
         for (Component* component : m_components)
             {

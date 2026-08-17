@@ -30,7 +30,8 @@ static const char* const SOFTWARE_NAMES[] =
     "Luicde Icons",
     "Posphur Icons",
     "DSEG Font Family",
-    "FakeIt Mock Framework"
+    "FakeIt Mock Framework",
+    "General Polygon Clipper (GPC)"
     };
 
 
@@ -253,6 +254,7 @@ void CreditsDialog::openLicense (swLicense lic)
         ":/text/LICENSE_PHOSPHOR",
         ":/text/DSEG-LICENSE.txt",
         ":/text/LICENSE_FAKEIT",
+        ":/text/LICENSE_GPC",
         };
     ASSERT_ARRAY_LENGTH (LICENSE_FILES, NUM_SW_LICENSES);
 
