@@ -70,9 +70,21 @@ void Actuator::set (bool val)
         }
     }
 
-void Actuator::request () { m_controller->requestActuatorControl (m_id); }
+void Actuator::request ()
+    {
+    if (NULL != m_controller)
+        {
+        m_controller->requestActuatorControl (m_id);
+        }
+    }
 
-void Actuator::release () { m_controller->releaseActuatorControl (m_id); }
+void Actuator::release ()
+    {
+    if (NULL != m_controller)
+        {
+        m_controller->releaseActuatorControl (m_id);
+        }
+    }
 
 void Actuator::remove ()
     {

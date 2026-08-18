@@ -7,15 +7,20 @@
  * @copyright   Copyright (c) 2026 Justin Scott
  */
 
+
+#include <common.hpp>
+
 #include <ui/common/utils.hpp>
 
 #include <QBoxLayout>
 #include <QComboBox>
 #include <QLabel>
+#include <QMenu>
 #include <QPushButton>
 #include <QtTest>
 
 using namespace ui::common;
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Template function to test setFormRowText() with an arbitrary field type
@@ -182,6 +187,26 @@ private slots:
                   "QComboBox");
         QCOMPARE (layout.itemAt (1)->widget ()->metaObject ()->className (),
                   "QLabel");
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test the getTopLevelWidget function
+    ///
+    /// @see    ui::common::getTopLevelWidget()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void getTopLevelWidgetTest ()
+        {
+        QPushButton btn;
+        QLabel      label;
+        QComboBox   cb;
+
+        QCOMPARE (getTopLevelWidget<QPushButton> (),    &btn);
+        QCOMPARE (getTopLevelWidget<QLabel> (),         &label);
+        QCOMPARE (getTopLevelWidget<QComboBox> (),      &cb);
+
+        // No top level menu should be open
+        QCOMPARE (getTopLevelWidget<QMenu> (),          NULL);
         }
     };
 

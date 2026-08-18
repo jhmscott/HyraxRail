@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "actuators", "actuators", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "actuatorbutton", "tests\actuatorbutton.vcxproj", "{AA006678-FA79-4EFF-8F4D-A7DEAA7102D6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gesture", "tests\gesture.vcxproj", "{055DA2D1-CC21-4CBB-A155-216B6FD0E0ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -76,6 +78,10 @@ Global
 		{AA006678-FA79-4EFF-8F4D-A7DEAA7102D6}.Release|x64.ActiveCfg = Release|x64
 		{AA006678-FA79-4EFF-8F4D-A7DEAA7102D6}.Test|x64.ActiveCfg = Test|x64
 		{AA006678-FA79-4EFF-8F4D-A7DEAA7102D6}.Test|x64.Build.0 = Test|x64
+		{055DA2D1-CC21-4CBB-A155-216B6FD0E0ED}.Debug|x64.ActiveCfg = Debug|x64
+		{055DA2D1-CC21-4CBB-A155-216B6FD0E0ED}.Release|x64.ActiveCfg = Release|x64
+		{055DA2D1-CC21-4CBB-A155-216B6FD0E0ED}.Test|x64.ActiveCfg = Test|x64
+		{055DA2D1-CC21-4CBB-A155-216B6FD0E0ED}.Test|x64.Build.0 = Test|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +99,7 @@ Global
 		{CC2882B7-9396-47E9-99BC-2646F403A7A3} = {E7603EE2-0F6A-4991-9C02-5C69E3D99F69}
 		{E7490F0A-C516-41F2-88AA-42DAA36C4B20} = {F3D6AEB3-D7EB-4959-813E-D9490D538B9F}
 		{AA006678-FA79-4EFF-8F4D-A7DEAA7102D6} = {E7490F0A-C516-41F2-88AA-42DAA36C4B20}
+		{055DA2D1-CC21-4CBB-A155-216B6FD0E0ED} = {E1A3BEC1-DC5A-486C-881F-7BAF9230949F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4ACFF0E3-DFF5-489E-866F-8829724F0C54}

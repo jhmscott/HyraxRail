@@ -235,4 +235,38 @@ void setFormRowText (QFormLayout&   layout,
         static_cast<QLabel*> (label)->setText (text);
         }
     }
-}
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Get the first top level widget instance of a particualar class
+///
+/// @tparam     T       Widget class
+///
+/// @return     Pointer to first top level instance of T, or NULL if none exist
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T>
+T* getTopLevelWidget ()
+    {
+    static_assert (std::is_base_of_v<QWidget, T>,
+                   "T must be a widget type");
+
+    QWidgetList widgets = QApplication::topLevelWidgets ();
+    T*          widget  = NULL;
+
+    auto it = std::find_if (widgets.begin (),
+                            widgets.end (),
+                            [] (const QWidget* widget) -> bool
+                            { return NULL != qobject_cast<const T*> (widget); });
+
+    if (widgets.end () != it)
+        {
+        widget = qobject_cast<T*> (*it);
+        }
+
+    return widget;
+    }
+
+
+} // namespace ui::common
+
