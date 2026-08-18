@@ -99,7 +99,7 @@ void ActuatorButton::createMenu ()
     if (not m_dummy)
         {
         addAction (tr ("Delete"), this, &ActuatorButton::removeActuator);
-        addAction (tr ("Edit"), this, &ActuatorButton::editActuator);
+        addAction (tr ("Edit"),   this, &ActuatorButton::editActuator);
         }
     }
 

@@ -1,7 +1,6 @@
 /**
  * @file        common/shortcutlineedit.hpp
- * @brief       Simple line to visually separate sections/widgets with back and
- *              forward signals, specified by a specific character shortcut
+ * @brief       Line edit with shortcut and signals for moving between adjacent widgets
  * @author      Justin Scott
  * @date        2026-03-07
  *
@@ -16,8 +15,7 @@ namespace ui::common
 {
 
 //////////////////////////////////////////////////////////////////////////////
-/// Simple line to visually separate sections/widgets with back and forward
-/// signals, specified by a specific character shortcut
+/// Line edit with shortcut and signals for moving between adjacent widgets
 ///
 //////////////////////////////////////////////////////////////////////////////
 class ShortcutLineEdit : public QLineEdit
