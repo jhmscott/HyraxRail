@@ -68,16 +68,24 @@ enum trackProtocol
 // forward declare
 class LocomotiveController;
 
+struct locomotiveState
+    {
+    std::string     m_name;     ///< Friendly name
+    trackProtocol   m_proto;    ///< Protocol to communicate between the controller and loco
+    };
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Interface for controlling a locomotive
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class Locomotive : public ComponentDerived<LocomotiveController>
+class Locomotive : public ComponentDerived<LocomotiveController, locomotiveState>
     {
     Q_OBJECT
 public:
-    using ComponentDerived<LocomotiveController>::ComponentDerived;
+    using Base = ComponentDerived<LocomotiveController, locomotiveState>;
+
+    using Base::ComponentDerived;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
@@ -99,7 +107,7 @@ public:
     /// @return     Name for use in UI
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    std::string getName () const { return m_name; }
+    std::string getName () const { return m_state->m_name; }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the locomotive speed
@@ -110,13 +118,13 @@ public:
     void setSpeed (int8_t speed);
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Request control of  this locomitve
+    /// Request control of  this locomotive
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void requestControl ();
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Release control of  this locomitve
+    /// Release control of  this locomotive
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void releaseControl ();
@@ -124,8 +132,8 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Set a function value
     ///
-    /// @param[in]  func        Function number
-    /// @param[in]  enable   True to enable this function, false to disable
+    /// @param[in]  func    Function number
+    /// @param[in]  enable  True to enable this function, false to disable
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void setFunc (uint8_t func, bool enable);
@@ -139,21 +147,18 @@ public:
     std::vector<funcInfo> getFunctions () const;
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Get the protocol the controller uses to comminucate with the train over
+    /// Get the protocol the controller uses to communicate with the train over
     /// the track
     ///
     /// @return     Track protocol
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    trackProtocol getProtocol () const { return m_proto; }
+    trackProtocol getProtocol () const { return m_state->m_proto; }
 
 signals:
     // TODO: not used
     void funcSet (uint8_t func, bool enable);
 
-private:
-    std::string     m_name;     ///< Friendly name
-    trackProtocol   m_proto;    ///< Protocol to communicate between the controller and loco
     };
 
 

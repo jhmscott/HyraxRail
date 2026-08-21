@@ -46,14 +46,17 @@ signals:
 /// that component type and controller. This ID is passed from the componebtto the controller throuh the
 /// controller interface
 ///
-/// @tparam     Controller type. Must inherit from ControllerBase
+/// @tparam     Controller      Must inherit from ControllerBase
+/// @tparam     State           Component state
 ///
 ///////////////////////////////////////////////////////////////////////////////
-template<class Controller>
+template<class Controller, class State>
 class ComponentDerived : public ComponentBase
     {
 public:
     using controller_t  = Controller;
+    using state_t       = State;
+    using StatePtr      = std::shared_ptr<State>;
 
     // TODO: get this compiler check working
 #if 0
@@ -64,11 +67,13 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
-    /// @param[in]  controller          Controller controlling this component
-    /// @param[in]  id                            Component unique ID
+    /// @param[in]  controller  Controller controlling this component
+    /// @param[in]  id          Component unique ID
+    /// @param[in]  state       Layout component sate pointer
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    ComponentDerived (Controller* controller, size_t id) :
+    ComponentDerived (Controller* controller, size_t id, StatePtr state) :
+        m_state (state),
         m_controller (controller),
         m_id (id)
         { register_ (); }
@@ -82,17 +87,17 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Copy constructor
     ///
-    /// @param[in]  other           Component to copy
+    /// @param[in]  other       Component to copy
     ///
     ///////////////////////////////////////////////////////////////////////////////
     ComponentDerived (const ComponentDerived& other) :
-        ComponentDerived (other.m_controller, other.m_id)
+        ComponentDerived (other.m_controller, other.m_id, other.m_state)
         {}
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Copy assignment operator
     ///
-    /// @param[in]  other           Component to copy
+    /// @param[in]  other       Component to copy
     ///
     /// @return     Reference to this
     ///
@@ -105,6 +110,7 @@ public:
 
             m_controller    = other.m_controller;
             m_id            = other.m_id;
+            m_state         = other.m_state;
 
             register_ ();
             }
@@ -115,10 +121,11 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Move constructor
     ///
-    /// @param[in,out]  other           Component to move
+    /// @param[in,out]  other       Component to move
     ///
     ///////////////////////////////////////////////////////////////////////////////
     ComponentDerived (ComponentDerived&& other) :
+        m_state (std::move (other.m_state)),
         m_controller (other.m_controller),
         m_id (other.m_id)
         {
@@ -127,9 +134,9 @@ public:
         }
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Moveassignment operator
+    /// Move assignment operator
     ///
-    /// @param[in]  other           Component to move
+    /// @param[in]  other       Component to move
     ///
     /// @return     Reference to this
     ///
@@ -142,6 +149,7 @@ public:
 
             m_controller    = other.m_controller;
             m_id            = other.m_id;
+            m_state         = std::move (other.m_state);
 
             other.deregister ();
             register_ ();
@@ -151,8 +159,8 @@ public:
         }
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Destructor. Deregisters this with the controller so it no longer recieves
-    /// destory signals
+    /// Destructor. Deregisters this with the controller so it no longer receives
+    /// destroy signals
     ///
     ///////////////////////////////////////////////////////////////////////////////
     ~ComponentDerived ()
@@ -217,22 +225,9 @@ public:
     operator bool () const { return 0 != m_id; }
 
 protected:
+    StatePtr    m_state;
     Controller* m_controller    = NULL;     ///< Non owning controller reference
     size_t      m_id            = 0;        ///< Unique ID
-
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Set a member variable for all instances of this object with the same ID
-    ///
-    /// @tparam     T           Member variable type
-    /// @tparam     ComponentT  Component type
-    ///
-    /// @param[in]  member      Member variable pointer
-    /// @param[in]  value       New value
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    template<class T, class ComponentT>
-    void setAll (T ComponentT::* member, const identityType<T>& value)
-        {  m_controller->setAll (m_id, member, value); }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Call a member functions for all instances of this object with the same ID
@@ -287,7 +282,8 @@ class ControllerBase
     {
 public:
     using component_t       = Component;
-    using componentBase_t   = ComponentDerived<typename component_t::controller_t>;
+    using componentBase_t   = ComponentDerived<typename component_t::controller_t,
+                                               typename component_t::state_t>;
 
     friend componentBase_t;
 
@@ -310,28 +306,6 @@ protected:
     std::set<Component*> m_components;  ///< Components under control of this controller
 
 private:
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Set a member variable for all instances of a given object
-    ///
-    /// @tparam     Member variable type
-    ///
-    /// @param[in]  id      ID of object to set
-    /// @param[in]  member  Member variable pointer
-    /// @param[in]  value   Value to set member to
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    template<class T>
-    void setAll (size_t id, T Component::* member, const identityType<T>& value)
-        {
-        for (Component* component : m_components)
-            {
-            if (component->getId () == id)
-                {
-                component->*member = value;
-                }
-            }
-        }
-
     ///////////////////////////////////////////////////////////////////////////////
     /// Call a member functions for all instances of a given object
     ///

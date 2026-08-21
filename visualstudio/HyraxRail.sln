@@ -39,6 +39,21 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "logspy", "tests\logspy.vcxp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ui", "tests\ui.vcxproj", "{FC620C22-A863-4BDC-A8DD-031F2B4A9C9E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "layout", "layout", "{C1E18B84-F9BD-432D-A9F1-A8A327A048E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "testutils", "testutils", "{78E57CD6-878C-44A7-855B-A53346DD19C4}"
+	ProjectSection(SolutionItems) = preProject
+		..\tests\cpp\testutils\logspy.hpp = ..\tests\cpp\testutils\logspy.hpp
+		..\tests\cpp\testutils\ui.hpp = ..\tests\cpp\testutils\ui.hpp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ext", "ext", "{3A46997A-5986-44CE-9652-0F15770CBACB}"
+	ProjectSection(SolutionItems) = preProject
+		..\tests\cpp\testutils\ext\fakeit.hpp = ..\tests\cpp\testutils\ext\fakeit.hpp
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "actuator", "tests\actuator.vcxproj", "{E3DE023E-1E72-4360-A280-B92029A44D5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -96,6 +111,10 @@ Global
 		{FC620C22-A863-4BDC-A8DD-031F2B4A9C9E}.Release|x64.ActiveCfg = Release|x64
 		{FC620C22-A863-4BDC-A8DD-031F2B4A9C9E}.Test|x64.ActiveCfg = Test|x64
 		{FC620C22-A863-4BDC-A8DD-031F2B4A9C9E}.Test|x64.Build.0 = Test|x64
+		{E3DE023E-1E72-4360-A280-B92029A44D5C}.Debug|x64.ActiveCfg = Debug|x64
+		{E3DE023E-1E72-4360-A280-B92029A44D5C}.Release|x64.ActiveCfg = Release|x64
+		{E3DE023E-1E72-4360-A280-B92029A44D5C}.Test|x64.ActiveCfg = Test|x64
+		{E3DE023E-1E72-4360-A280-B92029A44D5C}.Test|x64.Build.0 = Test|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +136,10 @@ Global
 		{FB01A98B-D8D1-46EE-8905-19DF1FB8CC8B} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{8EB22F55-2D24-410B-B90B-F0060891C48D} = {FB01A98B-D8D1-46EE-8905-19DF1FB8CC8B}
 		{FC620C22-A863-4BDC-A8DD-031F2B4A9C9E} = {FB01A98B-D8D1-46EE-8905-19DF1FB8CC8B}
+		{C1E18B84-F9BD-432D-A9F1-A8A327A048E6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{78E57CD6-878C-44A7-855B-A53346DD19C4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{3A46997A-5986-44CE-9652-0F15770CBACB} = {78E57CD6-878C-44A7-855B-A53346DD19C4}
+		{E3DE023E-1E72-4360-A280-B92029A44D5C} = {C1E18B84-F9BD-432D-A9F1-A8A327A048E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4ACFF0E3-DFF5-489E-866F-8829724F0C54}

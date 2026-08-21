@@ -16,20 +16,20 @@ Route::Route (RouteController*      controller,
               const std::string&    name,
               const routeList&      members,
               size_t                id) :
-    ComponentDerived<RouteController> (controller, id),
-    m_name (name),
-    m_members (members)
+    Base (controller,
+          id,
+          std::make_shared<routeState> (routeState{ name, members }))
     {}
 
 void Route::setName (const std::string& name)
     {
-    setAll (&Route::m_name, name);
+    m_state->m_name = name;
     m_controller->setRouteName (m_id, name);
     }
 
 void Route::setActuators (const routeList& members)
     {
-    setAll (&Route::m_members, members);
+    m_state->m_members = members;
     m_controller->setRouteMembers (m_id, members);
     }
 

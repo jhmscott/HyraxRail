@@ -211,7 +211,7 @@ private slots:
         // This time we should have a destroy signal
         QCOMPARE (spy.count (), 1);
         QCOMPARE (btnSpy.count (), 1);
-        fakeit::When (Method (*mockController, removeActuator).Using (FAKE_ID));
+        fakeit::Verify (Method (*mockController, removeActuator).Using (FAKE_ID));
         }
 
     ///////////////////////////////////////////////////////////////////////////////

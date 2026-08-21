@@ -55,16 +55,24 @@ using routeList = std::vector<routeMember>;
 // forward declare
 class RouteController;
 
+struct routeState
+    {
+    std::string m_name;     ///< Friendly name of route
+    routeList   m_members;  ///< Switching items belonging to this route
+    };
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Interface to access a route. A route is a named group of actuators with an
 /// associated state that they can all be set to at once
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class Route : public ComponentDerived<RouteController>
+class Route : public ComponentDerived<RouteController, routeState>
     {
 public:
-    using ComponentDerived<RouteController>::ComponentDerived;
+    using Base = ComponentDerived<RouteController, routeState>;
+
+    using Base::ComponentDerived;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
@@ -86,7 +94,7 @@ public:
     /// @return     Route friendly name
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    std::string getName () const { return m_name; }
+    std::string getName () const { return m_state->m_name; }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the name of this route
@@ -102,7 +110,7 @@ public:
     /// @return     List of actuators and states
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    routeList getActuators () const { return m_members; }
+    routeList getActuators () const { return m_state->m_members; }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the list of actuators
@@ -137,8 +145,6 @@ public:
     void release ();
 
 private:
-    std::string m_name;     ///< Friendly name of route
-    routeList   m_members;  ///< Switching items belonging to this route
     };
 
 

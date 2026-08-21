@@ -21,51 +21,48 @@ Actuator::Actuator (ActuatorController* controller,
                     uint                duration,
                     size_t              id,
                     bool                state) :
-    ComponentDerived<ActuatorController> (controller, id),
-    m_name (name),
-    m_icon (icon),
-    m_state (state),
-    m_mode (mode),
-    m_address (address),
-    m_duration (duration)
+    Base (controller,
+          id,
+          std::make_shared<actuatorState>
+                (actuatorState{ name, icon, state, mode, address, duration }))
     {}
 
 void Actuator::setIcon (actuatorIcon icon)
     {
     m_controller->setActuatorIcon (m_id, icon);
-    setAll (&Actuator::m_icon, icon);
+    m_state->m_icon = icon;
     }
 
 void Actuator::setName (const std::string& name)
     {
     m_controller->setActuatorName (m_id, name);
-    setAll (&Actuator::m_name, name);
+    m_state->m_name = name;
     }
 
 void Actuator::setMode (actuatorMode mode)
     {
     m_controller->setActuatorMode (m_id, mode);
-    setAll (&Actuator::m_mode, mode);
+    m_state->m_mode = mode;
     }
 
 void Actuator::setAddress (uint addrress)
     {
     m_controller->setActuatorAddress (m_id, addrress);
-    setAll (&Actuator::m_address, addrress);
+    m_state->m_address = addrress;
     }
 
 void Actuator::setDuration (uint duration)
     {
-    m_controller->setActuatorAddress (m_id, duration);
-    setAll (&Actuator::m_duration, duration);
+    m_controller->setActuatorDuration (m_id, duration);
+    m_state->m_duration = duration;
     }
 
 void Actuator::set (bool val)
     {
-    if (m_state != val)
+    if (m_state->m_state != val)
         {
         m_controller->setActuator (m_id, val);
-        setAll (&Actuator::m_state, val);
+        m_state->m_state = val;
         callAll (&Actuator::stateChanged, val);
         }
     }

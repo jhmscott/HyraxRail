@@ -46,22 +46,37 @@ enum class actuatorMode
 // Forward declare
 class ActuatorController;
 
+struct actuatorState
+    {
+    std::string         m_name;     ///< Friendly name
+    actuatorIcon        m_icon;     ///< UI symbol
+    bool                m_state;    ///< Cached state
+    actuatorMode        m_mode;     ///< Actuator mode
+    uint                m_address;  ///< Actuator track protocol address
+    uint                m_duration; ///< Actuation duration
+    };
+
 ///////////////////////////////////////////////////////////////////////////////
 /// Actuator component
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class Actuator : public ComponentDerived<ActuatorController>
+class Actuator : public ComponentDerived<ActuatorController, actuatorState>
     {
     Q_OBJECT
 public:
-    using ComponentDerived<ActuatorController>::ComponentDerived;
+    using Base = ComponentDerived<ActuatorController, actuatorState>;
 
-    ///////////////////////////////////////////////////////////////////////////////
+    using Base::ComponentDerived;
+
+   ///////////////////////////////////////////////////////////////////////////////
    /// Constructor
    ///
    /// @param[in]   controller      Controller controlling this actuator
    /// @param[in]   name            Friendly name
    /// @param[in]   icon            Symbol to use in the UI
+   /// @param[in]   mode            Actuator mode
+   /// @param[in]   address         Track protocol address
+   /// @param[in]   duration        Pulse/switch duration (in ms)
    /// @param[in]   id              Unique ID
    /// @param[in]   state           Initial state of the actuator
    ///
@@ -81,7 +96,7 @@ public:
     /// @return     Enumerated icon
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    actuatorIcon getIcon () const { return m_icon; }
+    actuatorIcon getIcon () const { return m_state->m_icon; }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the UI icon
@@ -97,7 +112,7 @@ public:
     /// @return     Name of the actuator in the UI
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    std::string getName () const { return m_name; }
+    std::string getName () const { return m_state->m_name; }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the friendly name of this actuator
@@ -113,7 +128,7 @@ public:
     /// @return     Actuator mode (SWITCH or PULSE)
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    actuatorMode getMode () const { return m_mode; }
+    actuatorMode getMode () const { return m_state->m_mode; }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the actuator mode
@@ -129,7 +144,7 @@ public:
     /// @return     Actuator track protocol address
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    uint getAddress () const { return m_address; }
+    uint getAddress () const { return m_state->m_address; }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the track protocol address
@@ -145,7 +160,7 @@ public:
     /// @return     Actuation duration
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    uint getDuration () const { return m_duration; }
+    uint getDuration () const { return m_state->m_duration; }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the actuation duration
@@ -169,7 +184,7 @@ public:
     /// @return     Actuator state
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    bool get () const { return m_state; }
+    bool get () const { return m_state->m_state; }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Request control of this actuator. Required to call before set
@@ -198,13 +213,6 @@ signals:
     ///////////////////////////////////////////////////////////////////////////////
     void stateChanged (bool state);
 
-private:
-    std::string         m_name;     ///< Friendly name
-    actuatorIcon        m_icon;     ///< UI symbol
-    bool                m_state;    ///< Cached state
-    actuatorMode        m_mode;     ///< Actuator mode
-    uint                m_address;  ///< Actuator track protocol address
-    uint                m_duration; ///< Actuation duration
     };
 
 ///////////////////////////////////////////////////////////////////////////////

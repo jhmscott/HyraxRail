@@ -13,10 +13,13 @@
 namespace layout
 {
 
-Locomotive::Locomotive (LocomotiveController* controller, const std::string& name, trackProtocol proto, size_t id) :
-    ComponentDerived<LocomotiveController> (controller, id),
-    m_name (name),
-    m_proto (proto)
+Locomotive::Locomotive (LocomotiveController*   controller,
+                        const std::string&      name,
+                        trackProtocol           proto,
+                        size_t                  id) :
+    Base (controller,
+          id,
+          std::make_shared<locomotiveState> (locomotiveState{ name, proto }))
     {}
 
 void Locomotive::setSpeed (int8_t speed) { if (NULL != m_controller) { m_controller->setSpeed (m_id, speed); } }
