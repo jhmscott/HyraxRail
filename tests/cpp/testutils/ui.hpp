@@ -1,4 +1,3 @@
-
 /**
  * @file        testutils/ui.hpp
  * @brief       UI testing utility functions
@@ -7,6 +6,9 @@
  *
  * @copyright   Copyright (c) 2026 Justin Scott
  */
+
+
+#include <common.hpp>
 
 #include <ui/common/utils.hpp>
 
