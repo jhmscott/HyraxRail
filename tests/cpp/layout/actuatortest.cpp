@@ -221,6 +221,8 @@ private slots:
         QCOMPARE (spy.size (), 0);
         QCOMPARE (copySpy.size (), 0);
 
+        fakeit::Verify (Method (*mockController, setActuator)).Never ();
+
         bool newState = not initial;
 
         actuator.set (newState);

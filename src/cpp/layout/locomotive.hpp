@@ -16,6 +16,11 @@
 
 #include <layout/base.hpp>
 
+#ifdef LAYOUT_TEST_CLASS
+class LAYOUT_TEST_CLASS;
+#endif // LAYOUT_TEST_CLASS
+
+
 namespace layout
 {
 // Information about a locomitve function
@@ -170,14 +175,18 @@ class LocomotiveController : public ControllerBase<Locomotive>
     {
     friend class Locomotive;
 
+#ifdef LAYOUT_TEST_CLASS
+    friend class ::LAYOUT_TEST_CLASS;
+#endif // LAYOUT_TEST_CLASS
+
     // private so only the locomotive class may call these functions
 private:
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the speed of a locomotive
     ///
-    /// @param[in]  id          Unique ID of the locomotive
-    /// @param[in]  speed    Speed value. Positve is forward. Negative is reverse
+    /// @param[in]  id      Unique ID of the locomotive
+    /// @param[in]  speed   Speed value. Positve is forward. Negative is reverse
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void setSpeed (size_t id, int8_t speed) = 0;
@@ -185,8 +194,8 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Set a locomotive function
     ///
-    /// @param[in]  id          Unique ID of locomotive
-    /// @param[in]  func      Function number
+    /// @param[in]  id      Unique ID of locomotive
+    /// @param[in]  func    Function number
     /// @param[in]  enable  True to enable the function. False to disable
     ///
     ///////////////////////////////////////////////////////////////////////////////
@@ -203,17 +212,17 @@ private:
     virtual std::vector<funcInfo> getFunctions (size_t id) const = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Request control of  a locomitve
+    /// Request control of  a locomotive
     ///
-    /// @param[in]  id          Unique ID of the locomotive
+    /// @param[in]  id      Unique ID of the locomotive
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void requestControl (size_t id) = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Request control of  a locomitve
+    /// Request control of  a locomotive
     ///
-    /// @param[in]  id          Unique ID of the locomotive
+    /// @param[in]  id      Unique ID of the locomotive
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void releaseControl (size_t id) = 0;

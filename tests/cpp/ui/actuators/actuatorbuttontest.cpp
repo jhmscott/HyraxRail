@@ -204,6 +204,7 @@ private slots:
         // Confirm we haven't signalled destruction of the actuator
         QCOMPARE (spy.count (), 0);
         QCOMPARE (btnSpy.count (), 0);
+        fakeit::Verify (Method (*mockController, removeActuator)).Never ();
 
         // Repeat this, but now accept the delete
         deleteActuator (btn, false, ACTUATOR_NAME);

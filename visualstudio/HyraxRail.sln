@@ -54,6 +54,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ext", "ext", "{3A46997A-598
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "actuator", "tests\actuator.vcxproj", "{E3DE023E-1E72-4360-A280-B92029A44D5C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "locomotive", "tests\locomotive.vcxproj", "{EA8CEECD-8FAB-43A4-A124-96B15AF069AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -115,6 +117,10 @@ Global
 		{E3DE023E-1E72-4360-A280-B92029A44D5C}.Release|x64.ActiveCfg = Release|x64
 		{E3DE023E-1E72-4360-A280-B92029A44D5C}.Test|x64.ActiveCfg = Test|x64
 		{E3DE023E-1E72-4360-A280-B92029A44D5C}.Test|x64.Build.0 = Test|x64
+		{EA8CEECD-8FAB-43A4-A124-96B15AF069AD}.Debug|x64.ActiveCfg = Debug|x64
+		{EA8CEECD-8FAB-43A4-A124-96B15AF069AD}.Release|x64.ActiveCfg = Release|x64
+		{EA8CEECD-8FAB-43A4-A124-96B15AF069AD}.Test|x64.ActiveCfg = Test|x64
+		{EA8CEECD-8FAB-43A4-A124-96B15AF069AD}.Test|x64.Build.0 = Test|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -140,6 +146,7 @@ Global
 		{78E57CD6-878C-44A7-855B-A53346DD19C4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{3A46997A-5986-44CE-9652-0F15770CBACB} = {78E57CD6-878C-44A7-855B-A53346DD19C4}
 		{E3DE023E-1E72-4360-A280-B92029A44D5C} = {C1E18B84-F9BD-432D-A9F1-A8A327A048E6}
+		{EA8CEECD-8FAB-43A4-A124-96B15AF069AD} = {C1E18B84-F9BD-432D-A9F1-A8A327A048E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4ACFF0E3-DFF5-489E-866F-8829724F0C54}
