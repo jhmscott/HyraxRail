@@ -15,10 +15,30 @@
 #include <vector>
 
 #include <layout/base.hpp>
+#include <layout/protocol.hpp>
+
+#include <utils/algorithm.hpp>
+
 
 #ifdef LAYOUT_TEST_CLASS
 class LAYOUT_TEST_CLASS;
 #endif // LAYOUT_TEST_CLASS
+
+///////////////////////////////////////////////////////////////////////////////
+/// Define a locomotive controller
+///
+/// @param[in]  ...         Variadic list of track protocols this supports
+///
+/// @ingroup    META_CLASS_MACRO
+///
+///////////////////////////////////////////////////////////////////////////////
+#define LOCOMOTIVE_CONTROLLER_DEFINE(...) \
+    public:\
+        static const layout::LocomotiveControllerMetaClass& getLocoMetaClassStatic () { return locoMeta; } \
+        virtual const layout::LocomotiveControllerMetaClass& getLocoMetaClass () const override { return locoMeta; } \
+    private:\
+        static inline const layout::LocomotiveControllerMetaClass locoMeta \
+            { utils::algorithm::makeBitset<layout::TRACK_PROTO_UNKNOWN> (__VA_ARGS__) };
 
 
 namespace layout
@@ -40,7 +60,7 @@ struct funcInfo
         ICON_FUNC_SOUND_GENERIC,    ///< Generic sound effect symbol
         ICON_FUNC_SOUND_OPERATING,  ///< Operating sound effects
 
-        // Miscillenaous
+        // Miscellaneous
         ICON_FUNC_MISC_PANTOGRAPH,  ///< Raise/lower the locomotive pantograph
         ICON_FUNC_MISC_ABV,         ///< ABV? Can't remember this one
         ICON_FUNC_MISC_SLOW,        ///< Slow the lcoomootive
@@ -59,17 +79,6 @@ struct funcInfo
     bool        state;              ///< Current state
     };
 
-// Protocol to communicate between the controller and loco
-enum trackProtocol
-    {
-    TRACK_PROTO_DCC,    ///< NMRA DCC, Digital Command Control
-    TRACK_PROTO_MFX,    ///< Märklin Digital
-    TRACK_PROTO_MM,     ///< Märklin-Motorola
-    TRACK_PROTO_UNKNOWN,///< Unknown protocol
-
-    NUM_TRACK_PROTO     ///< Delimiter only
-    };
-
 // forward declare
 class LocomotiveController;
 
@@ -77,6 +86,7 @@ struct locomotiveState
     {
     std::string     m_name;     ///< Friendly name
     trackProtocol   m_proto;    ///< Protocol to communicate between the controller and loco
+    uint            m_address;  ///< Track protocol address
     };
 
 
@@ -104,6 +114,7 @@ public:
     Locomotive (LocomotiveController*   controller,
                 const std::string&      name,
                 trackProtocol           proto,
+                uint                    address,
                 size_t                  id);
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -113,6 +124,14 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     std::string getName () const { return m_state->m_name; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the locomotive name
+    ///
+    /// @param[in]  name        New name
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setName (const std::string& name);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the locomotive speed
@@ -160,12 +179,47 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     trackProtocol getProtocol () const { return m_state->m_proto; }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the track protocol
+    ///
+    /// @param[in]  protocol    Track protocol
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setProtocol (trackProtocol protocol);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the track protocol address
+    ///
+    /// @return     Track protocol address
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    uint getAddress () const { return m_state->m_address;  }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the track protocol address
+    ///
+    /// @param[in]  address     Track protocol address
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setAddress (uint address);
 signals:
     // TODO: not used
     void funcSet (uint8_t func, bool enable);
 
     };
 
+
+///////////////////////////////////////////////////////////////////////////////
+/// Provides metadata about the locomotive controller
+///
+/// @ingroup    META_CLASS
+///
+///////////////////////////////////////////////////////////////////////////////
+class LocomotiveControllerMetaClass
+    {
+public:
+    const protocolMask protocols;   ///< List of supported track protocols
+    };
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Interface used by the locomoitve class to communicate with the controller
@@ -179,9 +233,17 @@ class LocomotiveController : public ControllerBase<Locomotive>
     friend class ::LAYOUT_TEST_CLASS;
 #endif // LAYOUT_TEST_CLASS
 
+public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the locomotive meta class instance
+    ///
+    /// @return     Meta class instance
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual const LocomotiveControllerMetaClass& getLocoMetaClass () const = 0;
+
     // private so only the locomotive class may call these functions
 private:
-
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the speed of a locomotive
     ///
@@ -210,6 +272,33 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual std::vector<funcInfo> getFunctions (size_t id) const = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the locomotive name
+    ///
+    /// @param[in]  id      Unique ID of locomotive
+    /// @param[in]  name    New name
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setLocomotiveName (size_t id, const std::string& name) = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the track protocol address
+    ///
+    /// @param[in]  id          Unique ID of locomotive
+    /// @param[in]  address     Track protocol address
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setLocomotiveAddress (size_t id, uint address) = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the track protocol
+    ///
+    /// @param[in]  id          Unique ID of locomotive
+    /// @param[in]  protocol    Track protocol
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setLocomotiveProtocol (size_t id, trackProtocol proto) = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Request control of  a locomotive

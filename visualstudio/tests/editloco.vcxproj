@@ -18,13 +18,13 @@
     <RunSettingsFilePath>$(MSBuildProjectDirectory)\HyraxRail.runsettings</RunSettingsFilePath>
   </PropertyGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{EA8CEECD-8FAB-43A4-A124-96B15AF069AD}</ProjectGuid>
+    <ProjectGuid>{E462A3FF-A984-43F7-83D1-36ACD42EF2CA}</ProjectGuid>
     <Keyword>QtVS_v304</Keyword>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.28000.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)'=='Test|x64'">10.0.28000.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.28000.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
-    <ProjectName>locomotive</ProjectName>
+    <ProjectName>editloco</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -52,17 +52,17 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>6.11.0</QtInstall>
-    <QtModules>core;gui;network;testlib;serialport</QtModules>
+    <QtModules>core;gui;network;testlib;widgets;serialport</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'" Label="QtSettings">
     <QtInstall>6.11.0</QtInstall>
-    <QtModules>core;gui;network;testlib;serialport</QtModules>
+    <QtModules>core;gui;network;testlib;widgets;serialport</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>6.11.0</QtInstall>
-    <QtModules>core;gui;network;testlib;serialport</QtModules>
+    <QtModules>core;gui;network;testlib;widgets;serialport</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
@@ -86,23 +86,24 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <OutDir>$(SolutionDir)..\runtime\</OutDir>
     <IntDir>$(SolutionDir)intermediate\$(Platform)-$(Configuration)\$(ProjectName)\</IntDir>
-    <TargetName>locomotivetest</TargetName>
+    <TargetName>editlocotest</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'">
     <OutDir>$(SolutionDir)..\runtime\</OutDir>
     <IntDir>$(SolutionDir)intermediate\$(Platform)-$(Configuration)\$(ProjectName)\</IntDir>
-    <TargetName>locomotivetest</TargetName>
+    <TargetName>editlocotest</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutDir>$(SolutionDir)..\runtime\</OutDir>
     <IntDir>$(SolutionDir)intermediate\$(Platform)-$(Configuration)\$(ProjectName)\</IntDir>
-    <TargetName>locomotivetest</TargetName>
+    <TargetName>editlocotest</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>_UNICODE;UNICODE;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\cpp;$(SolutionDir)..\tests\cpp;</AdditionalIncludeDirectories>
+      <UseStandardPreprocessor>true</UseStandardPreprocessor>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'">
@@ -110,6 +111,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>_UNICODE;UNICODE;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\cpp;$(SolutionDir)..\tests\cpp;</AdditionalIncludeDirectories>
+      <UseStandardPreprocessor>true</UseStandardPreprocessor>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -133,8 +135,9 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\src\cpp;$(SolutionDir)..\tests\cpp;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_UNICODE;UNICODE;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\src\cpp;$(SolutionDir)..\tests\cpp;</AdditionalIncludeDirectories>
+      <UseStandardPreprocessor>true</UseStandardPreprocessor>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -190,7 +193,7 @@
     <None Include="HyraxRail.runsettings" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="..\..\tests\cpp\layout\locomotivetest.cpp">
+    <QtMoc Include="..\..\tests\cpp\ui\trains\editlocotest.cpp">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Test|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>

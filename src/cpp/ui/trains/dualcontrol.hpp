@@ -22,6 +22,8 @@ namespace ui::trains
 /// Widget with up to two control panels. If there is only enough space for one,
 /// only one will be shown
 ///
+/// @ingroup    APP_PANEL
+///
 ///////////////////////////////////////////////////////////////////////////////
 class DualControlWidget : public QWidget
     {

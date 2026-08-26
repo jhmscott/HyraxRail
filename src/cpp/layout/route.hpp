@@ -155,7 +155,7 @@ private:
 class RouteController : public ControllerBase<Route>
     {
     friend class Route;
-public:
+private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Activate a route
     ///
@@ -191,7 +191,7 @@ public:
     virtual void setRouteName (size_t id, const std::string& name) = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Reuest control of a route
+    /// Request control of a route
     ///
     /// @return     Unique ID of route to request control of
     ///

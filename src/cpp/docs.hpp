@@ -21,6 +21,8 @@
 /// @defgroup   PIMPL               PImpl Implementation Classes
 /// @defgroup   JNI_FUNC            Java Native Interface Functions
 /// @defgroup   UNIT_TEST           Unit Test Suites
+/// @defgroup   COMPONENT_DLG       Component Edit Dialogs
+/// @defgroup   APP_PANEL           Application Panels
 ///
 ///////////////////////////////////////////////////////////////////////////////
 

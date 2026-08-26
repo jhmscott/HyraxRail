@@ -168,6 +168,16 @@ void makeBitset (std::bitset<N>& bits, Args... args)
     (void (bits[args] = true) , ...);
     }
 
+template<size_t N, class... Args>
+std::bitset<N> makeBitset (Args... args)
+    {
+    std::bitset<N> bits;
+
+    makeBitset (bits, args...);
+
+    return bits;
+    }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Convert a std::bitset to a std::set containing the indexes that are set to

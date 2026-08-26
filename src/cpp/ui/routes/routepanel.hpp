@@ -26,6 +26,8 @@ namespace ui::routes
 //////////////////////////////////////////////////////////////////////////////
 /// Tab containing route information
 ///
+/// @ingroup    APP_PANEL
+///
 //////////////////////////////////////////////////////////////////////////////
 class RoutePanel : public QWidget
     {
@@ -61,7 +63,7 @@ private slots:
     /// @param[in]  controller      Controller to add
     ///
     //////////////////////////////////////////////////////////////////////////////
-    void add (control::ControllerBase& controller);
+    void addController (control::ControllerBase& controller);
 
     };
 

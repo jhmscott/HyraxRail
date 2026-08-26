@@ -44,6 +44,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "testutils", "testutils", "{78E57CD6-878C-44A7-855B-A53346DD19C4}"
 	ProjectSection(SolutionItems) = preProject
 		..\tests\cpp\testutils\logspy.hpp = ..\tests\cpp\testutils\logspy.hpp
+		..\tests\cpp\testutils\mockcontroller.hpp = ..\tests\cpp\testutils\mockcontroller.hpp
 		..\tests\cpp\testutils\ui.hpp = ..\tests\cpp\testutils\ui.hpp
 	EndProjectSection
 EndProject
@@ -55,6 +56,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "actuator", "tests\actuator.vcxproj", "{E3DE023E-1E72-4360-A280-B92029A44D5C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "locomotive", "tests\locomotive.vcxproj", "{EA8CEECD-8FAB-43A4-A124-96B15AF069AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "trains", "trains", "{733D82A6-7403-4DFA-8E53-F864E18DCCC7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "editloco", "tests\editloco.vcxproj", "{E462A3FF-A984-43F7-83D1-36ACD42EF2CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +126,10 @@ Global
 		{EA8CEECD-8FAB-43A4-A124-96B15AF069AD}.Release|x64.ActiveCfg = Release|x64
 		{EA8CEECD-8FAB-43A4-A124-96B15AF069AD}.Test|x64.ActiveCfg = Test|x64
 		{EA8CEECD-8FAB-43A4-A124-96B15AF069AD}.Test|x64.Build.0 = Test|x64
+		{E462A3FF-A984-43F7-83D1-36ACD42EF2CA}.Debug|x64.ActiveCfg = Debug|x64
+		{E462A3FF-A984-43F7-83D1-36ACD42EF2CA}.Release|x64.ActiveCfg = Release|x64
+		{E462A3FF-A984-43F7-83D1-36ACD42EF2CA}.Test|x64.ActiveCfg = Test|x64
+		{E462A3FF-A984-43F7-83D1-36ACD42EF2CA}.Test|x64.Build.0 = Test|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -147,6 +156,8 @@ Global
 		{3A46997A-5986-44CE-9652-0F15770CBACB} = {78E57CD6-878C-44A7-855B-A53346DD19C4}
 		{E3DE023E-1E72-4360-A280-B92029A44D5C} = {C1E18B84-F9BD-432D-A9F1-A8A327A048E6}
 		{EA8CEECD-8FAB-43A4-A124-96B15AF069AD} = {C1E18B84-F9BD-432D-A9F1-A8A327A048E6}
+		{733D82A6-7403-4DFA-8E53-F864E18DCCC7} = {F3D6AEB3-D7EB-4959-813E-D9490D538B9F}
+		{E462A3FF-A984-43F7-83D1-36ACD42EF2CA} = {733D82A6-7403-4DFA-8E53-F864E18DCCC7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4ACFF0E3-DFF5-489E-866F-8829724F0C54}

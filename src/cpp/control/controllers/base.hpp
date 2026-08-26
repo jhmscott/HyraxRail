@@ -49,7 +49,8 @@ namespace internal
 {
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Generates a list of the protocol meta-class objects from a varidac list of protocol types
+/// Generates a list of the protocol meta-class objects from a varidac list of
+/// protocol types
 ///
 /// @tparam     Protos...       Variadic list of protocol types
 ///
@@ -68,7 +69,7 @@ protocolMetaList makeProtocolList ()
 
 // Forward declare
 class ControllerBase;
-
+struct createControllerInfo;
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Controller meta class abstract base class. Meta class is templated, so
@@ -79,14 +80,18 @@ class ControllerBase;
 ///////////////////////////////////////////////////////////////////////////////
 class ControllerMetaClassBase
     {
+    friend std::unique_ptr<ControllerBase> createController (const createControllerInfo& info);
+    friend const std::vector<const ControllerMetaClassBase*> getControllers ();
 public:
     ///////////////////////////////////////////////////////////////////////////////
-    /// Constructor. Inits the controlller type information
+    /// Constructor. Inits the controller type information
     ///
-    /// @param[in]  name                      Configuration name of the controller. Used in the registry and to programatically
-    ///                           construct. This must be unique and is typically created from the type name
+    /// @param[in]  name            Configuration name of the controller.
+    ///                             Used in the registry and to programmatically
+    ///                             construct. This must be unique and is typically
+    ///                             created from the type name
     /// @param[in]  friendlyName    Name of the controller type to use in the UI
-    /// @param[in]  protocols           List of protocols this controller supports
+    /// @param[in]  protocols       List of protocols this controller supports
     ///
     ///////////////////////////////////////////////////////////////////////////////
     ControllerMetaClassBase (const std::string&         name,
@@ -108,9 +113,10 @@ public:
     ///             nullptr if the controller could not be created
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual std::unique_ptr<ControllerBase> create (const std::string&                  friendlyName,
-                                                    const std::string&                  protocol,
-                                                    const utils::device::deviceInfo&    info) const = 0;
+    virtual std::unique_ptr<ControllerBase>
+        create (const std::string&                  friendlyName,
+                const std::string&                  protocol,
+                const utils::device::deviceInfo&    info) const = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Find the a protocol by name
@@ -121,6 +127,11 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     const ProtocolMetaClassBase& findProtocol (const std::string& protocol) const;
+
+private:
+    static inline std::map<std::string, ControllerMetaClassBase*> controllerTypes;  ///< Supported controller types
+                                                                                    ///  populated automatically by metaclass
+                                                                                    ///  global constructors
     };
 
 
@@ -151,11 +162,13 @@ public:
     ///             nullptr if the controller could not be created
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual std::unique_ptr<ControllerBase> create (const std::string&                  friendlyName,
-                                                    const std::string&                  protocol,
-                                                    const utils::device::deviceInfo&    info) const override
+    virtual std::unique_ptr<ControllerBase>
+        create (const std::string&                  friendlyName,
+                const std::string&                  protocol,
+                const utils::device::deviceInfo&    info) const override
         {
-        static_assert (std::is_base_of_v<ControllerBase, T>, "Meta class must be used with a controller class");
+        static_assert (std::is_base_of_v<ControllerBase, T>,
+                       "Meta class must be used with a controller class");
 
         return std::make_unique<T> (friendlyName, findProtocol (protocol).create (info));
         }
@@ -182,10 +195,12 @@ public:
     /// @param[in]  friendlyName        Name of thi controller in UI
     /// @param[in]  proto               Protocol to use. Controller takes ownership
     ///
-    /// @remarks    Derived classes must have the same function signature for their constructors
+    /// @remarks    Derived classes must have the same function signature
+    ///             for their constructors
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    ControllerBase (const std::string& friendlyName, std::unique_ptr<ProtocolBase>&& proto);
+    ControllerBase (const std::string&              friendlyName,
+                    std::unique_ptr<ProtocolBase>&& proto);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Virtual destructor
@@ -257,17 +272,19 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the health of the conenction to this controller
     ///
-    /// @return     Cotroller connnection health
+    /// @return     Controller connection health
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    ConnectionWorkerThread::health getConnctionHealth () const
+    ConnectionWorkerThread::health getConnectionHealth () const
         { return m_thread.getConnectionHealth (); }
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Trigger or leave an emergency stop state. This typically stops all locomotives by cutting track power
+    /// Trigger or leave an emergency stop state. This typically stops all locomotives
+    /// by cutting track power
     ///
-    /// @param[in]  stop            True to trigger an emergency stop
-    ///                      False  to exit an emrgency stop state (sometimes called a go command)
+    /// @param[in]  stop    True to trigger an emergency stop
+    ///                     False  to exit an emergency stop state
+    ///                     (sometimes called a go command)
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void eStop (bool stop) = 0;
@@ -285,7 +302,8 @@ public:
     ///
     /// @return     Meta class instance
     ///
-    /// @remarks    This is defined automatically by CONTROLLER_DEFINE(). Do not define manually.
+    /// @remarks    This is defined automatically by CONTROLLER_DEFINE().
+    ///             Do not define manually.
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual const ControllerMetaClassBase& getMetaClass () const = 0;
@@ -299,7 +317,8 @@ public:
     const control::ProtocolMetaClassBase& getProtocol () const { return m_thread.getProtocol (); }
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Get the information for the device used to communicate with this controller (i.e. socket or serial port)
+    /// Get the information for the device used to communicate with this controller
+    /// (i.e. socket or serial port)
     ///
     /// @return     Device info
     ///

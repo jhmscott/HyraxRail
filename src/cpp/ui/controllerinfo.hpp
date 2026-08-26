@@ -82,7 +82,7 @@ private:
                         control::ConnectionWorkerThread::HEALTH_UNAVAILABLE,
                         std::chrono::milliseconds { 0 }
                     } :
-                    m_controller->getConnctionHealth ());
+                    m_controller->getConnectionHealth ());
         }
 
     ///////////////////////////////////////////////////////////////////////////////

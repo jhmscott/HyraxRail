@@ -135,14 +135,14 @@ std::vector<layout::Locomotive> MarklinCS1::getLocomotives () const
                                     { "MFX",    layout::TRACK_PROTO_MFX },
 
                                     // NMRA DCC (Digital Command Control)
-                                    { "DCC14",  layout::TRACK_PROTO_DCC },
-                                    { "DCC28",  layout::TRACK_PROTO_DCC },
-                                    { "DCC128", layout::TRACK_PROTO_DCC },
+                                    { "DCC14",  layout::TRACK_PROTO_DCC14 },
+                                    { "DCC28",  layout::TRACK_PROTO_DCC28 },
+                                    { "DCC128", layout::TRACK_PROTO_DCC128 },
 
                                     // Märklin-Motorola
-                                    { "MM14",   layout::TRACK_PROTO_MM  },
-                                    { "MM27",   layout::TRACK_PROTO_MM  },
-                                    { "MM28",   layout::TRACK_PROTO_MM  },
+                                    { "MM14",   layout::TRACK_PROTO_MM14  },
+                                    { "MM27",   layout::TRACK_PROTO_MM27  },
+                                    { "MM28",   layout::TRACK_PROTO_MM28  },
                                 };
 
 
@@ -158,10 +158,17 @@ std::vector<layout::Locomotive> MarklinCS1::getLocomotives () const
                                 {
                                 proto = it->second;
                                 }
+                            auto addrFuture = issueDynamicCommand (ECoSProtocol::get,
+                                                                   line.id,
+                                                                   ECoSProtocol::ARG_ADDR);
+                            auto addrReply  = addrFuture.get ();
+                            auto address    = addrReply.lines[0].arg->val.value ();
 
                             return layout::Locomotive{ const_cast<MarklinCS1*> (this),
                                                        line.arg->val.value (),
                                                        proto,
+                                                       static_cast<uint> (
+                                                           atoi (address.c_str ())),
                                                        line.id, };
                             });
             }

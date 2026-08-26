@@ -133,6 +133,11 @@ void SchemeComboBox::addItem (const utils::resources::Icon& icon,
     setItemData (idx, QVariant::fromValue (icon), schemeIcon);
     }
 
+utils::resources::Icon SchemeComboBox::itemSchemeIcon (int idx) const
+    {
+    return itemData (idx, schemeIcon).value<utils::resources::Icon> ();
+    }
+
 void SchemeComboBox::colorSchemeChanged (Qt::ColorScheme scheme)
     {
     for (int ii = 0; ii < count (); ++ii)

@@ -8,38 +8,33 @@
  */
 
 
+#include <ui/common/addbtn.hpp>
 #include <ui/common/seperator.hpp>
 #include <ui/common/utils.hpp>
 
+#include <ui/trains/editloco.hpp>
 #include <ui/trains/lococontrolpanel.hpp>
 
+#include <QMessageBox>
 
 namespace ui::trains
 {
 
-struct protocolInfo
-    {
-    utils::resources::Icon  iconPath;
-    const char*             tooltip;
-    };
 
-static const protocolInfo PROTOCOLS[] =
+LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
+                                    vAlignment                  align,
+                                    QWidget*                    parent) :
+    QWidget (parent),
+    m_controllers (controllers)
     {
-    { "trains/dcc",     "NMRA DCC (Digital Command Control)"    },
-    { "trains/mfx",     "MFX (Märklin Digital)"                 },
-    { "trains/mm",      "Märklin-Motorola"                      },
-    { "misc/question",  ""                                      }
-    };
-
-LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers, vAlignment align, QWidget* parent) :
-    QWidget (parent)
-    {
-
     QVBoxLayout* mainLayout     = new QVBoxLayout{ this };
     QHBoxLayout* controlLayout  = new QHBoxLayout;
     QHBoxLayout* trainSelLayout = new QHBoxLayout;
 
-    m_controllerInfo = new ControllerInfo (controllers.size () > 0 ? &(controllers[0]) : NULL, this, false);
+    m_controllerInfo = new ControllerInfo{ controllers.size () > 0 ?
+                                          &(controllers[0]) : NULL,
+                                           this,
+                                           false };
 
     m_locos = new common::SchemeComboBox{ this };
 
@@ -47,10 +42,10 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers, vAl
 
     for (control::ControllerBase& controller : controllers)
         {
-        add (controller);
+        addController (controller);
         }
 
-    protocolInfo proto = PROTOCOLS[layout::TRACK_PROTO_UNKNOWN];
+    layout::protocolInfo proto = layout::PROTOCOLS[layout::TRACK_PROTO_UNKNOWN];
 
     if (m_locos->count () > 0)
         {
@@ -59,16 +54,33 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers, vAl
         m_currentLoco = *m_locos->currentData ().value<layout::Locomotive*> ();
         m_currentLoco.requestControl ();
 
-        proto = PROTOCOLS[m_currentLoco.getProtocol ()];
+        proto = layout::PROTOCOLS[m_currentLoco.getProtocol ()];
         }
 
-    m_proto = new common::SchemeIconButton{ proto.iconPath, this };
+    m_proto = new common::SchemeIconButton{ proto.icon, this };
 
-    m_proto->setToolTip (proto.tooltip);
+    m_proto->setToolTip (proto.description);
     m_proto->setIconSize (QSize{ 40, 30 });
     m_proto->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
 
     common::makeFrameless (*m_proto);
+
+    common::AddButton* add = new common::AddButton{ this };
+
+    add->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
+
+    common::PointedIconButton* edit = new common::PointedIconButton{ "misc/pencil", this };
+
+    edit->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
+    edit->setIconSize (QSize{ 20, 20 });
+    common::makeFrameless (*edit);
+
+
+    common::PointedIconButton* deleteBtn = new common::PointedIconButton{ "misc/trash", this };
+
+    deleteBtn->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
+    deleteBtn->setIconSize (QSize{ 20, 20 });
+    common::makeFrameless (*deleteBtn);
 
     connect (m_locos,
             &QComboBox::currentIndexChanged,
@@ -78,7 +90,22 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers, vAl
     connect (&controllers,
              &control::ControllerManager::controllerAdded,
               this,
-             &LocoControlPanel::add);
+             &LocoControlPanel::addController);
+
+    connect (add,
+            &common::AddButton::addPressed,
+             this,
+            &LocoControlPanel::addLoco);
+
+    connect (edit,
+            &common::PointedIconButton::released,
+             this,
+            &LocoControlPanel::editLoco);
+
+    connect (deleteBtn,
+            &common::PointedIconButton::released,
+             this,
+            &LocoControlPanel::deleteLoco);
 
     m_speed = new SpeedControlWidget{ this };
     m_speed->setLocomotive (m_currentLoco);
@@ -88,7 +115,6 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers, vAl
 
     trainSelLayout->setContentsMargins (0, 0, 0, 0);
 
-
     if (vAlignment::LEFT == align)
         {
         controlLayout->addWidget (m_speed);
@@ -96,12 +122,18 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers, vAl
 
         trainSelLayout->addWidget (m_proto);
         trainSelLayout->addWidget (m_locos);
+        trainSelLayout->addWidget (edit);
+        trainSelLayout->addWidget (deleteBtn);
+        trainSelLayout->addWidget (add);
         }
     else // (vAlignment::RIGHT == align)
         {
         controlLayout->addWidget (m_functions);
         controlLayout->addWidget (m_speed);
 
+        trainSelLayout->addWidget (add);
+        trainSelLayout->addWidget (deleteBtn);
+        trainSelLayout->addWidget (edit);
         trainSelLayout->addWidget (m_locos);
         trainSelLayout->addWidget (m_proto);
         }
@@ -113,7 +145,7 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers, vAl
     setLayout (mainLayout);
     }
 
-void LocoControlPanel::add (control::ControllerBase& controller)
+void LocoControlPanel::addController (control::ControllerBase& controller)
     {
     for (layout::Locomotive& loco : controller.getLocomotives ())
         {
@@ -136,8 +168,8 @@ void LocoControlPanel::onLocoChange (int idx)
     {
     m_currentLoco.releaseControl ();
 
-    layout::Locomotive* newLoco = m_locos->currentData ().value<layout::Locomotive*> ();
-    protocolInfo        proto   = PROTOCOLS[layout::TRACK_PROTO_UNKNOWN];
+    layout::Locomotive*     newLoco = m_locos->currentData ().value<layout::Locomotive*> ();
+    layout::protocolInfo    proto   = layout::PROTOCOLS[layout::TRACK_PROTO_UNKNOWN];
 
     if (NULL == newLoco)
         {
@@ -155,15 +187,15 @@ void LocoControlPanel::onLocoChange (int idx)
         m_speed->setLocomotive (m_currentLoco);
         m_functions->setLocomotive (m_currentLoco);
 
-        proto = PROTOCOLS[m_currentLoco.getProtocol ()];
+        proto = layout::PROTOCOLS[m_currentLoco.getProtocol ()];
 
         m_controllerInfo->setController (
             *static_cast<control::ControllerBase*> (
                 m_currentLoco.getController ()));
         }
 
-    m_proto->setIcon (proto.iconPath);
-    m_proto->setToolTip (proto.tooltip);
+    m_proto->setIcon (proto.icon);
+    m_proto->setToolTip (proto.description);
     }
 
 
@@ -172,5 +204,58 @@ void LocoControlPanel::locoDeleted ()
     layout::Locomotive* loco = static_cast<layout::Locomotive*> (sender ());
 
     common::removeComboBoxItemByUserData (*m_locos, loco);
+    }
+
+void LocoControlPanel::addLoco ()
+    {
+    EditLocoDialog dlg
+        {
+        m_controllers,
+        this,
+        static_cast<control::ControllerBase*> (m_currentLoco.getController ())
+        };
+
+    dlg.exec ();
+    }
+
+void LocoControlPanel::editLoco ()
+    {
+    EditLocoDialog dlg
+        {
+        m_controllers,
+        this,
+        m_currentLoco
+        };
+
+    if (QDialog::Accepted == dlg.exec ())
+        {
+        if (m_currentLoco.getName () != dlg.getName ())
+            {
+            m_currentLoco.setName (dlg.getName ());
+            }
+
+        if (m_currentLoco.getAddress () != dlg.getAddress ())
+            {
+            m_currentLoco.setAddress (dlg.getAddress ());
+            }
+
+        if (m_currentLoco.getProtocol () != dlg.getProtocol ())
+            {
+            m_currentLoco.setProtocol (dlg.getProtocol ());
+            }
+        }
+    }
+
+void LocoControlPanel::deleteLoco ()
+    {
+    QString msg = tr ("Would you like to delete locomotive \"%1\"?").
+                                            arg (m_currentLoco.getName ());
+
+    if (QMessageBox::Yes == QMessageBox::question (this,
+                                                   tr ("Delete Locomotive"),
+                                                   msg))
+        {
+
+        }
     }
 }

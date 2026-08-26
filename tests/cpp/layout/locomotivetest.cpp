@@ -20,9 +20,12 @@ static constexpr size_t ID = 7890;
 
 static const std::string            INIT_NAME = "Original Name";
 static const layout::trackProtocol  INIT_PROTO= layout::TRACK_PROTO_MFX;
+static const uint                   INIT_ADDR = 314159;
+
 
 static const std::string            NEW_NAME  = "New Name";
-static const layout::trackProtocol  NEW_PROTO = layout::TRACK_PROTO_MM;
+static const layout::trackProtocol  NEW_PROTO = layout::TRACK_PROTO_MM14;
+static const uint                   NEW_ADDR  = 271828;
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Assert the locomotive contains the initial state
@@ -35,6 +38,15 @@ static void assertInitState (const layout::Locomotive& loco)
     QCOMPARE (loco.getId (),        ID);
     QCOMPARE (loco.getName (),      INIT_NAME);
     QCOMPARE (loco.getProtocol (),  INIT_PROTO);
+    QCOMPARE (loco.getAddress (),   INIT_ADDR);
+    }
+
+static void assertNewState (const layout::Locomotive& loco)
+    {
+    QCOMPARE (loco.getId (),        ID);
+    QCOMPARE (loco.getName (),      NEW_NAME);
+    QCOMPARE (loco.getProtocol (),  NEW_PROTO);
+    QCOMPARE (loco.getAddress (),   NEW_ADDR);
     }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -88,6 +100,7 @@ private slots:
         layout::Locomotive loco{ &mockController->get (),
                                   INIT_NAME,
                                   INIT_PROTO,
+                                  INIT_ADDR,
                                   ID };
         layout::Locomotive locoCopy = loco;
 
@@ -129,10 +142,43 @@ private slots:
         layout::Locomotive loco{ &mockController->get (),
                                   INIT_NAME,
                                   INIT_PROTO,
+                                  INIT_ADDR,
                                   ID };
         loco.setSpeed (speed);
 
         fakeit::Verify (Method (*mockController, setSpeed).Using (ID, speed));
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test the shared state of a locomotive between multiple instances of the same
+    /// loco
+    ///
+    /// @see    layout::Locomotive
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void sharedStateTest ()
+        {
+        fakeit::When (Method (*mockController, setLocomotiveName)).AlwaysReturn ();
+        fakeit::When (Method (*mockController, setLocomotiveAddress)).AlwaysReturn ();
+        fakeit::When (Method (*mockController, setLocomotiveProtocol)).AlwaysReturn ();
+
+        layout::Locomotive loco{ &mockController->get (),
+                                  INIT_NAME,
+                                  INIT_PROTO,
+                                  INIT_ADDR,
+                                  ID };
+        layout::Locomotive locoCopy = loco;
+
+        loco.setName    (NEW_NAME);
+        loco.setAddress (NEW_ADDR);
+        loco.setProtocol(NEW_PROTO);
+
+        assertNewState (loco);
+        assertNewState (locoCopy);
+
+        fakeit::Verify (Method (*mockController, setLocomotiveName).    Using (ID, NEW_NAME));
+        fakeit::Verify (Method (*mockController, setLocomotiveAddress). Using (ID, NEW_ADDR));
+        fakeit::Verify (Method (*mockController, setLocomotiveProtocol).Using (ID, NEW_PROTO));
         }
     };
 

@@ -270,6 +270,12 @@
     <ClInclude Include="..\src\cpp\ui\common\centeredslider.hpp">
       <Filter>Header Files\ui\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\trains\editloco.hpp">
+      <Filter>Header Files\ui\trains</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\layout\protocol.hpp">
+      <Filter>Header Files\layout</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cpp\control\controllers\base.cpp">
@@ -520,6 +526,9 @@
     </ClCompile>
     <ClCompile Include="..\src\cpp\utils\log.cpp">
       <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\trains\editloco.cpp">
+      <Filter>Source Files\ui\trains</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

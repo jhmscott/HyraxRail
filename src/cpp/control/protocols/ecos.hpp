@@ -20,14 +20,14 @@ namespace control
 // ECoS Protocol version information
 struct ecosVersion
     {
-    version protocol;       ///< Procol version
+    version protocol;       ///< Protocol version
     version application;    ///< Application version
-    version hardware;       ///< HArdware version
+    version hardware;       ///< Hardware version
     };
 
 
 ///////////////////////////////////////////////////////////////////////////////
-/// ESU's ECoS protocl, version 0.1
+/// ESU's ECoS protocol, version 0.1
 ///
 ///////////////////////////////////////////////////////////////////////////////
 class ECoSProtocol : public ProtocolBase
@@ -79,7 +79,7 @@ public:
     enum argType
         {
         ARG_VIEW,           ///< Request view access to an object
-        ARG_STOP,           ///< Stop command (Emegency/global stop)
+        ARG_STOP,           ///< Stop command (Emergency/global stop)
         ARG_GO,             ///< Go command (clears emergency stop)
         ARG_INFO,           ///< Get info for an object
         ARG_STATUS,         ///< Status of an object
@@ -121,11 +121,12 @@ public:
     // Status of a command, extracted from the reply
     enum replyStatus
         {
-        REPLY_OK,                           ///< Command suceeded
+        REPLY_OK,                           ///< Command succeeded
         REPLY_NERROR_NOAPPEND,              ///< Could not append the object
         REPLY_NERROR_NOCONTROL,             ///< You do not have control of this object
 
-        REPLY_EMPTY,                        ///< Not a real status, used to signal an unitialized status object
+        REPLY_EMPTY,                        ///< Not a real status, used to signal an
+                                            ///  uninitialized status object
         NUM_REPLY_STATUSES = REPLY_EMPTY    ///< Delimeter only
         };
 
@@ -195,7 +196,7 @@ public:
             {}
 
         ///////////////////////////////////////////////////////////////////////////////
-        /// String argument contructor
+        /// String argument constructor
         ///
         /// @param[in]  type            Argument type
         /// @param[in]  vale            String argument value
@@ -210,8 +211,8 @@ public:
         ///////////////////////////////////////////////////////////////////////////////
         /// Range argument constructor
         ///
-        /// @param[in]  type            Argument type
-        /// @param[in]  range          Range argument value
+        /// @param[in]  type        Argument type
+        /// @param[in]  range       Range argument value
         ///
         ///////////////////////////////////////////////////////////////////////////////
         arg (argType type, const range& range) :
@@ -223,7 +224,7 @@ public:
         /// Integer argument constructor
         ///
         /// @param[in]  type        Argument type
-        /// @param[in]  integer Argument integer value
+        /// @param[in]  integer     Argument integer value
         ///
         ///////////////////////////////////////////////////////////////////////////////
         arg (argType type, int integer) :
@@ -235,7 +236,7 @@ public:
         /// Boolean argument constructor
         ///
         /// @param[in]  type        Argument type
-        /// @param[in]  b1            boolean argument value
+        /// @param[in]  b1          boolean argument value
         ///
         ///////////////////////////////////////////////////////////////////////////////
         arg (argType type, bool bl) :
@@ -415,7 +416,7 @@ public:
         }
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Request acces to an object
+    /// Request access to an object
     ///
     /// @tparam     Args        Command argument types
     ///
@@ -595,11 +596,11 @@ public:
         }
 private:
     ///////////////////////////////////////////////////////////////////////////////
-    /// Issue a command to the ECoS controlelr
+    /// Issue a command to the ECoS controller
     ///
     /// @param[in]  cmd     Command code
-    /// @param[in]  id       Object ID
-    /// @param[in]  args   Command arguments
+    /// @param[in]  id      Object ID
+    /// @param[in]  args    Command arguments
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void issueCommand (cmd cmd, dynamicId id, std::initializer_list<arg> args);
@@ -616,8 +617,8 @@ private:
     /// Make a request. This sends a command to the controller, parses and returns the reply
     ///
     /// @param[in]  cmd     Command code
-    /// @param[in]  id       Object ID
-    /// @param[in]  args  Command arguments
+    /// @param[in]  id      Object ID
+    /// @param[in]  args    Command arguments
     ///
     ///////////////////////////////////////////////////////////////////////////////
     reply makeRequest (cmd cmd, dynamicId id, std::initializer_list<arg> args);

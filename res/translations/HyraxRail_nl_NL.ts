@@ -238,39 +238,49 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::actuators::EditActuatorDialog</name>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="60"/>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="111"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="61"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="112"/>
         <source>Switch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="61"/>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="112"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="62"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="113"/>
         <source>Pulse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="119"/>
-        <source>Name</source>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="120"/>
+        <source>Edit Switching Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="120"/>
-        <source>Address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="121"/>
-        <source>Icon</source>
+        <source>Add Switching Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="122"/>
-        <source>Mode</source>
+        <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="123"/>
+        <source>Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="124"/>
+        <source>Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="125"/>
+        <source>Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="126"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -721,6 +731,39 @@ Would you like to pause it or keep it running?</source>
     </message>
 </context>
 <context>
+    <name>ui::trains::EditLocoDialog</name>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="117"/>
+        <source>Edit Locomotive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="117"/>
+        <source>Add Locomotive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="119"/>
+        <source>Controller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="120"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="122"/>
+        <source>Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="121"/>
+        <source>Protocol</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ui::trains::FunctionPanel</name>
     <message>
         <location filename="../../src/cpp/ui/trains/functionpanel.cpp" line="201"/>
@@ -736,6 +779,19 @@ Would you like to pause it or keep it running?</source>
     <message>
         <location filename="../../src/cpp/ui/trains/functionpanel.cpp" line="212"/>
         <source>Function %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::trains::LocoControlPanel</name>
+    <message>
+        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="251"/>
+        <source>Would you like to delete locomotive &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="255"/>
+        <source>Delete Locomotive</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

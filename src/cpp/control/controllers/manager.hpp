@@ -33,23 +33,26 @@ public:
     /// Controller list iterator
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    class Iterator
+    template<bool constant>
+    class IteratorImpl
         {
         friend ControllerManager;
     public:
         using iterator_category = std::random_access_iterator_tag;
-        using value_type        = ControllerBase;
+        using value_type        = std::conditional_t<constant,
+                                                     const ControllerBase,
+                                                     ControllerBase>;
         using difference_type   = typename controllerList::difference_type;
         using pointer           = value_type*;
         using reference         = value_type&;
 
         // Copyable
-        Iterator (const Iterator&) = default;
-        Iterator& operator= (const Iterator&) = default;
+        IteratorImpl (const IteratorImpl&) = default;
+        IteratorImpl& operator= (const IteratorImpl&) = default;
 
         // Movable
-        Iterator (Iterator&&) = default;
-        Iterator& operator= (Iterator&&) = default;
+        IteratorImpl (IteratorImpl&&) = default;
+        IteratorImpl& operator= (IteratorImpl&&) = default;
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Pointer arrow operator
@@ -73,7 +76,7 @@ public:
         /// @return     Reference to this
         ///
         ///////////////////////////////////////////////////////////////////////////////
-        Iterator& operator++ () noexcept { m_it++; return *this; }
+        IteratorImpl& operator++ () noexcept { m_it++; return *this; }
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Iterator increment after operator
@@ -81,7 +84,7 @@ public:
         /// @return     Un-incremented iterator
         ///
         ///////////////////////////////////////////////////////////////////////////////
-        Iterator operator++ (int) noexcept { auto tmp = *this; m_it++; return tmp; }
+        IteratorImpl operator++ (int) noexcept { auto tmp = *this; m_it++; return tmp; }
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Iterator decrement operator
@@ -89,7 +92,7 @@ public:
         /// @return     Reference to this
         ///
         ///////////////////////////////////////////////////////////////////////////////
-        Iterator& operator-- () noexcept { m_it--; return *this; }
+        IteratorImpl& operator-- () noexcept { m_it--; return *this; }
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Iterator decrement after operator
@@ -97,7 +100,7 @@ public:
         /// @return     Un-decremented iterator
         ///
         ///////////////////////////////////////////////////////////////////////////////
-        Iterator operator-- (int) noexcept { auto tmp = *this; m_it--; return tmp; }
+        IteratorImpl operator-- (int) noexcept { auto tmp = *this; m_it--; return tmp; }
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Add an offset to this iterator
@@ -107,7 +110,7 @@ public:
         /// @return     Reference to this
         ///
         ///////////////////////////////////////////////////////////////////////////////
-        Iterator& operator+= (const difference_type off) noexcept { m_it += off; return *this; }
+        IteratorImpl& operator+= (const difference_type off) noexcept { m_it += off; return *this; }
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Subtract an offset from this iterator
@@ -117,7 +120,7 @@ public:
         /// @return     Reference to this
         ///
         ///////////////////////////////////////////////////////////////////////////////
-        Iterator& operator-= (const difference_type off) noexcept { m_it -= off; return *this; }
+        IteratorImpl& operator-= (const difference_type off) noexcept { m_it -= off; return *this; }
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Adds an offset to this iteraor, creating a new iterator
@@ -127,7 +130,7 @@ public:
         /// @return     Iterator with offset added
         ///
         ///////////////////////////////////////////////////////////////////////////////
-        Iterator operator+ (const difference_type off) const noexcept { return (m_it + off); }
+        IteratorImpl operator+ (const difference_type off) const noexcept { return (m_it + off); }
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Subtract an offset from this iteraor, creating a new iterator
@@ -137,7 +140,7 @@ public:
         /// @return     Iterator with offset subtracted
         ///
         ///////////////////////////////////////////////////////////////////////////////
-        Iterator operator- (const difference_type off) const noexcept { return (m_it - off); }
+        IteratorImpl operator- (const difference_type off) const noexcept { return (m_it - off); }
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Index operator
@@ -157,7 +160,7 @@ public:
         /// @return     True if iterators point to the same controller
         ///
         ///////////////////////////////////////////////////////////////////////////////
-        bool operator== (const Iterator& other) const { return m_it == other.m_it; }
+        bool operator== (const IteratorImpl& other) const { return m_it == other.m_it; }
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Compare to iterators
@@ -167,9 +170,11 @@ public:
         /// @return     True if iterators point to different controllers
         ///
         ///////////////////////////////////////////////////////////////////////////////
-        bool operator!= (const Iterator& other) const { return !(*this == other); }
+        bool operator!= (const IteratorImpl& other) const { return !(*this == other); }
     private:
-        using iterImpl = controllerList::iterator;
+        using iterImpl = std::conditional_t<constant,
+                                           controllerList::const_iterator,
+                                           controllerList::iterator>;
 
         iterImpl m_it;  ///< Iterator into list implementation
 
@@ -179,10 +184,14 @@ public:
         /// @param[in]  it      List iterator
         ///
         ///////////////////////////////////////////////////////////////////////////////
-        Iterator (iterImpl it) :
+        IteratorImpl (iterImpl it) :
             m_it (it)
             {}
         };
+
+    using Iterator      = IteratorImpl<false>;
+    using ConstIterator = IteratorImpl<true>;
+
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
@@ -231,6 +240,22 @@ public:
     Iterator end () { return m_controllers.end (); }
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Get the const start iterator
+    ///
+    /// @return     Start iterator
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    ConstIterator begin () const { return m_controllers.begin (); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the const end iterator
+    ///
+    /// @return     End iterator
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    ConstIterator end () const { return m_controllers.end (); }
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Add a controller to the manager
     ///
     /// @param[in]  info        Controller info
@@ -273,6 +298,12 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     ptrdiff_t indexOf (const ControllerBase& controller) const;
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Delete all controllers from the manager
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void clear ();
+
 signals:
     ///////////////////////////////////////////////////////////////////////////////
     /// Signals a controller has been added
@@ -289,7 +320,7 @@ signals:
     ///
     /// @remarks    If you are connecting this to a slot on a different thread you
     ///             MUST use Qt::BlockingQueuedConnection, as the controller object
-    ///             is deleted after emiting this signal. If you are connecting this
+    ///             is deleted after emitting this signal. If you are connecting this
     ///             to a slot on the same thread, you must use Qt::DirectConnection,
     ///             or Qt::AutoConnection (default behaviour)
     ///

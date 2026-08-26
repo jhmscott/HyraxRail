@@ -327,6 +327,7 @@
     <ClCompile Include="..\src\cpp\ui\sensors\sensorpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\sensors\sensorstate.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\dualcontrol.cpp" />
+    <ClCompile Include="..\src\cpp\ui\trains\editloco.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\functionpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\lococontrolpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\speedcontrol.cpp" />
@@ -358,6 +359,7 @@
     <QtMoc Include="..\src\cpp\ui\clock\monthly.hpp" />
     <ClInclude Include="..\src\cpp\docs.hpp" />
     <ClInclude Include="..\src\cpp\ext\gpc.h" />
+    <ClInclude Include="..\src\cpp\layout\protocol.hpp" />
     <ClInclude Include="..\src\cpp\ui\clock\clock.hpp" />
     <ClInclude Include="..\src\cpp\ui\clock\digitalclock.hpp" />
     <ClInclude Include="..\src\cpp\ui\clock\task.hpp" />
@@ -422,6 +424,7 @@
     <ClInclude Include="..\src\cpp\ui\trains\dualcontrol.hpp" />
     <QtMoc Include="..\src\cpp\ui\trains\functionpanel.hpp" />
     <QtMoc Include="..\src\cpp\ui\trains\lococontrolpanel.hpp" />
+    <ClInclude Include="..\src\cpp\ui\trains\editloco.hpp" />
     <ClInclude Include="..\src\cpp\ui\trains\speedcontrol.hpp" />
     <ClInclude Include="..\src\cpp\utils\algorithm.hpp" />
     <QtMoc Include="..\src\cpp\utils\battery.hpp" />

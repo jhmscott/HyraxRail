@@ -168,6 +168,8 @@ public:
     void addItem (const utils::resources::Icon& icon,
                   const QString&                text,
                   const QVariant&               userData = QVariant{});
+
+    utils::resources::Icon itemSchemeIcon (int idx) const;
 private slots:
     ///////////////////////////////////////////////////////////////////////////////
     /// Handle the change to the color scheme

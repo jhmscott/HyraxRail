@@ -16,7 +16,8 @@ namespace ui::actuators
 EditActuatorDialog::EditActuatorDialog (control::ControllerBase&    controller,
                                         QWidget*                    parent,
                                         const layout::Actuator*     actuator) :
-    common::FormDialog (parent)
+    common::FormDialog (parent),
+    m_edit (NULL != actuator)
     {
     static const int durations[] =
         {
@@ -116,6 +117,8 @@ void EditActuatorDialog::updateTexts ()
 
 void EditActuatorDialog::setLabels ()
     {
+    setWindowTitle (m_edit ? tr ("Edit Switching Item") : tr ("Add Switching Item"));
+
     common::setFormRowText (*m_form, *m_name,       tr ("Name"));
     common::setFormRowText (*m_form, *m_address,    tr ("Address"));
     common::setFormRowText (*m_form, *m_icon,       tr ("Icon"));

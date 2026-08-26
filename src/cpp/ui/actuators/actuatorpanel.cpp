@@ -37,7 +37,7 @@ ActuatorPanel::ActuatorPanel (control::ControllerManager&   controllers,
     connect (&m_controllers,
              &control::ControllerManager::controllerAdded,
               this,
-             &ActuatorPanel::add);
+             &ActuatorPanel::addController);
 
     connect (&m_controllers,
              &control::ControllerManager::controllerDeleted,
@@ -57,7 +57,7 @@ void ActuatorPanel::remove (const control::ControllerBase& controller)
         }
     }
 
-void ActuatorPanel::add (control::ControllerBase& controller)
+void ActuatorPanel::addController (control::ControllerBase& controller)
     {
     QVBoxLayout* myLayout = static_cast<QVBoxLayout*> (layout ());
 

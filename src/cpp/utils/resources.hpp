@@ -126,6 +126,11 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     operator bool () const { return not m_subPath.isEmpty (); }
+
+    bool operator== (const Icon& other) const { return m_subPath == other.m_subPath; }
+
+    bool operator!= (const Icon& other) const { return !(*this == other); }
+
 private:
     QString m_subPath;
     };

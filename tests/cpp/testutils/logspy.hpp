@@ -1,4 +1,3 @@
-
 /**
  * @file        testutils/logspy.hpp
  * @brief       Class to capture log messages for unit testing
@@ -7,7 +6,6 @@
  *
  * @copyright   Copyright (c) 2026 Justin Scott
  */
-
 
 #pragma once
 

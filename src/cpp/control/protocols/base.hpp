@@ -73,15 +73,15 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     int getTimeout () const { return m_timeout; }
 private:
-    int m_timeout;  ///< Millisecons before timeout occured
+    int m_timeout;  ///< Milliseconds before timeout occurred
     };
 
 // Forward declare
 class ProtocolBase;
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Protocol meta class base. Meta class is templated as it has type dependent logic. This provides a
-/// concrete type we can store pointers to
+/// Protocol meta class base. Meta class is templated as it has type dependent logic.
+/// This provides a concrete type we can store pointers to
 ///
 /// @ingroup    META_CLASS
 ///
@@ -94,12 +94,13 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
-    /// @param[in]  name                        Protocol type name. Must be unique
-    /// @param[in]  friendlyName      Name to use for this protocol in the UI
-    /// @param[in]  defaultType        Default device type
-    /// @param[in]  defaultPort        Default port number. Use NO_DEFAULT_PORT to not populate this
-    ///                            automatically in the UI. N/A for COM porte
-    /// @param[in]  types                      List of supported device types
+    /// @param[in]  name            Protocol type name. Must be unique
+    /// @param[in]  friendlyName    Name to use for this protocol in the UI
+    /// @param[in]  defaultType     Default device type
+    /// @param[in]  defaultPort     Default port number. Use NO_DEFAULT_PORT to not
+    ///                             populate this automatically in the UI.
+    ///                             N/A for COM ports
+    /// @param[in]  types           List of supported device types
     ///
     ///////////////////////////////////////////////////////////////////////////////
     ProtocolMetaClassBase (const std::string&                       name,
@@ -135,7 +136,7 @@ public:
     };
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Protocol meta clas type. Derived and templated version
+/// Protocol meta class type. Derived and templated version
 ///
 /// @tparam     T           Protocol type
 ///
@@ -178,9 +179,10 @@ public:
     /// Constructor
     ///
     /// @param[in]  deviceInfo      Connection device info
-    /// @param[in]  timeout             Time before connection times out
+    /// @param[in]  timeout         Time before connection times out
     ///
-    /// @remarks    Derived classes must have a constructor that takes just the deviceInfo parameter
+    /// @remarks    Derived classes must have a constructor that takes just the
+    ///             deviceInfo parameter
     ///
     ///////////////////////////////////////////////////////////////////////////////
     ProtocolBase (const utils::device::deviceInfo& deviceInfo, int timeout);
@@ -192,7 +194,7 @@ public:
     virtual ~ProtocolBase () {}
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Check if the connection is still open and re-open if necassary
+    /// Check if the connection is still open and re-open if necessary
     ///
     ///////////////////////////////////////////////////////////////////////////////
     bool maintainConnection ();
@@ -209,7 +211,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the IP address of the connection. Undefined for COM port connections
     ///
-    /// @return     IP Addres
+    /// @return     IP Address
     ///
     ///////////////////////////////////////////////////////////////////////////////
     QHostAddress getIpAddress ();
@@ -219,8 +221,8 @@ public:
     ///
     /// @return     polling intervals
     ///
-    /// @remarks    Defaults to 1000 ms. Override this in your base class if you need a different or dynamic
-    ///             value
+    /// @remarks    Defaults to 1000 ms. Override this in your base class if you need
+    ///             a different or dynamic value
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual std::chrono::milliseconds getEventPollInterval () const
@@ -231,7 +233,8 @@ public:
     ///
     /// @return     Meta class instance
     ///
-    /// @remarks    This is implement automatically by PROTOCOL_DEFINE(). Do not implement manually.
+    /// @remarks    This is implement automatically by PROTOCOL_DEFINE().
+    ///             Do not implement manually.
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual const control::ProtocolMetaClassBase& getMetaClass () const = 0;

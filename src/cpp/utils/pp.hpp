@@ -32,6 +32,8 @@
 #define UTILPP_CONCAT(arg1, arg2)           __UTILPP_CONCAT_IMPL (arg1, arg2)
 
 
+#define UTILPP_STRINGIFY(token)         __UTILPP_STRINGIFY_IMPL(token)
+
 // Macro implementation details, don't use
 
 #define _UTILPP_NARG_(...)      _UTILPP_SEQ (__VA_ARGS__)
@@ -66,3 +68,5 @@
     9,8,7,6,5,4,3,2,1,0
 
 #define __UTILPP_CONCAT_IMPL(arg1, arg2)    arg1 ## arg2
+
+#define __UTILPP_STRINGIFY_IMPL(token)     #token

@@ -11,7 +11,6 @@
 #include <control/controllers/manager.hpp>
 
 #include <utils/algorithm.hpp>
-#include "manager.hpp"
 
 namespace control
 {
@@ -59,5 +58,14 @@ ptrdiff_t ControllerManager::indexOf (const ControllerBase& controller) const
     return idx;
     }
 
+void ControllerManager::clear ()
+    {
+    for (const ControllerBase& controller : *this)
+        {
+        emit controllerDeleted (controller);
+        }
+
+    m_controllers.clear ();
+    }
 
 } // namespace control

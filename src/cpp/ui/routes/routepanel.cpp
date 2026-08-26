@@ -39,7 +39,7 @@ RoutePanel::RoutePanel (control::ControllerManager& controllers,
     connect (&m_controllers,
              &control::ControllerManager::controllerAdded,
               this,
-             &RoutePanel::add);
+             &RoutePanel::addController);
 
     connect (&m_controllers,
              &control::ControllerManager::controllerDeleted,
@@ -59,7 +59,7 @@ void RoutePanel::remove (const control::ControllerBase& controller)
         }
     }
 
-void RoutePanel::add (control::ControllerBase& controller)
+void RoutePanel::addController (control::ControllerBase& controller)
     {
     QVBoxLayout* myLayout = static_cast<QVBoxLayout*> (layout ());
 

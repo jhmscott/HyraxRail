@@ -28,6 +28,8 @@ namespace ui::actuators
 //////////////////////////////////////////////////////////////////////////////
 /// Dialog box to add or edit an actuator
 ///
+/// @ingroup    COMPONENT_DLG
+///
 //////////////////////////////////////////////////////////////////////////////
 class EditActuatorDialog : public common::FormDialog
     {
@@ -94,9 +96,12 @@ private:
     QComboBox*              m_mode;     ///< Actuator mode dropdown
     QComboBox*              m_duration; ///< Duration dropdown
     QFormLayout*            m_form;     ///< Form layout
+    bool                    m_edit;     ///< True if we are editing a loco
+                                        ///  False if we are creating one
+
 
     //////////////////////////////////////////////////////////////////////////////
-    /// Upate the text to the current language
+    /// Update the text to the current language
     ///
     //////////////////////////////////////////////////////////////////////////////
     void updateTexts ();

@@ -15,9 +15,6 @@
 
 namespace control
 {
-static std::map<std::string, ControllerMetaClassBase*> controllerTypes; ///< Supported controller types
-                                                                        ///  populated automatically by metaclass
-                                                                        ///  global constructors
 
 
 
@@ -35,7 +32,7 @@ const ProtocolMetaClassBase& ControllerMetaClassBase::findProtocol (const std::s
     {
     auto it = std::find_if (protocols.begin (),
                             protocols.end (),
-                            [&name] (const  ProtocolMetaClassBase* proto)
+                            [&name] (const ProtocolMetaClassBase* proto) -> bool
                             { return proto->name == name; });
 
     if (it == protocols.end ())
@@ -46,17 +43,17 @@ const ProtocolMetaClassBase& ControllerMetaClassBase::findProtocol (const std::s
     return **it;
     }
 
-
-
 std::unique_ptr<ControllerBase> createController (const createControllerInfo& info)
     {
     std::unique_ptr<ControllerBase> controller = NULL;
 
-    auto it = controllerTypes.find (info.name);
+    auto it = ControllerMetaClassBase::controllerTypes.find (info.name);
 
-    if (controllerTypes.end () != it)
+    if (ControllerMetaClassBase::controllerTypes.end () != it)
         {
-        controller = it->second->create (info.friendlyName, info.protocol, info.device);
+        controller = it->second->create (info.friendlyName,
+                                         info.protocol,
+                                         info.device);
         }
 
     return controller;
@@ -64,14 +61,16 @@ std::unique_ptr<ControllerBase> createController (const createControllerInfo& in
 
 const std::vector<const ControllerMetaClassBase*> getControllers ()
     {
+    using MetaPair = decltype (ControllerMetaClassBase::controllerTypes)::value_type;
+
     std::vector<const ControllerMetaClassBase*> controllers;
 
-    controllers.reserve (controllerTypes.size ());
+    controllers.reserve (ControllerMetaClassBase::controllerTypes.size ());
 
-    std::transform (controllerTypes.begin (),
-                    controllerTypes.end (),
+    std::transform (ControllerMetaClassBase::controllerTypes.begin (),
+                    ControllerMetaClassBase::controllerTypes.end (),
                     std::back_inserter (controllers),
-                    [] (std::pair<std::string, ControllerMetaClassBase*> pair)
+                    [] (const MetaPair& pair) -> const ControllerMetaClassBase*
                     { return pair.second; });
 
     return controllers;
@@ -81,8 +80,7 @@ ControllerBase::ControllerBase (const std::string&              friendlyName,
                                 std::unique_ptr<ProtocolBase>&& proto) :
     m_thread (friendlyName, std::move (proto)),
     m_friendlyName (friendlyName)
-    {
-    }
+    {}
 
 std::vector<AutomationItem> ControllerBase::getAutomationItems () const
     {

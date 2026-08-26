@@ -31,6 +31,10 @@ namespace control
 class MarklinCS1 : public ControllerBase
     {
     CONTROLLER_DEFINE (MarklinCS1, "Märklin Central Station 1", ECoSProtocol);
+    LOCOMOTIVE_CONTROLLER_DEFINE (layout::TRACK_PROTO_MFX,
+                                  layout::TRACK_PROTO_MM14,
+                                  layout::TRACK_PROTO_MM27,
+                                  layout::TRACK_PROTO_MM28);
 public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Create a CS1 controller
@@ -106,10 +110,12 @@ public:
                                              uint                   duration) override;
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Trigger or leave an emergency stop state. This typically stops all locomotives by cutting track power
+    /// Trigger or leave an emergency stop state. This typically stops all locomotives
+    /// by cutting track power
     ///
-    /// @param[in]  stop            True to trigger an emergency stop
-    ///                      False  to exit an emrgency stop state (sometimes called a go command)
+    /// @param[in]  stop    True to trigger an emergency stop
+    ///                     False  to exit an emergency stop state
+    ///                     (sometimes called a go command)
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void eStop (bool stop) override;
@@ -159,12 +165,18 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the list of functions supported by this locomotive
     ///
-    /// @param[in]  id          Locomotiv ID
+    /// @param[in]  id          Locomotive ID
     ///
     /// @return     List of functions
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual std::vector<layout::funcInfo> getFunctions (size_t id) const override;
+
+    virtual void setLocomotiveName (size_t id, const std::string& name) {}
+
+    virtual void setLocomotiveAddress (size_t id, uint address) {}
+
+    virtual void setLocomotiveProtocol (size_t id, layout::trackProtocol proto) {}
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Request control of a locomitive

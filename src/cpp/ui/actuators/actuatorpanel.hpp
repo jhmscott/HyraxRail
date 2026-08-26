@@ -28,6 +28,8 @@ namespace ui::actuators
 //////////////////////////////////////////////////////////////////////////////
 /// Actautor configuration panel
 ///
+/// @ingroup    APP_PANEL
+///
 //////////////////////////////////////////////////////////////////////////////
 class ActuatorPanel : public QWidget
     {
@@ -65,6 +67,6 @@ private slots:
     /// @param[in]  controller      Controller being added
     ///
     //////////////////////////////////////////////////////////////////////////////
-    void add (control::ControllerBase& controller);
+    void addController (control::ControllerBase& controller);
     };
 } // namespace ui::actuators
