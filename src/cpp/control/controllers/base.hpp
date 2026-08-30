@@ -1,7 +1,7 @@
 /**
  * @file        controller/base.hpp
  * @brief       Abstract base class for all model train controllers,
- *              and metaclass utilitiess
+ *              and metaclass utilities
  * @author      Justin Scott
  * @date        2026-01-25
  *
@@ -270,6 +270,20 @@ public:
                                              uint                   duration) = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Create a locomotive
+    ///
+    /// @param[in]  name        Locomotive name
+    /// @param[in]  proto       Track protocol
+    /// @param[in]  address     Track protocol address
+    ///
+    /// @return     Created locomotive
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual layout::Locomotive createLocomotive (const std::string&     name,
+                                                 layout::trackProtocol  proto,
+                                                 uint                   address) = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Get the health of the conenction to this controller
     ///
     /// @return     Controller connection health
@@ -332,6 +346,12 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     std::string getFriendlyName () const { return m_friendlyName; }
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Wait for the network thread to finish processing the queued messages
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void waitForMessages () const { m_thread.waitForNetworkQueue (); }
 protected:
     mutable ConnectionWorkerThread m_thread;    ///< Thread used to communicate with this controller
 

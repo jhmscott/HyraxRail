@@ -368,6 +368,19 @@ private slots:
 
         QCOMPARE (UNACCENTED_STRING, removeDiacritics (accented));
         }
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test the quote function
+    ///
+    /// @see    utils::str::quote()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void quoteTest ()
+        {
+        QCOMPARE (utils::str::quote ("Quote This"),
+                  "\"Quote This\"");
+        }
     };
 
 

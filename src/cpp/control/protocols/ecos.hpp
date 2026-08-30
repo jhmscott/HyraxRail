@@ -14,6 +14,8 @@
 
 #include <optional>
 
+class MarklinCS1Test;
+
 namespace control
 {
 
@@ -32,6 +34,8 @@ struct ecosVersion
 ///////////////////////////////////////////////////////////////////////////////
 class ECoSProtocol : public ProtocolBase
     {
+    friend class ::MarklinCS1Test;
+
     PROTOCOL_DEFINE (ECoSProtocol,
                      "ECoS Protocol",
                      utils::device::TYPE_TCP,   // Default type
@@ -42,7 +46,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Static IDs. These are hard coded IDs taken from the protocol standard. Pinned to be the same size as
-    /// the dynamic ID so they can be used interchangably
+    /// the dynamic ID so they can be used interchangeably
     ///
     ///////////////////////////////////////////////////////////////////////////////
     enum staticId : dynamicId
@@ -85,7 +89,7 @@ public:
         ARG_STATUS,         ///< Status of an object
         ARG_NAME,           ///< UI name of an object
         ARG_ADDR,           ///< DCC/MFX address
-        ARG_PROTOCOL,       ///< Protocol (i.e. Motorolla, MFX, DCC)
+        ARG_PROTOCOL,       ///< Protocol (i.e. Motorola, MFX, DCC)
         ARG_APPEND,         ///< Add to the end of a list
         ARG_DISCARD,        ///< Discard
         ARG_CONSIST,        ///< Create a consist
@@ -95,7 +99,7 @@ public:
         ARG_PROFILE,        ///< Profile
         ARG_SNIFFER,        ///< Sniffer
         ARG_FAVORIT,        ///< Set/get the "favourite" flag
-        ARG_SPEEDINDICATOR, ///< Speed indictaor
+        ARG_SPEEDINDICATOR, ///< Speed indicator
         ARG_SPEED,          ///< Speed value
         ARG_SPEEDSTEP,      ///< Size of a speed step
         ARG_DIR,            ///< Direction (forward or reverse)
@@ -185,8 +189,8 @@ public:
         std::string serialize () const;
 
         ///////////////////////////////////////////////////////////////////////////////
-        /// Implicit constructor from argument type. Allows you to just pass the enumerated type when the argument
-        /// requires no value
+        /// Implicit constructor from argument type. Allows you to just pass the
+        /// enumerated type when the argument requires no value
         ///
         /// @param[in]  type        Argument type
         ///
@@ -206,7 +210,6 @@ public:
             type (type),
             val (val)
             {}
-
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Range argument constructor
@@ -256,7 +259,7 @@ public:
             {}
         };
 
-    // Defauklt ECoS POrt
+    // Default ECoS POrt
     static constexpr utils::device::portNumber_t DEFAULT_PORT = 15471;
 
     // Represents a line in a reply
@@ -621,7 +624,7 @@ private:
     /// @param[in]  args    Command arguments
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    reply makeRequest (cmd cmd, dynamicId id, std::initializer_list<arg> args);
+    virtual reply makeRequest (cmd cmd, dynamicId id, std::initializer_list<arg> args);
 
     };
 

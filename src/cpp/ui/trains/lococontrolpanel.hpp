@@ -42,13 +42,30 @@ public:
                                QWidget*                     parent);
 
 private:
-    control::ControllerManager& m_controllers;
+    control::ControllerManager& m_controllers;      ///< List of controllers being managed
     layout::Locomotive          m_currentLoco;      ///< Current loco under control
     SpeedControlWidget*         m_speed;            ///< Speed control widget
     FunctionPanel*              m_functions;        ///< Function control widget
     common::SchemeComboBox*     m_locos;            ///< Locomotive selector
     ControllerInfo*             m_controllerInfo;   ///< Controller info for selected locomotive
     common::SchemeIconButton*   m_proto;            ///< Track protocol for selected locomotive
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Add a locomotive to the combobox
+    ///
+    /// @param[in]  loco        Locomotive to add
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void addLocoToCb (const layout::Locomotive& loco);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the protocol icon
+    ///
+    /// @param[in]  proto       Protocol to display
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setProtocol (layout::trackProtocol proto);
 
 private slots:
     ///////////////////////////////////////////////////////////////////////////////

@@ -77,4 +77,11 @@ void Locomotive::setAddress (uint address)
     m_controller->setLocomotiveAddress (m_id, address);
     m_state->m_address = address;
     }
+
+void Locomotive::remove ()
+    {
+    m_controller->removeLocomotive (m_id);
+    destroyThis ();
+    deregister ();
+    }
 }

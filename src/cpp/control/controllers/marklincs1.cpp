@@ -63,6 +63,24 @@ static const std::map<int, layout::actuatorIcon> ICON_TABLE =
         { 24, layout::ICON_TURNOUT_RIGHT    }
     };
 
+static const std::string PROTOCOLS[] =
+    {
+        // NMRA DCC (Digital Command Control)
+        "DCC14",    // layout::TRACK_PROTO_DCC14
+        "DCC28",    // layout::TRACK_PROTO_DCC28
+        "DCC128",   // layout::TRACK_PROTO_DCC128
+
+        // Märklin Digital
+        "MFX",      // layout::TRACK_PROTO_MFX
+
+
+        // Märklin-Motorola
+        "MM14",     // layout::TRACK_PROTO_MM14
+        "MM27",     // layout::TRACK_PROTO_MM27
+        "MM28",     // layout::TRACK_PROTO_MM28
+    };
+ASSERT_ARRAY_LENGTH (PROTOCOLS, layout::TRACK_PROTO_UNKNOWN);
+
 //////////////////////////////////////////////////////////////////////////////
 /// Extract the icon information from a reply
 ///
@@ -96,7 +114,8 @@ static void resolveReplyVector (std::vector<std::future<ECoSProtocol::reply>>&  
                     std::mem_fn (&std::future<ECoSProtocol::reply>::get));
     }
 
-MarklinCS1::MarklinCS1 (const std::string& friendlyName, std::unique_ptr<ProtocolBase>&& proto) :
+MarklinCS1::MarklinCS1 (const std::string&              friendlyName,
+                        std::unique_ptr<ProtocolBase>&& proto) :
     ControllerBase (friendlyName, std::move (proto))
     {
     }
@@ -129,34 +148,20 @@ std::vector<layout::Locomotive> MarklinCS1::getLocomotives () const
                             std::back_inserter (locos),
                             [this] (const control::ECoSProtocol::replyLine& line)
                             {
-                            static const std::map<std::string, layout::trackProtocol> protocols
-                                {
-                                    // Märklin Digital
-                                    { "MFX",    layout::TRACK_PROTO_MFX },
-
-                                    // NMRA DCC (Digital Command Control)
-                                    { "DCC14",  layout::TRACK_PROTO_DCC14 },
-                                    { "DCC28",  layout::TRACK_PROTO_DCC28 },
-                                    { "DCC128", layout::TRACK_PROTO_DCC128 },
-
-                                    // Märklin-Motorola
-                                    { "MM14",   layout::TRACK_PROTO_MM14  },
-                                    { "MM27",   layout::TRACK_PROTO_MM27  },
-                                    { "MM28",   layout::TRACK_PROTO_MM28  },
-                                };
-
-
                             auto future     = issueDynamicCommand (ECoSProtocol::get,
                                                                    line.id,
                                                                    ECoSProtocol::ARG_PROTOCOL);
                             auto protoReply = future.get ();
-                            auto it         = protocols.find (protoReply.lines[0].arg->val.value ());
+                            auto it         = std::find (PROTOCOLS,
+                                                         PROTOCOLS + std::size (PROTOCOLS),
+                                                         protoReply.lines[0].arg->val.value ());
 
                             layout::trackProtocol proto = layout::TRACK_PROTO_UNKNOWN;
 
-                            if (protocols.end () != it)
+                            if ((PROTOCOLS + std::size (PROTOCOLS)) != it)
                                 {
-                                proto = it->second;
+                                proto = static_cast<layout::trackProtocol> (
+                                                        std::distance (PROTOCOLS, it));
                                 }
                             auto addrFuture = issueDynamicCommand (ECoSProtocol::get,
                                                                    line.id,
@@ -359,7 +364,8 @@ std::vector<layout::Route> MarklinCS1::getRoutes () const
     return routes;
     }
 
-layout::Route MarklinCS1::createRoute (const std::string& name, const layout::routeList& actuators)
+layout::Route MarklinCS1::createRoute (const std::string&       name,
+                                       const layout::routeList& actuators)
     {
     ECoSProtocol::dynamicId routeId = 0;
 
@@ -421,6 +427,32 @@ layout::Actuator MarklinCS1::createActuator (const std::string&     name,
         }
 
     return layout::Actuator{ this, name, icon, mode, address, duration, actuatorId, false };
+    }
+
+layout::Locomotive MarklinCS1::createLocomotive (const std::string&     name,
+                                                 layout::trackProtocol  proto,
+                                                 uint                   address)
+    {
+    ECoSProtocol::dynamicId locoId = 0;
+
+    issueStaticCommand (ECoSProtocol::create,
+                        ECoSProtocol::ID_LOCOMOTIVES);
+
+    auto future = issueStaticCommand (ECoSProtocol::create,
+                                      ECoSProtocol::ID_LOCOMOTIVES,
+                                      ECoSProtocol::ARG_APPEND);
+    auto res = future.get ();
+
+    if (ECoSProtocol::REPLY_OK == res.status)
+        {
+        locoId = atoi (res.lines[0].arg->val->c_str ());
+
+        setLocomotiveName       (locoId, name);
+        setLocomotiveProtocol   (locoId, proto);
+        setLocomotiveAddress    (locoId, address);
+        }
+
+    return layout::Locomotive{ this, name, proto, address, locoId };
     }
 
 
@@ -624,30 +656,63 @@ std::vector<layout::funcInfo> MarklinCS1::getFunctions (size_t id) const
 
         layout::funcInfo::icon_t icon = layout::funcInfo::ICON_FUNC_NUMBER;
 
-        auto [idx, iconStr] = utils::str::split (*reply.lines[0].arg->val, ", ");
-        int   iconInt = atoi (std::string{ iconStr }.c_str ());
-
-        if (iconInt > 0)
+        if (reply.lines.size () > 0)
             {
-            auto it = iconMap.find (iconInt);
-            auto [_, state] = utils::str::split (*replies[ii + 16].lines[0].arg->val, ", ");
+            auto [idx, iconStr] = utils::str::split (*reply.lines[0].arg->val, ", ");
+            int   iconInt = atoi (std::string{ iconStr }.c_str ());
 
-            if (iconMap.end () != it)
+            if (iconInt > 0)
                 {
-                icon = it->second;
-                }
+                auto it = iconMap.find (iconInt);
+                auto [_, state] = utils::str::split (*replies[ii + 16].lines[0].arg->val, ", ");
 
-            functions.emplace_back (layout::funcInfo
-                                    { "",
-                                     icon,
-                                     static_cast<uint8_t>
-                                            (atoi (std::string{idx}.c_str ())),
-                                     "1" == state });
+                if (iconMap.end () != it)
+                    {
+                    icon = it->second;
+                    }
+
+                functions.emplace_back (layout::funcInfo
+                                        { "",
+                                         icon,
+                                         static_cast<uint8_t>
+                                                (atoi (std::string{idx}.c_str ())),
+                                         "1" == state });
+                }
             }
         }
 
     return functions;
     }
+
+void MarklinCS1::setLocomotiveName (size_t id, const std::string& name)
+    {
+    issueDynamicCommand (ECoSProtocol::set,
+                         id,
+                         ARG (ECoSProtocol::ARG_NAME,
+                              utils::str::quote (name)));
+    }
+
+void MarklinCS1::setLocomotiveAddress (size_t id, uint address)
+    {
+    issueDynamicCommand (ECoSProtocol::set,
+                         id,
+                         ARG (ECoSProtocol::ARG_ADDR,
+                              std::to_string (address)));
+    }
+
+void MarklinCS1::setLocomotiveProtocol (size_t id, layout::trackProtocol proto)
+    {
+    issueDynamicCommand (ECoSProtocol::set,
+                         id,
+                         ARG (ECoSProtocol::ARG_PROTOCOL,
+                              PROTOCOLS[proto]));
+    }
+
+void MarklinCS1::removeLocomotive (size_t id)
+    {
+    issueDynamicCommand (ECoSProtocol::deleteId, id);
+    }
+
 void MarklinCS1::setActuator (size_t id, bool val)
     {
     issueDynamicCommand (ECoSProtocol::set,
@@ -677,7 +742,8 @@ void MarklinCS1::setActuatorName (size_t id, const std::string& name)
     {
     issueDynamicCommand (ECoSProtocol::set,
                          id,
-                         ARG (ECoSProtocol::ARG_NAME1, "\"" + name + "\""));
+                         ARG (ECoSProtocol::ARG_NAME1,
+                              utils::str::quote (name)));
     }
 
 void MarklinCS1::setActuatorAddress (size_t id, uint address)
@@ -728,7 +794,8 @@ void MarklinCS1::setRouteName (size_t id, const std::string& name)
     {
     issueDynamicCommand (ECoSProtocol::set,
                          id,
-                         ARG (ECoSProtocol::ARG_NAME1, "\"" + name + "\""));
+                         ARG (ECoSProtocol::ARG_NAME1,
+                              utils::str::quote (name)));
     }
 
 void MarklinCS1::setRouteMembers (size_t id, const layout::routeList & members)

@@ -145,21 +145,36 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
     setLayout (mainLayout);
     }
 
+void LocoControlPanel::addLocoToCb (const layout::Locomotive& loco)
+    {
+    std::string         name        = loco.getName ();
+    layout::Locomotive* locoInCb    = new layout::Locomotive{ loco };
+
+    locoInCb->setParent (m_locos);
+
+    m_locos->addItem ("misc/train",
+                      name.c_str (),
+                      QVariant::fromValue (locoInCb));
+
+    connect (locoInCb,
+            &layout::Locomotive::destroyed,
+             this,
+            &LocoControlPanel::locoDeleted);
+    }
+
+void LocoControlPanel::setProtocol (layout::trackProtocol proto)
+    {
+    layout::protocolInfo info = layout::PROTOCOLS[proto];
+
+    m_proto->setIcon (info.icon);
+    m_proto->setToolTip (info.description);
+    }
+
 void LocoControlPanel::addController (control::ControllerBase& controller)
     {
-    for (layout::Locomotive& loco : controller.getLocomotives ())
+    for (const layout::Locomotive& loco : controller.getLocomotives ())
         {
-        std::string         name        = loco.getName ();
-        layout::Locomotive* locoInCb    = new layout::Locomotive{ std::move (loco) };
-
-        m_locos->addItem ("misc/train",
-                          name.c_str (),
-                          QVariant::fromValue (locoInCb));
-
-        connect (locoInCb,
-                &layout::Locomotive::destroyed,
-                 this,
-                &LocoControlPanel::locoDeleted);
+        addLocoToCb (loco);
         }
     }
 
@@ -169,7 +184,7 @@ void LocoControlPanel::onLocoChange (int idx)
     m_currentLoco.releaseControl ();
 
     layout::Locomotive*     newLoco = m_locos->currentData ().value<layout::Locomotive*> ();
-    layout::protocolInfo    proto   = layout::PROTOCOLS[layout::TRACK_PROTO_UNKNOWN];
+    layout::trackProtocol   proto   = layout::TRACK_PROTO_UNKNOWN;
 
     if (NULL == newLoco)
         {
@@ -187,15 +202,14 @@ void LocoControlPanel::onLocoChange (int idx)
         m_speed->setLocomotive (m_currentLoco);
         m_functions->setLocomotive (m_currentLoco);
 
-        proto = layout::PROTOCOLS[m_currentLoco.getProtocol ()];
+        proto = m_currentLoco.getProtocol ();
 
         m_controllerInfo->setController (
             *static_cast<control::ControllerBase*> (
                 m_currentLoco.getController ()));
         }
 
-    m_proto->setIcon (proto.icon);
-    m_proto->setToolTip (proto.description);
+    setProtocol (proto);
     }
 
 
@@ -215,7 +229,17 @@ void LocoControlPanel::addLoco ()
         static_cast<control::ControllerBase*> (m_currentLoco.getController ())
         };
 
-    dlg.exec ();
+    if (QDialog::Accepted == dlg.exec ())
+        {
+        control::ControllerBase* controller = const_cast<control::ControllerBase*>
+                                                                    (dlg.getController ());
+
+        layout::Locomotive loco = controller->createLocomotive (dlg.getName (),
+                                                                dlg.getProtocol (),
+                                                                dlg.getAddress ());
+
+        addLocoToCb (loco);
+        }
     }
 
 void LocoControlPanel::editLoco ()
@@ -229,19 +253,28 @@ void LocoControlPanel::editLoco ()
 
     if (QDialog::Accepted == dlg.exec ())
         {
-        if (m_currentLoco.getName () != dlg.getName ())
+        std::string             newName     = dlg.getName ();
+        uint                    newAddress  = dlg.getAddress ();
+        layout::trackProtocol   newProto    = dlg.getProtocol ();
+
+
+        if (m_currentLoco.getName () != newName)
             {
-            m_currentLoco.setName (dlg.getName ());
+            int idx = m_locos->currentIndex (); // we only ever edit the current loco
+
+            m_currentLoco.setName (newName);
+            m_locos->setItemText (idx, newName.c_str ());
             }
 
-        if (m_currentLoco.getAddress () != dlg.getAddress ())
+        if (m_currentLoco.getAddress () != newAddress)
             {
-            m_currentLoco.setAddress (dlg.getAddress ());
+            m_currentLoco.setAddress (newAddress);
             }
 
-        if (m_currentLoco.getProtocol () != dlg.getProtocol ())
+        if (m_currentLoco.getProtocol () != newProto)
             {
-            m_currentLoco.setProtocol (dlg.getProtocol ());
+            m_currentLoco.setProtocol (newProto);
+            setProtocol (newProto);
             }
         }
     }
@@ -255,7 +288,7 @@ void LocoControlPanel::deleteLoco ()
                                                    tr ("Delete Locomotive"),
                                                    msg))
         {
-
+        m_currentLoco.remove ();
         }
     }
 }

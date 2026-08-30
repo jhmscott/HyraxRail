@@ -110,6 +110,20 @@ public:
                                              uint                   duration) override;
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Create a locomotive
+    ///
+    /// @param[in]  name        Locomotive name
+    /// @param[in]  proto       Track protocol
+    /// @param[in]  address     Track protocol address
+    ///
+    /// @return     Created locomotive
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual layout::Locomotive createLocomotive (const std::string&     name,
+                                                 layout::trackProtocol  proto,
+                                                 uint                   address) override;
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Trigger or leave an emergency stop state. This typically stops all locomotives
     /// by cutting track power
     ///
@@ -172,11 +186,40 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     virtual std::vector<layout::funcInfo> getFunctions (size_t id) const override;
 
-    virtual void setLocomotiveName (size_t id, const std::string& name) {}
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the locomotive name
+    ///
+    /// @param[in]  id      Unique ID of locomotive
+    /// @param[in]  name    New name
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setLocomotiveName (size_t id, const std::string& name) override;
 
-    virtual void setLocomotiveAddress (size_t id, uint address) {}
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the track protocol address
+    ///
+    /// @param[in]  id          Unique ID of locomotive
+    /// @param[in]  address     Track protocol address
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setLocomotiveAddress (size_t id, uint address) override;
 
-    virtual void setLocomotiveProtocol (size_t id, layout::trackProtocol proto) {}
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the track protocol
+    ///
+    /// @param[in]  id          Unique ID of locomotive
+    /// @param[in]  protocol    Track protocol
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setLocomotiveProtocol (size_t id, layout::trackProtocol proto) override;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Remove this locomotive from this controller
+    ///
+    /// @param[in]  id      Locomotive ID
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void removeLocomotive (size_t id) override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Request control of a locomitive

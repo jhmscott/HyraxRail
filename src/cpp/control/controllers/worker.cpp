@@ -67,6 +67,16 @@ ConnectionWorkerThread::~ConnectionWorkerThread ()
     QObject::disconnect (m_stateConnection);
     }
 
+void ConnectionWorkerThread::waitForNetworkQueue () const
+    {
+    std::unique_lock lk{ m_mtx };
+
+    if (not m_taskQueue.empty ())
+        {
+        m_emptySignal.wait (lk);
+        }
+    }
+
 void ConnectionWorkerThread::loop ()
     {
     using namespace std::chrono_literals;
@@ -146,6 +156,11 @@ void ConnectionWorkerThread::loop ()
                 std::lock_guard lk{ m_mtx };
                 task = std::move (m_taskQueue.front ());
                 m_taskQueue.pop ();
+
+                if (m_taskQueue.empty ())
+                    {
+                    m_emptySignal.notify_all ();
+                    }
                 }
 
                 task->callContained (*m_proto);
@@ -171,6 +186,8 @@ void ConnectionWorkerThread::loop ()
                 {
                 m_taskQueue.pop ();
                 }
+
+            m_emptySignal.notify_all ();
             }
             }
 

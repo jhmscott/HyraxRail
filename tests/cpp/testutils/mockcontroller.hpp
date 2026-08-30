@@ -87,6 +87,10 @@ public:
                                              layout::actuatorMode   mode,
                                              uint                   duration) override { return {}; }
 
+    virtual layout::Locomotive createLocomotive (const std::string&     name,
+                                                 layout::trackProtocol  proto,
+                                                 uint                   address) override { return {}; }
+
     virtual void eStop (bool stop) override {}
 
     virtual bool isEStopped () override { return false; }
@@ -107,11 +111,13 @@ private:
 
     virtual void setLocomotiveAddress (size_t id, uint address) override {}
 
-    virtual void setLocomotiveProtocol (size_t id, layout::trackProtocol proto) {}
+    virtual void setLocomotiveProtocol (size_t id, layout::trackProtocol proto) override {}
 
-    virtual void requestControl (size_t id) {}
+    virtual void removeLocomotive (size_t id) override {}
 
-    virtual void releaseControl (size_t id) {}
+    virtual void requestControl (size_t id) override {}
+
+    virtual void releaseControl (size_t id) override {}
 
     // Actuator controller stubs
 
@@ -157,7 +163,7 @@ private:
 /// @return     Controller creation info
 ///
 ///////////////////////////////////////////////////////////////////////////////
-control::createControllerInfo mockedControllerInfo (const std::string& name)
+inline control::createControllerInfo mockedControllerInfo (const std::string& name)
     {
     return control::createControllerInfo
         {

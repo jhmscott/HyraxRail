@@ -104,5 +104,15 @@ inline QString escape (QString str) { return str.replace ("&", "&&"); }
 ///////////////////////////////////////////////////////////////////////////////
 QString removeDiacritics (const QString& text);
 
+///////////////////////////////////////////////////////////////////////////////
+/// Add quotes to a string
+///
+/// @param[in]  toQuote     String to quoted
+///
+/// @return     "toQuote"
+///
+///////////////////////////////////////////////////////////////////////////////
+inline std::string quote (const std::string& toQuote) { return "\"" + toQuote + "\""; }
+
 } // namespace utils::str
 

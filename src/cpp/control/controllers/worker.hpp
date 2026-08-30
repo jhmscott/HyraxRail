@@ -251,6 +251,12 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     utils::device::deviceInfo getDeviceInfo () const { return m_proto->getDeviceInfo (); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Waits for the network queue to empty
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void waitForNetworkQueue () const;
 private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Polymporphic task base class
@@ -370,7 +376,7 @@ private:
     std::unique_ptr<ProtocolBase>           m_proto;            ///< Protocol being exchanged
     std::queue<std::unique_ptr<TaskBase>>   m_taskQueue;        ///< Queue of network tasks
     std::thread                             m_thread;           ///< Connection thread
-    std::mutex                              m_mtx;              ///< Queue lock
+    mutable std::mutex                      m_mtx;              ///< Queue lock
     std::condition_variable                 m_cv;               ///< Enueue signal
     mutable std::mutex                      m_healthLock;       ///< Protects the connection health status
     std::condition_variable                 m_healthChange;     ///< Signals the health as changed
@@ -378,7 +384,8 @@ private:
     bool                                    m_suspended = false;///< If the app is suspended
     std::unique_ptr<utils::Pinger>          m_pinger = NULL;    ///< Connection pinger instance
     health                                  m_health = { HEALTH_DEAD,  std::chrono::milliseconds{ 0 } };
-    QMetaObject::Connection                 m_stateConnection;
+    QMetaObject::Connection                 m_stateConnection;  ///< Application state change signal
+    mutable std::condition_variable         m_emptySignal;      ///< Signals the queue has been emptied
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Worker thread loop function
