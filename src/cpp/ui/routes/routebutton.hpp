@@ -72,7 +72,7 @@ private:
         common::removeAllActions (*this);
         createMenu ();
         updateTooltip ();
-        });
+        })
 
 private slots:
     //////////////////////////////////////////////////////////////////////////////

@@ -32,7 +32,10 @@ template<class Widget>
 class HoldToOpenMenu : public Widget
     {
 public:
+    /// Is this a widget?
     static constexpr bool is_widget             = std::is_base_of_v<QWidget,        Widget>;
+
+    /// Is this a graphics object?
     static constexpr bool is_graphics_object    = std::is_base_of_v<QGraphicsObject,Widget>;
 
     static_assert (is_widget || is_graphics_object,
@@ -41,9 +44,9 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
-    /// @tparam     Args...     Argument types
+    /// @tparam     Args    Argument types
     ///
-    /// @param[in]  args...     Constructor arguments
+    /// @param[in]  args    Constructor arguments
     ///
     ///////////////////////////////////////////////////////////////////////////////
     template<class... Args>

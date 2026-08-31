@@ -6,8 +6,8 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "Hyrax Rail"
 PROJECT_NUMBER         =
-PROJECT_BRIEF          =
-PROJECT_LOGO           =
+PROJECT_BRIEF          = "A cross platform model train controller app, based on QT 6, using QWidgets."
+PROJECT_LOGO           = android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp
 PROJECT_ICON           = ./res/icons/app/conductor-hyrax-mini.svg
 OUTPUT_DIRECTORY       = ./docs
 CREATE_SUBDIRS         = NO
@@ -123,12 +123,12 @@ WARN_IF_UNDOCUMENTED   = YES
 WARN_IF_DOC_ERROR      = YES
 WARN_IF_INCOMPLETE_DOC = YES
 WARN_NO_PARAMDOC       = NO
-WARN_IF_UNDOC_ENUM_VAL = NO
+WARN_IF_UNDOC_ENUM_VAL = YES
 WARN_LAYOUT_FILE       = YES
 WARN_AS_ERROR          = NO
 WARN_FORMAT            = "$file:$line: $text"
 WARN_LINE_FORMAT       = "at line $line of file $file"
-WARN_LOGFILE           =
+WARN_LOGFILE           = ./docs/warn.log
 #---------------------------------------------------------------------------
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
@@ -188,14 +188,19 @@ FILE_PATTERNS          = *.c \
                          *.ice \
                          *.mm
 RECURSIVE              = YES
-EXCLUDE                =
+EXCLUDE                = ./tests/cpp/testutils/ext \
+                         ./src/cpp/ext
 EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       =
 EXCLUDE_SYMBOLS        =
 EXAMPLE_PATH           =
 EXAMPLE_PATTERNS       = *
 EXAMPLE_RECURSIVE      = NO
-IMAGE_PATH             =
+IMAGE_PATH             = res/icons/light/trains \
+                         res/icons/light/functions \
+                         res/icons/light/misc \
+                         res/icons/light/switches \
+                         res/icons/common/misc
 INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
@@ -206,7 +211,7 @@ FORTRAN_COMMENT_AFTER  = 72
 #---------------------------------------------------------------------------
 # Configuration options related to source browsing
 #---------------------------------------------------------------------------
-SOURCE_BROWSER         = NO
+SOURCE_BROWSER         = YES
 INLINE_SOURCES         = NO
 STRIP_CODE_COMMENTS    = YES
 REFERENCED_BY_RELATION = NO
@@ -366,13 +371,14 @@ PERLMOD_MAKEVAR_PREFIX =
 # Configuration options related to the preprocessor
 #---------------------------------------------------------------------------
 ENABLE_PREPROCESSING   = YES
-MACRO_EXPANSION        = NO
-EXPAND_ONLY_PREDEF     = NO
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = YES
 SEARCH_INCLUDES        = YES
-INCLUDE_PATH           =
+INCLUDE_PATH           = ./src/cpp \
+                         ./tests/cpp
 INCLUDE_FILE_PATTERNS  =
 PREDEFINED             = DOXYGEN
-EXPAND_AS_DEFINED      =
+EXPAND_AS_DEFINED      = ASSERT_ARRAY_LENGTH
 SKIP_FUNCTION_MACROS   = YES
 #---------------------------------------------------------------------------
 # Configuration options related to external references

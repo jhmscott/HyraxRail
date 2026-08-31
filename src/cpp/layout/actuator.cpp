@@ -45,10 +45,10 @@ void Actuator::setMode (actuatorMode mode)
     m_state->m_mode = mode;
     }
 
-void Actuator::setAddress (uint addrress)
+void Actuator::setAddress (uint address)
     {
-    m_controller->setActuatorAddress (m_id, addrress);
-    m_state->m_address = addrress;
+    m_controller->setActuatorAddress (m_id, address);
+    m_state->m_address = address;
     }
 
 void Actuator::setDuration (uint duration)

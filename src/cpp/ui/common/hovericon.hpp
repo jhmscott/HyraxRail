@@ -27,9 +27,9 @@ class HoverIcon : public PointedIconButton
     {
     Q_OBJECT
 
-    Q_PROPERTY (uint opacity READ getOpacity WRITE setOpacity);
+    Q_PROPERTY (uint opacity READ getOpacity WRITE setOpacity)
 public:
-    // Shadow style
+    /// Shadow style
     enum class style
         {
         CIRCLE,         ///< Circle

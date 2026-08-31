@@ -13,7 +13,7 @@
 #include <QtEndian>
 #include <QtTest>
 
-
+/// Set of 4 octets in an IPv4 address
 struct ipQuad
     {
     uint8_t addr[4];

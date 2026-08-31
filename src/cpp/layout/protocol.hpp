@@ -9,31 +9,33 @@
 
 #pragma once
 
+#include <bitset>
+
 #include <utils/resources.hpp>
 
 namespace layout
 {
 
-// Protocol to communicate between the controller and loco
+/// Protocol to communicate between the controller and loco
 enum trackProtocol
     {
-    TRACK_PROTO_DCC14,  ///< NMRA DCC, Digital Command Control
-    TRACK_PROTO_DCC28,  ///< NMRA DCC, Digital Command Control
-    TRACK_PROTO_DCC128, ///< NMRA DCC, Digital Command Control
+    TRACK_PROTO_DCC14,  ///< NMRA DCC, Digital Command Control @image html dcc.svg width=32
+    TRACK_PROTO_DCC28,  ///< NMRA DCC, Digital Command Control @image html dcc.svg width=32
+    TRACK_PROTO_DCC128, ///< NMRA DCC, Digital Command Control @image html dcc.svg width=32
 
-    TRACK_PROTO_MFX,    ///< Märklin Digital
+    TRACK_PROTO_MFX,    ///< Märklin Digital @image html mfx.svg width=32
 
-    TRACK_PROTO_MM14,   ///< Märklin-Motorola
-    TRACK_PROTO_MM27,   ///< Märklin-Motorola
-    TRACK_PROTO_MM28,   ///< Märklin-Motorola
+    TRACK_PROTO_MM14,   ///< Märklin-Motorola @image html mm.svg width=32
+    TRACK_PROTO_MM27,   ///< Märklin-Motorola @image html mm.svg width=32
+    TRACK_PROTO_MM28,   ///< Märklin-Motorola @image html mm.svg width=32
 
-    TRACK_PROTO_UNKNOWN,///< Unknown protocol
+    TRACK_PROTO_UNKNOWN,///< Unknown protocol @image html question.svg width=32
 
     NUM_TRACK_PROTO     ///< Delimiter only
     };
 
 
-// Information about the track protocol
+/// Information about the track protocol
 struct protocolInfo
     {
     utils::resources::Icon  icon;           ///< Icon to use for the resource
@@ -41,6 +43,8 @@ struct protocolInfo
     uint                    numAddresses;   ///< Number of addresses supported by this protocol
     };
 
+
+/// Lookup from tackProtocol enum value to protocol info
 inline const protocolInfo PROTOCOLS[] =
     {
     { "trains/dcc",     "NMRA DCC 14",              127     },
@@ -58,8 +62,10 @@ inline const protocolInfo PROTOCOLS[] =
 ASSERT_ARRAY_LENGTH (PROTOCOLS, NUM_TRACK_PROTO);
 
 
+/// Set of protocols
 using protocolMask = std::bitset<TRACK_PROTO_UNKNOWN>;
 
+/// Convience for mask containing all protocols
 inline constexpr protocolMask ALL_TRACK_PROTOCOLS{ (1 << layout::TRACK_PROTO_UNKNOWN) - 1 };
 
 } // namespace layout

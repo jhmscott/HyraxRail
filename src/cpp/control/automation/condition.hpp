@@ -114,7 +114,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     virtual QString description () const override
         {
-        auto [count, unit] = utils::time::convertToBestUnit (m_duration, utils::time::allUnits);
+        auto [count, unit] = utils::time::convertToBestUnit (m_duration, utils::time::ALL_UNITS);
 
         return QObject::tr ("Every %1").arg (utils::time::formatWithUnit (count, unit));
         }

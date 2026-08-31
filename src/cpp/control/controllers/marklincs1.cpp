@@ -120,10 +120,6 @@ MarklinCS1::MarklinCS1 (const std::string&              friendlyName,
     {
     }
 
-MarklinCS1::~MarklinCS1 ()
-    {
-    }
-
 std::vector<layout::Locomotive> MarklinCS1::getLocomotives () const
     {
     std::vector<layout::Locomotive> locos;

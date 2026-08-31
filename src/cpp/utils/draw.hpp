@@ -40,7 +40,7 @@ class DebugDrawable
     {
     friend class ScopedDebugDraw;
 private:
-    // Records time info about a frame
+    /// Records time info about a frame
     struct frameInfo
         {
         std::chrono::system_clock::time_point   time    =   ///< Time the frame was drawn

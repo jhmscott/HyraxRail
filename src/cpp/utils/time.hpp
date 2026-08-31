@@ -25,65 +25,71 @@ enum class dateFormat
 
     };
 
-// Enumerated months of the year
-// Note that this starts at 0, while QDate::month() starts at 1
-//
+///////////////////////////////////////////////////////////////////////////////
+/// Enumerated months of the year
+/// Note that this starts at 0, while QDate::month() starts at 1
+///
+///////////////////////////////////////////////////////////////////////////////
 enum month
     {
-    JANUARY,
-    FEBRUARY,
-    MARCH,
-    APRIL,
-    MAY,
-    JUNE,
-    JULY,
-    AUGUST,
-    SEPTEMBER,
-    OCTOBER,
-    NOVEMBER,
-    DECEMBER,
+    JANUARY,    ///< January
+    FEBRUARY,   ///< February
+    MARCH,      ///< March
+    APRIL,      ///< April
+    MAY,        ///< May
+    JUNE,       ///< June
+    JULY,       ///< July
+    AUGUST,     ///< August
+    SEPTEMBER,  ///< September
+    OCTOBER,    ///< October
+    NOVEMBER,   ///< November
+    DECEMBER,   ///< December
 
-    NUM_MONTHS
+    NUM_MONTHS  ///< Delimiter only
     };
 
-// Enumerated days of the week
-// Note that this starts at 0, while QDate::dayOfWeek() starts at 1
-//
+///////////////////////////////////////////////////////////////////////////////
+/// Enumerated days of the week
+/// Note that this starts at 0, while QDate::dayOfWeek() starts at 1
+///
+///////////////////////////////////////////////////////////////////////////////
 enum dayOfTheWeek
     {
-    MONDAY,
-    TUESDAY,
-    WEDNESDAY,
-    THURSDAY,
-    FRIDAY,
-    SATURDAY,
-    SUNDAY,
+    MONDAY,     ///< Monday
+    TUESDAY,    ///< Tuesday
+    WEDNESDAY,  ///< Wednesday
+    THURSDAY,   ///< Thursday
+    FRIDAY,     ///< Friday
+    SATURDAY,   ///< Saturday
+    SUNDAY,     ///< Sunday
 
-    NUM_DAYS
+    NUM_DAYS    ///< Delimiter only
     };
 
-// Bitset containing a set of days in an arbitrary week
+/// Bitset containing a set of days in an arbitrary week
 using days = std::bitset<NUM_DAYS>;
 
 enum unit
     {
-    NANOSECONDS,
-    MICROSECONDS,
-    MILLISECONDS,
-    SECONDS,
-    MINUTES,
-    HOURS,
-    DAYS,
-    WEEEKS,
+    NANOSECONDS,    ///< Nano-seconds
+    MICROSECONDS,   ///< Micro-seconds
+    MILLISECONDS,   ///< Mili-seconds
+    SECONDS,        ///< Seconds
+    MINUTES,        ///< Minutes
+    HOURS,          ///< Hours
+    DAYS,           ///< Days
+    WEEEKS,         ///< Weeks
 
-    NUM_UNITS
+    NUM_UNITS       ///< Delimiter
     };
 
+/// Bitset containing a set of units to use
 using units = std::bitset<NUM_UNITS>;
 
-inline constexpr units allUnits{ (1 << NUM_UNITS) - 1 };
+/// Constant to enable all time units
+inline constexpr units ALL_UNITS{ (1 << NUM_UNITS) - 1 };
 
-// System clock time point type
+/// System clock time point type
 template<class Duration>
 using system_time = std::chrono::time_point<std::chrono::system_clock, Duration>;
 

@@ -74,6 +74,6 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     void setLabels ();
 
-    UILANG_ON_CHANGE (ConditionForm, setLabels ());
+    UILANG_ON_CHANGE (ConditionForm, setLabels ())
     };
 }

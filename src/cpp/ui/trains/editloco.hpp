@@ -101,7 +101,7 @@ private:
     bool                                m_edit;         ///< True if we are editing a loco
                                                         ///  False if we are creating one
 
-    UILANG_ON_CHANGE (common::FormDialog, setLabels ());
+    UILANG_ON_CHANGE (common::FormDialog, setLabels ())
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor

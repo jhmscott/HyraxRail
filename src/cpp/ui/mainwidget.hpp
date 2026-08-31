@@ -57,7 +57,7 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     void setTooltips ();
 
-    UILANG_ON_CHANGE (common::SchemeTabWidget, setTooltips ());
+    UILANG_ON_CHANGE (common::SchemeTabWidget, setTooltips ())
     };
 
 } // namespace ui

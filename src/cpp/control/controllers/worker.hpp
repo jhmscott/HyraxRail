@@ -32,17 +32,17 @@ struct memberFuncTraits
 ///////////////////////////////////////////////////////////////////////////////
 /// Type trait to get information about a member functiojn
 ///
-/// @tparam     Class           Class the function is a member of
-/// @tparam     RetT             Function return type
-/// @tparam     Args...      Function arguments
+/// @tparam     Class   Class the function is a member of
+/// @tparam     RetT    Function return type
+/// @tparam     Args    Function arguments
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<class Class, class RetT, class... Args>
 struct memberFuncTraits<RetT (Class::*) (Args...)>
     {
-    using class_t   = Class;
-    using ret_t     = RetT;
-    using args_t    = std::tuple<Args...>;
+    using class_t   = Class;                ///< Class type
+    using ret_t     = RetT;                 ///< Return type
+    using args_t    = std::tuple<Args...>;  ///< Tuple of argument types
     };
 
 template<class Class, class RetT, class... Args>
@@ -126,28 +126,36 @@ auto resolve (T&& val)
 class ConnectionWorkerThread
     {
 public:
-    // Enumerated health value
-    // Each value corresponds to an icon in the UI
+    /// Enumerated health value
+    /// Each value corresponds to an icon in the UI
     enum healthLevel
         {
         // Network connection health
         HEALTH_DEAD,        ///< No connection
+                            ///  @image html cell-signal-x.svg width=32
         HEALTH_LOW,         ///< Poor connection
+                            ///  @image html cell-signal-low.svg width=32
         HEALTH_MEDIUM,      ///< Average connection
+                            ///  @image html cell-signal-medium.svg width=32
         HEALTH_HIGH,        ///< Good connection
+                            ///  @image html cell-signal-high.svg width=32
         HEALTH_FULL,        ///< Great connection
+                            ///  @image html cell-signal-full.svg width=32
 
         // Com port health
         HEALTH_CONNECTED,   ///< COM port connected
+                            ///  @image html plugs-connected.svg width=32
         HEALTH_DISCONNECTED,///< COM port disconnected
+                            ///  @image html unplug.svg width=32
 
         // Shared, for when a controller is not configured
         HEALTH_UNAVAILABLE, ///< Controller not configured
+                            ///  @image html cell-signal-grey.svg width=32
 
         NUM_HEALTH_VALUES   ///< Delimiter only
         };
 
-    // Connection health information
+    /// Connection health information
     struct health
         {
         healthLevel                 level;  ///< Enumerated health value
@@ -259,7 +267,7 @@ public:
     void waitForNetworkQueue () const;
 private:
     ///////////////////////////////////////////////////////////////////////////////
-    /// Polymporphic task base class
+    /// Polymorphic task base class
     ///
     ///////////////////////////////////////////////////////////////////////////////
     class TaskBase
@@ -288,6 +296,7 @@ private:
         auto getCreationTime () const { return m_creation; }
 
     private:
+        /// Task creation time
         std::chrono::system_clock::time_point m_creation = std::chrono::system_clock::now ();
         };
 
@@ -303,8 +312,8 @@ private:
     class ProtocolTask : public TaskBase
         {
     public:
-        using Derived   = typename memberFuncTraits<Func>::class_t;
-        using RetT      = typename memberFuncTraits<Func>::ret_t;
+        using Derived   = typename memberFuncTraits<Func>::class_t; ///< Class derived type
+        using RetT      = typename memberFuncTraits<Func>::ret_t;   ///< Function return type
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Constructor. Create a task from a protocol's member function
@@ -383,7 +392,8 @@ private:
     std::atomic_bool                        m_continue = true;  ///< Continue flag, set to false to signal shutdown
     bool                                    m_suspended = false;///< If the app is suspended
     std::unique_ptr<utils::Pinger>          m_pinger = NULL;    ///< Connection pinger instance
-    health                                  m_health = { HEALTH_DEAD,  std::chrono::milliseconds{ 0 } };
+    health                                  m_health =          ///< Connection health
+                                                { HEALTH_DEAD,  std::chrono::milliseconds{ 0 } };
     QMetaObject::Connection                 m_stateConnection;  ///< Application state change signal
     mutable std::condition_variable         m_emptySignal;      ///< Signals the queue has been emptied
 

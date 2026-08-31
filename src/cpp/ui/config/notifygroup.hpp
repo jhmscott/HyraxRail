@@ -44,7 +44,7 @@ private:
     //////////////////////////////////////////////////////////////////////////////
     void setLabels ();
 
-    UILANG_ON_CHANGE (QGroupBox, setLabels ());
+    UILANG_ON_CHANGE (QGroupBox, setLabels ())
     };
 
 } // ui::config

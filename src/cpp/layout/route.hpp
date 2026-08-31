@@ -18,7 +18,7 @@
 namespace layout
 {
 
-// Represents an actuator's membership in a route
+/// Represents an actuator's membership in a route
 struct routeMember
     {
     layout::Actuator    actuator;   ///< Actuator in thr route
@@ -49,12 +49,13 @@ struct routeMember
     bool operator!= (const routeMember& other) const { return !(*this == other); }
     };
 
-// Components of a route
+/// Components of a route
 using routeList = std::vector<routeMember>;
 
 // forward declare
 class RouteController;
 
+/// Represents the current state of the route
 struct routeState
     {
     std::string m_name;     ///< Friendly name of route
@@ -70,6 +71,7 @@ struct routeState
 class Route : public ComponentDerived<RouteController, routeState>
     {
 public:
+    /// Component base class type
     using Base = ComponentDerived<RouteController, routeState>;
 
     using Base::ComponentDerived;
@@ -159,7 +161,7 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Activate a route
     ///
-    /// @return     Unique ID of route to activate
+    /// @param[in]  id      Unique ID of route to activate
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void setRoute (size_t id) = 0;
@@ -193,7 +195,7 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Request control of a route
     ///
-    /// @return     Unique ID of route to request control of
+    /// @param[in]  id      Unique ID of route to request control of
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void requestRouteControl (size_t id) = 0;
@@ -201,7 +203,7 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Release control of a route
     ///
-    /// @return     Unique ID of route to release control of
+    /// @param[in]  id      Unique ID of route to release control of
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void releaseRouteControl (size_t id) = 0;

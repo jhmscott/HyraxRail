@@ -63,7 +63,7 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     void setTitles ();
 
-    UILANG_ON_CHANGE (QGroupBox, setTitles ());
+    UILANG_ON_CHANGE (QGroupBox, setTitles ())
 
 private slots:
 

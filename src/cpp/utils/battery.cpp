@@ -233,6 +233,12 @@ static int getBatteryPercentage ()
 class BatteryImplApple : public BatteryImpl
     {
 public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  battery     Battery interface instance to recieve notifications
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     explicit BatteryImplApple (Battery* battery) :
         m_battery (battery)
         {

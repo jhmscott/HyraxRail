@@ -69,6 +69,6 @@ private:
     ////////////////////////////////////////////////////////////////////////////
     void setLabels ();
 
-    UILANG_ON_CHANGE (DeviceInfoWidget, setLabels ());
+    UILANG_ON_CHANGE (DeviceInfoWidget, setLabels ())
     };
 } // namespace ui::config

@@ -52,7 +52,7 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     void updateTooltip ();
 
-    UILANG_ON_CHANGE (QWidget, updateTooltip ());
+    UILANG_ON_CHANGE (QWidget, updateTooltip ())
     };
 
 } // namespace ui::clock

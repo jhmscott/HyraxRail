@@ -17,6 +17,7 @@
 namespace utils::resources
 {
 
+/// Font size used by "large" text labels
 inline constexpr int FONT_SIZE_LARGE =
 #ifdef Q_OS_ANDROID
     24;
@@ -62,18 +63,21 @@ inline QString makePath (type type, const QString& path)
 /// Icon stored a resource file. Includes the on/off state of icon, and color
 /// scheme variants
 ///
-/// @remarks    Icons should be stored in the res folder using the following path:<BR>
-///             icons/<scheme>/<path>.svg<BR><BR>
+/// @verbatim
 ///
-///             Where <scheme> is light or dark. If there is no difference between
-///             the light and dark icons, <scheme> can be replaced with common.<BR>
-///             The <path> is the path parameter in the constructor.<BR><BR>
+/// Icons should be stored in the res folder using the following path:
+///     icons/<scheme>/<path>.svg
 ///
-///             If there is different icons for the on and off states, they should
-///             be named as follows:<BR>
-///             On state    : <path>-on.svg<BR>
-///             Off state   : <path>-off.svg
+/// Where <scheme> is light or dark. If there is no difference between
+/// the light and dark icons, <scheme> can be replaced with common.
+/// The <path> is the path parameter in the constructor.
 ///
+/// If there is different icons for the on and off states, they should
+/// be named as follows:
+///     On state    : <path>-on.svg
+///     Off state   : <path>-off.svg
+///
+/// @endverbatim
 ///
 ///////////////////////////////////////////////////////////////////////////////
 class Icon
@@ -127,12 +131,28 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     operator bool () const { return not m_subPath.isEmpty (); }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Comparison operation
+    ///
+    /// @param[in]  other       Icon to compare to
+    ///
+    /// @return     true if this equals other
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     bool operator== (const Icon& other) const { return m_subPath == other.m_subPath; }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Comparison operation
+    ///
+    /// @param[in]  other       Icon to compare to
+    ///
+    /// @return     true if this doe not equals other
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     bool operator!= (const Icon& other) const { return !(*this == other); }
 
 private:
-    QString m_subPath;
+    QString m_subPath;  ///< Path within colour scheme folder
     };
 
 } // namespace utils::resources

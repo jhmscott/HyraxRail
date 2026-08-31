@@ -38,7 +38,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     explicit LocoControlPanel (control::ControllerManager&  controllers,
-                               vAlignment                   align,
+                               hAlignment                   align,
                                QWidget*                     parent);
 
 private:

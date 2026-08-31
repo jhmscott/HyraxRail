@@ -86,7 +86,7 @@ private:
         {
         common::removeAllActions (*this);
         createMenu ();
-        });
+        })
 
 private slots:
 

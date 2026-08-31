@@ -30,11 +30,11 @@ namespace control
 ///////////////////////////////////////////////////////////////////////////////
 class MarklinCS1 : public ControllerBase
     {
-    CONTROLLER_DEFINE (MarklinCS1, "Märklin Central Station 1", ECoSProtocol);
+    CONTROLLER_DEFINE (MarklinCS1, "Märklin Central Station 1", ECoSProtocol)
     LOCOMOTIVE_CONTROLLER_DEFINE (layout::TRACK_PROTO_MFX,
                                   layout::TRACK_PROTO_MM14,
                                   layout::TRACK_PROTO_MM27,
-                                  layout::TRACK_PROTO_MM28);
+                                  layout::TRACK_PROTO_MM28)
 public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Create a CS1 controller
@@ -45,12 +45,6 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     MarklinCS1 (const std::string&                 friendlyName,
                 std::unique_ptr<ProtocolBase>&&    proto);
-
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Destructor
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    ~MarklinCS1 ();
 
     ///////////////////////////////////////////////////////////////////////////////
     /// CONTROLLER BASE OVERRIDES
@@ -84,11 +78,11 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Create a route on  the controller
     ///
-    /// @param[in]  name               Name of the route
+    /// @param[in]  name        Name of the route
     /// @param[in]  actuators   List of actuators and the state to set them to
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual layout::Route createRoute (const std::string&               sname,
+    virtual layout::Route createRoute (const std::string&               name,
                                        const layout::routeList&         actuators) override;
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -207,8 +201,8 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the track protocol
     ///
-    /// @param[in]  id          Unique ID of locomotive
-    /// @param[in]  protocol    Track protocol
+    /// @param[in]  id      Unique ID of locomotive
+    /// @param[in]  proto   Track protocol
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void setLocomotiveProtocol (size_t id, layout::trackProtocol proto) override;

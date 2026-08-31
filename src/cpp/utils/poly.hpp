@@ -21,8 +21,8 @@
 namespace utils
 {
 
-// Polygon operations
-// Kepp in sync with gpc_op
+/// Polygon operations
+/// Keep in sync with gpc_op
 enum polyOp
     {
     POLY_DIFF,  ///< Subtract a polygon
@@ -50,11 +50,11 @@ class BasicComplexPolygon
     {
 public:
 
-    using Polygon   = std::conditional_t<floating, QPolygonF, QPolygon>;
-    using Point     = std::conditional_t<floating, QPointF, QPoint>;
-    using Coordinate= std::conditional_t<floating, qreal, int>;
-    using Rect      = std::conditional_t<floating, QRectF, QRect>;
-    using RingList  = std::vector<Polygon>;
+    using Polygon   = std::conditional_t<floating, QPolygonF, QPolygon>;///< Polygon ring component
+    using Point     = std::conditional_t<floating, QPointF, QPoint>;    ///< Point within polygon
+    using Coordinate= std::conditional_t<floating, qreal, int>;         ///< Point component
+    using Rect      = std::conditional_t<floating, QRectF, QRect>;      ///< Rectangle type
+    using RingList  = std::vector<Polygon>;                             ///< List of rings
 
     Polygon     exteriorRing;   ///< Main, exterior polygon ring
     RingList    interiorRings;  ///< Interior rings/holes
@@ -154,7 +154,7 @@ public:
     /// Translate this polygon
     ///
     /// @param[in]  x       X-offset
-    /// @param[in]  x       Y-offset
+    /// @param[in]  y       Y-offset
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void translate (Coordinate x, Coordinate y) { translate (Point{ x, y }); }
@@ -162,7 +162,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Create a translated copy of this polygon
     ///
-    /// @param[in]  offset      Ammount to offset polygon by
+    /// @param[in]  offset      Amount to offset polygon by
     ///
     /// @return     Translated polygon
     ///
@@ -189,7 +189,7 @@ public:
     /// Create a translated copy of this polygon
     ///
     /// @param[in]  x       X-offset
-    /// @param[in]  x       Y-offset
+    /// @param[in]  y       Y-offset
     ///
     /// @return     Translated polygon
     ///
@@ -262,7 +262,7 @@ public:
     ///                             > 1.0 : Expand  <BR>
     ///                             < 1.0 : Contract<BR>
     ///
-    /// @retrun         Expanded polygon
+    /// @return         Expanded polygon
     ///
     ///////////////////////////////////////////////////////////////////////////////
     [[nodiscard]] BasicComplexPolygon expanded (double scale) const
@@ -477,10 +477,10 @@ template<bool floating>
 class BasicMultiPolygon : public std::vector<BasicComplexPolygon<floating>>
     {
 public:
-    using SubPolygon    = BasicComplexPolygon<floating>;
-    using Point         = typename SubPolygon::Point;
-    using Rect          = typename SubPolygon::Rect;
-    using Coordinate    = typename SubPolygon::Coordinate;
+    using SubPolygon    = BasicComplexPolygon<floating>;    ///< Polygon within the collection
+    using Point         = typename SubPolygon::Point;       ///< Point within a polygon
+    using Rect          = typename SubPolygon::Rect;        ///< Rectangle type
+    using Coordinate    = typename SubPolygon::Coordinate;  ///< Point coordinate type
 
     // using std::vector<SubPolygon>::vector<SubPolygon>;
 
@@ -572,7 +572,7 @@ public:
     ///                             > 1.0 : Expand  <BR>
     ///                             < 1.0 : Contract<BR>
     ///
-    /// @retrun         Expanded polygon
+    /// @return         Expanded polygon
     ///
     ///////////////////////////////////////////////////////////////////////////////
     [[nodiscard]] BasicMultiPolygon expanded (double scale) const
@@ -788,7 +788,7 @@ public:
     auto operator| (const BasicPolygonView<otherFloating>& other) const;
 
 private:
-    using Base = std::vector<BasicComplexPolygon<floating>>;
+    using Base = std::vector<BasicComplexPolygon<floating>>;    ///< Base vector type
     };
 
 // Floating point multi-polygon
@@ -807,8 +807,8 @@ template<bool floating>
 class BasicPolygonView : public QSpan<const BasicComplexPolygon<floating>>
     {
 public:
-    using Multi = BasicMultiPolygon<floating>;
-    using Sub   = typename Multi::SubPolygon;
+    using Multi = BasicMultiPolygon<floating>;  ///< Multi-polygon type this can be created from
+    using Sub   = typename Multi::SubPolygon;   ///< Single-polygon type this can be created from
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Implicit copy constructor. Creates a reference to a complex polygon

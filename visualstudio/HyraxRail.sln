@@ -67,6 +67,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "controllers", "controllers"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "marklincs1", "tests\marklincs1.vcxproj", "{A3B8C527-A48A-4A5F-AFB2-3C670358FCB0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "common", "tests\common.vcxproj", "{8CE68F83-044B-4F9C-B7E1-F19FA89F62C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -140,6 +142,10 @@ Global
 		{A3B8C527-A48A-4A5F-AFB2-3C670358FCB0}.Release|x64.ActiveCfg = Release|x64
 		{A3B8C527-A48A-4A5F-AFB2-3C670358FCB0}.Test|x64.ActiveCfg = Test|x64
 		{A3B8C527-A48A-4A5F-AFB2-3C670358FCB0}.Test|x64.Build.0 = Test|x64
+		{8CE68F83-044B-4F9C-B7E1-F19FA89F62C6}.Debug|x64.ActiveCfg = Debug|x64
+		{8CE68F83-044B-4F9C-B7E1-F19FA89F62C6}.Release|x64.ActiveCfg = Release|x64
+		{8CE68F83-044B-4F9C-B7E1-F19FA89F62C6}.Test|x64.ActiveCfg = Test|x64
+		{8CE68F83-044B-4F9C-B7E1-F19FA89F62C6}.Test|x64.Build.0 = Test|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -171,6 +177,7 @@ Global
 		{B798AA5C-F062-4757-9E94-0F42F53FABE4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{A7E46AFC-761F-4960-8489-E5E63ECAED9E} = {B798AA5C-F062-4757-9E94-0F42F53FABE4}
 		{A3B8C527-A48A-4A5F-AFB2-3C670358FCB0} = {A7E46AFC-761F-4960-8489-E5E63ECAED9E}
+		{8CE68F83-044B-4F9C-B7E1-F19FA89F62C6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4ACFF0E3-DFF5-489E-866F-8829724F0C54}

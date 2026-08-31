@@ -14,12 +14,14 @@
 
 #include <optional>
 
+// forward declare
 class MarklinCS1Test;
 
 namespace control
 {
 
-// ECoS Protocol version information
+
+/// ECoS Protocol version information
 struct ecosVersion
     {
     version protocol;       ///< Protocol version
@@ -40,7 +42,7 @@ class ECoSProtocol : public ProtocolBase
                      "ECoS Protocol",
                      utils::device::TYPE_TCP,   // Default type
                      15471,                     // Default port
-                     utils::device::TYPE_TCP);  // Only support TCP
+                     utils::device::TYPE_TCP)   // Only support TCP
 public:
     using dynamicId = uint16_t;         ///< Dynamic ID (i.e. individual loco or actuator)
 
@@ -63,7 +65,7 @@ public:
         ID_CONTROL_DESK         = 31,   ///< Control desk
         };
 
-    // Supported commands
+    /// Supported commands
     enum cmd
         {
         CMD_QUERY_OBJECTS,  ///< Return a list of objects for this ID
@@ -79,7 +81,7 @@ public:
         };
 
 
-    // Command argument types
+    /// Command argument types
     enum argType
         {
         ARG_VIEW,           ///< Request view access to an object
@@ -122,7 +124,7 @@ public:
         };
 
 
-    // Status of a command, extracted from the reply
+    /// Status of a command, extracted from the reply
     enum replyStatus
         {
         REPLY_OK,                           ///< Command succeeded
@@ -134,7 +136,7 @@ public:
         NUM_REPLY_STATUSES = REPLY_EMPTY    ///< Delimeter only
         };
 
-    // Status of a locomotive
+    /// Status of a locomotive
     enum locoStatus
         {
         LOCO_STOP,      ///< Locomotive stopped
@@ -142,7 +144,7 @@ public:
         LOCO_SHUTDOWN   ///< Shutdown
         };
 
-    // range value used in an argument
+    /// range value used in an argument
     struct range
         {
         uint16_t min;   ///< Minimum value
@@ -157,13 +159,13 @@ public:
         std::string serialize () const;
         };
 
-    // Set of four integer values used in an argument
+    /// Set of four integer values used in an argument
     struct quad
         {
-        uint16_t val1;
-        uint16_t val2;
-        uint16_t val3;
-        uint16_t val4;
+        uint16_t val1;  ///< First value
+        uint16_t val2;  ///< Second value
+        uint16_t val3;  ///< Third value
+        uint16_t val4;  ///< Forth value
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Serialize this argument to send
@@ -174,7 +176,7 @@ public:
         std::string serialize () const;
         };
 
-    // Represents a command argument
+    /// Represents a command argument
     struct arg
         {
         argType                     type;   ///< Argument type
@@ -195,7 +197,7 @@ public:
         /// @param[in]  type        Argument type
         ///
         ///////////////////////////////////////////////////////////////////////////////
-        arg (argType type) :
+        implicit arg (argType type) :
             type (type)
             {}
 
@@ -203,7 +205,7 @@ public:
         /// String argument constructor
         ///
         /// @param[in]  type            Argument type
-        /// @param[in]  vale            String argument value
+        /// @param[in]  val             String argument value
         ///
         ///////////////////////////////////////////////////////////////////////////////
         arg (argType type, const std::string& val) :
@@ -239,7 +241,7 @@ public:
         /// Boolean argument constructor
         ///
         /// @param[in]  type        Argument type
-        /// @param[in]  b1          boolean argument value
+        /// @param[in]  bl          boolean argument value
         ///
         ///////////////////////////////////////////////////////////////////////////////
         arg (argType type, bool bl) :
@@ -259,17 +261,17 @@ public:
             {}
         };
 
-    // Default ECoS POrt
+    /// Default ECoS POrt
     static constexpr utils::device::portNumber_t DEFAULT_PORT = 15471;
 
-    // Represents a line in a reply
+    /// Represents a line in a reply
     struct replyLine
         {
         dynamicId           id;     ///< ID of object
         std::optional<arg>  arg;    ///< Response argument
         };
 
-    // Represents an ECoS replu
+    /// Represents an ECoS reply
     struct reply
         {
         replyStatus             status = REPLY_EMPTY;   ///< Status code

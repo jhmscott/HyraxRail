@@ -20,32 +20,43 @@ class LAYOUT_TEST_CLASS;
 
 namespace layout
 {
-// Symbol to use for the actuator in the UI
+/// Symbol to use for the actuator in the UI
 enum actuatorIcon
     {
     ICON_STREET_LIGHT,          ///< Street light
+                                ///  @image html streetlight-on.svg width=32
+                                ///  @image html streetlight-off.svg width=32
     ICON_MAST_LIGHT,            ///< Mast lighting
+                                ///  @image html mast-light-on.svg width=32
+                                ///  @image html mast-light-off.svg width=32
     ICON_LIGHTING,              ///< Generic layout lighting
+                                ///  @image html lightbulb-on.svg width=32
+                                ///  @image html lightbulb-off.svg width=32
 
     ICON_TURNOUT_LEFT,          ///< Straight track with left turnout
+                                ///  @image html left-track-on.svg width=32
+                                ///  @image html left-track-off.svg width=32
     ICON_TURNOUT_RIGHT,         ///< Straight track with right turnout
+                                ///  @image html right-track-on.svg width=32
+                                ///  @image html right-track-off.svg width=32
 
 
     NUM_TRUE_ICONS,             ///< Total number of unique icons. Delimiter only
     NO_ICON = NUM_TRUE_ICONS,   ///< No symbol for this actuator. Display a generic icon
-
     NUM_TOTAL_ICONS             ///< Delimitor only
     };
 
+/// Actuator switching mode
 enum class actuatorMode
     {
-    PULSE,
-    SWITCH
+    PULSE,  ///< Pulse the actuator
+    SWITCH  ///< Toggle the actuator
     };
 
 // Forward declare
 class ActuatorController;
 
+/// Actuator state information
 struct actuatorState
     {
     std::string         m_name;     ///< Friendly name
@@ -64,6 +75,7 @@ class Actuator : public ComponentDerived<ActuatorController, actuatorState>
     {
     Q_OBJECT
 public:
+    /// Component base class
     using Base = ComponentDerived<ActuatorController, actuatorState>;
 
     using Base::ComponentDerived;
@@ -152,7 +164,7 @@ public:
     /// @param[in]  address     Actuator track protocol address
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    void setAddress (uint addrress);
+    void setAddress (uint address);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the duration of the actuation

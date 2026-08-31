@@ -36,15 +36,18 @@ public:
     template<bool constant>
     class IteratorImpl
         {
-        friend ControllerManager;
+        friend class ControllerManager;
     public:
-        using iterator_category = std::random_access_iterator_tag;
+        /// Controller value type
         using value_type        = std::conditional_t<constant,
                                                      const ControllerBase,
                                                      ControllerBase>;
+        /// Difference type
         using difference_type   = typename controllerList::difference_type;
-        using pointer           = value_type*;
-        using reference         = value_type&;
+
+        using iterator_category = std::random_access_iterator_tag;  ///< type of iterator
+        using pointer           = value_type*;                      ///< Pointer type
+        using reference         = value_type&;                      ///< Reference type
 
         // Copyable
         IteratorImpl (const IteratorImpl&) = default;
@@ -172,6 +175,7 @@ public:
         ///////////////////////////////////////////////////////////////////////////////
         bool operator!= (const IteratorImpl& other) const { return !(*this == other); }
     private:
+        /// Vector iterator used to implement this
         using iterImpl = std::conditional_t<constant,
                                            controllerList::const_iterator,
                                            controllerList::iterator>;
@@ -189,8 +193,8 @@ public:
             {}
         };
 
-    using Iterator      = IteratorImpl<false>;
-    using ConstIterator = IteratorImpl<true>;
+    using Iterator      = IteratorImpl<false>;  ///< Mutable iterator
+    using ConstIterator = IteratorImpl<true>;   ///< Constant iterator
 
 
     ///////////////////////////////////////////////////////////////////////////////

@@ -11,9 +11,7 @@
 
 #include <QObject>
 
-#include <bitset>
-#include <array>
-#include <algorithm>
+#include <ostream>
 #include <type_traits>
 
 // Only include this for intellisense tools and doxygen generation
@@ -22,34 +20,34 @@
 #endif // defined (__INTELLISENSE__) || defined (DOXYGEN)
 
 #ifdef _MSVC_LANG
-#define CPP_VERSION _MSVC_LANG
+#define CPP_VERSION _MSVC_LANG  ///< C++ compiler version (MSVC)
 #else
-#define CPP_VERSION __cplusplus
+#define CPP_VERSION __cplusplus ///< C++ compiler version
 #endif // _MSVC_LANG
 
 
-#define CPP_VERSION_98  199711L
-#define CPP_VERSION_11  201103L
-#define CPP_VERSION_14  201402L
-#define CPP_VERSION_17  201703L
-#define CPP_VERSION_20  202002L
-#define CPP_VERSION_23 	202302L
+#define CPP_VERSION_98  199711L     ///< C++ 98
+#define CPP_VERSION_11  201103L     ///< C++ 11
+#define CPP_VERSION_14  201402L     ///< C++ 14
+#define CPP_VERSION_17  201703L     ///< C++ 17
+#define CPP_VERSION_20  202002L     ///< C++ 20
+#define CPP_VERSION_23 	202302L     ///< C++ 23
 
 #ifdef NULL
 #undef NULL
 #endif // NULL
 
-#define NULL nullptr
+#define NULL nullptr    ///< Re-define to C++ nullptr
 
 #ifdef __cpp_conditional_explicit
-#define implicit explicit (false)
+#define implicit explicit (false)   ///< Implicit constructor
 #else
 #define implicit
 #endif
 
 
 #if defined (Q_OS_LINUX) && !defined (Q_OS_ANDROID)
-// Defined for versions of linux that aren't android
+/// Defined for versions of linux that aren't android
 #define NON_DROID_LINUX
 #endif
 
@@ -65,88 +63,82 @@
 #define ASSERT_ARRAY_LENGTH(array, len) static_assert (std::size (array) == len,\
                                                        "Array size mismatch")
 
-enum class vAlignment
+/// Horizontal alignment
+enum class hAlignment
     {
-    LEFT,
-    RIGHT
+    LEFT,   ///< Align left
+    RIGHT   ///< Align right
     };
 
 
 #ifdef __cpp_lib_type_identity
 template<class T>
-using identityType = std::type_identity_t<T>;
+using identityType = std::type_identity_t<T>; ///< Alias for std::type_identity
 #else
+/// Pre c++20 implementation of std::type_identity
 template<class T>
 struct _identityType
     {
     using type = T;
     };
 
+/// Pre C++20 implementation of std::type_identity_t
 template<class T>
 using identityType = typename _identityType<T>::type;
 #endif // __cpp_lib_type_identity
 
 
+/// Hyrax rail's use of the User data
 enum userDataRole
     {
     genericData = Qt::UserRole, ///< Generic user data. Always leave this available to clients
     schemeIcon,                 ///< Icon without the color scheme applied
-    dropDownTier                ///< Which level of dopdown this is in a tiered dropdown
+    dropDownTier                ///< Which level of dropdown this is in a tiered dropdown
     };
 
-template<class T, size_t N>
-constexpr bool contains (const T (&arr)[N], const identityType<T>& val)
-    {
-    const T*    end     = arr + N;
-    const T*    it;
-
-#ifdef STL_HAS_CONSTEXPR20
-    it = std::find (arr,
-                    end,
-                    val);
-#else
-    for (it = arr; arr < end; ++it)
-        {
-        if (val == *it) { break; }
-        }
-#endif // STL_HAS_CONSTEXPR20
-
-
-    return end != it;
-    }
-
-
-template<class T, class U, size_t N>
-size_t findArrayIdx (const T (&arr)[N], U& val)
-    {
-    const T* end = arr + N;
-    const T* it;
-
-    it = std::find (arr,
-                    end,
-                    val);
-
-    return it - arr;
-    }
-
-
-namespace control
-{
-
+/// Software version information
 struct version
     {
-    uint8_t major = 0;
-    uint8_t minor = 0;
-    uint8_t micro = 0;
+    uint major; ///< Major version
+    uint minor; ///< Minor version
+    uint micro; ///< Micro version
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Stream formatting operator
+    ///
+    /// @param[in,out]  os      Stream to format to
+    /// @param[in]      ver     Version to format
+    ///
+    /// @return         Output stream
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    friend std::ostream& operator<< (std::ostream& os, const version& ver)
+        {
+        return (os << ver.major << "." << ver.minor << "." << ver.micro);
+        }
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Comparison operator
+    ///
+    /// @param[in]  other       Version to compare to
+    ///
+    /// @return     True if this equals other
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     constexpr bool operator== (const version& other) const
-#ifdef __cpp_impl_three_way_comparison
-        = default;
-#else
-        { return major == other.major && minor == other.minor && micro == other.micro;}
-#endif // __cpp_impl_three_way_comparison
+        {
+        return other.major == major &&
+               other.minor == minor &&
+               other.micro == micro;
+        }
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Comparison operator
+    ///
+    /// @param[in]  other       Version to compare to
+    ///
+    /// @return     True if this does not equals other
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    constexpr bool operator!= (const version& other) const { return !(*this == other); }
     };
-
-
-}
-

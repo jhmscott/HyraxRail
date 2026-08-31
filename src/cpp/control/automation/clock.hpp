@@ -33,7 +33,7 @@ class FastClock : public QObject
     {
     Q_OBJECT
 public:
-    // Time point type
+    /// Time point type
     using time_point = std::chrono::system_clock::time_point;
 
     ///////////////////////////////////////////////////////////////////////////////

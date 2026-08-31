@@ -43,10 +43,10 @@ class LAYOUT_TEST_CLASS;
 
 namespace layout
 {
-// Information about a locomitve function
+/// Information about a locomotive function
 struct funcInfo
     {
-    // Symbol to use in the UI
+    /// Symbol to use in the UI
     enum icon_t
         {
         // Lights
@@ -63,7 +63,7 @@ struct funcInfo
         // Miscellaneous
         ICON_FUNC_MISC_PANTOGRAPH,  ///< Raise/lower the locomotive pantograph
         ICON_FUNC_MISC_ABV,         ///< ABV? Can't remember this one
-        ICON_FUNC_MISC_SLOW,        ///< Slow the lcoomootive
+        ICON_FUNC_MISC_SLOW,        ///< Slow the locomotive
 
         NUM_TRUE_ICONS,             ///< Number of true icons. Delimiter only
 
@@ -82,6 +82,7 @@ struct funcInfo
 // forward declare
 class LocomotiveController;
 
+/// Locomotive state
 struct locomotiveState
     {
     std::string     m_name;     ///< Friendly name
@@ -98,6 +99,7 @@ class Locomotive : public ComponentDerived<LocomotiveController, locomotiveState
     {
     Q_OBJECT
 public:
+    /// Component base class type
     using Base = ComponentDerived<LocomotiveController, locomotiveState>;
 
     using Base::ComponentDerived;
@@ -108,6 +110,7 @@ public:
     /// @param[in]  controller  Controller controlling this locomotive
     /// @param[in]  name        Friendly name
     /// @param[in]  proto       Track protocol
+    /// @param[in]  address     Track protocol address
     /// @param[in]  id          Unique ID
     ///
     ///////////////////////////////////////////////////////////////////////////////
@@ -300,8 +303,8 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the track protocol
     ///
-    /// @param[in]  id          Unique ID of locomotive
-    /// @param[in]  protocol    Track protocol
+    /// @param[in]  id      Unique ID of locomotive
+    /// @param[in]  proto   Track protocol
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void setLocomotiveProtocol (size_t id, trackProtocol proto) = 0;

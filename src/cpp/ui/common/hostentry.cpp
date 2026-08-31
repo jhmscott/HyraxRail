@@ -18,9 +18,12 @@ using namespace std::chrono_literals;
 
 namespace ui::common
 {
-// Regex to validate a hostname for RFC 1123 compliance
-// This check is done before attempting a hostname lookup
-//
+
+///////////////////////////////////////////////////////////////////////////////
+/// Regex to validate a hostname for RFC 1123 compliance
+/// This check is done before attempting a hostname lookup
+///
+///////////////////////////////////////////////////////////////////////////////
 static const QRegularExpression RFC_1123_FQDN_REGEX{
     R"(^(?![0-9]+$)(?!-)[a-zA-Z0-9-]{1,63}(?<!-)(\.(?!-)[a-zA-Z0-9-]{1,63}(?<!-))*$)" };
 

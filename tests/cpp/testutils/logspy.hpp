@@ -18,7 +18,7 @@
 namespace testutils
 {
 
-// Log message record
+/// Log message record
 struct logRecord
     {
     QtMsgType   type;   ///< Log level

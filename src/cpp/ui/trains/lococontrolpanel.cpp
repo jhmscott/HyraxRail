@@ -22,7 +22,7 @@ namespace ui::trains
 
 
 LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
-                                    vAlignment                  align,
+                                    hAlignment                  align,
                                     QWidget*                    parent) :
     QWidget (parent),
     m_controllers (controllers)
@@ -115,7 +115,7 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
 
     trainSelLayout->setContentsMargins (0, 0, 0, 0);
 
-    if (vAlignment::LEFT == align)
+    if (hAlignment::LEFT == align)
         {
         controlLayout->addWidget (m_speed);
         controlLayout->addWidget (m_functions);

@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <bitset>
 #include <memory>
 #include <set>
 #include <vector>
@@ -47,8 +48,8 @@ auto makePtrPred (const T* ptr)
 /// @tparam         T       Vector element type
 /// @tparam         Pred    Predicate type
 ///
-/// @param[in,out]  vec     Vector to erase elements from
-/// @param[in]      pred    Predicate
+/// @param[in,out]  vec         Vector to erase elements from
+/// @param[in]      condition   Predicate
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<class T, class Pred>
@@ -109,7 +110,6 @@ void eraseByPtr (std::vector<std::unique_ptr<T>>& vec, const T* ptr)
     eraseIf (vec, internal::makePtrPred (ptr));
     }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 /// Find the first element in an vector of unique_ptr<> by the pointer address/value.
 /// Const version
@@ -149,15 +149,14 @@ auto findByPtr (const std::vector<std::unique_ptr<T>>& vec, const T* ptr)
                          internal::makePtrPred (ptr));
     }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 /// Create a std::bitset from a set of index values
 ///
 /// @tparam     N       Size of the bitset
-/// @tparam     Args... Argument types (must be convertible to integer)
+/// @tparam     Args    Argument types (must be convertible to integer)
 ///
 /// @param[out] bits    Bitset
-/// @param[in]  args... Indexes to set
+/// @param[in]  args    Indexes to set
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<size_t N, class... Args>
@@ -168,6 +167,17 @@ void makeBitset (std::bitset<N>& bits, Args... args)
     (void (bits[args] = true) , ...);
     }
 
+///////////////////////////////////////////////////////////////////////////////
+/// Create a std::bitset from a set of index values
+///
+/// @tparam     N       Size of the bitset
+/// @tparam     Args    Argument types (must be convertible to integer)
+///
+/// @param[in]  args    Indexes to set
+///
+/// @return     Bitset
+///
+///////////////////////////////////////////////////////////////////////////////
 template<size_t N, class... Args>
 std::bitset<N> makeBitset (Args... args)
     {
@@ -177,7 +187,6 @@ std::bitset<N> makeBitset (Args... args)
 
     return bits;
     }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Convert a std::bitset to a std::set containing the indexes that are set to
@@ -200,5 +209,65 @@ std::set<size_t> bitsetToSet (const std::bitset<N>& bits)
 
     return set;
     }
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Check if a C-style array contains a given value
+///
+/// @tparam     T       Array element type
+/// @tparam     N       Number of elements in the array
+///
+/// @param[in]  arr     Array to check for element
+/// @param[in]  val     Value to look for in array
+///
+/// @return     true if arr contains val
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T, size_t N>
+constexpr bool contains (const T (&arr)[N], const identityType<T>& val)
+    {
+    const T*    end     = arr + N;
+    const T*    it;
+
+#ifdef STL_HAS_CONSTEXPR20
+    it = std::find (arr,
+                    end,
+                    val);
+#else
+    for (it = arr; it < end; ++it)
+        {
+        if (val == *it) { break; }
+        }
+#endif // STL_HAS_CONSTEXPR20
+
+
+    return end != it;
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Find the index of a given element in an array
+///
+/// @tparam     T       Array element type
+/// @tparam     U       Type of value to look for (must be comparable with T)
+///
+/// @param[in]  arr     Array to search
+/// @param[in]  val     Value to look for
+///
+/// @return     Index of first index of val in arr, or N if not found
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T, class U, size_t N>
+size_t findArrayIdx (const T (&arr)[N], const U& val)
+    {
+    const T* end = arr + N;
+    const T* it;
+
+    it = std::find (arr,
+                    end,
+                    val);
+
+    return it - arr;
+    }
+
 
 } // namespace utils::algorithm

@@ -102,7 +102,7 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     void hideConditionForms ();
 
-    UILANG_ON_CHANGE (common::FormDialog, setLabels ());
+    UILANG_ON_CHANGE (common::FormDialog, setLabels ())
 
 private slots:
 

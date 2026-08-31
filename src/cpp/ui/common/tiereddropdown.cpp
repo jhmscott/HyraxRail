@@ -14,7 +14,7 @@
 #include <QStandardItemModel>
 #include <QStyleHints>
 
-
+/// Tier or level of a dropdown
 enum class tier
     {
     PARENT,     ///< Parent item

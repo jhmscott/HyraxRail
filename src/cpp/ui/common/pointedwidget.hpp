@@ -51,8 +51,10 @@ protected:
         }
     };
 
-// Push button that displays a pointing hand cursor when you hover over it
+/// Push button that displays a pointing hand cursor when you hover over it
 using PointedIconButton = PointedWidget<SchemeIconButton>;
+
+/// Pushbutton without a scheme dependent icon
 using PointedButton     = PointedWidget<QPushButton>;
 
 

@@ -21,11 +21,13 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 
+
+/// Device utilities
 namespace utils::device
 {
 
 
-// device type
+/// device type
 enum type
     {
     TYPE_UDP,                           ///< UDP Socket (QUdpSocket)
@@ -38,7 +40,7 @@ enum type
     NUM_TYPES = TYPE_UNSUPPORTED        ///< Delimiter only, number of supported types
     };
 
-// Device type names for use in the UI
+/// Device type names for use in the UI
 inline constexpr const char* typeNames[] =
     {
     "UDP",
@@ -46,10 +48,10 @@ inline constexpr const char* typeNames[] =
     "Serial",
     };
 
-// Device type mask. Used to indicate a set of types, typically supported types
+/// Device type mask. Used to indicate a set of types, typically supported types
 using mask = std::bitset<NUM_TYPES>;
 
-// TCP/UDP port number, 16-bits
+/// TCP/UDP port number, 16-bits
 using portNumber_t = uint16_t;
 
 
@@ -60,7 +62,7 @@ using portNumber_t = uint16_t;
 class HostInfo
     {
 public:
-    // Type of network host, kept in sync with m_value index
+    ///  Type of network host, kept in sync with m_value index
     enum class type
         {
         IP,         ///< IPv4 or IPv6
@@ -130,27 +132,29 @@ public:
     static HostInfo fromString (const QString& string, type type);
 
 private:
-    // Host info storage
+    /// Host info storage
     std::variant<QHostAddress, QString, std::nullopt_t> m_value = std::nullopt;
     };
 
-// Information needed to bind to a socket
+/// Information needed to bind to a socket
 struct socketInfo
     {
     HostInfo        host;       ///< IPv4/IPv6 address, or DNS hostname
     portNumber_t    port;       ///< TCP/UDP port number
     };
 
-// Information needed to bind to a serial/COM port
+/// Information needed to bind to a serial/COM port
 struct serialInfo
     {
     QSerialPortInfo port;       ///< COM port
     int             baud;       ///< Baud rate (bits/second)
     };
 
+
+/// Information needed to create a communication device
 struct deviceInfo
     {
-    // variant, determined by type member
+    /// variant, determined by type member
     using info_t = std::variant<socketInfo, serialInfo>;
 
     type    type;       ///< Device type
@@ -221,20 +225,6 @@ constexpr bool isDeviceSupported (type type, const mask& mask)
 inline bool isDeviceSupported (const QIODevice& device, const mask& mask)
     {
     return isDeviceSupported (getDeviceType (device), mask);
-    }
-
-// TODO: Get this working
-template<class... Args>
-constexpr mask createMask (Args... args)
-    {
-    // static_assert (std::is_same_v<Args, deviceType> || ...,
-   //                    "Arguments must be device types");
-
-    mask mask{ 0 };
-
-    // mask[args] = true, ...;
-
-    return mask;
     }
 
 } // namespace utils::device

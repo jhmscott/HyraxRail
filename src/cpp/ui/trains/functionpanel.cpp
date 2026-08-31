@@ -19,15 +19,40 @@
 
 namespace ui::trains
 {
+
+///////////////////////////////////////////////////////////////////////////////
+/// Button for controlling a locomotive function
+///
+///////////////////////////////////////////////////////////////////////////////
 class FunctionButton : public common::PointedIconButton
     {
 public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  id      Function ID
+    /// @param[in]  parent  Parent widget
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     FunctionButton (uint8_t id, QWidget* parent) :
         common::PointedIconButton (QString::number (id), parent)
         {}
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the instance number; the number of a given function type within the panel
+    ///
+    /// @param[in]  instanceNum     Instance number
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     void setInstanceNum (int instanceNum) { m_instanceNum = instanceNum; }
 protected:
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Paint event. Draws the widget
+    ///
+    /// @param[in]  event       Paint event
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     virtual void paintEvent (QPaintEvent* event) override
         {
         bool    darkMode = Qt::ColorScheme::Dark == qApp->styleHints ()->colorScheme ();
@@ -58,10 +83,10 @@ protected:
             }
         }
 private:
-    int m_instanceNum = 0;
+    int m_instanceNum = 0;  ///< Instance number
     };
 
-FunctionPanel::FunctionPanel (vAlignment align, QWidget* parent) :
+FunctionPanel::FunctionPanel (hAlignment align, QWidget* parent) :
     QWidget (parent)
     {
     common::AutoGridLayout* mainLayout =
@@ -77,7 +102,7 @@ FunctionPanel::FunctionPanel (vAlignment align, QWidget* parent) :
 
         mainLayout->addWidget (btn);
 
-        if (vAlignment::LEFT == align)
+        if (hAlignment::LEFT == align)
             {
             mainLayout->setAlignment (Qt::AlignLeft | Qt::AlignTop);
             }

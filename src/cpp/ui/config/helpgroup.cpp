@@ -39,14 +39,14 @@ namespace ui::config
 class RichTextDialog : public common::SchemeDialog
     {
 public:
-    // Text mode
+    /// Text mode
     enum class mode
         {
         MD,     ///< Markdown
         TXT     ///< Plain text
         };
 
-    // Resize mode
+    /// Resize mode
     enum resize
         {
         NO_RESIZE   = 0x0,                      ///< Don't resize the dialog

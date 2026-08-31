@@ -18,7 +18,7 @@
 namespace ui::clock
 {
 
-// Clock widget style
+/// Clock widget style
 enum clockStyle
     {
     CLOCK_TYPE_ANALOG_BASIC,    ///< Analog clock
@@ -33,6 +33,15 @@ enum clockStyle
     NUM_CLOCK_TYPES             ///< Delimiter only
     };
 
+///////////////////////////////////////////////////////////////////////////////
+/// Get if a clock style is analog
+///
+/// @param[in]  style       Clock style
+///
+/// @return     True if this is an analog clock style
+///             False if this is a digital clock style
+///
+///////////////////////////////////////////////////////////////////////////////
 constexpr bool isAnalog (clockStyle style)
     {
     return style >= CLOCK_TYPE_ANALOG_BASIC &&
@@ -66,7 +75,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the clock style
     ///
-    /// @param[in]  newStyle    New clock style
+    /// @param[in]  style   New clock style
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void setStyle (clockStyle style) = 0;
@@ -80,7 +89,7 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     virtual void setTime (const control::FastClock::time_point& time) = 0;
 
-    UILANG_ON_CHANGE (QWidget, setTime (control::FastClock::now ()));
+    UILANG_ON_CHANGE (QWidget, setTime (control::FastClock::now ()))
     };
 
 } // namespace ui::clock

@@ -12,8 +12,9 @@
 #include <layout/actuator.hpp>
 #include <layout/route.hpp>
 
-
 #include <QObject>
+
+#include <bitset>
 
 namespace control
 {

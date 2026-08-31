@@ -655,14 +655,11 @@ ASSERT_ARRAY_LENGTH (FACES, AnalogClock::NUM_STYLES);
 ///////////////////////////////////////////////////////////////////////////////
 /// Draw a clock hand
 ///
-/// @tparam     N       Number of hand points
+/// @tparam         N           Number of hand points
 ///
-/// @Param[in,out]  painter     Painter instance
-/// @param[in]      rotation    Hand rotation in degrees [0,360]
-/// @param[in]      offfset     Offset to apply to hand
+/// @param[in,out]  painter     Painter instance
+/// @param[in]      offset      Offset to apply to hand
 /// @param[in]      hand        Clock hand vector symbol
-/// @param[in]      lolipop     Draw a "lolipop" style hand, with a large
-///                             circle on the end
 ///
 ///////////////////////////////////////////////////////////////////////////////
 static void drawHand (QPainter&     painter,
@@ -678,13 +675,12 @@ static void drawHand (QPainter&     painter,
 ///////////////////////////////////////////////////////////////////////////////
 /// Draw a clock hand with a "shadow" to provide contrast with hands below it
 ///
-/// @Param[in,out]  painter     Painter instance
+/// @param[in,out]  painter     Painter instance
 /// @param[in]      rotation    Hand rotation in degrees [0,360]
 /// @param[in]      handColor   Colour to draw hand in
 /// @param[in]      shadowColor Colour of hand shadow
 /// @param[in]      hand        Clock hand vector symbol
-/// @param[in]      lolipop     Draw a "lolipop" style hand, with a large
-///                             circle on the end
+/// @param[in]      lens        Cyclops lens to apply to the hand
 ///
 ///////////////////////////////////////////////////////////////////////////////
 static void drawHandWithShadow (QPainter&                                   painter,

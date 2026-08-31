@@ -73,7 +73,7 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     void setUnitLabels ();
 
-    UILANG_ON_CHANGE (QWidget, setUnitLabels ());
+    UILANG_ON_CHANGE (QWidget, setUnitLabels ())
     };
 
 } // namespace ui::common

@@ -105,7 +105,7 @@ private:
             removeAllActions (*m_fields[ii]);
             addMenuToField (ii);
             }
-        });
+        })
 
 private slots:
     //////////////////////////////////////////////////////////////////////////////

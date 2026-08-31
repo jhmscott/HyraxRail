@@ -82,8 +82,8 @@ public:
     double getScale () const { return m_scale; }
 
 private:
-    BasicMultiPolygon<floating>  m_lens;
-    double                  m_scale;
+    BasicMultiPolygon<floating> m_lens; ///< Magnification lens polygon
+    double                      m_scale;///< Magnification scale factor
     };
 
 }

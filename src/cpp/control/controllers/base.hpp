@@ -360,7 +360,7 @@ private:
     };
 ;
 
-// Information for creating a controller
+/// Information for creating a controller
 struct createControllerInfo
     {
     std::string                 name;           ///< Controller type name

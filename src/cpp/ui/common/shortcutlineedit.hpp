@@ -25,7 +25,7 @@ public:
     //////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
-    /// @param[in]  shorcut     Shortcut character to move to next widget
+    /// @param[in]  shortcut    Shortcut character to move to next widget
     /// @param[in]  parent      Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
@@ -39,16 +39,16 @@ public:
     ///
     /// @tparam     Func        Paste handler function type
     ///
-    /// @param[in]  reciever    Object to recieve the paste event
+    /// @param[in]  receiver    Object to receive the paste event
     /// @param[in]  slot        Paste handler slot
     ///
     //////////////////////////////////////////////////////////////////////////////
     template<class Func>
-    void setPasteHandler (QObject* reciever, Func slot)
+    void setPasteHandler (QObject* receiver, Func slot)
         {
         connect (this,
                 &ShortcutLineEdit::pasteSpecial,
-                 reciever,
+                 receiver,
                  slot);
         m_overridePaste = true;
         }

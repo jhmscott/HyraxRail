@@ -2,7 +2,7 @@
  * @file        controlllers/marklincs1test.hpp
  * @brief       Test suite for the MarklinCS1 Controller
  * @author      Justin Scott
- * @date        2026-08-08
+ * @date        2026-08-28
  *
  * @copyright   Copyright (c) 2026 Justin Scott
  */

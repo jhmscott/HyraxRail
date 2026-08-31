@@ -26,7 +26,7 @@ class HostEntryField : public QLineEdit, public AbstractHostField
     {
     Q_OBJECT
 public:
-    // validity of input
+    /// validity of input
     enum class validity
         {
         NON_RFC_1123_COMPLIANT, ///< Text entered doesn't meet RFC 1123
@@ -75,8 +75,8 @@ signals:
     void validityChanged ();
 
 private:
-    QTimer* m_timer;
-    bool    m_validHostName = false;
+    QTimer* m_timer;                    ///< Input debounce timer
+    bool    m_validHostName = false;    ///< True if host name is valid
 
 private slots:
     //////////////////////////////////////////////////////////////////////////////

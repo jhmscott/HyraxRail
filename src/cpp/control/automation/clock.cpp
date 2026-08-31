@@ -1,5 +1,5 @@
 /**
- * @file        automation/fastclock.cpp
+ * @file        automation/clock.cpp
  * @brief       Simulated time source with configurable start time and ratio wrt to real time
  * @author      Justin Scott
  * @date        2026-05-30

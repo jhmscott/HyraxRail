@@ -18,7 +18,10 @@
 namespace ui::common
 {
 
+/// Width of the slider groove
 static constexpr int MAX_SLIDER_GROOVE_WIDTH = 20;
+
+/// Radius of the handle
 static constexpr int HANDLE_RADIUS =
 #ifdef Q_OS_ANDROID
         9;

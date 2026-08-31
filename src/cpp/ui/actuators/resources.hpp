@@ -18,7 +18,7 @@
 namespace ui::actuators::resources
 {
 
-// Display information for an actuator icon
+/// Display information for an actuator icon
 struct iconInfo
     {
     QString                 title;  ///< Title of this icon

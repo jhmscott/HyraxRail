@@ -85,6 +85,41 @@ private slots:
                 }
             }
         }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test the contains function on a C array
+    ///
+    /// @see     utils::algorithm::contains()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void containsTest ()
+        {
+        static const int TEST_ARRAY[] = { 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55 };
+
+        QVERIFY (contains (TEST_ARRAY, 0));
+        QVERIFY (contains (TEST_ARRAY, 1));
+        QVERIFY (contains (TEST_ARRAY, 5));
+
+        QVERIFY (not contains (TEST_ARRAY, 12));
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test the findArrayIdx function on a C array
+    ///
+    /// @see     utils::algorithm::findArrayIdx()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void findArrayIdxTest ()
+        {
+        static const int TEST_ARRAY[] = { 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55 };
+
+        QCOMPARE (findArrayIdx (TEST_ARRAY, 0), 0);
+        QCOMPARE (findArrayIdx (TEST_ARRAY, 1), 1);
+        QCOMPARE (findArrayIdx (TEST_ARRAY, 1), 1);
+        QCOMPARE (findArrayIdx (TEST_ARRAY, 55), std::size (TEST_ARRAY) - 1);
+
+        QCOMPARE (findArrayIdx (TEST_ARRAY, 12), std::size (TEST_ARRAY));
+        }
     };
 
 

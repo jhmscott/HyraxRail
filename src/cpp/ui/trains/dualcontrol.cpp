@@ -20,8 +20,8 @@ DualControlWidget::DualControlWidget (control::ControllerManager& controllers, Q
     {
     QHBoxLayout* layout = new QHBoxLayout{ this };
 
-    m_left  = new LocoControlPanel{ controllers, vAlignment::LEFT, this };
-    m_right = new LocoControlPanel{ controllers, vAlignment::RIGHT, this };
+    m_left  = new LocoControlPanel{ controllers, hAlignment::LEFT, this };
+    m_right = new LocoControlPanel{ controllers, hAlignment::RIGHT, this };
 
     m_right->setVisible (false);
 

@@ -26,15 +26,16 @@ class OsTest;
 namespace utils::os
 {
 
-// Vibration effect type
+/// Vibration effect type
 enum vibrationEffect
     {
-    VIBRATE_TICK = 0,
-    VIBRATE_CLICK,
-    VIBRATE_LONG_CLICK,
-    VIBRATE_DOUBLE_CLICK
+    VIBRATE_TICK = 0,       ///< Tick vibration
+    VIBRATE_CLICK,          ///< Click vibration
+    VIBRATE_LONG_CLICK,     ///< Long click vibration
+    VIBRATE_DOUBLE_CLICK    ///< Double click vibration
     };
 
+/// NULL thread handle
 inline constexpr auto null_handle = static_cast<std::thread::native_handle_type> (0);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -76,15 +77,24 @@ inline void setThreadName (std::string_view name, std::jthread& thread)
 ///////////////////////////////////////////////////////////////////////////////
 /// Get a thread's name
 ///
-/// @param[in]  handle      Native OS thread handle. If NULL, this names the current thread
+/// @param[in]  handle      Native OS thread handle. If NULL, this names the
+///                         current thread
 ///
 /// @return     Name of the thread
 ///
 ///////////////////////////////////////////////////////////////////////////////
 std::string getThreadName (std::thread::native_handle_type handle = null_handle);
 
-inline std::string getThreadName (std::thread& thread)
-    { return getThreadName (thread.native_handle ()); }
+///////////////////////////////////////////////////////////////////////////////
+/// Get the name of std::thread
+///
+/// @param[in]  thread      Thread to get the name of
+///
+/// @return     Name of thread
+///
+///////////////////////////////////////////////////////////////////////////////
+inline std::string getThreadName (const std::thread& thread)
+    { return getThreadName (const_cast<std::thread&> (thread).native_handle ()); }
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Send a push notification to the user
@@ -277,7 +287,7 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 class MessageOnlyWindow : public NativeWindow
     {
-    DEFINE_WIN32_WINDOW (MessageOnlyWindow);
+    DEFINE_WIN32_WINDOW (MessageOnlyWindow)
 public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor

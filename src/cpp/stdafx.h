@@ -41,6 +41,7 @@
 #ifdef __cplusplus
 
 // STL containers
+#include <bitset>
 #include <deque>
 #include <list>
 #include <map>

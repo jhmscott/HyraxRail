@@ -118,7 +118,7 @@ private:
         {
         refreshHealthIcon ();
         setController (*m_controller);
-        });
+        })
     };
 
 }

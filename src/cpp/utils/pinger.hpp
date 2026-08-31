@@ -29,7 +29,7 @@ class PingerImpl;
 class Pinger
     {
 public:
-    // result of a ping operation
+    /// result of a ping operation
     struct result
         {
         std::chrono::milliseconds   roundtrip;          ///< Ping roundtrip time in milliseconds

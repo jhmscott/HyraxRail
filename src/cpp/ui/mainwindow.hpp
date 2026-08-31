@@ -103,7 +103,7 @@ protected:
     virtual void closeEvent (QCloseEvent* event) override;
 
 private:
-    // Options for fast clock behaviour while app is not running
+    /// Options for fast clock behaviour while app is not running
     enum class clockShutdownType
         {
         PAUSE,  ///< Starts the fast clock where it was when you closed the app

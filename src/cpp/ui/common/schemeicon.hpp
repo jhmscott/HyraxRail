@@ -169,6 +169,14 @@ public:
                   const QString&                text,
                   const QVariant&               userData = QVariant{});
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the scheme independent icon path for a given icon
+    ///
+    /// @param[in]  idx     Item index
+    ///
+    /// @return     Item icon
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     utils::resources::Icon itemSchemeIcon (int idx) const;
 private slots:
     ///////////////////////////////////////////////////////////////////////////////

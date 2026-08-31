@@ -80,7 +80,7 @@ private:
     //////////////////////////////////////////////////////////////////////////////
     virtual bool hasAcceptableInput () const override;
 
-    UILANG_ON_CHANGE (common::FormDialog, setLabels ());
+    UILANG_ON_CHANGE (common::FormDialog, setLabels ())
     };
 
 }

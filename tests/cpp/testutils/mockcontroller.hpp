@@ -21,7 +21,7 @@ template<class T>
 using MockPtr = std::unique_ptr<fakeit::Mock<T>>;
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Mocked controller's protcol defintion. Not meant to be used directly,
+/// Mocked controller's protocol defintion. Not meant to be used directly,
 /// just required for the MockController's meta class
 ///
 ///////////////////////////////////////////////////////////////////////////////
@@ -30,12 +30,13 @@ class MockControllerProtocol : public control::ProtocolBase
     PROTOCOL_DEFINE (MockControllerProtocol, "Mocked Protocol",
                      utils::device::TYPE_UDP, // Todo: mocked sockets
                      control::ProtocolMetaClassBase::NO_DEFAULT_PORT,
-                     utils::device::TYPE_UDP);
+                     utils::device::TYPE_UDP)
 public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
     /// @param[in]  deviceInfo      Device info
+    ///
     ///////////////////////////////////////////////////////////////////////////////
     MockControllerProtocol (const utils::device::deviceInfo& deviceInfo) :
         control::ProtocolBase (deviceInfo, 1000)
@@ -49,11 +50,11 @@ public:
 ///////////////////////////////////////////////////////////////////////////////
 class MockController : public control::ControllerBase
     {
-    CONTROLLER_DEFINE (MockController, "Mocked Controller", MockControllerProtocol);
+    CONTROLLER_DEFINE (MockController, "Mocked Controller", MockControllerProtocol)
 public:
-    MockPtr<layout::ActuatorController>    actuatorController;
-    MockPtr<layout::LocomotiveController>  locomotiveController;
-    MockPtr<layout::RouteController>       routeController;
+    MockPtr<layout::ActuatorController>    actuatorController;      ///< Mocked actuator controller interface
+    MockPtr<layout::LocomotiveController>  locomotiveController;    ///< Mocked loco controller interface
+    MockPtr<layout::RouteController>       routeController;         ///< Mocked route controller interface
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Mocked controller constructor

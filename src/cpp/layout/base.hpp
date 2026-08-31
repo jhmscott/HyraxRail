@@ -54,9 +54,9 @@ template<class Controller, class State>
 class ComponentDerived : public ComponentBase
     {
 public:
-    using controller_t  = Controller;
-    using state_t       = State;
-    using StatePtr      = std::shared_ptr<State>;
+    using controller_t  = Controller;               ///< Controller type
+    using state_t       = State;                    ///< Component state type
+    using StatePtr      = std::shared_ptr<State>;   ///< Pointer to the shared state
 
     // TODO: get this compiler check working
 #if 0
@@ -232,7 +232,8 @@ public:
     operator bool () const { return 0 != m_id; }
 
 protected:
-    StatePtr    m_state;
+    StatePtr    m_state;                    ///< State shared amongst all instances of
+                                            ///  this component
     Controller* m_controller    = NULL;     ///< Non owning controller reference
     size_t      m_id            = 0;        ///< Unique ID
 
@@ -241,9 +242,9 @@ protected:
     ///
     /// @tparam     ComponentT  Component type
     /// @tparam     RetT        Member function return type
-    /// @param      Args...     Member function argument types
+    /// @tparam     Args        Member function argument types
     ///
-    /// @param[in]  member      Member function pointer
+    /// @param[in]  func        Member function pointer
     /// @param[in]  args        Arguments to call member with
     ///
     ///////////////////////////////////////////////////////////////////////////////
@@ -288,11 +289,13 @@ template<class Component>
 class ControllerBase
     {
 public:
-    using component_t       = Component;
+    using component_t       = Component;    ///< Component type
+
+    /// Component base class type
     using componentBase_t   = ComponentDerived<typename component_t::controller_t,
                                                typename component_t::state_t>;
 
-    friend componentBase_t;
+    friend class componentBase_t;
 
     static_assert (std::is_base_of_v<componentBase_t, Component>,
                    "Component must derive from ComponentBase");
@@ -318,10 +321,10 @@ private:
     ///
     /// @tparam     ComponentT  Component type
     /// @tparam     RetT        Member function return type
-    /// @param      Args...     Member function argument types
+    /// @tparam     Args        Member function argument types
     ///
     /// @param[in]  id          ID of object to call function for
-    /// @param[in]  member      Member function pointer
+    /// @param[in]  func        Member function pointer
     /// @param[in]  args        Arguments to call member with
     ///
     ///////////////////////////////////////////////////////////////////////////////

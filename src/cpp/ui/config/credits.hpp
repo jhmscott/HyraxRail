@@ -27,7 +27,12 @@ class CreditsDialog : public QDialog
     {
     Q_OBJECT
 public:
-    // Dialog box title
+    //////////////////////////////////////////////////////////////////////////////
+    /// Get the dialog box title
+    ///
+    /// @return     Translated dialog box title
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     static QString TITLE () { return tr ("Third Party Licenses & Credits"); };
 
     //////////////////////////////////////////////////////////////////////////////
@@ -39,26 +44,26 @@ public:
     explicit CreditsDialog (QWidget* parent);
 
 private:
-    // 3rd Party licenses
+    /// 3rd Party licenses
     enum swLicense
         {
         SWLIC_LUCIDE,   ///< Lucide Icons
         SWLIC_POSPHUR,  ///< Phosphur Icons
         SWLIC_DSEG,     ///< DSEG font
         SWLIC_FAKEIT,   ///< FakeIt Mocking Framework
-        SWLIC_GPC,
+        SWLIC_GPC,      ///< Generic Polygon Clipper
 
         NUM_SW_LICENSES ///< Delimiter only
         };
 
-    // Credit information
+    /// Credit information
     struct creditPair
         {
         QString title;  ///< Title of this credit (brief)
         QString info;   ///< Full credit information
         };
 
-    // Stores previously visited page
+    /// Stores previously visited page
     using lastPage = std::variant<swLicense, creditPair>;
 
     QGroupBox*      m_licenses;                     ///< 3rd party licenses

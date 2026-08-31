@@ -41,7 +41,7 @@ public:
     /// @param[in]  parent      Parent widget
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    FunctionPanel (vAlignment align, QWidget* parent);
+    FunctionPanel (hAlignment align, QWidget* parent);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the locomotive to control the functions for
@@ -76,7 +76,7 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     void setTooltips ();
 
-    UILANG_ON_CHANGE (QWidget, setTooltips ());
+    UILANG_ON_CHANGE (QWidget, setTooltips ())
     };
 
 } // namespace ui::trains

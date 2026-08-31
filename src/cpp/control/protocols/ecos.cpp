@@ -10,6 +10,8 @@
 
 
 #include <control/protocols/ecos.hpp>
+
+#include <utils/algorithm.hpp>
 #include <utils/string.hpp>
 
 #include <QStringTokenizer>
@@ -72,7 +74,7 @@ ASSERT_ARRAY_LENGTH (REPLY_STATUS_STRINGS, ECoSProtocol::NUM_REPLY_STATUSES);
 
 static ECoSProtocol::argType argTypeFromString (std::string_view str)
     {
-    size_t size  = findArrayIdx (ARG_STRINGS, str);
+    size_t size  = utils::algorithm::findArrayIdx (ARG_STRINGS, str);
 
     if (std::size (ARG_STRINGS) == size)
         {
@@ -223,7 +225,7 @@ ECoSProtocol::reply ECoSProtocol::readReply ()
                 {
                 auto [code, str] = utils::str::split (status, " ");
 
-                size_t size = findArrayIdx (REPLY_STATUS_STRINGS, str);
+                size_t size = utils::algorithm::findArrayIdx (REPLY_STATUS_STRINGS, str);
 
                 if (std::size (REPLY_STATUS_STRINGS) == size)
                     {
