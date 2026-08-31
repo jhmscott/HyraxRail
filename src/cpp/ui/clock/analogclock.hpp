@@ -29,7 +29,7 @@ namespace ui::clock
 class AnalogClock : public ClockWidget, public utils::draw::DebugDrawable
     {
 public:
-    // Analog clock style
+    /// Analog clock style
     enum style
         {
         STYLE_BASIC,    ///< Basic clock style

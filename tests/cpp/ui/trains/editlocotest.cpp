@@ -87,7 +87,7 @@ public:
         {}
 
 private:
-    control::ControllerManager controllers;
+    control::ControllerManager controllers;  ///< List of controllers for testing
 
 private slots:
 

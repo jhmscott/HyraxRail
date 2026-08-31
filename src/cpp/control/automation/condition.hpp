@@ -22,7 +22,7 @@ namespace control
 class AutomationCondition
     {
 public:
-    // Type of automation condition
+    /// Type of automation condition
     enum type
         {
         TYPE_TIMER,         ///< Perform task every ... units of time
@@ -275,7 +275,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     utils::time::days getDays () const { return m_days; }
 private:
-    utils::time::days   m_days;
+    utils::time::days   m_days; ///< Selected days
     };
 
 ///////////////////////////////////////////////////////////////////////////////

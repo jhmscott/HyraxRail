@@ -17,6 +17,7 @@
 
 namespace testutils
 {
+/// Smart pointer to a mocked object
 template<class T>
 using MockPtr = std::unique_ptr<fakeit::Mock<T>>;
 
@@ -28,9 +29,10 @@ using MockPtr = std::unique_ptr<fakeit::Mock<T>>;
 class MockControllerProtocol : public control::ProtocolBase
     {
     PROTOCOL_DEFINE (MockControllerProtocol, "Mocked Protocol",
-                     utils::device::TYPE_UDP, // Todo: mocked sockets
+                     utils::device::TYPE_UDP,
                      control::ProtocolMetaClassBase::NO_DEFAULT_PORT,
                      utils::device::TYPE_UDP)
+
 public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor

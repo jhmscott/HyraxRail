@@ -17,10 +17,10 @@ namespace ui::common
 ///////////////////////////////////////////////////////////////////////////////
 /// Button to add an item
 ///
-/// Widget looks as follows:
-///  + <label>
+/// Widget looks as follows:<BR>
+///  @image{inline} html plus.svg width=16 Label
 ///
-/// Where "+" triggers addPressed() and <label> is set by setLabelText*()
+/// Where "+" triggers addPressed() and Label is set by setLabelText()
 ///
 ///////////////////////////////////////////////////////////////////////////////
 class AddButton : public QWidget

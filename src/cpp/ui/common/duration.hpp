@@ -35,7 +35,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
-    /// @param[in]  untis       List of units to include in the combobox
+    /// @param[in]  units       List of units to include in the combobox
     /// @param[in]  parent      Parent widget
     ///
     ///////////////////////////////////////////////////////////////////////////////
@@ -60,10 +60,14 @@ public:
     std::chrono::nanoseconds getDuration () const;
 
 signals:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Signals the intput has changed
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     void inputChanged ();
 
 private:
-    QSpinBox*           m_num;              ///< Number of <m_units> time
+    QSpinBox*           m_num;              ///< Number of #m_unit time
     QComboBox*          m_unit;             ///< Unit combobox
     utils::time::units  m_supportedUnits;   ///< List of supported units
 

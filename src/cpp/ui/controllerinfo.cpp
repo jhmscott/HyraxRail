@@ -21,6 +21,7 @@
 namespace ui
 {
 
+/// Size of the icon in pixels
 static constexpr int ICON_SIZE = 20;
 
 ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* parent, bool includeDelete) :

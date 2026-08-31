@@ -18,6 +18,7 @@
 namespace ui::config
 {
 
+/// Fake IP type, representing a host name instead of an address
 static constexpr auto HOST_NAME_TYPE = QHostAddress::AnyIPProtocol;
 
 

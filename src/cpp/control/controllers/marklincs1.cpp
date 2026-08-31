@@ -53,7 +53,7 @@ using namespace std::chrono_literals;
 
 namespace control
 {
-
+/// Lookup table from icon ID to enumerated type
 static const std::map<int, layout::actuatorIcon> ICON_TABLE =
     {
         { 14, layout::ICON_LIGHTING         },
@@ -63,6 +63,7 @@ static const std::map<int, layout::actuatorIcon> ICON_TABLE =
         { 24, layout::ICON_TURNOUT_RIGHT    }
     };
 
+/// Lookup table from enumerated protocol type to text in response
 static const std::string PROTOCOLS[] =
     {
         // NMRA DCC (Digital Command Control)
@@ -103,6 +104,13 @@ static layout::actuatorIcon getActuatorIcon (const ECoSProtocol::reply& reply)
     return icon;
     }
 
+//////////////////////////////////////////////////////////////////////////////
+/// Wait on a set of futures and resolve them into a vector of replies
+///
+/// @param[in]  replyFutures    Set of futures to wait on
+/// @param[out] replies         Result of replies
+///
+//////////////////////////////////////////////////////////////////////////////
 static void resolveReplyVector (std::vector<std::future<ECoSProtocol::reply>>&  replyFutures,
                                 std::vector<ECoSProtocol::reply>&               replies)
     {

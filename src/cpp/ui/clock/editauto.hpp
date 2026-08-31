@@ -54,6 +54,7 @@ public:
     void setTaskParameters (control::AutomationTask& task) const;
 
 private:
+    /// Set of condition forms
     using forms = std::array<ConditionForm*, control::AutomationCondition::NUM_TYPES>;
 
     QFormLayout*                m_layout;           ///< Main form layout

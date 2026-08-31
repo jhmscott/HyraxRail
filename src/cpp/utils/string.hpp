@@ -17,8 +17,12 @@
 namespace utils::str
 {
 
-// Regex to check is a string isn't empty.
-// A string that is only spaces is considered empty according to this
+///////////////////////////////////////////////////////////////////////////////
+/// Regex to check is a string isn't empty.
+///
+/// @remarks    A string that is only spaces is considered empty according to this
+///
+///////////////////////////////////////////////////////////////////////////////
 inline constexpr const char* const NON_EMPTY_REGEX = R"(^(?!\s*$).+)";
 
 ///////////////////////////////////////////////////////////////////////////////

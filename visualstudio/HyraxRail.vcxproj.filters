@@ -276,6 +276,9 @@
     <ClInclude Include="..\src\cpp\layout\protocol.hpp">
       <Filter>Header Files\layout</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\cpp\utils\traits.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cpp\control\controllers\base.cpp">

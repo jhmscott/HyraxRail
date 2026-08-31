@@ -370,11 +370,11 @@ private:
 
 // Alias the native type
 #if defined (Q_OS_WINDOWS) || defined (DOXYGEN)
-using BatteryImplNative = BatteryImplWindows;
+using BatteryImplNative = BatteryImplWindows;   ///< Native battery implementation (Windows)
 #elif defined (Q_OS_MACOS)
-using BatteryImplNative = BatteryImplApple;
+using BatteryImplNative = BatteryImplApple;     ///< Native battery implementation (Apple)
 #elif defined (Q_OS_ANDROID)
-using BatteryImplNative = BatteryImplAndroid;
+using BatteryImplNative = BatteryImplAndroid;   ///< Native battery implementation (Android)
 #endif
 
 

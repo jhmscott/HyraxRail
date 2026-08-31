@@ -27,14 +27,19 @@ class AutomationItem : public QObject
     {
     Q_OBJECT
 public:
-    // What type of automation this is
-    // Keep this in sync with the variant index
+    ///////////////////////////////////////////////////////////////////////////////
+    /// What type of automation this is
+    ///
+    /// @remarks    Keep this in sync with the variant index
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     enum class type
         {
         ACTUATOR,   ///< layout::Actuator
         ROUTE       ///< layout:::Route
         };
 
+    /// Action type; action to perform when condition is met
     enum action
         {
         ACTION_SET,     ///< Set/turn on
@@ -44,7 +49,7 @@ public:
         NUM_ACTIONS     ///< Delimiter only
         };
 
-    // used to represent a list of supported actions
+    /// used to represent a list of supported actions
     using actions = std::bitset<NUM_ACTIONS>;
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -170,6 +175,10 @@ signals:
 private:
     std::variant<layout::Actuator, layout::Route> m_item;   ///< Underlying item being automated
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Connect the signals from the automated item
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     void connectSignals ();
     };
 

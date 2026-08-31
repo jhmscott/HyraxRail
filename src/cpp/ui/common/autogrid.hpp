@@ -26,7 +26,7 @@ namespace ui::common
 class AutoGridLayout : public QLayout
     {
 public:
-    // Direction to expand in
+    /// Direction to expand in
     enum class expand
         {
         ROW_FIRST,      ///< Add new columns to a row before adding a new row
@@ -146,7 +146,7 @@ private:
     //
     union
         {
-        int                     m_numRowsOrColumns;
+        int                     m_numRowsOrColumns; ///< Generic version
         int                     m_numRows;          ///< Number of rows per column
         int                     m_numColumns;       ///< Number of columns per row
         };

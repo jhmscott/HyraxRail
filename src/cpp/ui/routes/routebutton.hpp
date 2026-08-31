@@ -52,7 +52,7 @@ signals:
 
 private:
     layout::Route               m_route;        ///< Route being controlled
-    control::AutomationManager& m_automations;
+    control::AutomationManager& m_automations;  ///< List of automations
     QLabel*                     m_name;         ///< Name of the route
 
     //////////////////////////////////////////////////////////////////////////////

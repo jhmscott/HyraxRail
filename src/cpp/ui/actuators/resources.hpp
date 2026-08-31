@@ -1,5 +1,5 @@
 /**
- * @file        actuators/respources.hpp
+ * @file        actuators/resources.hpp
  * @brief       Common UI resources for actuators
  * @author      Justin Scott
  * @date        2026-04-26

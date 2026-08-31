@@ -25,6 +25,7 @@
 
 namespace ui::config
 {
+/// Names of the third party software libraries
 static const char* const SOFTWARE_NAMES[] =
     {
     "Luicde Icons",

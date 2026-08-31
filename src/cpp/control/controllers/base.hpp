@@ -42,7 +42,7 @@ namespace control
 {
 
 
-// List of protocols supported  by a controller
+/// List of protocols supported  by a controller
 using protocolMetaList = std::vector<const ProtocolMetaClassBase*>;
 
 namespace internal
@@ -52,7 +52,7 @@ namespace internal
 /// Generates a list of the protocol meta-class objects from a varidac list of
 /// protocol types
 ///
-/// @tparam     Protos...       Variadic list of protocol types
+/// @tparam     Protos          Variadic list of protocol types
 ///
 /// @return     List of the meta classes for Protos
 ///
@@ -105,9 +105,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Create an instance of this controller type
     ///
-    /// @param[in]  friendlyName      Name of this controller instance to use in the UI
-    /// @param[in]  protocol               Name of the protocol type
-    /// @param[in]  info                        Used to create the device to communicate with the controller
+    /// @param[in]  friendlyName    Name of this controller instance to use in the UI
+    /// @param[in]  protocol        Name of the protocol type
+    /// @param[in]  info            Used to create the device to communicate with
+    ///                             the controller
     ///
     /// @return     unique_ptr instance of the requested controller
     ///             nullptr if the controller could not be created
@@ -129,9 +130,8 @@ public:
     const ProtocolMetaClassBase& findProtocol (const std::string& protocol) const;
 
 private:
-    static inline std::map<std::string, ControllerMetaClassBase*> controllerTypes;  ///< Supported controller types
-                                                                                    ///  populated automatically by metaclass
-                                                                                    ///  global constructors
+    /// Supported controller types populated automatically by metaclass global constructors
+    static inline std::map<std::string, ControllerMetaClassBase*> controllerTypes;
     };
 
 

@@ -26,7 +26,7 @@ inline constexpr int FONT_SIZE_LARGE =
 #endif // Q_OS_ANDROID
 
 
-// Resource type
+/// Resource type
 enum type
     {
     RESOURCE_FONT,      ///< Font file (.ttf, .otf, etc)
@@ -109,7 +109,7 @@ public:
         m_subPath (path)
         {}
 
-    // Default copy behaviour
+    /// Default copy behaviour
     Icon (const Icon&) = default;
     Icon& operator= (const Icon&) = default;
 

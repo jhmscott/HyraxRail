@@ -33,6 +33,7 @@ public:
     /// Constructor
     ///
     /// @param[in]  controller      Controller to display routes for
+    /// @param[in]  automations     List of automations
     /// @param[in]  parent          Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////

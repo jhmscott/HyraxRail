@@ -25,8 +25,8 @@
 
 using namespace ui::actuators;
 
-using FakeController = layout::ControllerBase<layout::Actuator>;
-using MockController = fakeit::Mock<layout::ActuatorController>;
+using FakeController = layout::ControllerBase<layout::Actuator>;    ///< Controller type
+using MockController = fakeit::Mock<layout::ActuatorController>;    ///< Controller mock type
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -80,8 +80,8 @@ class ActuatorButtonTest : public QObject
     {
     Q_OBJECT
 private:
-    FakeController                  fakeController; // needed for storage of controller data
-    std::unique_ptr<MockController> mockController;
+    FakeController                  fakeController; ///< Controller used for testing
+    std::unique_ptr<MockController> mockController; ///< Mocked controller interface
 
 private slots:
     ///////////////////////////////////////////////////////////////////////////////

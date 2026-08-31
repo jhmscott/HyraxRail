@@ -378,7 +378,8 @@ INCLUDE_PATH           = ./src/cpp \
                          ./tests/cpp
 INCLUDE_FILE_PATTERNS  =
 PREDEFINED             = DOXYGEN
-EXPAND_AS_DEFINED      = ASSERT_ARRAY_LENGTH
+EXPAND_AS_DEFINED      = ASSERT_ARRAY_LENGTH \
+                         Q_PROPERTY
 SKIP_FUNCTION_MACROS   = YES
 #---------------------------------------------------------------------------
 # Configuration options related to external references

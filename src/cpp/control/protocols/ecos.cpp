@@ -24,6 +24,7 @@ using namespace std::string_view_literals;
 
 namespace control
 {
+/// Argument strings
 static constexpr const char* const ARG_STRINGS[] =
     {
     "view",             // ARG_VIEW
@@ -63,6 +64,7 @@ static constexpr const char* const ARG_STRINGS[] =
     };
 ASSERT_ARRAY_LENGTH (ARG_STRINGS, ECoSProtocol::NUM_ARGS);
 
+/// Reply status strings
 static constexpr const char* const REPLY_STATUS_STRINGS[]
     {
     "(OK)",
@@ -72,6 +74,14 @@ static constexpr const char* const REPLY_STATUS_STRINGS[]
 ASSERT_ARRAY_LENGTH (REPLY_STATUS_STRINGS, ECoSProtocol::NUM_REPLY_STATUSES);
 
 
+///////////////////////////////////////////////////////////////////////////////
+/// Get the argument type for a given string
+///
+/// @param[in]  str     String to parse argument type from
+///
+/// @return     Argument type
+///
+///////////////////////////////////////////////////////////////////////////////
 static ECoSProtocol::argType argTypeFromString (std::string_view str)
     {
     size_t size  = utils::algorithm::findArrayIdx (ARG_STRINGS, str);
@@ -85,7 +95,14 @@ static ECoSProtocol::argType argTypeFromString (std::string_view str)
     }
 
 
-
+///////////////////////////////////////////////////////////////////////////////
+/// Extract an argument value
+///
+/// @param[in]  str     Argument string to parse
+///
+/// @return     Argument value parsed
+///
+///////////////////////////////////////////////////////////////////////////////
 static ECoSProtocol::arg argFromString (std::string_view str)
     {
     size_t valStart;

@@ -342,6 +342,7 @@
     <ClCompile Include="..\src\cpp\utils\string.cpp" />
     <ClCompile Include="..\src\cpp\utils\time.cpp" />
     <ClInclude Include="..\res\version.h" />
+    <ClInclude Include="..\src\cpp\utils\traits.hpp" />
     <QtMoc Include="..\src\cpp\control\automation\clock.hpp" />
     <QtMoc Include="..\src\cpp\control\automation\item.hpp" />
     <QtMoc Include="..\src\cpp\control\automation\manager.hpp" />

@@ -26,13 +26,22 @@
 /// @param[in]  arg1            First token
 /// @param[in]  arg2            Second token
 ///
-/// @return     Conactenation of two tokens
+/// @return     Concatenation of two tokens
 ///
 ///////////////////////////////////////////////////////////////////////////////
 #define UTILPP_CONCAT(arg1, arg2)           __UTILPP_CONCAT_IMPL (arg1, arg2)
 
 
+///////////////////////////////////////////////////////////////////////////////
+/// String-ify a token
+///
+/// @param[in]  token       Token to stringify
+///
+/// @return     Stringified token
+///////////////////////////////////////////////////////////////////////////////
 #define UTILPP_STRINGIFY(token)         __UTILPP_STRINGIFY_IMPL(token)
+
+/// @cond
 
 // Macro implementation details, don't use
 
@@ -70,3 +79,5 @@
 #define __UTILPP_CONCAT_IMPL(arg1, arg2)    arg1 ## arg2
 
 #define __UTILPP_STRINGIFY_IMPL(token)     #token
+
+/// @endcond

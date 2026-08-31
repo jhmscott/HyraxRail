@@ -13,6 +13,7 @@
 #include <control/protocols/base.hpp>
 
 #include <utils/pinger.hpp>
+#include <utils/traits.hpp>
 
 #include <chrono>
 #include <tuple>
@@ -21,37 +22,6 @@
 #include <mutex>
 #include <future>
 
-// Unspecialized version
-template<class T>
-struct memberFuncTraits
-    {
-
-    };
-
-
-///////////////////////////////////////////////////////////////////////////////
-/// Type trait to get information about a member functiojn
-///
-/// @tparam     Class   Class the function is a member of
-/// @tparam     RetT    Function return type
-/// @tparam     Args    Function arguments
-///
-///////////////////////////////////////////////////////////////////////////////
-template<class Class, class RetT, class... Args>
-struct memberFuncTraits<RetT (Class::*) (Args...)>
-    {
-    using class_t   = Class;                ///< Class type
-    using ret_t     = RetT;                 ///< Return type
-    using args_t    = std::tuple<Args...>;  ///< Tuple of argument types
-    };
-
-template<class Class, class RetT, class... Args>
-struct memberFuncTraits<RetT (Class::*) (Args...) const >
-    {
-    using class_t   = Class;
-    using ret_t     = RetT;
-    using args_t    = std::tuple<Args...>;
-    };
 
 namespace control
 {
@@ -178,10 +148,7 @@ public:
         /// @param[in]  other       Health to compare to
         ///
         ///////////////////////////////////////////////////////////////////////////////
-        bool operator!= (const health& other) const
-            {
-            return !(*this == other);
-            }
+        bool operator!= (const health& other) const { return !(*this == other); }
         };
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -304,22 +271,22 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Derived templated task
     ///
-    /// @tparam     Func                        Task function type
-    /// @tparam     PassedArgs...    Argument types to pass to task function
+    /// @tparam     Func        Task function type
+    /// @tparam     PassedArgs  Argument types to pass to task function
     ///
     ///////////////////////////////////////////////////////////////////////////////
     template<class Func, class... PassedArgs >
     class ProtocolTask : public TaskBase
         {
     public:
-        using Derived   = typename memberFuncTraits<Func>::class_t; ///< Class derived type
-        using RetT      = typename memberFuncTraits<Func>::ret_t;   ///< Function return type
+        using Derived   = typename utils::traits::memberFuncTraits<Func>::class_t; ///< Class derived type
+        using RetT      = typename utils::traits::memberFuncTraits<Func>::ret_t;   ///< Function return type
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Constructor. Create a task from a protocol's member function
         ///
-        /// @param[in]  func            Protocol member function
-        /// @param[in]  args...     Arguments to pass to func
+        /// @param[in]  func    Protocol member function
+        /// @param[in]  args    Arguments to pass to func
         ///
         ///////////////////////////////////////////////////////////////////////////////
         ProtocolTask (Func func, PassedArgs&&... args) :

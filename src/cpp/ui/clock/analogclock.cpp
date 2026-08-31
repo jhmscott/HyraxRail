@@ -31,7 +31,7 @@
 namespace // anonymous
 {
 
-// Type of date window
+/// Type of date window
 enum class dateWindowStyle
     {
     NONE,       ///< No date window
@@ -40,18 +40,18 @@ enum class dateWindowStyle
     MONTH_DATE  ///< Month string + date of month
     };
 
-// Dial shape
+/// Dial shape
 enum class dialStyle
     {
     ROUND,  ///< Circle
     RECT    ///< Rectangle
     };
 
-// Scheme dependent style
+/// Scheme dependent style
 struct styleInfoScheme
     {
-    QColor  brush   = Qt::transparent;
-    QColor  pen     = Qt::transparent;
+    QColor  brush   = Qt::transparent;  ///< Brush colour
+    QColor  pen     = Qt::transparent;  ///< Pen colour
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Apply this style to a painter
@@ -66,11 +66,11 @@ struct styleInfoScheme
         }
     };
 
-// Style info for a item
+/// Style info for a item
 struct styleInfo
     {
-    styleInfoScheme light;
-    styleInfoScheme dark;
+    styleInfoScheme light;  ///< Style info for the light colour scheme
+    styleInfoScheme dark;   ///< Style info for the dark colour scheme
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Apply this style to a painter
@@ -99,7 +99,7 @@ struct styleInfo
 class Index
     {
 public:
-    styleInfo style;
+    styleInfo style;    ///< Index style
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Draw this index to a painter
@@ -113,6 +113,10 @@ public:
         draw (painter);
         }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Virtual destructor
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     virtual ~Index () {}
 private:
     ///////////////////////////////////////////////////////////////////////////////
@@ -251,13 +255,13 @@ private:
         { painter.drawPolygon (m_poly); }
     };
 
-// Clock face indices
+/// Clock face indices
 using indexArray = std::array<std::unique_ptr<Index>, 12>;
 
-// Variable number of indices, for other indicators
+/// Variable number of indices, for other indicators
 using indexVector = std::vector<std::unique_ptr<Index>>;
 
-// Main spring power indicator. Maps to the device battery
+/// Main spring power indicator. Maps to the device battery
 struct powerIndicator
     {
     QPoint                  pos;    ///< Center position
@@ -268,7 +272,7 @@ struct powerIndicator
     utils::MultiPolygonF    hand;   ///< Power indicaror hand
     };
 
-// Represents a set of hands to draw over the dial
+/// Represents a set of hands to draw over the dial
 struct hands
     {
     utils::MultiPolygonF                hour;           ///< Hour hand
@@ -282,7 +286,7 @@ struct hands
     };
 
 
-// Dial style info
+/// Dial style info
 struct dial
     {
     indexArray  indices;                        ///< Major indices (every hour/5 minutes
@@ -291,20 +295,20 @@ struct dial
     double      dialRatio   = 1.0;              ///< Height to width ratio
     };
 
-// Day/date window
+/// Day/date window
 struct dateWindow
     {
     dateWindowStyle                         style;  ///< Style of window
     std::optional<utils::Magnifier<true>>   cyclops;///< "Cyclops" magnification lens
     };
 
-// Clock face
+/// Clock face
 struct clockFace
     {
     hands                           hands;          ///< Clock hands
     dial                            dial;           ///< Clock dial
     dateWindow                      window;         ///< Day/date window
-    std::optional<powerIndicator>   powerIndicator;
+    std::optional<powerIndicator>   powerIndicator; ///< Power indication dial
     };
 
 
@@ -313,6 +317,7 @@ struct clockFace
 namespace ui::clock
 {
 
+/// Font used for date window
 static const char* const DATE_FONT = "Cascadia Mono";
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -425,7 +430,7 @@ static indexArray makeKeyIndexArray (const T&           index,
     return indices;
     }
 
-// List of clock faces/styles
+/// List of clock faces/styles
 static const clockFace FACES[] =
     {
     // Basic
@@ -648,7 +653,6 @@ static const clockFace FACES[] =
             }
         }
     };
-
 ASSERT_ARRAY_LENGTH (FACES, AnalogClock::NUM_STYLES);
 
 

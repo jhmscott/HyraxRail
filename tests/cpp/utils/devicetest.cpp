@@ -16,7 +16,7 @@
 /// Set of 4 octets in an IPv4 address
 struct ipQuad
     {
-    uint8_t addr[4];
+    uint8_t addr[4];    ///< Address octets
     };
 
 using namespace utils::device;

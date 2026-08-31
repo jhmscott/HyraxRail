@@ -31,14 +31,16 @@ import java.util.Locale;
 ///////////////////////////////////////////////////////////////////////////////
 public class MainActivity extends QtActivity
     {
-    private Battery         m_battery;  ///< Battery notification client
-    private Locale          m_locale;   ///< Current system locale
-    private BackAnimation   m_backAnimation;
+    private Battery         m_battery;      ///< Battery notification client
+    private Locale          m_locale;       ///< Current system locale
+    private BackAnimation   m_backAnimation;///< Animation called with the back gesture
 
-    private static final int VIBRATE_TICK           = 0;
-    private static final int VIBRATE_CLICK          = 1;
-    private static final int VIBRATE_LONG_CLICK     = 2;
-    private static final int VIBRATE_DOUBLE_CLICK   = 3;
+    // Vibration enum, see utils::os::vibrationEffect
+
+    private static final int VIBRATE_TICK           = 0;    ///< @see utils::os::VIBRATE_TICK
+    private static final int VIBRATE_CLICK          = 1;    ///< @see utils::os::VIBRATE_CLICK
+    private static final int VIBRATE_LONG_CLICK     = 2;    ///< @see utils::os::VIBRATE_LONG_CLICK
+    private static final int VIBRATE_DOUBLE_CLICK   = 3;    ///< @see utils::os::VIBRATE_DOUBLE_CLICK
 
 
     ///////////////////////////////////////////////////////////////////////////////

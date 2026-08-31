@@ -461,10 +461,10 @@ public:
     auto operator| (const BasicPolygonView<otherFloating>& other) const;
     };
 
-// Floating point complex polygon
+/// Floating point complex polygon
 using ComplexPolygonF = BasicComplexPolygon<true>;
 
-// Integer complex polygon
+/// Integer complex polygon
 using ComplexPolygon = BasicComplexPolygon<false>;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -791,10 +791,10 @@ private:
     using Base = std::vector<BasicComplexPolygon<floating>>;    ///< Base vector type
     };
 
-// Floating point multi-polygon
+/// Floating point multi-polygon
 using MultiPolygonF = BasicMultiPolygon<true>;
 
-// Integer multi-polygon
+/// Integer multi-polygon
 using MultiPolygon  = BasicMultiPolygon<false>;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -958,8 +958,10 @@ private:
     using Base = QSpan<const BasicComplexPolygon<floating>>;
     };
 
+/// Floating point polygon view
 using PolygonViewF = BasicPolygonView<true>;
 
+/// Integer polygon view
 using PolygonView  = BasicPolygonView<false>;
 
 ///////////////////////////////////////////////////////////////////////////////

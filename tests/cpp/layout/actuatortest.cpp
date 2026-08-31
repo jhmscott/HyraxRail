@@ -74,11 +74,11 @@ class ActuatorTest : public QObject
     {
     Q_OBJECT
 private:
-    using FakeController = layout::ControllerBase<layout::Actuator>;
-    using MockController = fakeit::Mock<layout::ActuatorController>;
+    using FakeController = layout::ControllerBase<layout::Actuator>;///< Controller type
+    using MockController = fakeit::Mock<layout::ActuatorController>;///< Controller mock type
 
-    FakeController                  fakeController;
-    std::unique_ptr<MockController> mockController;
+    FakeController                  fakeController;                 ///< Controller used to test
+    std::unique_ptr<MockController> mockController;                 ///< Mocked controller
 
 private slots:
     ///////////////////////////////////////////////////////////////////////////////

@@ -42,7 +42,7 @@
 #ifdef __cpp_conditional_explicit
 #define implicit explicit (false)   ///< Implicit constructor
 #else
-#define implicit
+#define implicit                    ///< Implicit constructor
 #endif
 
 
@@ -79,7 +79,7 @@ using identityType = std::type_identity_t<T>; ///< Alias for std::type_identity
 template<class T>
 struct _identityType
     {
-    using type = T;
+    using type = T; ///< Type
     };
 
 /// Pre C++20 implementation of std::type_identity_t

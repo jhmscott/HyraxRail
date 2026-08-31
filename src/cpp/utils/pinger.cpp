@@ -454,20 +454,26 @@ private:
     struct in_addr m_ip;    ///< IPv4 address to ping
     };
 
-// TODO: IPv6 POSIX implementation
+/// TODO: IPv6 POSIX implementation
 class IPv6PingerPosix : public PingerImpl
     {
-    public:
-        explicit IPv6PingerPosix (Q_IPV6ADDR ip)
-            {
-            std::copy (ip.c,
-                       ip.c + std::size (ip.c),
-                       m_ip.s6_addr);
-            }
+public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  ip      IP address
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    explicit IPv6PingerPosix (Q_IPV6ADDR ip)
+        {
+        std::copy (ip.c,
+                    ip.c + std::size (ip.c),
+                    m_ip.s6_addr);
+        }
 
 
-    private:
-        struct in6_addr m_ip;
+private:
+    struct in6_addr m_ip;   ///< IP address
     };
 
 
@@ -475,11 +481,11 @@ class IPv6PingerPosix : public PingerImpl
 
 
 #if defined (Q_OS_WIN) || defined (DOXYGEN)
-using IPv4Pinger = IPv4PingerWin;
-using IPv6Pinger = IPv6PingerWin;
+using IPv4Pinger = IPv4PingerWin;   ///< IPv4 pinger implementation (windows)
+using IPv6Pinger = IPv6PingerWin;   ///< IPv6 pinger implementation (windows)
 #elif defined (Q_OS_UNIX)
-using IPv4Pinger = IPv4PingerPosix;
-using IPv6Pinger = IPv6PingerPosix;
+using IPv4Pinger = IPv4PingerPosix; ///< IPv4 pinger implementation (POSIX)
+using IPv6Pinger = IPv6PingerPosix; ///< IPv6 pinger implementation (POSIX)
 #endif
 
 } // namespace anonymous

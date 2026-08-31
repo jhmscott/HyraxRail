@@ -24,8 +24,8 @@ class AutomationManager : public QObject
     {
     Q_OBJECT
 public:
-    using iterator          = std::list<AutomationTask>::iterator;
-    using const_iterator    = std::list<AutomationTask>::const_iterator;
+    using iterator          = std::list<AutomationTask>::iterator;      ///< Automation iterator
+    using const_iterator    = std::list<AutomationTask>::const_iterator;///< Automation iterator
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor

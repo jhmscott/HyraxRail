@@ -249,23 +249,23 @@ BasicMultiPolygon<floating1 || floating2> operate (BasicPolygonView<floating1>  
     return res;
     }
 
-// Explicit template instatiation
+/// Explicit template instatiation
 template BasicMultiPolygon<false>
 operate<false, false> (BasicPolygonView<false>   pg1,
                        BasicPolygonView<false>   pg2,
                        polyOp               op);
-
+/// Explicit template instatiation
 template BasicMultiPolygon<true>
 operate<true, false>  (BasicPolygonView<true>    pg1,
                        BasicPolygonView<false>   pg2,
                        polyOp               op);
 
-
+/// Explicit template instatiation
 template BasicMultiPolygon<true>
 operate<false, true>  (BasicPolygonView<false>   pg1,
                        BasicPolygonView<true>    pg2,
                        polyOp               op);
-
+/// Explicit template instatiation
 template BasicMultiPolygon<true>
 operate<true, true>   (BasicPolygonView<true>    pg1,
                        BasicPolygonView<true>    pg2,

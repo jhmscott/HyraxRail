@@ -20,11 +20,6 @@
 namespace utils::time
 {
 
-enum class dateFormat
-    {
-
-    };
-
 ///////////////////////////////////////////////////////////////////////////////
 /// Enumerated months of the year
 /// Note that this starts at 0, while QDate::month() starts at 1
@@ -69,6 +64,7 @@ enum dayOfTheWeek
 /// Bitset containing a set of days in an arbitrary week
 using days = std::bitset<NUM_DAYS>;
 
+/// Unit of time
 enum unit
     {
     NANOSECONDS,    ///< Nano-seconds
@@ -255,6 +251,7 @@ inline QString monthAbreviation (month mon)
 ///////////////////////////////////////////////////////////////////////////////
 /// Get the full name of a unit
 ///
+/// @param[in]  num         Number of units of that unit of time
 /// @param[in]  unit        Unit to get name of
 ///
 /// @return     Name of unit
@@ -266,14 +263,14 @@ inline QString formatWithUnit (int num, unit unit)
 
     const QString UNITS[] =
         {
-        TimeStringConstants::tr ("%n nanosecond(s)", "", num),
-        TimeStringConstants::tr ("%n microsecond(s)", "", num),
-        TimeStringConstants::tr ("%n millisecond(s)", "", num),
-        TimeStringConstants::tr ("%n second(s)", "", num),
-        TimeStringConstants::tr ("%n minute(s)", "", num),
-        TimeStringConstants::tr ("%n hour(s)", "", num),
-        TimeStringConstants::tr ("%n day(s)", "", num),
-        TimeStringConstants::tr ("%n week(s)", "", num)
+        TimeStringConstants::tr ("%n nanosecond(s)",    "", num),
+        TimeStringConstants::tr ("%n microsecond(s)",   "", num),
+        TimeStringConstants::tr ("%n millisecond(s)",   "", num),
+        TimeStringConstants::tr ("%n second(s)",        "", num),
+        TimeStringConstants::tr ("%n minute(s)",        "", num),
+        TimeStringConstants::tr ("%n hour(s)",          "", num),
+        TimeStringConstants::tr ("%n day(s)",           "", num),
+        TimeStringConstants::tr ("%n week(s)",          "", num)
         };
     ASSERT_ARRAY_LENGTH (UNITS, NUM_UNITS);
 

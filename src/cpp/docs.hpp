@@ -90,3 +90,7 @@ namespace ui::sensors {}
 /// Train control UI
 ///////////////////////////////////////////////////////////////////////////////
 namespace ui::trains {}
+
+#ifdef DOXYGEN
+#define Q_PROPERTY(...) ///< Needed so doxygen doesn't complain about this macro it can't see
+#endif

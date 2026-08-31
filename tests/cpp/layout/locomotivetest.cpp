@@ -59,11 +59,11 @@ class LocomotiveTest : public QObject
     {
     Q_OBJECT
 private:
-    using FakeController = layout::ControllerBase<layout::Locomotive>;
-    using MockController = fakeit::Mock<layout::LocomotiveController>;
+    using FakeController = layout::ControllerBase<layout::Locomotive>;  ///< Controller type
+    using MockController = fakeit::Mock<layout::LocomotiveController>;  ///< Controller mock type
 
-    FakeController                  fakeController;
-    std::unique_ptr<MockController> mockController;
+    FakeController                  fakeController;                     ///< Controller used for testing
+    std::unique_ptr<MockController> mockController;                     ///< Mocked controller interface
 
 private slots:
     ///////////////////////////////////////////////////////////////////////////////

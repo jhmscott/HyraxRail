@@ -26,6 +26,7 @@ class ControllerManager : public QObject
     {
     Q_OBJECT
 
+    /// List implementation type
     using controllerList = std::vector<std::unique_ptr<ControllerBase>>;
 
 public:
@@ -49,11 +50,11 @@ public:
         using pointer           = value_type*;                      ///< Pointer type
         using reference         = value_type&;                      ///< Reference type
 
-        // Copyable
+        /// Copyable
         IteratorImpl (const IteratorImpl&) = default;
         IteratorImpl& operator= (const IteratorImpl&) = default;
 
-        // Movable
+        /// Movable
         IteratorImpl (IteratorImpl&&) = default;
         IteratorImpl& operator= (IteratorImpl&&) = default;
 
@@ -332,7 +333,6 @@ signals:
     void controllerDeleted (const ControllerBase& controller);
 
 private:
-
     controllerList m_controllers;   ///< List of controllers we are managing
     };
 
