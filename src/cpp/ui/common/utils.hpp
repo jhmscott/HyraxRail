@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <utils/qobj.hpp>
+
 #include <QApplication>
 #include <QComboBox>
 #include <QFormLayout>
@@ -20,6 +22,8 @@
 
 namespace ui::common
 {
+
+
 ///////////////////////////////////////////////////////////////////////////////
 /// Set the current item in a combobox to the first item with a given user data
 ///
@@ -27,14 +31,20 @@ namespace ui::common
 ///
 /// @param[in,out]  cb      Combobox to set current item for
 /// @param[in]      ud      User data
+/// @param[in]      notify  True to trigger the currentIndexChanged() signal
+///                         False not to
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<class T>
-void setComboBoxIndexByUserData (QComboBox& cb, const T& ud)
+void setComboBoxIndexByUserData (QComboBox& cb, const T& ud, bool notify = true)
     {
+    utils::qobj::SignalGuard grd{ cb, not notify };
+
     for (int ii = 0; ii < cb.count (); ++ii)
         {
-        if (cb.itemData (ii).value<T> () == ud)
+        auto variant = cb.itemData (ii);
+
+        if (variant.isValid () && variant.value<T> () == ud)
             {
             cb.setCurrentIndex (ii);
             break;
@@ -267,6 +277,43 @@ T* getTopLevelWidget ()
     return widget;
     }
 
+///////////////////////////////////////////////////////////////////////////////
+/// Refresh a combobox list without signalling. This empties and refills the
+/// combobox and then sets the current index to the previous items new position.
+/// This will only emit currentIndexChanged() if that previous item doesn't exist
+/// in the new list
+///
+/// @tparam         Func        Refill callback function type
+///
+/// @param[in,out]  cb          Combobox to empty and refill
+/// @param[in]      refill      Callback to fill the emptied combobox
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class Func>
+void refreshComboboxItems (QComboBox& cb, Func&& refill)
+    {
+    QVariant    ud = cb.currentData ();
+    int         newIdx;
+
+    {
+    utils::qobj::SignalGuard grd{ cb, true /* block */ };
+
+    cb.clear ();
+    refill ();
+
+    newIdx = cb.findData (ud);
+
+    if (newIdx >= 0)
+        {
+        cb.setCurrentIndex (newIdx);
+        }
+    }
+
+    if (-1 == newIdx)
+        {
+        emit cb.currentIndexChanged (cb.currentIndex ());
+        }
+    }
 
 } // namespace ui::common
 

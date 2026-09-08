@@ -42,6 +42,143 @@ auto makePtrPred (const T* ptr)
 } // namespace internal
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Iterable range from an enum start and end value
+///
+/// @tparam     Enum        Enum typr
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class Enum>
+class EnumRange
+    {
+public:
+    static_assert (std::is_enum_v<Enum>, "Must be an enumerated type");
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Enum range iterator type
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    class Iterator
+        {
+    public:
+        using value_type        = Enum;                             ///< Enum value type
+        using iterator_category = std::bidirectional_iterator_tag;  ///< type of iterator
+        using pointer           = const value_type*;                ///< Pointer type
+        using reference         = const value_type&;                ///< Reference type
+
+        explicit Iterator (Enum start) :
+            m_current (static_cast<Underlying> (start))
+            {}
+
+        ///////////////////////////////////////////////////////////////////////////////
+        /// Pointer arrow operator
+        ///
+        /// @return     Pointer to enumerated value
+        ///
+        ///////////////////////////////////////////////////////////////////////////////
+        [[nodiscard]] pointer operator-> () const noexcept
+            { return reinterpret_cast<const Enum*> (&m_current); }
+
+        ///////////////////////////////////////////////////////////////////////////////
+        /// Pointer de-reference operator
+        ///
+        /// @return     Enum value
+        ///
+        ///////////////////////////////////////////////////////////////////////////////
+        [[nodiscard]] value_type operator* () const noexcept
+            { return static_cast<Enum> (m_current); }
+
+        ///////////////////////////////////////////////////////////////////////////////
+        /// Iterator increment operator
+        ///
+        /// @return     Reference to this
+        ///
+        ///////////////////////////////////////////////////////////////////////////////
+        Iterator& operator++ () noexcept { m_current++; return *this; }
+
+        ///////////////////////////////////////////////////////////////////////////////
+        /// Iterator increment after operator
+        ///
+        /// @return     Un-incremented iterator
+        ///
+        ///////////////////////////////////////////////////////////////////////////////
+        Iterator operator++ (int) noexcept { auto tmp = *this; m_current++; return tmp; }
+
+        ///////////////////////////////////////////////////////////////////////////////
+        /// Iterator decrement operator
+        ///
+        /// @return     Reference to this
+        ///
+        ///////////////////////////////////////////////////////////////////////////////
+        Iterator& operator-- () noexcept { m_current--; return *this; }
+
+        ///////////////////////////////////////////////////////////////////////////////
+        /// Iterator decrement after operator
+        ///
+        /// @return     Un-decremented iterator
+        ///
+        ///////////////////////////////////////////////////////////////////////////////
+        Iterator operator-- (int) noexcept { auto tmp = *this; m_current--; return tmp; }
+
+        ///////////////////////////////////////////////////////////////////////////////
+        /// Comparison operator
+        ///
+        /// @param[in]  other       Iterator to compare to
+        ///
+        /// @return     true if iterators point to the same enum value
+        ///
+        ///////////////////////////////////////////////////////////////////////////////
+        bool operator== (const Iterator& other) const { return m_current == other.m_current; }
+
+        ///////////////////////////////////////////////////////////////////////////////
+        /// Comparison operator
+        ///
+        /// @param[in]  other       Iterator to compare to
+        ///
+        /// @return     true if iterators point to the different enum values
+        ///
+        ///////////////////////////////////////////////////////////////////////////////
+        bool operator!= (const Iterator& other) const { return !(*this == other); }
+    private:
+        /// Underlying integer type of enum, used as counter
+        using Underlying = std::underlying_type_t<Enum>;
+
+        Underlying m_current;   ///< Integer value of current enum
+        };
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  start       Start of range
+    /// @param[in]  end         End of range, not inclusive
+    ///
+    /// @remarks    Range is [start,end)
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    EnumRange (Enum start, Enum end) :
+        m_pair (start, end)
+        {}
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the start of this range
+    ///
+    /// @return     Start iterator
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    Iterator begin () const { return Iterator{ m_pair.first }; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the end of this range
+    ///
+    /// @return     End iterator
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    Iterator end () const { return Iterator{ m_pair.second }; }
+
+private:
+    std::pair<Enum, Enum> m_pair; ///< first -> start, second -> end
+    };
+
+///////////////////////////////////////////////////////////////////////////////
 /// Erase all elements in a vector that fulfill a predicate.
 /// Basically std::erase_if() from c++20
 ///

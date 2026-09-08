@@ -330,6 +330,7 @@
     <ClCompile Include="..\src\cpp\ui\trains\editloco.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\functionpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\lococontrolpanel.cpp" />
+    <ClCompile Include="..\src\cpp\ui\trains\resources.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\speedcontrol.cpp" />
     <ClCompile Include="..\src\cpp\utils\battery.cpp" />
     <ClCompile Include="..\src\cpp\utils\device.cpp" />
@@ -342,6 +343,8 @@
     <ClCompile Include="..\src\cpp\utils\string.cpp" />
     <ClCompile Include="..\src\cpp\utils\time.cpp" />
     <ClInclude Include="..\res\version.h" />
+    <ClInclude Include="..\src\cpp\ui\trains\resources.hpp" />
+    <ClInclude Include="..\src\cpp\utils\qobj.hpp" />
     <ClInclude Include="..\src\cpp\utils\traits.hpp" />
     <QtMoc Include="..\src\cpp\control\automation\clock.hpp" />
     <QtMoc Include="..\src\cpp\control\automation\item.hpp" />

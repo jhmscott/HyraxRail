@@ -120,6 +120,76 @@ private slots:
 
         QCOMPARE (findArrayIdx (TEST_ARRAY, 12), std::size (TEST_ARRAY));
         }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Simple test of the EnumRange and it's associated iterator
+    ///
+    /// @see    utils::algorithm::EnumRange
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void enumRangeTest ()
+        {
+        enum test
+            {
+            TEST_1,
+            TEST_2,
+            TEST_3,
+            TEST_4,
+            TEST_5
+            };
+
+        EnumRange range{ TEST_1, TEST_5 };
+
+        // Test of begin and end
+        QCOMPARE (*range.begin (), TEST_1);
+        QCOMPARE (*range.end (), TEST_5);
+
+        auto it = range.begin ();
+
+        // Test comparison operators
+        QCOMPARE (it, range.begin ());
+        QCOMPARE_NE (it, range.end ());
+
+        // Test iterator advancement
+        ++it;
+        QCOMPARE (*it, TEST_2);
+
+        it++;
+        QCOMPARE (*it, TEST_3);
+
+        ++it;
+        QCOMPARE (*it, TEST_4);
+
+        it++;
+        QCOMPARE (*it, TEST_5);
+
+        QCOMPARE (it, range.end ());
+        QCOMPARE_NE (it, range.begin ());
+
+
+        it--;
+        QCOMPARE (*it, TEST_4);
+
+        --it;
+        QCOMPARE (*it, TEST_3);
+
+        --it;
+        QCOMPARE (*it, TEST_2);
+
+        --it;
+        QCOMPARE (*it, TEST_1);
+
+        QCOMPARE (it, range.begin ());
+        QCOMPARE_NE (it, range.end ());
+
+        // Test advancement iterator order
+        QCOMPARE (it++, range.begin ());
+
+        auto it2 = it = range.begin ();
+        ++it2;
+
+        QCOMPARE (++it, it2);
+        }
     };
 
 

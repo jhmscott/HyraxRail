@@ -37,7 +37,8 @@
 ///
 /// @param[in]  token       Token to stringify
 ///
-/// @return     Stringified token
+/// @return     String-ified token
+///
 ///////////////////////////////////////////////////////////////////////////////
 #define UTILPP_STRINGIFY(token)         __UTILPP_STRINGIFY_IMPL(token)
 
@@ -81,3 +82,9 @@
 #define __UTILPP_STRINGIFY_IMPL(token)     #token
 
 /// @endcond
+
+#ifdef _MSVC_TRADITIONAL
+#if 1 == _MSVC_TRADITIONAL
+#error "pp.hpp requires standard preprocessor"
+#endif // 1 == _MSVC_TRADITIONAL
+#endif // _MSVC_TRADITIONAL
