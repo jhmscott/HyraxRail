@@ -1,6 +1,6 @@
 /**
  * @file        utils/resources.hpp
- * @brief       Helper functions for resolving resouce paths
+ * @brief       Helper functions for resolving resource paths
  * @author      Justin Scott
  * @date        2026-05-05
  *
@@ -14,6 +14,7 @@
 #include <QIcon>
 #include <QString>
 
+/// Helper functions for resolving resource paths
 namespace utils::resources
 {
 

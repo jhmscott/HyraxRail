@@ -15,6 +15,7 @@
 
 #include <QIcon>
 
+/// Common UI resources for actuators
 namespace ui::actuators::resources
 {
 

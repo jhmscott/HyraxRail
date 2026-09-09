@@ -17,6 +17,7 @@
 #include <bitset>
 #include <chrono>
 
+/// Time utilities
 namespace utils::time
 {
 
@@ -89,7 +90,7 @@ inline constexpr units ALL_UNITS{ (1 << NUM_UNITS) - 1 };
 template<class Duration>
 using system_time = std::chrono::time_point<std::chrono::system_clock, Duration>;
 
-
+/// Internal time namespace
 namespace internal
 {
 ///////////////////////////////////////////////////////////////////////////////

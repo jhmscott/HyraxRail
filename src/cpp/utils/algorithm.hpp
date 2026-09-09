@@ -18,9 +18,10 @@
 
 #include <common.hpp>
 
+/// Simple STL-style algorithms for use with containers, iterators and ranges
 namespace utils::algorithm
 {
-// Internal implementation details, don't use outside this header
+/// Internal implementation details, don't use outside this header
 namespace internal
 {
 ///////////////////////////////////////////////////////////////////////////////

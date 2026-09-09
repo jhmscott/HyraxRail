@@ -1,6 +1,6 @@
 /**
  * @file        utils/resources.cpp
- * @brief       Helper functions for resolving resouce paths
+ * @brief       Helper functions for resolving resource paths
  * @author      Justin Scott
  * @date        2026-05-10
  *

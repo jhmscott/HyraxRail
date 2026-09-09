@@ -982,7 +982,7 @@ BasicMultiPolygon<floating1 || floating2> operate (BasicPolygonView<floating1>  
                                                    BasicPolygonView<floating2>  pg2,
                                                    polyOp                       op);
 
-// Transformation functions for QPolygon and QPolygonF
+/// Transformation functions for QPolygon and QPolygonF
 namespace poly
 {
 

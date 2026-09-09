@@ -11,7 +11,7 @@
 
 #include <string>
 
-// Apple implementation of language utilities
+/// Apple implementation of language utilities
 namespace ui::lang::apple
 {
 

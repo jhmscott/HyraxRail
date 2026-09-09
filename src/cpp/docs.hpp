@@ -11,18 +11,41 @@
 
 #pragma once
 
+/*
+ ** Doxygen topics. Associate symbols with these using the @ingroup directive
+ */
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Doxygen groups
 ///
 /// @defgroup   META_CLASS          Meta-Classes
+/// Provides metadata and a mechanism for identifying and creating instances of
+/// classes.
+///
 /// @defgroup   META_CLASS_MACRO    Meta-Class Macros
+/// Macros to generate boiler plate for meta class instances.
+///
 /// @defgroup   SINGLETON           Singletons
+/// A design pattern that restricts a class to a single instance and a global
+/// accessor.
+///
 /// @defgroup   PIMPL               PImpl Implementation Classes
+/// Pointer to implementation class. Design pattern used to hide private members
+/// from the header file.
+///
 /// @defgroup   JNI_FUNC            Java Native Interface Functions
+/// Native C functions that are exposed so they can be accessed by Java code
+/// via the Java Native Interface (JNI).
+///
 /// @defgroup   UNIT_TEST           Unit Test Suites
+/// Unit test suite classes.
+///
 /// @defgroup   COMPONENT_DLG       Component Edit Dialogs
+/// Dialog boxes that provide the user interface to edit and create components
+/// from the layout framework.
+///
 /// @defgroup   APP_PANEL           Application Panels
+/// One of the top level application panels associated with a tab in the main
+/// widget.
 ///
 ///////////////////////////////////////////////////////////////////////////////
 

@@ -41,7 +41,7 @@
         base::changeEvent (event);                      \
         }
 
-// Language utilities
+/// UI Language utilities
 namespace ui::lang
 {
 

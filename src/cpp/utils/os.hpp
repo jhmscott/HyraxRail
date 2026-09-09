@@ -23,6 +23,7 @@
 
 class OsTest;
 
+/// OS utilities
 namespace utils::os
 {
 
@@ -123,6 +124,7 @@ bool isIPv6Available ();
 
 #if defined (Q_OS_WIN) || defined (DOXYGEN)
 
+/// Windows only OS utilities
 namespace win32
 {
 
