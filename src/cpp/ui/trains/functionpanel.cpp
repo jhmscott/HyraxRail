@@ -75,8 +75,7 @@ protected:
             bottomRight.rx () -= 10;
             bottomRight.ry () -= 10;
 
-            font.setPixelSize (9);
-
+            font.setPixelSize (utils::resources::FONT_SIZE_SMALL);
 
             painter.setFont (font);
             painter.setPen (darkMode ? Qt::white : Qt::black);
@@ -113,8 +112,8 @@ FunctionPanel::FunctionPanel (hAlignment align, QWidget* parent) :
             mainLayout->setAlignment (Qt::AlignRight | Qt::AlignTop);
             }
 
-        btn->setFixedSize (50, 50);
-        btn->setIconSize (QSize{ 30, 30 });
+        btn->setFixedSize (utils::resources::PUSHBUTTON_SIZE);
+        btn->setIconSize (utils::resources::ICON_SIZE_LARGE);
 
         connect (btn,
                 &QPushButton::toggled,

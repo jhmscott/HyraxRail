@@ -78,6 +78,11 @@ EditLocoDialog::EditLocoDialog (const control::ControllerManager&   manager,
     common::makeFrameless (*m_trash);
     common::makeFrameless (*m_plus);
 
+#ifdef Q_OS_ANDROID
+    m_trash->setIconSize (QSize{ 20, 20 });
+    m_plus->setIconSize  (QSize{ 20, 20 });
+#endif // Q_OS_ANDROID
+
     m_funcBar->setLayout (funcBarLayout);
     m_funcBar->setContentsMargins (0, 0, 0, 0);
 

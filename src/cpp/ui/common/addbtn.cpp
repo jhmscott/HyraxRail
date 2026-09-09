@@ -24,7 +24,7 @@ AddButton::AddButton (QWidget* parent) :
     m_plusLabel = new QLabel{ this };
 
 
-    plusIcon->setIconSize ((QSize{ 20, 20 }));
+    plusIcon->setIconSize (utils::resources::ICON_SIZE_NORMAL);
     plusIcon->setSizePolicy (QSizePolicy::Maximum,
                              QSizePolicy::Maximum);
 

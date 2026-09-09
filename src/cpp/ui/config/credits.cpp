@@ -176,7 +176,7 @@ CreditsDialog::CreditsDialog (QWidget* parent) :
 
     m_licTitle->setFont (boldFont);
 
-    back->setIconSize (QSize{ 20, 20 });
+    back->setIconSize (utils::resources::ICON_SIZE_NORMAL);
     back->setShortcut (QKeySequence::Back);
 
     navLayout->addWidget (back,         0, Qt::AlignLeft);

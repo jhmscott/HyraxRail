@@ -41,8 +41,8 @@ ActuatorButton::ActuatorButton (const layout::Actuator&     actuator,
 
     m_name = new QLabel{ actuator.getName ().c_str (), this };
 
-    m_button->setFixedSize (50, 50);
-    m_button->setIconSize (QSize{ 30, 30 });
+    m_button->setFixedSize (utils::resources::PUSHBUTTON_SIZE);
+    m_button->setIconSize (utils::resources::ICON_SIZE_LARGE);
 
     m_name->setAlignment (Qt::AlignTop);
 

@@ -60,7 +60,14 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
     m_proto = new common::SchemeIconButton{ proto.icon, this };
 
     m_proto->setToolTip (proto.description);
-    m_proto->setIconSize (QSize{ 40, 30 });
+    m_proto->setIconSize (
+#ifdef Q_OS_ANDROID
+        QSize{ 60, 45 }
+#else
+        QSize{ 40, 30 }
+#endif // Q_OS_ANDROID
+
+    );
     m_proto->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
 
     common::makeFrameless (*m_proto);
@@ -72,14 +79,14 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
     common::PointedIconButton* edit = new common::PointedIconButton{ "misc/pencil", this };
 
     edit->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
-    edit->setIconSize (QSize{ 20, 20 });
+    edit->setIconSize (utils::resources::ICON_SIZE_NORMAL);
     common::makeFrameless (*edit);
 
 
     common::PointedIconButton* deleteBtn = new common::PointedIconButton{ "misc/trash", this };
 
     deleteBtn->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
-    deleteBtn->setIconSize (QSize{ 20, 20 });
+    deleteBtn->setIconSize (utils::resources::ICON_SIZE_NORMAL);
     common::makeFrameless (*deleteBtn);
 
     connect (m_locos,

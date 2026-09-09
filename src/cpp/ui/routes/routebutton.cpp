@@ -37,8 +37,8 @@ RouteButton::RouteButton (const layout::Route&          route,
 
     m_route.request ();
 
-    button->setFixedSize (50, 50);
-    button->setIconSize (QSize{ 30, 30 });
+    button->setFixedSize (utils::resources::PUSHBUTTON_SIZE);
+    button->setIconSize (utils::resources::ICON_SIZE_LARGE);
     button->setStyleSheet ("QPushButton:pressed { background-color: royalblue; }");
 
     common::refreshStyleSheetOnColorSchemeChange (*button);

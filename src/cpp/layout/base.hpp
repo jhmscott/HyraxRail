@@ -295,7 +295,7 @@ public:
     using componentBase_t   = ComponentDerived<typename component_t::controller_t,
                                                typename component_t::state_t>;
 
-    friend class componentBase_t;
+    friend componentBase_t;
 
     static_assert (std::is_base_of_v<componentBase_t, Component>,
                    "Component must derive from ComponentBase");

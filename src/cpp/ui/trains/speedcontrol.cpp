@@ -34,7 +34,7 @@ SpeedControlWidget::SpeedControlWidget (QWidget* parent) :
                     this
                     };
 
-    m_stop->setIconSize (QSize{ 50, 50 });
+    m_stop->setIconSize (utils::resources::ICON_SIZE_XL);
     common::makeFrameless (*m_stop);
 
     m_slider    = new common::CenteredSlider{ Qt::Vertical, this };
@@ -56,7 +56,13 @@ SpeedControlWidget::SpeedControlWidget (QWidget* parent) :
     QString family  = QFontDatabase::applicationFontFamilies (id).at (0);
     QFont   font{ family };
 
-    font.setPointSize (30);
+    font.setPointSize (
+#ifdef Q_OS_ANDROID
+        45
+#else
+        30
+#endif // Q_OS_ANDROID
+    );
 
     m_label->setFont (font);
 

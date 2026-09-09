@@ -20,10 +20,6 @@
 
 namespace ui
 {
-
-/// Size of the icon in pixels
-static constexpr int ICON_SIZE = 20;
-
 ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* parent, bool includeDelete) :
     QWidget (parent),
     m_controller (controller)
@@ -50,14 +46,14 @@ ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* pa
     m_stop = new QPushButton{ icon, "", this };
     common::makeFrameless (*m_stop);
 
-    m_stop->setIconSize (QSize{ ICON_SIZE, ICON_SIZE });
+    m_stop->setIconSize (utils::resources::ICON_SIZE_NORMAL);
     m_stop->setCheckable (true);
     // m_stop->setTooltips ("Go", "Emergency Stop");
 
-    m_connectionIcon->setIconSize (QSize{ ICON_SIZE, ICON_SIZE });
+    m_connectionIcon->setIconSize (utils::resources::ICON_SIZE_NORMAL);
     ui::common::makeFrameless (*m_connectionIcon);
 
-    m_settings->setIconSize (QSize{ ICON_SIZE, ICON_SIZE });
+    m_settings->setIconSize (utils::resources::ICON_SIZE_NORMAL);
     common::makeFrameless (*m_settings);
 
     m_nameLabel = new QLabel{ NULL == controller ? "-" : controller->getFriendlyName ().c_str (), this};
@@ -77,7 +73,7 @@ ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* pa
     if (includeDelete)
         {
         deleteBtn = new common::PointedIconButton{ "misc/trash", this };
-        deleteBtn->setIconSize (QSize{ ICON_SIZE, ICON_SIZE });
+        deleteBtn->setIconSize (utils::resources::ICON_SIZE_NORMAL);
 
         common::makeFrameless (*deleteBtn);
 

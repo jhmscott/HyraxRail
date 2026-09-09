@@ -110,6 +110,10 @@ SchemeComboBox::SchemeComboBox (QWidget* parent) :
     {
     refreshStyleSheetOnColorSchemeChange (*this);
 
+#ifdef Q_OS_ANDROID
+    setIconSize (QSize{ 20, 20 });
+#endif // Q_OS_ANDROID
+
     connect (qApp->styleHints (),
             &QStyleHints::colorSchemeChanged,
              this,

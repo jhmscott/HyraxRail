@@ -174,6 +174,15 @@ public:
                   const QVariant&               userData = QVariant{})
         { insertItem (count (), icon, text, userData); }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Insert an item to the combo box with an icon at a given index
+    ///
+    /// @param[in]  idx         Index to insert at
+    /// @param[in]  icon        Scheme aware icon
+    /// @param[in]  text        Item text
+    /// @param[in]  userData    Item user data
+    ///
+    //////////////////////////////////////////////////////////////////////////////
     void insertItem (int                            idx,
                      const utils::resources::Icon&  icon,
                      const QString&                 text,

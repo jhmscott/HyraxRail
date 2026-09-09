@@ -18,6 +18,15 @@
 namespace utils::resources
 {
 
+/// Small font size
+inline constexpr int FONT_SIZE_SMALL =
+#ifdef Q_OS_ANDROID
+    14;
+#else
+    9;
+#endif // Q_OS_ANDROID
+
+
 /// Font size used by "large" text labels
 inline constexpr int FONT_SIZE_LARGE =
 #ifdef Q_OS_ANDROID
@@ -26,6 +35,36 @@ inline constexpr int FONT_SIZE_LARGE =
     16;
 #endif // Q_OS_ANDROID
 
+/// Size of an icon, used with frameless buttons
+inline constexpr QSize ICON_SIZE_NORMAL =
+#ifdef Q_OS_ANDROID
+    { 30, 30 };
+#else
+    { 20, 20 };
+#endif
+
+/// Size of a large icon, used with pushbuttons
+inline constexpr QSize ICON_SIZE_LARGE =
+#ifdef Q_OS_ANDROID
+    { 45, 45 };
+#else
+    { 30, 30 };
+#endif
+
+inline constexpr QSize ICON_SIZE_XL =
+#ifdef Q_OS_ANDROID
+    { 75, 75 };
+#else
+    { 50, 50 };
+#endif
+
+/// Size of a standard, framed pushbutton
+inline constexpr QSize PUSHBUTTON_SIZE =
+#ifdef Q_OS_ANDROID
+    { 75, 75 };
+#else
+    { 50, 50 };
+#endif
 
 /// Resource type
 enum type
