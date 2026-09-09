@@ -99,6 +99,75 @@
         <source>Monthly Alarm</source>
         <translation>Báo thức hàng tháng</translation>
     </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="21"/>
+        <source>Headlight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="23"/>
+        <source>Cabin Lighting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="27"/>
+        <source>Horn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="29"/>
+        <source>Brakes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="31"/>
+        <source>Coupling Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="33"/>
+        <source>Generic Sounds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="35"/>
+        <source>Operating Sounds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="39"/>
+        <source>Pantograph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="41"/>
+        <source>ABV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="43"/>
+        <source>Slow Locomotive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>layout::Locomotive</name>
+    <message>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="94"/>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="101"/>
+        <source>Function %1 : %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="102"/>
+        <source>Headlights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="106"/>
+        <source>Function %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ui::ControllerInfo</name>
@@ -766,57 +835,79 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::trains::EditLocoDialog</name>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="117"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="252"/>
         <source>Edit Locomotive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="117"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="252"/>
         <source>Add Locomotive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="119"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="254"/>
+        <source>Function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="256"/>
         <source>Controller</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="120"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="257"/>
         <source>Name</source>
-        <translation type="unfinished">Tên</translation>
+        <translation>Tên</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="122"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="259"/>
         <source>Address</source>
         <translation type="unfinished">Địa Chỉ</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="121"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="260"/>
+        <source>Functions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="263"/>
+        <source>Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="324"/>
+        <source>Lights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="329"/>
+        <source>Sounds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="334"/>
+        <source>Miscellaneous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="460"/>
+        <source>Delete Function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="461"/>
+        <source>Would you like to delete %1?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="258"/>
         <source>Protocol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="262"/>
         <source>Icon</source>
-        <translation type="obsolete">Biểu Tượng</translation>
-    </message>
-</context>
-<context>
-    <name>ui::trains::FunctionPanel</name>
-    <message>
-        <location filename="../../src/cpp/ui/trains/functionpanel.cpp" line="237"/>
-        <source>Function %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/cpp/ui/trains/functionpanel.cpp" line="233"/>
-        <source>Headlights</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/cpp/ui/trains/functionpanel.cpp" line="226"/>
-        <location filename="../../src/cpp/ui/trains/functionpanel.cpp" line="233"/>
-        <source>Function %1 : %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Biểu Tượng</translation>
     </message>
 </context>
 <context>

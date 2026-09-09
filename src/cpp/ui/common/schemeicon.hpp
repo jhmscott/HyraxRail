@@ -171,7 +171,13 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     void addItem (const utils::resources::Icon& icon,
                   const QString&                text,
-                  const QVariant&               userData = QVariant{});
+                  const QVariant&               userData = QVariant{})
+        { insertItem (count (), icon, text, userData); }
+
+    void insertItem (int                            idx,
+                     const utils::resources::Icon&  icon,
+                     const QString&                 text,
+                     const QVariant&                userData = QVariant{});
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the scheme independent icon path for a given icon

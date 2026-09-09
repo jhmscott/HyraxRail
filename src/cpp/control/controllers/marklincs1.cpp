@@ -497,6 +497,37 @@ bool MarklinCS1::isEStopped ()
     return eStop;
     }
 
+uint MarklinCS1::getNumberOfFunctions (layout::trackProtocol proto) const
+    {
+    uint numFunc = 0;
+
+    switch (proto)
+        {
+        case layout::TRACK_PROTO_MFX:
+            {
+            numFunc = 16;
+            break;
+            }
+        case layout::TRACK_PROTO_MM28:
+        case layout::TRACK_PROTO_MM27:
+            {
+            numFunc = 5;
+            break;
+            }
+        case layout::TRACK_PROTO_MM14:
+            {
+            numFunc = 1;
+            break;
+            }
+        default:
+            {
+            qDebug () << "Unsupported protocol";
+            }
+        }
+
+    return numFunc;
+    }
+
 
 layout::Actuator MarklinCS1::getActuatorSingle (size_t id) const
     {

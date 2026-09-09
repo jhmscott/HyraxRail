@@ -117,17 +117,18 @@ SchemeComboBox::SchemeComboBox (QWidget* parent) :
 
     }
 
-void SchemeComboBox::addItem (const utils::resources::Icon& icon,
-                              const QString&                text,
-                              const QVariant&               userData)
-    {
-    int idx = count ();
 
-    QComboBox::addItem (icon.toIcon (qApp->
-                                        styleHints ()->
-                                            colorScheme ()),
-                        text,
-                        userData);
+void SchemeComboBox::insertItem (int                            idx,
+                                 const utils::resources::Icon&  icon,
+                                 const QString&                 text,
+                                 const QVariant&                userData)
+    {
+    QComboBox::insertItem (idx,
+                           icon.toIcon (qApp->
+                                     styleHints ()->
+                                     colorScheme ()),
+                            text,
+                            userData);
 
     // Store the source icon in user data, so we can update the scheme on the fly
     setItemData (idx, QVariant::fromValue (icon), schemeIcon);

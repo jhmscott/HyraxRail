@@ -102,6 +102,7 @@ public:
 
     virtual const layout::LocomotiveControllerMetaClass& getLocoMetaClass () const override { return {}; }
 
+    virtual uint getNumberOfFunctions (layout::trackProtocol proto) const override { return 0; }
 private:
 
     virtual void setSpeed (size_t id, int8_t speed) override {}

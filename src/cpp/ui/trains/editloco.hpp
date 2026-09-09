@@ -1,14 +1,26 @@
+/**
+ * @file        tains/editloco.hpp
+ * @brief       Dialog box to create or edit a locomotive
+ * @author      Justin Scott
+ * @date        2026-08-22
+ *
+ * @copyright   Copyright (c) 2026 Justin Scott
+ */
+
 #pragma once
 
 #include <control/controllers/base.hpp>
 #include <control/controllers/manager.hpp>
 
 #include <ui/common/formdialog.hpp>
+#include <ui/common/pointedwidget.hpp>
 #include <ui/common/schemeicon.hpp>
+#include <ui/common/tiereddropdown.hpp>
 #include <ui/lang.hpp>
 
 #include <QComboBox>
 #include <QFormLayout>
+#include <QGroupBox>
 #include <QLineEdit>
 #include <QSpinBox>
 
@@ -90,16 +102,43 @@ public:
     layout::trackProtocol getProtocol () const
         { return m_protocol->currentData ().value<layout::trackProtocol> (); }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the locomotive functions
+    ///
+    /// @return     List of functions
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::vector<layout::funcInfo> getFunctions () const;
+
 private:
-    const control::ControllerManager&   m_manager;      ///< List of controllers
-    QFormLayout*                        m_form;         ///< Locomotive form
-    QWidget*                            m_controller;   ///< Controller widget (static label or dropdown)
-    QComboBox*                          m_controllerCb; ///< Controller dropdown
-    QLineEdit*                          m_name;         ///< Locomotive name
-    QSpinBox*                           m_address;      ///< Locomotive track address
-    common::SchemeComboBox*             m_protocol;     ///< Locomotive track protocol
-    bool                                m_edit;         ///< True if we are editing a loco
-                                                        ///  False if we are creating one
+    const control::ControllerManager&   m_manager;          ///< List of controllers
+    const control::ControllerBase*      m_controller;       ///< Controller being used
+
+    // Forms
+    QFormLayout*                        m_form;             ///< Locomotive form
+    QFormLayout*                        m_funcForm;         ///< Function form
+
+    // Locomotive fields
+    QWidget*                            m_controllerWdgt;   ///< Controller widget (static label or dropdown)
+    QComboBox*                          m_controllerCb;     ///< Controller dropdown
+    QLineEdit*                          m_name;             ///< Locomotive name
+    QSpinBox*                           m_address;          ///< Locomotive track address
+    common::SchemeComboBox*             m_protocol;         ///< Locomotive track protocol
+
+    // Function bar field
+    QWidget*                            m_funcBar;          ///< Function bar widget
+                                                            ///  Contains dropdown, add and delete
+    common::SchemeComboBox*             m_functions;        ///< List of available functions
+    common::PointedIconButton*          m_plus;             ///< Add function
+    common::PointedIconButton*          m_trash;            ///< Delete function
+
+    // Function fields
+    QGroupBox*                          m_functionGroup;
+    common::TieredDropdown*             m_funcIcons;        ///< List of function icon
+    QComboBox*                          m_funcNumbers;      ///< List of function numbers
+
+    bool                                m_edit;             ///< True if we are editing a loco
+                                                            ///  False if we are creating one
 
     UILANG_ON_CHANGE (common::FormDialog, setLabels ())
 
@@ -148,6 +187,54 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     void limitAddress ();
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Populate the function icon dropdown
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void populateFunctionIcons ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Populate the function number dropdown
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void populateFunctionNumbers ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Refresh the function number dropdown
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void refreshFunctionNumbers ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the function fields to match a given function in the dropdown
+    ///
+    /// @param[in]  idx     Function dropdown index
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setFunctionFields (int idx);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Read the values from the function field and update the currently selected
+    /// function
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void readFunctionFields ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Update the enabled/disabled state of the add/delete function buttons
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void updateButtonStates ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the maximum number of functions available with the current combination
+    /// of controller and track protocol
+    ///
+    /// @return     Max number of locomotive function
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    uint getMaxFunctions () const;
+
 private slots:
     ///////////////////////////////////////////////////////////////////////////////
     /// Called when the user changes the controller
@@ -164,6 +251,27 @@ private slots:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void onProtocolChange (int idx);
+
+    /////////////////////////////////////////////////////////////////////////////
+    /// Called when the user selects a function from the dropdown
+    ///
+    /// @param[in]  idx     Index of selected function
+    ///
+    /////////////////////////////////////////////////////////////////////////////
+    void onFunctionChange (int idx);
+
+    /////////////////////////////////////////////////////////////////////////////
+    /// Prompt the user to delete a function
+    ///
+    /////////////////////////////////////////////////////////////////////////////
+    void deleteFunction ();
+
+    /////////////////////////////////////////////////////////////////////////////
+    /// Add a new function to the combobox
+    ///
+    /////////////////////////////////////////////////////////////////////////////
+    void addFunction ();
+
     };
 
 } // namespace ui::trains

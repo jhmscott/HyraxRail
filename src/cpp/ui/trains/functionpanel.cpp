@@ -8,9 +8,11 @@
  * @copyright   Copyright (c) 2026 Justin Scott
  */
 
-#include <ui/trains/functionpanel.hpp>
 #include <ui/common/autogrid.hpp>
 #include <ui/common/pointedwidget.hpp>
+
+#include <ui/trains/functionpanel.hpp>
+#include <ui/trains/resources.hpp>
 
 #include <QApplication>
 #include <QPainter>
@@ -130,27 +132,6 @@ FunctionPanel::FunctionPanel (hAlignment align, QWidget* parent) :
 
 void FunctionPanel::setLocomotive (const layout::Locomotive& loco)
     {
-    static utils::resources::Icon ICONS[] =
-        {
-        // lights
-        "functions/headlights",        ///< ICON_FUNC_LIGHT_HEADLIGHT,
-        "functions/lightbulb",         ///< ICON_FUNC_LIGHT_CAB
-
-        // Sound
-        "functions/megaphone",         ///< ICON_FUNC_SOUND_HORN
-        "functions/tire",              ///< ICON_FUNC_SOUND_BRAKES
-        "functions/plugs-connected",   ///< ICON_FUNC_SOUND_COUPLING
-        "functions/speaker-high",      ///< ICON_FUNC_SOUND_GENERIC
-        "functions/engine",            ///< ICON_FUNC_SOUND_OPERATING
-
-        // Misc
-        "functions/radical",
-        "functions/chart-line-up",
-        "functions/snail",
-        };
-    ASSERT_ARRAY_LENGTH (ICONS, layout::funcInfo::NUM_TRUE_ICONS);
-
-
     m_loco = loco;
 
     auto functions = m_loco.getFunctions ();
@@ -194,7 +175,7 @@ void FunctionPanel::setLocomotive (const layout::Locomotive& loco)
                 m_btns[idx]->setInstanceNum (0);
                 }
 
-            m_btns[idx]->setIcon (ICONS[icon]);
+            m_btns[idx]->setIcon (resources::getFunctionInfo (icon).icon);
             m_btns[idx]->setText ("");
             }
 
@@ -219,23 +200,9 @@ void FunctionPanel::clear ()
 
 void FunctionPanel::setTooltips ()
     {
-    for (auto& [name, _, idx, __] : m_loco.getFunctions ())
+    for (const layout::funcInfo& func : m_loco.getFunctions ())
         {
-        if (not name.empty ())
-            {
-            m_btns[idx]->setToolTip (tr ("Function %1 : %2").arg (idx).arg (name.c_str ()));
-            }
-        // Function 0 is pretty universally the main headlight
-        else if (0 == idx)
-            {
-            static constexpr const int id0 = 0;
-
-            m_btns[idx]->setToolTip (tr ("Function %1 : %2").arg (id0).arg (tr ("Headlights")));
-            }
-        else
-            {
-            m_btns[idx]->setToolTip (tr ("Function %1").arg (idx));
-            }
+        m_btns[func.id]->setToolTip (func.uiName ());
         }
     }
 

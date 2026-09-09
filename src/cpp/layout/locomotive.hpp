@@ -50,25 +50,47 @@ struct funcInfo
     enum icon_t
         {
         // Lights
-        ICON_FUNC_LIGHT_HEADLIGHT,  ///< Headlight
+        ICON_FUNC_LIGHT_START,      ///< Delimeter only, start of light functions
+        ICON_FUNC_LIGHT_HEADLIGHT = ///< Headlight
+                                    ///  @image html headlights.svg width=32
+                        ICON_FUNC_LIGHT_START,
         ICON_FUNC_LIGHT_CAB,        ///< Cabin lighting
+                                    ///  @image html lightbulb.svg width=32
+        ICON_FUNC_LIGHT_END,        ///< Delimeter only, end of light functions
 
         // Sound
-        ICON_FUNC_SOUND_HORN,       ///< Horn Sound effect
+        ICON_FUNC_SOUND_START =     ///< Delimeter only, start of sound functions
+                        ICON_FUNC_LIGHT_END,
+        ICON_FUNC_SOUND_HORN =      ///< Horn Sound effect
+                                    ///  @image html megaphone.svg width=32
+                        ICON_FUNC_SOUND_START,
         ICON_FUNC_SOUND_BRAKES,     ///< Brake sound effect
+                                    ///  @image html tire.svg width=32
         ICON_FUNC_SOUND_COUPLING,   ///< Train coupling sound effect
+                                    ///  @image html plugs-connected.svg width=32
         ICON_FUNC_SOUND_GENERIC,    ///< Generic sound effect symbol
+                                    ///  @image html speaker-high.svg width=32
         ICON_FUNC_SOUND_OPERATING,  ///< Operating sound effects
+                                    ///  @image html engine.svg width=32
+        ICON_FUNC_SOUND_END,        ///< Delimeter only, end of sound functions
 
         // Miscellaneous
-        ICON_FUNC_MISC_PANTOGRAPH,  ///< Raise/lower the locomotive pantograph
+        ICON_FUNC_MISC_START =      ///< Delimeter only, start of misc functions
+                        ICON_FUNC_SOUND_END,
+        ICON_FUNC_MISC_PANTOGRAPH = ///< Raise/lower the locomotive pantograph
+                                    ///  @image html radical.svg width=32
+                        ICON_FUNC_MISC_START,
         ICON_FUNC_MISC_ABV,         ///< ABV? Can't remember this one
+                                    ///  @image html chart-line-up.svg width=32
         ICON_FUNC_MISC_SLOW,        ///< Slow the locomotive
+                                    ///  @image html snail.svg width=32
+        ICON_FUNC_MISC_END,         ///< Delimeter only, end of misc functions
 
-        NUM_TRUE_ICONS,             ///< Number of true icons. Delimiter only
+        NUM_TRUE_ICONS =            ///< Number of true icons. Delimiter only
+                        ICON_FUNC_MISC_END,
 
         ICON_FUNC_NUMBER =          ///< Use the function number as the icon
-            NUM_TRUE_ICONS,
+                        NUM_TRUE_ICONS,
 
         NUM_TOTAL_ICONS             ///< Delimiter only
         };
@@ -77,6 +99,40 @@ struct funcInfo
     icon_t      icon;               ///< UI Symbol
     uint8_t     id;                 ///< Function number
     bool        state;              ///< Current state
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Comparison operation
+    ///
+    /// @param[in]  other       Function to compare to
+    ///
+    /// @return     true if other equals this
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool operator== (const funcInfo& other) const
+        {
+        return name == other.name &&
+               icon == other.icon &&
+               id   == other.icon &&
+               state== other.state;
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Comparison operation
+    ///
+    /// @param[in]  other       Function to compare to
+    ///
+    /// @return     true if other does not equals this
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool operator!= (const funcInfo& other) const { return !(*this == other); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the name of this function to display in the UI
+    ///
+    /// @return     Formatted function name
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    QString uiName () const;
     };
 
 // forward declare
@@ -250,6 +306,16 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual const LocomotiveControllerMetaClass& getLocoMetaClass () const = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the number of functions available for a given protocol on this controller
+    ///
+    /// @param[in]  proto   Protocol to get number of functions for
+    ///
+    /// @return     Number of functions available for that protocol
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual uint getNumberOfFunctions (trackProtocol proto) const = 0;
 
     // private so only the locomotive class may call these functions
 private:

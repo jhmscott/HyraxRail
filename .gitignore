@@ -46,6 +46,7 @@
 # Visual Studio Temp Files
 .vs/
 visualstudio/intermediate/
+visualstudio/vcpkg_installed/
 *.aps
 
 # Qt Creator Temp files

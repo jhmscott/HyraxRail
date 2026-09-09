@@ -84,4 +84,28 @@ void Locomotive::remove ()
     destroyThis ();
     deregister ();
     }
+
+QString funcInfo::uiName () const
+    {
+    QString friendlyName;
+
+    if (not name.empty ())
+        {
+        friendlyName = Locomotive::tr ("Function %1 : %2").arg (id).arg (name.c_str ());
+        }
+    // Function 0 is pretty universally the main headlight
+    else if (0 == id)
+        {
+        static constexpr const int id0 = 0;
+
+        friendlyName = Locomotive::tr ("Function %1 : %2").
+                                         arg (id0).arg (Locomotive::tr ("Headlights"));
+        }
+    else
+        {
+        friendlyName = Locomotive::tr ("Function %1").arg (id);
+        }
+
+    return friendlyName;
+    }
 }
