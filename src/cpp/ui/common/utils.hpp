@@ -44,7 +44,9 @@ void setComboBoxIndexByUserData (QComboBox& cb, const T& ud, bool notify = true)
         {
         auto variant = cb.itemData (ii);
 
-        if (variant.isValid () && variant.value<T> () == ud)
+        if (variant.isValid ()          &&
+            variant.canConvert<T> ()    &&
+            variant.value<T> () == ud)
             {
             cb.setCurrentIndex (ii);
             break;

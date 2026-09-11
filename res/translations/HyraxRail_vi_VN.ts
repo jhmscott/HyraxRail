@@ -835,77 +835,77 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::trains::EditLocoDialog</name>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="252"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="257"/>
         <source>Edit Locomotive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="252"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="257"/>
         <source>Add Locomotive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="254"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="259"/>
         <source>Function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="256"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="261"/>
         <source>Controller</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="257"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="262"/>
         <source>Name</source>
         <translation>Tên</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="259"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="264"/>
         <source>Address</source>
         <translation type="unfinished">Địa Chỉ</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="260"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="265"/>
         <source>Functions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="263"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="268"/>
         <source>Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="324"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="329"/>
         <source>Lights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="329"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="334"/>
         <source>Sounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="334"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="339"/>
         <source>Miscellaneous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="460"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="465"/>
         <source>Delete Function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="461"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="466"/>
         <source>Would you like to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="258"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="263"/>
         <source>Protocol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="262"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="267"/>
         <source>Icon</source>
         <translation type="unfinished">Biểu Tượng</translation>
     </message>

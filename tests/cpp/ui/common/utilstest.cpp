@@ -21,6 +21,13 @@
 
 using namespace ui::common;
 
+/// Custom user data type for combobox tests
+struct customData
+    {
+    int myInt;
+
+    bool operator== (const customData& other) const { return myInt == other.myInt; }
+    };
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Template function to test setFormRowText() with an arbitrary field type
@@ -207,6 +214,166 @@ private slots:
 
         // No top level menu should be open
         QCOMPARE (getTopLevelWidget<QMenu> (),          NULL);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test refreshing the combobox contents, with one item with the same user data
+    ///
+    /// @see    ui::common::refreshComboboxItems()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void refreshComboboxTest ()
+        {
+        QComboBox   cb;
+
+        cb.addItem ("Test 1", 1);
+        cb.addItem ("Test 2", 2);
+        cb.addItem ("Test 3", 3);
+        cb.addItem ("Test 4", 4);
+        cb.addItem ("Test 5", 5);
+
+        cb.setCurrentIndex (2); // Should set this to test 3
+
+        QSignalSpy  spy{ &cb, &QComboBox::currentIndexChanged };
+
+        // Re-fill the combobox
+        refreshComboboxItems (cb,
+            [&] () -> void
+            {
+            cb.addItem ("Test 6", 6);
+            cb.addItem ("Test 7", 7);
+            cb.addItem ("Test 8", 8);
+            cb.addItem ("Test 9", 9);
+            cb.addItem ("Test 10", 3); // New "test 3"
+            cb.addItem ("Test 11", 11);
+            });
+
+        // Since Test 10 is the new Test 3 (based on user data)
+        // We shouldn't see an index changed signal
+        //
+        QCOMPARE (spy.count (), 0);
+        QCOMPARE (cb.currentIndex (), 4);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test refreshing the combobox contents, with the currently selected item not
+    /// in the new set of items
+    ///
+    /// @see    ui::common::refreshComboboxItems()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void refreshComboboxCurrentSelectionRemovedTest ()
+        {
+        QComboBox   cb;
+
+        cb.addItem ("Test 1", 1);
+        cb.addItem ("Test 2", 2);
+        cb.addItem ("Test 3", 3);
+        cb.addItem ("Test 4", 4);
+        cb.addItem ("Test 5", 5);
+
+        cb.setCurrentIndex (2); // Should set this to test 3
+
+        QSignalSpy  spy{ &cb, &QComboBox::currentIndexChanged };
+
+        // Re-fill the combobox
+        refreshComboboxItems (cb,
+            [&] () -> void
+            {
+            cb.addItem ("Test 6", 6);
+            cb.addItem ("Test 7", 7);
+            cb.addItem ("Test 8", 8);
+            cb.addItem ("Test 9", 9);
+            cb.addItem ("Test 10", 10);
+            cb.addItem ("Test 11", 11);
+            });
+
+        // Theres is no item with data 3, so we should return to item 1,
+        // and signal that it has changed
+        //
+        QCOMPARE (spy.count (), 1);
+        QCOMPARE (cb.currentIndex (), 0);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for setComboBoxIndexByUserDataTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setComboBoxIndexByUserDataTest_data ()
+        {
+        QTest::addColumn<bool> ("notify");
+
+        QTest::newRow ("Notify") << true;
+        QTest::newRow ("Block")  << false;
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Tests setting the combobox index to a given user data value
+    ///
+    /// @see    ui::common::setComboBoxIndexByUserData()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setComboBoxIndexByUserDataTest ()
+        {
+        QFETCH (bool, notify);
+
+        QComboBox   cb;
+
+        cb.addItem ("Test 1", QVariant::fromValue (customData{ 1 }));
+        cb.addItem ("Test 2", QVariant::fromValue (customData{ 2 }));
+        cb.addItem ("Test 3", QVariant::fromValue (customData{ 3 }));
+        cb.addItem ("Test 4", QVariant::fromValue (customData{ 4 }));
+        cb.addItem ("Test 5", QVariant::fromValue (customData{ 5 }));
+
+        QSignalSpy  spy{ &cb, &QComboBox::currentIndexChanged };
+
+        // Test user data we have an item for
+        setComboBoxIndexByUserData (cb, customData{ 4 }, notify);
+
+        QCOMPARE (cb.currentIndex (), 3);
+
+        if (notify)
+            {
+            QCOMPARE (spy.count (), 1);
+            }
+        else
+            {
+            QCOMPARE (spy.count (), 0);
+            }
+
+        spy.clear ();
+
+        // Test user data we have don't have an item for
+        setComboBoxIndexByUserData (cb, customData{ 6 }, true);
+
+        QCOMPARE (cb.currentIndex (), 3);
+        QCOMPARE (spy.count (), 0);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Tests settting the combobox index by user data, when the items have
+    /// inconsistent and sometimes non-existent user data
+    ///
+    /// @see    ui::common::setComboBoxIndexByUserData()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setComboBoxIndexByUserDataInvalidUserDataTest ()
+        {
+        QComboBox   cb;
+
+        cb.addItem ("Test 1");                                          // no user data
+        cb.addItem ("Test 2", "Test 2 data");                           // different data type
+        cb.addItem ("Test 3", QVariant::fromValue (customData{ 1 }));   // Same data type, different value
+        cb.addItem ("Test 4", QVariant::fromValue (customData{ 0 }));   // The one we're looking for!
+        cb.addItem ("Test 5", QVariant::fromValue (customData{ 2 }));   // Another dud
+
+        QSignalSpy  spy{ &cb, &QComboBox::currentIndexChanged };
+
+        // Testing with 0, to make sure that empty variants aren't confused with 0
+        setComboBoxIndexByUserData (cb, customData{ 0 });
+
+        QCOMPARE (cb.currentIndex (), 3);
+        QCOMPARE (spy.count (), 1);
         }
     };
 
