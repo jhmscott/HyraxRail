@@ -43,6 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "layout", "layout", "{C1E18B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "testutils", "testutils", "{78E57CD6-878C-44A7-855B-A53346DD19C4}"
 	ProjectSection(SolutionItems) = preProject
+		..\tests\cpp\testutils\assert.hpp = ..\tests\cpp\testutils\assert.hpp
 		..\tests\cpp\testutils\logspy.hpp = ..\tests\cpp\testutils\logspy.hpp
 		..\tests\cpp\testutils\mockcontroller.hpp = ..\tests\cpp\testutils\mockcontroller.hpp
 		..\tests\cpp\testutils\ui.hpp = ..\tests\cpp\testutils\ui.hpp
@@ -72,6 +73,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pp", "tests\pp.vcxproj", "{32C5F1C1-5C08-4C2A-A44D-3BF75E3A6729}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qobj", "tests\qobj.vcxproj", "{A4293BAA-6C5E-413A-B99B-D3DDA46F5ECE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "schemeicon", "tests\schemeicon.vcxproj", "{9689D14A-BF7E-4343-897D-C08D0F0E9CCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -158,6 +161,10 @@ Global
 		{A4293BAA-6C5E-413A-B99B-D3DDA46F5ECE}.Release|x64.ActiveCfg = Release|x64
 		{A4293BAA-6C5E-413A-B99B-D3DDA46F5ECE}.Test|x64.ActiveCfg = Test|x64
 		{A4293BAA-6C5E-413A-B99B-D3DDA46F5ECE}.Test|x64.Build.0 = Test|x64
+		{9689D14A-BF7E-4343-897D-C08D0F0E9CCA}.Debug|x64.ActiveCfg = Debug|x64
+		{9689D14A-BF7E-4343-897D-C08D0F0E9CCA}.Release|x64.ActiveCfg = Release|x64
+		{9689D14A-BF7E-4343-897D-C08D0F0E9CCA}.Test|x64.ActiveCfg = Test|x64
+		{9689D14A-BF7E-4343-897D-C08D0F0E9CCA}.Test|x64.Build.0 = Test|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -192,6 +199,7 @@ Global
 		{8CE68F83-044B-4F9C-B7E1-F19FA89F62C6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{32C5F1C1-5C08-4C2A-A44D-3BF75E3A6729} = {E7603EE2-0F6A-4991-9C02-5C69E3D99F69}
 		{A4293BAA-6C5E-413A-B99B-D3DDA46F5ECE} = {E7603EE2-0F6A-4991-9C02-5C69E3D99F69}
+		{9689D14A-BF7E-4343-897D-C08D0F0E9CCA} = {E1A3BEC1-DC5A-486C-881F-7BAF9230949F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4ACFF0E3-DFF5-489E-866F-8829724F0C54}

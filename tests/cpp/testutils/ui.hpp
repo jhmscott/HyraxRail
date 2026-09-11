@@ -7,6 +7,7 @@
  * @copyright   Copyright (c) 2026 Justin Scott
  */
 
+#pragma once
 
 #include <common.hpp>
 
