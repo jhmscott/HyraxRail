@@ -24,6 +24,17 @@
 #define COMPARE_PIXMAPS(actual, expected) \
     QCOMPARE ((actual).toImage (), (expected).toImage ())
 
+
+///////////////////////////////////////////////////////////////////////////////
+/// Compare that two pixmaps are NOT pixel perfect identical
+///
+/// @param[in]  actual      Actual pixmap
+/// @param[in]  expected    Expected pixmap
+///
+///////////////////////////////////////////////////////////////////////////////
+#define COMPARE_PIXMAPS_NE(actual, expected) \
+    QCOMPARE_NE ((actual).toImage (), (expected).toImage ())
+
 ///////////////////////////////////////////////////////////////////////////////
 /// Compare two icons produce identical bitmaps when rendered
 ///
@@ -38,3 +49,18 @@
 #define COMPARE_ICONS(actual, expected) \
     COMPARE_PIXMAPS ((actual).pixmap (utils::resources::ICON_SIZE_NORMAL), \
                     (expected).pixmap (utils::resources::ICON_SIZE_NORMAL))
+
+///////////////////////////////////////////////////////////////////////////////
+/// Compare two icons produce NON identical bitmaps when rendered
+///
+/// @param[in]  actual      Actual icon
+/// @param[in]  expected    Expected icon
+///
+/// @remarks    Rendered at the app's default icon size
+///
+/// @see        utils::resources::ICON_SIZE_NORMAL
+///
+///////////////////////////////////////////////////////////////////////////////
+#define COMPARE_ICONS_NE(actual, expected) \
+    COMPARE_PIXMAPS_NE ((actual).pixmap (utils::resources::ICON_SIZE_NORMAL), \
+                        (expected).pixmap (utils::resources::ICON_SIZE_NORMAL))

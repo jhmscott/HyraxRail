@@ -11,12 +11,15 @@
 
 #pragma once
 
+#include <common.hpp>
+
+#include <utils/traits.hpp>
+
 #include <bitset>
 #include <memory>
 #include <set>
 #include <vector>
 
-#include <common.hpp>
 
 /// Simple STL-style algorithms for use with containers, iterators and ranges
 namespace utils::algorithm
@@ -39,6 +42,27 @@ auto makePtrPred (const T* ptr)
     {
     return [ptr] (const std::unique_ptr<T>& other) -> bool
                  {  return other.get () == ptr; };
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Indirection layer for bindMemFn(), to extract the function arguments
+///
+/// @tparam     Func    Member function type
+/// @tparam     Obj     Object type
+/// @tparam     Args    Func argument types
+///
+/// @param[in]  func    Member function to bind
+/// @param[in]  obj     Object instance to bind to
+/// @param[in]  unused  Not actually used, just provided to extract the function
+///                     arguments from the tuple
+///
+/// @return     Functor
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class Func, class Obj, class... Args>
+auto makeMemberBinder (Func func, Obj* obj, traits::envelope<std::tuple<Args...>> unused)
+    {
+    return [=] (Args... args) { return (obj->*func) (std::forward<Args> (args)...); };
     }
 } // namespace internal
 
@@ -405,6 +429,48 @@ size_t findArrayIdx (const T (&arr)[N], const U& val)
                     val);
 
     return it - arr;
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Poor man's std::bind_front() from c++20, but which only provides the ability
+/// bind a member function to an object instance to create a functior
+///
+/// @tparam     Func        Member function type
+///
+/// @param[in]  func        Member function to bind
+/// @param[in]  instance    Object instance to bind to
+///
+/// @return     Functor
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class Func>
+auto bindMemFn (Func func, typename traits::memberFuncTraits<Func>::class_t& instance)
+    {
+    using Args = typename traits::memberFuncTraits<Func>::args_t;
+
+    return internal::makeMemberBinder (func, &instance, traits::envelope<Args>{});
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Const object specialization of bindMemFn()
+///
+/// @tparam     Func        Member function type
+///
+/// @param[in]  func        Member function to bind
+/// @param[in]  instance    Object instance to bind to
+///
+/// @return     Functor
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class Func>
+auto bindMemFn (Func func, const typename traits::memberFuncTraits<Func>::class_t& instance)
+    {
+    static_assert (traits::memberFuncTraits<Func>::is_const,
+                   "Cannot bind const instance to non const member function");
+
+    using Args = typename traits::memberFuncTraits<Func>::args_t;
+
+    return internal::makeMemberBinder (func, &instance, traits::envelope<Args>{});
     }
 
 

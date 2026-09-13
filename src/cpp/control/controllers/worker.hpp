@@ -13,6 +13,7 @@
 #include <control/protocols/base.hpp>
 
 #include <utils/pinger.hpp>
+#include <utils/qobj.hpp>
 #include <utils/traits.hpp>
 
 #include <chrono>
@@ -93,7 +94,7 @@ auto resolve (T&& val)
 /// Represents the thread for communicating with the controller
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class ConnectionWorkerThread
+class ConnectionWorkerThread : public utils::qobj::SignalClient
     {
 public:
     /// Enumerated health value
@@ -361,7 +362,6 @@ private:
     std::unique_ptr<utils::Pinger>          m_pinger = NULL;    ///< Connection pinger instance
     health                                  m_health =          ///< Connection health
                                                 { HEALTH_DEAD,  std::chrono::milliseconds{ 0 } };
-    QMetaObject::Connection                 m_stateConnection;  ///< Application state change signal
     mutable std::condition_variable         m_emptySignal;      ///< Signals the queue has been emptied
 
     ///////////////////////////////////////////////////////////////////////////////

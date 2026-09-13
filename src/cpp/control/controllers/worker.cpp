@@ -35,12 +35,9 @@ ConnectionWorkerThread::ConnectionWorkerThread (std::string_view                
 
     m_cv.notify_all ();
 
-    m_stateConnection =
-        QObject::connect (qApp,
-                         &QGuiApplication::applicationStateChanged,
-                          std::bind (&ConnectionWorkerThread::applicationStateChanged,
-                                      this,
-                                      std::placeholders::_1));
+    connect (qApp,
+            &QGuiApplication::applicationStateChanged,
+            &ConnectionWorkerThread::applicationStateChanged);
     }
 
 ConnectionWorkerThread::~ConnectionWorkerThread ()
@@ -63,8 +60,6 @@ ConnectionWorkerThread::~ConnectionWorkerThread ()
         {
         // Have to swallow this exception because it's a destructor
         }
-
-    QObject::disconnect (m_stateConnection);
     }
 
 void ConnectionWorkerThread::waitForNetworkQueue () const

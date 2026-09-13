@@ -7,11 +7,39 @@
  * @copyright   Copyright (c) 2026 Justin Scott
  */
 
+
+#include <testutils/ext/fakeit.hpp>
+
 #include <utils/algorithm.hpp>
 
 #include <QtTest>
 
 using namespace utils::algorithm;
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class for testing bindMemFn
+///
+/// @see    utils::algorithm::bindMemFn()
+/// @see    AlgorithmTest::bindMemFn()
+///
+///////////////////////////////////////////////////////////////////////////////
+class MemberFuncTest
+    {
+public:
+    virtual void setStr (std::string str) = 0;
+
+    virtual void setInt (int myInt) = 0;
+
+    virtual void setPnt (QPoint pt) = 0;
+
+    virtual std::string getStr () const = 0;
+
+    virtual int getInt () const = 0;
+
+    virtual QPoint getPnt () const = 0;
+
+
+    };
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Test suite for the algorithm library
@@ -189,6 +217,67 @@ private slots:
         ++it2;
 
         QCOMPARE (++it, it2);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test binding member functions to an object
+    ///
+    /// @see    utils::algorithm::bindMemFn()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void bindMemFnTest ()
+        {
+        static std::string  TEST_SET_STRING = "Test String";
+        static int          TEST_SET_INT    = 42;
+        static QPoint       TEST_SET_POINT  = { 67, 43 };
+
+        static std::string  TEST_GET_STRING = "Other String";
+        static int          TEST_GET_INT    = 24;
+        static QPoint       TEST_GET_POINT  = { 47, 66 };
+
+        // Setup
+
+        fakeit::Mock<MemberFuncTest>    mock;
+        MemberFuncTest&                 obj     = mock.get ();
+        const MemberFuncTest&           cobj    = obj;
+
+        fakeit::When (Method (mock, setStr)).AlwaysReturn ();
+        fakeit::When (Method (mock, setInt)).AlwaysReturn ();
+        fakeit::When (Method (mock, setPnt)).AlwaysReturn ();
+
+        fakeit::When (Method (mock, getStr)).AlwaysReturn (TEST_GET_STRING);
+        fakeit::When (Method (mock, getInt)).AlwaysReturn (TEST_GET_INT);
+        fakeit::When (Method (mock, getPnt)).AlwaysReturn (TEST_GET_POINT);
+
+        // Bind calls
+
+        auto setStr = bindMemFn (&MemberFuncTest::setStr, obj);
+        auto setInt = bindMemFn (&MemberFuncTest::setInt, obj);
+        auto setPnt = bindMemFn (&MemberFuncTest::setPnt, obj);
+
+        auto getStr = bindMemFn (&MemberFuncTest::getStr, cobj);
+        auto getInt = bindMemFn (&MemberFuncTest::getInt, cobj);
+        auto getPnt = bindMemFn (&MemberFuncTest::getPnt, cobj);
+
+        // Test setters
+
+        setStr (TEST_SET_STRING);
+        setInt (TEST_SET_INT);
+        setPnt (TEST_SET_POINT);
+
+        fakeit::Verify (Method (mock, setStr).Using (TEST_SET_STRING));
+        fakeit::Verify (Method (mock, setInt).Using (TEST_SET_INT));
+        fakeit::Verify (Method (mock, setPnt).Using (TEST_SET_POINT));
+
+        // Test getters
+
+        QCOMPARE (getStr (), TEST_GET_STRING);
+        QCOMPARE (getInt (), TEST_GET_INT);
+        QCOMPARE (getPnt (), TEST_GET_POINT);
+
+        fakeit::Verify (Method (mock, getStr)).Once ();
+        fakeit::Verify (Method (mock, getInt)).Once ();
+        fakeit::Verify (Method (mock, getPnt)).Once ();
         }
     };
 

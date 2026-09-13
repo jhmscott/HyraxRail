@@ -18,13 +18,13 @@
     <RunSettingsFilePath>$(MSBuildProjectDirectory)\HyraxRail.runsettings</RunSettingsFilePath>
   </PropertyGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{A4293BAA-6C5E-413A-B99B-D3DDA46F5ECE}</ProjectGuid>
+    <ProjectGuid>{9BE0AA8B-0ECE-444E-9E16-93793EE0B0D2}</ProjectGuid>
     <Keyword>QtVS_v304</Keyword>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.28000.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)'=='Test|x64'">10.0.28000.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.28000.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
-    <ProjectName>qobj</ProjectName>
+    <ProjectName>assert</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -52,17 +52,17 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>6.11.0</QtInstall>
-    <QtModules>core;network;testlib;serialport</QtModules>
+    <QtModules>core;gui;network;testlib;serialport</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'" Label="QtSettings">
     <QtInstall>6.11.0</QtInstall>
-    <QtModules>core;network;testlib;serialport</QtModules>
+    <QtModules>core;gui;network;testlib;serialport</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>6.11.0</QtInstall>
-    <QtModules>core;network;testlib;serialport</QtModules>
+    <QtModules>core;gui;network;testlib;serialport</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
@@ -86,27 +86,29 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <OutDir>$(SolutionDir)..\runtime\</OutDir>
     <IntDir>$(SolutionDir)intermediate\$(Platform)-$(Configuration)\$(ProjectName)\</IntDir>
-    <TargetName>qobjtest</TargetName>
+    <TargetName>asserttest</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'">
     <OutDir>$(SolutionDir)..\runtime\</OutDir>
     <IntDir>$(SolutionDir)intermediate\$(Platform)-$(Configuration)\$(ProjectName)\</IntDir>
-    <TargetName>qobjtest</TargetName>
+    <TargetName>asserttest</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutDir>$(SolutionDir)..\runtime\</OutDir>
     <IntDir>$(SolutionDir)intermediate\$(Platform)-$(Configuration)\$(ProjectName)\</IntDir>
-    <TargetName>qobjtest</TargetName>
+    <TargetName>asserttest</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\cpp;$(SolutionDir)..\tests\cpp;</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\cpp;$(SolutionDir)..\tests\cpp;</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -132,6 +134,7 @@
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)..\src\cpp;$(SolutionDir)..\tests\cpp;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -187,7 +190,7 @@
     <None Include="HyraxRail.runsettings" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="..\..\tests\cpp\utils\qobjtest.cpp">
+    <QtMoc Include="..\..\tests\cpp\testutils_test\asserttest.cpp">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Test|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
@@ -200,6 +203,9 @@
     <ProjectReference Include="..\HyraxRail.vcxproj">
       <Project>{0ed23473-b2f8-4c1c-a4a5-641c5e79af9e}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\..\res\HyraxRail.qrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
