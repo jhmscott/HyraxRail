@@ -78,6 +78,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "schemeicon", "tests\schemei
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "assert", "tests\assert.vcxproj", "{9BE0AA8B-0ECE-444E-9E16-93793EE0B0D2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "traits", "tests\traits.vcxproj", "{E204AE2D-9863-4DE0-83C1-AD60FC562F39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -171,6 +173,10 @@ Global
 		{9BE0AA8B-0ECE-444E-9E16-93793EE0B0D2}.Release|x64.ActiveCfg = Release|x64
 		{9BE0AA8B-0ECE-444E-9E16-93793EE0B0D2}.Test|x64.ActiveCfg = Test|x64
 		{9BE0AA8B-0ECE-444E-9E16-93793EE0B0D2}.Test|x64.Build.0 = Test|x64
+		{E204AE2D-9863-4DE0-83C1-AD60FC562F39}.Debug|x64.ActiveCfg = Debug|x64
+		{E204AE2D-9863-4DE0-83C1-AD60FC562F39}.Release|x64.ActiveCfg = Release|x64
+		{E204AE2D-9863-4DE0-83C1-AD60FC562F39}.Test|x64.ActiveCfg = Test|x64
+		{E204AE2D-9863-4DE0-83C1-AD60FC562F39}.Test|x64.Build.0 = Test|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -207,6 +213,7 @@ Global
 		{A4293BAA-6C5E-413A-B99B-D3DDA46F5ECE} = {E7603EE2-0F6A-4991-9C02-5C69E3D99F69}
 		{9689D14A-BF7E-4343-897D-C08D0F0E9CCA} = {E1A3BEC1-DC5A-486C-881F-7BAF9230949F}
 		{9BE0AA8B-0ECE-444E-9E16-93793EE0B0D2} = {FB01A98B-D8D1-46EE-8905-19DF1FB8CC8B}
+		{E204AE2D-9863-4DE0-83C1-AD60FC562F39} = {E7603EE2-0F6A-4991-9C02-5C69E3D99F69}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4ACFF0E3-DFF5-489E-866F-8829724F0C54}

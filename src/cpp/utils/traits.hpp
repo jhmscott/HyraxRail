@@ -9,6 +9,9 @@
 
 #pragma once
 
+#include <tuple>
+#include <type_traits>
+
 /// Template type traits
 namespace utils::traits
 {
