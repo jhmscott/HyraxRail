@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file        utils/algorithmtest.hpp
  * @brief       Test suite for the algorithm library
  * @author      Justin Scott
@@ -15,6 +15,7 @@
 #include <QtTest>
 
 using namespace utils::algorithm;
+using namespace std::string_literals;
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class for testing bindMemFn
@@ -40,6 +41,145 @@ public:
 
 
     };
+
+/// Struct for testing the safeGet() function
+struct safeGetTestRec
+    {
+    int         num;    ///< Number
+    std::string str;    ///< String
+    QPoint      pt;     ///< Point
+    };
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Helper function for assertSafeGetNullPointer() which tests just one pointer
+/// type
+///
+/// @tparam     Ptr         Pointer type
+/// @tparam     MemType     Member variable type
+/// @tparam     Elem        Pointer element type
+///
+/// @param[in]  memVar      Member variable
+/// @param[in]  defaultVal  Default value to pass to safeGet()
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class Ptr, class MemType, class Elem = typename std::pointer_traits<Ptr>::element_type>
+static void assertSafeGetNullPointerHelper (MemType Elem::*                 memVar,
+                                            const identityType<MemType>&    defaultVal)
+    {
+    Ptr ptr = utils::traits::null<Ptr>;
+
+    MemType actual = safeGet (ptr, memVar, defaultVal);
+
+    QCOMPARE (actual, defaultVal);
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Tests safeGet() when the pointer is NULL for multiple pointer like types
+///
+/// @tparam     T           Type to test pointer like types for
+/// @tparam     MemType     Member variable type
+///
+/// @param[in]  memVar      Member variable
+/// @param[in]  defaultVal  Default value to pass to safeGet()
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T, class MemType>
+static void assertSafeGetNullPointer (MemType T::*                  memVar,
+                                      const identityType<MemType>&  defaultVal)
+    {
+    assertSafeGetNullPointerHelper<T*>                  (memVar, defaultVal);
+    assertSafeGetNullPointerHelper<std::unique_ptr<T>>  (memVar, defaultVal);
+    assertSafeGetNullPointerHelper<std::shared_ptr<T>>  (memVar, defaultVal);
+    assertSafeGetNullPointerHelper<std::optional<T>>    (memVar, defaultVal);
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Make a pointer-like type
+///
+/// @tparam     Ptr     Pointer like type
+///
+/// @return     Newly created pointer type
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class Ptr>
+static Ptr makePointer ()
+    {
+    using Elem = typename std::pointer_traits<Ptr>::element_type;
+
+    if constexpr (std::is_same_v<Ptr, std::optional<Elem>>)
+        {
+        return Elem{};
+        }
+    else
+        {
+        return Ptr{ new Elem{} };
+        }
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Helper function for assertSafeGetMemberHelper() which tests just one pointer
+/// type
+///
+/// @tparam     Ptr         Pointer type
+/// @tparam     MemType     Member variable type
+/// @tparam     Elem        Pointer element type
+///
+/// @param[in]  memVar      Member variable
+/// @param[in]  defaultVal  Default value to pass to safeGet()
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class Ptr, class MemType, class Elem = typename std::pointer_traits<Ptr>::element_type>
+static void assertSafeGetMemberHelper (MemType Elem::* memVar, const identityType<MemType>& expected)
+    {
+    Ptr ptr = makePointer<Ptr> ();
+
+    (*ptr).*memVar = expected;
+
+    QCOMPARE (safeGet (ptr, memVar), expected);
+
+    if constexpr (std::is_pointer_v<Ptr>)
+        {
+        delete ptr;
+        }
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Tests safeGet() when the pointer is not NULL for multiple pointer like types
+///
+/// @tparam     T           Type to test pointer like types for
+/// @tparam     MemType     Member variable type
+///
+/// @param[in]  memVar      Member variable
+/// @param[in]  expected    Expected return value
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T, class MemType>
+static void assertSafeGetMember (MemType T::* memVar, const identityType<MemType>& expected)
+    {
+    assertSafeGetMemberHelper<T*>                   (memVar, expected);
+    assertSafeGetMemberHelper<std::unique_ptr<T>>   (memVar, expected);
+    assertSafeGetMemberHelper<std::shared_ptr<T>>   (memVar, expected);
+    assertSafeGetMemberHelper<std::optional<T>>     (memVar, expected);
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Test case implementation for a single member variable
+///
+/// @tparam     T           Type to test pointer like types for
+/// @tparam     MemType     Member variable type
+///
+/// @param[in]  memVar      Member variable
+/// @param[in]  expected    Expected return value
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T, class MemType>
+static void safeGetTestImpl (MemType T::* memVar, const identityType<MemType>& expected)
+    {
+    assertSafeGetNullPointer    (memVar, expected);
+    assertSafeGetMember         (memVar, expected);
+    }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Test suite for the algorithm library
@@ -278,6 +418,90 @@ private slots:
         fakeit::Verify (Method (mock, getStr)).Once ();
         fakeit::Verify (Method (mock, getInt)).Once ();
         fakeit::Verify (Method (mock, getPnt)).Once ();
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for safeGetIntTest
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void safeGetIntTest_data ()
+        {
+        QTest::addColumn<int> ("num");
+
+        for (int ii = -1234; ii < 2567; ++ii)
+            {
+            QTest::addRow ("%d", ii) << ii;
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test safeGet with an int member variable
+    ///
+    /// @see    utils::algorithm::safeGet()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void safeGetIntTest ()
+        {
+        QFETCH (int, num);
+
+        safeGetTestImpl<safeGetTestRec> (&safeGetTestRec::num, num);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for safeGetStringTest
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void safeGetStringTest_data ()
+        {
+        QTest::addColumn<std::string> ("str");
+
+        QTest::newRow ("Test")  << "Test"s;
+        QTest::newRow ("Empty") << ""s;
+        QTest::newRow ("Long")  << "lorem ipsum dolor sit amet consectetur adipiscing elit est quis irure consequatur duis sint illum excepteur in ullamco vero corrupti provident in praesentium et consectetur aliqua culpa quis ut officia qui deserunt consequat aliqua cupiditate eos voluptatum ea dolor nulla quibusdam voluptas similique et facere cum pariatur maxime est est"s;
+        QTest::newRow ("UTF-8") << "测试文本"s;
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test safeGet with a string member variable
+    ///
+    /// @see    utils::algorithm::safeGet()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void safeGetStringTest ()
+        {
+        QFETCH (std::string, str);
+
+        safeGetTestImpl<safeGetTestRec> (&safeGetTestRec::str, str);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for safeGetPointTest
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void safeGetPointTest_data ()
+        {
+        QTest::addColumn<QPoint> ("pt");
+
+        for (int ii = -100; ii < 100; ++ii)
+            {
+            for (int jj = -100; jj < 100; ++jj)
+                {
+                QTest::addRow ("(%d,%d)", ii, jj) << QPoint{ ii, jj };
+                }
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test safeGet with a point member variable
+    ///
+    /// @see    utils::algorithm::safeGet()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void safeGetPointTest ()
+        {
+        QFETCH (QPoint, pt);
+
+        safeGetTestImpl<safeGetTestRec> (&safeGetTestRec::pt, pt);
         }
     };
 

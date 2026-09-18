@@ -9,12 +9,43 @@
 
 #pragma once
 
+#include <common.hpp>
+
+#include <memory>
+#include <optional>
 #include <tuple>
 #include <type_traits>
 
 /// Template type traits
 namespace utils::traits
 {
+
+/// Internal type traits implementation
+namespace internal
+{
+///////////////////////////////////////////////////////////////////////////////
+/// Implementation of the null constant
+///
+/// @tparam     Pointer-like type
+///
+/// @return     NULL (or equivalent) for that type
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T>
+constexpr auto createNullPointer ()
+    {
+    using Elem = typename std::pointer_traits<T>::element_type;
+
+    if constexpr (std::is_same_v<T, std::optional<Elem>>)
+        {
+        return std::nullopt;
+        }
+    else
+        {
+        return NULL;
+        }
+    }
+}
 
 /// Unspecialized version
 template<class T>
@@ -73,7 +104,7 @@ struct envelope
 /// @tparam     T       Any type
 ///
 ///////////////////////////////////////////////////////////////////////////////
-template <typename T>
+template<class T>
 struct always_false : std::false_type {};
 
 
@@ -85,7 +116,17 @@ struct always_false : std::false_type {};
 /// @tparam     T       Any type
 ///
 ///////////////////////////////////////////////////////////////////////////////
-template <typename T>
+template<class T>
 inline constexpr bool always_false_v = always_false<T>::value;
 
-}
+
+///////////////////////////////////////////////////////////////////////////////
+/// NULL equivalent for pointer like types
+///
+/// @tparam     T       Pointer like type
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T>
+inline constexpr auto null = internal::createNullPointer<T> ();
+
+} // namespace utils::traits

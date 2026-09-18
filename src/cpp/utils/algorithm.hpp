@@ -490,11 +490,11 @@ auto bindMemFn (Func func, const typename traits::memberFuncTraits<Func>::class_
 ///
 ///////////////////////////////////////////////////////////////////////////////
 template<class Ptr, class MemType, class Elem = typename std::pointer_traits<Ptr>::element_type>
-MemType safeGet (Ptr                            ptr,
+MemType safeGet (const Ptr&                     ptr,
                  MemType Elem::*                memVar,
                  const identityType<MemType>&   defaultVal = {})
     {
-    return NULL == ptr ? defaultVal : (*ptr).*memVar;
+    return traits::null<Ptr> == ptr ? defaultVal : (*ptr).*memVar;
     }
 
 } // namespace utils::algorithm

@@ -40,6 +40,20 @@ public:
     std::string overload (int num) { return ""; }
     };
 
+///////////////////////////////////////////////////////////////////////////////
+/// Test the value and type of null for a pointer like type
+///
+/// @tparam     Ptr         Pointer like type
+///
+/// @see        utils::traits::null
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class Ptr>
+static void asserNullPointer ()
+    {
+    QCOMPARE (null<Ptr>, NULL);
+    QVERIFY (std::is_null_pointer_v<decltype (null<Ptr>)>);
+    }
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Test suite for the type traits library
@@ -171,6 +185,25 @@ private slots:
     void alwaysFalseTest ()
         {
         QVERIFY (not always_false_v<int>);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test the templated NULl constant
+    ///
+    /// @see    utils::traits::null
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void nullTest ()
+        {
+        static const std::optional<int> NULLOPT = std::nullopt;
+
+        asserNullPointer<int*> ();
+        asserNullPointer<std::unique_ptr<int>> ();
+        asserNullPointer<std::weak_ptr<int>> ();
+        asserNullPointer<std::shared_ptr<int>> ();
+
+        QCOMPARE (null<std::optional<int>>,     NULLOPT);
+        QVERIFY ((std::is_same_v<std::nullopt_t, decltype (null<std::optional<int>>)>));
         }
     };
 

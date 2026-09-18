@@ -61,7 +61,7 @@ private slots:
         m_protocol.reset (new MockProtocol{ *protocol });
         m_controller.reset (new MarklinCS1{ "Test Controller", std::move (protocol) });
 
-        // Can't verify inializer lists with fakeit, so capture it for verificiation later
+        // Can't verify initializer lists with fakeit, so capture it for verificiation later
         fakeit::When (Method (*m_protocol, makeRequest)).
             Do ([this] (ECoSProtocol::cmd                           cmd,
                         ECoSProtocol::dynamicId                     id,

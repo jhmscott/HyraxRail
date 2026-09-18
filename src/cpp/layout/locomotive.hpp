@@ -112,7 +112,7 @@ struct funcInfo
         {
         return name == other.name &&
                icon == other.icon &&
-               id   == other.icon &&
+               id   == other.id   &&
                state== other.state;
         }
 
@@ -125,6 +125,25 @@ struct funcInfo
     ///
     ///////////////////////////////////////////////////////////////////////////////
     bool operator!= (const funcInfo& other) const { return !(*this == other); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Format function info using the stream operator
+    ///
+    /// @param[in,out]  os      Output stream
+    /// @param[in]      info    Function info to format
+    ///
+    /// @return         Output stream
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    friend std::ostream& operator<< (std::ostream& os, const funcInfo& info)
+        {
+        os << "{ " << info.name                     << ", "
+                   << static_cast<int>  (info.icon) << ", "
+                   << static_cast<uint> (info.id)   << ", "
+                   << (info.state ? "on" : "off")   << " }";
+
+        return os;
+        }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the name of this function to display in the UI
