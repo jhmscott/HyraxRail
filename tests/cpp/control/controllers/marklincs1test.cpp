@@ -101,6 +101,7 @@ private slots:
                                  OLD_NAME,
                                  OLD_PROTO,
                                  OLD_ADDR,
+                                 {},
                                  ID };
 
         loco.setName (NEW_NAME);
@@ -130,6 +131,7 @@ private slots:
                                  OLD_NAME,
                                  OLD_PROTO,
                                  OLD_ADDR,
+                                 {},
                                  ID };
 
         loco.setAddress (NEW_ADDR);
@@ -159,6 +161,7 @@ private slots:
                                  OLD_NAME,
                                  OLD_PROTO,
                                  OLD_ADDR,
+                                 {},
                                  ID };
 
         loco.setProtocol (NEW_PROTO);
@@ -191,7 +194,7 @@ private slots:
                                         ECoSProtocol::arg{ ECoSProtocol::ARG_ID,
                                                             std::to_string (ID) } } } });
 
-        auto loco = m_controller->createLocomotive (OLD_NAME, OLD_PROTO, OLD_ADDR);
+        auto loco = m_controller->createLocomotive (OLD_NAME, OLD_PROTO, OLD_ADDR, {});
 
         QCOMPARE (loco.getId (),        ID);
         QCOMPARE (loco.getName (),      OLD_NAME);
@@ -211,6 +214,7 @@ private slots:
                                  OLD_NAME,
                                  OLD_PROTO,
                                  OLD_ADDR,
+                                 {},
                                  ID };
 
         loco.remove ();

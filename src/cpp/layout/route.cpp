@@ -9,6 +9,7 @@
 
 
 #include <layout/route.hpp>
+#include <layout/utils.hpp>
 
 namespace layout
 {
@@ -21,22 +22,22 @@ Route::Route (RouteController*      controller,
           std::make_shared<routeState> (routeState{ name, members }))
     {}
 
+std::string Route::getName () const
+    LAYOUT_DEFINE_GETTER (m_name)
+
 void Route::setName (const std::string& name)
-    {
-    m_state->m_name = name;
-    m_controller->setRouteName (m_id, name);
-    }
+    LAYOUT_DEFINE_SETTER (m_name, setRouteName, name)
 
 void Route::setActuators (const routeList& members)
-    {
-    m_state->m_members = members;
-    m_controller->setRouteMembers (m_id, members);
-    }
+    LAYOUT_DEFINE_SETTER (m_members, setRouteMembers, members)
 
 void Route::set ()
     {
     m_controller->setRoute (m_id);
     }
+
+routeList Route::getActuators () const
+    LAYOUT_DEFINE_GETTER (m_members)
 
 void Route::remove ()
     {

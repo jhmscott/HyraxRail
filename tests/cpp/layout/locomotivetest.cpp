@@ -101,6 +101,7 @@ private slots:
                                   INIT_NAME,
                                   INIT_PROTO,
                                   INIT_ADDR,
+                                  {},
                                   ID };
         layout::Locomotive locoCopy = loco;
 
@@ -143,6 +144,7 @@ private slots:
                                   INIT_NAME,
                                   INIT_PROTO,
                                   INIT_ADDR,
+                                  {},
                                   ID };
         loco.setSpeed (speed);
 
@@ -166,6 +168,7 @@ private slots:
                                   INIT_NAME,
                                   INIT_PROTO,
                                   INIT_ADDR,
+                                  {},
                                   ID };
         layout::Locomotive locoCopy = loco;
 

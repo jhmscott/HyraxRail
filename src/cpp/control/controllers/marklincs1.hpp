@@ -109,13 +109,15 @@ public:
     /// @param[in]  name        Locomotive name
     /// @param[in]  proto       Track protocol
     /// @param[in]  address     Track protocol address
+    /// @param[in]  functions   List of functions
     ///
     /// @return     Created locomotive
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual layout::Locomotive createLocomotive (const std::string&     name,
-                                                 layout::trackProtocol  proto,
-                                                 uint                   address) override;
+    virtual layout::Locomotive createLocomotive (const std::string&                     name,
+                                                 layout::trackProtocol                  proto,
+                                                 uint                                   address,
+                                                 const std::vector<layout::funcInfo>&   functions) override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Trigger or leave an emergency stop state. This typically stops all locomotives
@@ -158,6 +160,16 @@ private:
     layout::Actuator getActuatorSingle (size_t id) const;
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Get the list of functions supported by a given locomotive
+    ///
+    /// @param[in]  id          Locomotive ID
+    ///
+    /// @return     List of functions
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::vector<layout::funcInfo> getFunctions (size_t id) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// LOCOMOTIVE CONTROLLER OVERRIDES
     ///////////////////////////////////////////////////////////////////////////////
 
@@ -179,16 +191,6 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void setFunc (size_t id, uint8_t func, bool enable) override;
-
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Get the list of functions supported by this locomotive
-    ///
-    /// @param[in]  id          Locomotive ID
-    ///
-    /// @return     List of functions
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    virtual std::vector<layout::funcInfo> getFunctions (size_t id) const override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the locomotive name
@@ -216,6 +218,15 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void setLocomotiveProtocol (size_t id, layout::trackProtocol proto) override;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the list of functions
+    ///
+    /// @param[in]  id          Unique ID of locomotive
+    /// @param[in]  functions   New set of functions
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void setLocomotiveFunctions (size_t id, const std::vector<layout::funcInfo>& functions) override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Remove this locomotive from this controller

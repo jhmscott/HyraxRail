@@ -365,6 +365,7 @@ private slots:
                                  NAME,
                                  PROTO,
                                  ADDR,
+                                 {},
                                  ID };
 
         EditLocoDialog dlg{ controllers, NULL, loco };

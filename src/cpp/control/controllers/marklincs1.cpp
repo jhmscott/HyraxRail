@@ -53,14 +53,30 @@ using namespace std::chrono_literals;
 
 namespace control
 {
-/// Lookup table from icon ID to enumerated type
-static const std::map<int, layout::actuatorIcon> ICON_TABLE =
+/// Lookup table from icon ID to enumerated type for actuators
+static const std::map<int, layout::actuatorIcon> ACTUATOR_ICON_TABLE =
     {
         { 14, layout::ICON_LIGHTING         },
         { 15, layout::ICON_MAST_LIGHT       },
         { 16, layout::ICON_STREET_LIGHT     },
         { 23, layout::ICON_TURNOUT_LEFT     },
         { 24, layout::ICON_TURNOUT_RIGHT    }
+    };
+
+
+/// Lookup table from icon ID to enumerated type for functions
+static std::map<int, layout::funcInfo::icon_t> FUNC_ICON_TABLE =
+    {
+     { 2,  layout::funcInfo::ICON_FUNC_LIGHT_HEADLIGHT },
+     { 9,  layout::funcInfo::ICON_FUNC_MISC_PANTOGRAPH },
+     { 14, layout::funcInfo::ICON_FUNC_SOUND_OPERATING },
+     { 7,  layout::funcInfo::ICON_FUNC_SOUND_HORN },
+     { 1,  layout::funcInfo::ICON_FUNC_MISC_ABV },
+     { 15, layout::funcInfo::ICON_FUNC_SOUND_BRAKES },
+     { 16, layout::funcInfo::ICON_FUNC_LIGHT_CAB },
+     { 11, layout::funcInfo::ICON_FUNC_MISC_SLOW },
+     { 19, layout::funcInfo::ICON_FUNC_SOUND_COUPLING },
+     { 13, layout::funcInfo::ICON_FUNC_SOUND_GENERIC },
     };
 
 /// Lookup table from enumerated protocol type to text in response
@@ -82,6 +98,9 @@ static const std::string PROTOCOLS[] =
     };
 ASSERT_ARRAY_LENGTH (PROTOCOLS, layout::TRACK_PROTO_UNKNOWN);
 
+static constexpr int MAX_FUNCTIONS = 16;
+
+
 //////////////////////////////////////////////////////////////////////////////
 /// Extract the icon information from a reply
 ///
@@ -94,9 +113,9 @@ static layout::actuatorIcon getActuatorIcon (const ECoSProtocol::reply& reply)
     {
 
     layout::actuatorIcon    icon    = layout::NO_ICON;
-    auto                    it      = ICON_TABLE.find (atoi (reply.lines[0].arg->val->c_str ()));
+    auto                    it      = ACTUATOR_ICON_TABLE.find (atoi (reply.lines[0].arg->val->c_str ()));
 
-    if (ICON_TABLE.end () != it)
+    if (ACTUATOR_ICON_TABLE.end () != it)
         {
         icon = it->second;
         }
@@ -178,6 +197,7 @@ std::vector<layout::Locomotive> MarklinCS1::getLocomotives () const
                                                        proto,
                                                        static_cast<uint> (
                                                            atoi (address.c_str ())),
+                                                       getFunctions (line.id),
                                                        line.id, };
                             });
             }
@@ -433,9 +453,10 @@ layout::Actuator MarklinCS1::createActuator (const std::string&     name,
     return layout::Actuator{ this, name, icon, mode, address, duration, actuatorId, false };
     }
 
-layout::Locomotive MarklinCS1::createLocomotive (const std::string&     name,
-                                                 layout::trackProtocol  proto,
-                                                 uint                   address)
+layout::Locomotive MarklinCS1::createLocomotive (const std::string&                     name,
+                                                 layout::trackProtocol                  proto,
+                                                 uint                                   address,
+                                                 const std::vector<layout::funcInfo>&   functions)
     {
     ECoSProtocol::dynamicId locoId = 0;
 
@@ -454,9 +475,10 @@ layout::Locomotive MarklinCS1::createLocomotive (const std::string&     name,
         setLocomotiveName       (locoId, name);
         setLocomotiveProtocol   (locoId, proto);
         setLocomotiveAddress    (locoId, address);
+        setLocomotiveFunctions  (locoId, functions);
         }
 
-    return layout::Locomotive{ this, name, proto, address, locoId };
+    return layout::Locomotive{ this, name, proto, address, functions, locoId };
     }
 
 
@@ -505,7 +527,7 @@ uint MarklinCS1::getNumberOfFunctions (layout::trackProtocol proto) const
         {
         case layout::TRACK_PROTO_MFX:
             {
-            numFunc = 16;
+            numFunc = MAX_FUNCTIONS;
             break;
             }
         case layout::TRACK_PROTO_MM28:
@@ -587,7 +609,7 @@ void MarklinCS1::setSpeed (size_t id, int8_t speed)
 
 void MarklinCS1::setFunc (size_t id, uint8_t func, bool enable)
     {
-    auto pair = ECoSProtocol::range{ func, static_cast<uint16_t> (enable ? 1 : 0) };
+    auto pair = ECoSProtocol::range{ func, static_cast<int16_t> (enable ? 1 : 0) };
 
     issueDynamicCommand (ECoSProtocol::set,
                          id,
@@ -651,18 +673,18 @@ std::vector<layout::funcInfo> MarklinCS1::getFunctions (size_t id) const
     std::array<std::future<ECoSProtocol::reply>, 32>    futures;
     std::array<ECoSProtocol::reply, 32>                 replies;
 
-    for (int ii = 0; ii < 16; ++ii)
+    for (int ii = 0; ii < MAX_FUNCTIONS; ++ii)
         {
         futures[ii] = issueDynamicCommand (ECoSProtocol::get,
                                            id,
                                            ARG (ECoSProtocol::ARG_FUNCSYMBOL, ii));
         }
 
-    for (int ii = 0; ii < 16; ++ii)
+    for (int ii = 0; ii < MAX_FUNCTIONS; ++ii)
         {
-        futures[ii + 16] = issueDynamicCommand (ECoSProtocol::get,
-                                                id,
-                                                ARG (ECoSProtocol::ARG_FUNC, ii));
+        futures[ii + MAX_FUNCTIONS] = issueDynamicCommand (ECoSProtocol::get,
+                                                           id,
+                                                           ARG (ECoSProtocol::ARG_FUNC, ii));
         }
 
     std::transform (futures.begin (),
@@ -670,23 +692,10 @@ std::vector<layout::funcInfo> MarklinCS1::getFunctions (size_t id) const
                     replies.begin (),
                     std::mem_fn (&std::future<ECoSProtocol::reply>::get));
 
-    functions.reserve (16);
+    functions.reserve (MAX_FUNCTIONS);
 
-    for (int ii = 0; ii < 16; ++ii)
+    for (int ii = 0; ii < MAX_FUNCTIONS; ++ii)
         {
-        static std::map<int, layout::funcInfo::icon_t> iconMap =
-            {
-             { 2,  layout::funcInfo::ICON_FUNC_LIGHT_HEADLIGHT },
-             { 9,  layout::funcInfo::ICON_FUNC_MISC_PANTOGRAPH },
-             { 14, layout::funcInfo::ICON_FUNC_SOUND_OPERATING },
-             { 7,  layout::funcInfo::ICON_FUNC_SOUND_HORN },
-             { 1,  layout::funcInfo::ICON_FUNC_MISC_ABV },
-             { 15, layout::funcInfo::ICON_FUNC_SOUND_BRAKES },
-             { 16, layout::funcInfo::ICON_FUNC_LIGHT_CAB },
-             { 11, layout::funcInfo::ICON_FUNC_MISC_SLOW },
-             { 19, layout::funcInfo::ICON_FUNC_SOUND_COUPLING },
-             { 13, layout::funcInfo::ICON_FUNC_SOUND_GENERIC },
-            };
         const ECoSProtocol::reply& reply = replies[ii];
 
         layout::funcInfo::icon_t icon = layout::funcInfo::ICON_FUNC_NUMBER;
@@ -698,10 +707,10 @@ std::vector<layout::funcInfo> MarklinCS1::getFunctions (size_t id) const
 
             if (iconInt > 0)
                 {
-                auto it = iconMap.find (iconInt);
-                auto [_, state] = utils::str::split (*replies[ii + 16].lines[0].arg->val, ", ");
+                auto it = FUNC_ICON_TABLE.find (iconInt);
+                auto [_, state] = utils::str::split (*replies[ii + MAX_FUNCTIONS].lines[0].arg->val, ", ");
 
-                if (iconMap.end () != it)
+                if (FUNC_ICON_TABLE.end () != it)
                     {
                     icon = it->second;
                     }
@@ -741,6 +750,63 @@ void MarklinCS1::setLocomotiveProtocol (size_t id, layout::trackProtocol proto)
                          id,
                          ARG (ECoSProtocol::ARG_PROTOCOL,
                               PROTOCOLS[proto]));
+    }
+
+void MarklinCS1::setLocomotiveFunctions (size_t id, const std::vector<layout::funcInfo>& functions)
+    {
+    for (uint16_t ii = 0; ii < MAX_FUNCTIONS; ++ii)
+        {
+        ECoSProtocol::range pair;
+        auto                func = std::find_if (functions.begin (),
+                                                 functions.end (),
+                                                 [ii] (const layout::funcInfo& info) -> bool
+                                                 { return ii == info.id; });
+
+        pair.min = ii;
+
+        if (functions.end () == func) // Function with this ID not configured
+            {
+            // So why issue it twice
+            //
+            // Setting it to 0 lets us know that it should be considered hidden
+            // Setting it to -1 tells the controller to hide it
+            //
+            // The API doesn't tell us what is hidden in it's UI,
+            // which is why the first step is needed
+            //
+            pair.max = 0;
+
+            issueDynamicCommand (ECoSProtocol::set,
+                                 id,
+                                 ARG (ECoSProtocol::ARG_FUNCSYMBOL, pair));
+            pair.max = -1;
+
+            issueDynamicCommand (ECoSProtocol::set,
+                                 id,
+                                 ARG (ECoSProtocol::ARG_FUNCSYMBOL, pair));
+            }
+        else
+            {
+            auto it = std::find_if (FUNC_ICON_TABLE.begin (),
+                                    FUNC_ICON_TABLE.end (),
+                                    [&func] (const auto& icon) -> bool
+                                    { return func->icon == icon.second; });
+
+            if (FUNC_ICON_TABLE.end () == it)
+                {
+                pair.max = 0;
+                }
+            else
+                {
+                pair.max = it->first;
+                }
+
+            issueDynamicCommand (ECoSProtocol::set,
+                                 id,
+                                 ARG (ECoSProtocol::ARG_FUNCSYMBOL, pair));
+            }
+
+        }
     }
 
 void MarklinCS1::removeLocomotive (size_t id)
@@ -799,12 +865,12 @@ void MarklinCS1::setActuatorDuration (size_t id, uint duration)
 
 void MarklinCS1::setActuatorIcon (size_t id, layout::actuatorIcon icon)
     {
-    auto it = std::find_if (ICON_TABLE.begin (),
-                            ICON_TABLE.end (),
+    auto it = std::find_if (ACTUATOR_ICON_TABLE.begin (),
+                            ACTUATOR_ICON_TABLE.end (),
                             [icon] (const std::pair<int, layout::actuatorIcon>& pair) -> bool
                             { return pair.second == icon; });
 
-    if (ICON_TABLE.end () != it)
+    if (ACTUATOR_ICON_TABLE.end () != it)
         {
         issueDynamicCommand (ECoSProtocol::set,
                              id,

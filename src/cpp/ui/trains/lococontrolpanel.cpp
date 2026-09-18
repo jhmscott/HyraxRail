@@ -72,22 +72,22 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
 
     common::makeFrameless (*m_proto);
 
-    common::AddButton* add = new common::AddButton{ this };
+    m_add = new common::AddButton{ this };
 
-    add->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
+    m_add->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
 
-    common::PointedIconButton* edit = new common::PointedIconButton{ "misc/pencil", this };
+    m_edit = new common::PointedIconButton{ "misc/pencil", this };
 
-    edit->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
-    edit->setIconSize (utils::resources::ICON_SIZE_NORMAL);
-    common::makeFrameless (*edit);
+    m_edit->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
+    m_edit->setIconSize (utils::resources::ICON_SIZE_NORMAL);
+    common::makeFrameless (*m_edit);
 
 
-    common::PointedIconButton* deleteBtn = new common::PointedIconButton{ "misc/trash", this };
+    m_delete = new common::PointedIconButton{ "misc/trash", this };
 
-    deleteBtn->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
-    deleteBtn->setIconSize (utils::resources::ICON_SIZE_NORMAL);
-    common::makeFrameless (*deleteBtn);
+    m_delete->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
+    m_delete->setIconSize (utils::resources::ICON_SIZE_NORMAL);
+    common::makeFrameless (*m_delete);
 
     connect (m_locos,
             &QComboBox::currentIndexChanged,
@@ -99,17 +99,17 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
               this,
              &LocoControlPanel::addController);
 
-    connect (add,
+    connect (m_add,
             &common::AddButton::addPressed,
              this,
             &LocoControlPanel::addLoco);
 
-    connect (edit,
+    connect (m_edit,
             &common::PointedIconButton::released,
              this,
             &LocoControlPanel::editLoco);
 
-    connect (deleteBtn,
+    connect (m_delete,
             &common::PointedIconButton::released,
              this,
             &LocoControlPanel::deleteLoco);
@@ -129,18 +129,18 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
 
         trainSelLayout->addWidget (m_proto);
         trainSelLayout->addWidget (m_locos);
-        trainSelLayout->addWidget (edit);
-        trainSelLayout->addWidget (deleteBtn);
-        trainSelLayout->addWidget (add);
+        trainSelLayout->addWidget (m_edit);
+        trainSelLayout->addWidget (m_delete);
+        trainSelLayout->addWidget (m_add);
         }
     else // (vAlignment::RIGHT == align)
         {
         controlLayout->addWidget (m_functions);
         controlLayout->addWidget (m_speed);
 
-        trainSelLayout->addWidget (add);
-        trainSelLayout->addWidget (deleteBtn);
-        trainSelLayout->addWidget (edit);
+        trainSelLayout->addWidget (m_add);
+        trainSelLayout->addWidget (m_delete);
+        trainSelLayout->addWidget (m_edit);
         trainSelLayout->addWidget (m_locos);
         trainSelLayout->addWidget (m_proto);
         }
@@ -148,6 +148,8 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
     mainLayout->addWidget (m_controllerInfo);
     mainLayout->addLayout (trainSelLayout);
     mainLayout->addLayout (controlLayout);
+
+    updateButtonStates ();
 
     setLayout (mainLayout);
     }
@@ -175,6 +177,19 @@ void LocoControlPanel::setProtocol (layout::trackProtocol proto)
 
     m_proto->setIcon (info.icon);
     m_proto->setToolTip (info.description);
+    }
+
+void LocoControlPanel::updateButtonStates ()
+    {
+    bool hasLocos       = m_locos->count () > 0;
+    bool hasController  = std::any_of (m_controllers.begin (),
+                                       m_controllers.end (),
+                                       [] (const control::ControllerBase& controller) -> bool
+                                       { return controller.getConnectionHealth ().isConnected (); });
+
+    m_delete->setEnabled (hasLocos && hasController);
+    m_edit->setEnabled (hasLocos && hasController);
+    m_add->setEnabled (hasController);
     }
 
 void LocoControlPanel::addController (control::ControllerBase& controller)
@@ -225,6 +240,8 @@ void LocoControlPanel::locoDeleted ()
     layout::Locomotive* loco = static_cast<layout::Locomotive*> (sender ());
 
     common::removeComboBoxItemByUserData (*m_locos, loco);
+
+    updateButtonStates ();
     }
 
 void LocoControlPanel::addLoco ()
@@ -243,7 +260,8 @@ void LocoControlPanel::addLoco ()
 
         layout::Locomotive loco = controller->createLocomotive (dlg.getName (),
                                                                 dlg.getProtocol (),
-                                                                dlg.getAddress ());
+                                                                dlg.getAddress (),
+                                                                dlg.getFunctions ());
 
         addLocoToCb (loco);
         }
@@ -260,10 +278,12 @@ void LocoControlPanel::editLoco ()
 
     if (QDialog::Accepted == dlg.exec ())
         {
-        std::string             newName     = dlg.getName ();
-        uint                    newAddress  = dlg.getAddress ();
-        layout::trackProtocol   newProto    = dlg.getProtocol ();
+        std::string                     newName     = dlg.getName ();
+        uint                            newAddress  = dlg.getAddress ();
+        layout::trackProtocol           newProto    = dlg.getProtocol ();
+        std::vector<layout::funcInfo>   newFunctions= dlg.getFunctions ();
 
+        std::vector<layout::funcInfo>   oldFunctions= m_currentLoco.getFunctions ();
 
         if (m_currentLoco.getName () != newName)
             {
@@ -282,6 +302,16 @@ void LocoControlPanel::editLoco ()
             {
             m_currentLoco.setProtocol (newProto);
             setProtocol (newProto);
+            }
+
+        if (not std::equal (newFunctions.begin (),
+                            newFunctions.end (),
+                            oldFunctions.begin (),
+                            oldFunctions.end ()))
+            {
+            m_currentLoco.setFunctions (newFunctions);
+            // Forces an update of functions
+            m_functions->setLocomotive (m_currentLoco);
             }
         }
     }

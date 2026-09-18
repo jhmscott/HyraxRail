@@ -173,7 +173,7 @@ EditLocoDialog::EditLocoDialog (const control::ControllerManager&   manager,
     // Restrict fields
 
     limitAddress ();
-    updateButtonStates ();
+    updateWidgetStates ();
 
     m_name->setValidator (new QRegularExpressionValidator{
                                     QRegularExpression{ utils::str::NON_EMPTY_REGEX } });
@@ -411,7 +411,7 @@ void EditLocoDialog::readFunctionFields ()
     emit inputChanged ();
     }
 
-void EditLocoDialog::updateButtonStates ()
+void EditLocoDialog::updateWidgetStates ()
     {
     const int maxFunctions = getMaxFunctions ();
     const int numFunctions = m_functions->count ();
@@ -420,6 +420,10 @@ void EditLocoDialog::updateButtonStates ()
     m_trash->setDisabled (0 == numFunctions);
     // Can't add if list is full
     m_plus->setDisabled (maxFunctions == numFunctions);
+
+    // The dropdowns need a functionin the dropdown to act on
+    m_funcIcons->setDisabled (0 == numFunctions);
+    m_funcNumbers->setDisabled (0 == numFunctions);
     }
 
 uint EditLocoDialog::getMaxFunctions () const
@@ -446,6 +450,7 @@ void EditLocoDialog::onProtocolChange (int idx)
     {
     limitAddress ();
     refreshFunctionNumbers ();
+    updateWidgetStates ();
 
     emit inputChanged ();
     }
@@ -467,7 +472,7 @@ void EditLocoDialog::deleteFunction ()
                                                    arg (info.uiName ())))
         {
         m_functions->removeItem (m_functions->currentIndex ());
-        updateButtonStates ();
+        updateWidgetStates ();
         }
     }
 
@@ -506,7 +511,7 @@ void EditLocoDialog::addFunction ()
                               info);
     m_functions->setCurrentIndex (static_cast<int> (idx));
 
-    updateButtonStates ();
+    updateWidgetStates ();
     }
 
 } // namespace ui::trains

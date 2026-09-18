@@ -221,10 +221,11 @@ private:
     void readFunctionFields ();
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Update the enabled/disabled state of the add/delete function buttons
+    /// Update the enabled/disabled state of the add/delete function buttons and
+    /// and function fields
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    void updateButtonStates ();
+    void updateWidgetStates ();
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the maximum number of functions available with the current combination

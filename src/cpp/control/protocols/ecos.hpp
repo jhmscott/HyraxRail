@@ -147,8 +147,8 @@ public:
     /// range value used in an argument
     struct range
         {
-        uint16_t min;   ///< Minimum value
-        uint16_t max;   ///< Maximum value
+        int16_t min;   ///< Minimum value
+        int16_t max;   ///< Maximum value
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Serialize this argument to send
@@ -162,10 +162,10 @@ public:
     /// Set of four integer values used in an argument
     struct quad
         {
-        uint16_t val1;  ///< First value
-        uint16_t val2;  ///< Second value
-        uint16_t val3;  ///< Third value
-        uint16_t val4;  ///< Forth value
+        int16_t val1;  ///< First value
+        int16_t val2;  ///< Second value
+        int16_t val3;  ///< Third value
+        int16_t val4;  ///< Forth value
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Serialize this argument to send

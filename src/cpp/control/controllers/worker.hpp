@@ -133,6 +133,20 @@ public:
         std::chrono::milliseconds   ping;   ///< Connection ping (only for socket connections)
 
         ///////////////////////////////////////////////////////////////////////////////
+        /// Check if the connection health is in a connected state
+        ///
+        /// @return     true if connected
+        ///             false if disconnected
+        ///
+        ///////////////////////////////////////////////////////////////////////////////
+        bool isConnected () const
+            {
+            return HEALTH_UNAVAILABLE   != level &&
+                   HEALTH_DISCONNECTED  != level &&
+                   HEALTH_DEAD          != level;
+            }
+
+        ///////////////////////////////////////////////////////////////////////////////
         /// Equality operator
         ///
         /// @param[in]  other       Health to compare to
@@ -207,9 +221,7 @@ public:
         {
         std::lock_guard lk{ m_healthLock };
 
-        return HEALTH_DISCONNECTED != m_health.level &&
-                HEALTH_UNAVAILABLE != m_health.level &&
-                       HEALTH_DEAD != m_health.level;
+        return m_health.isConnected ();
         }
 
     ///////////////////////////////////////////////////////////////////////////////

@@ -275,13 +275,15 @@ public:
     /// @param[in]  name        Locomotive name
     /// @param[in]  proto       Track protocol
     /// @param[in]  address     Track protocol address
+    /// @param[in]  functions   List of locomotive functions
     ///
     /// @return     Created locomotive
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual layout::Locomotive createLocomotive (const std::string&     name,
-                                                 layout::trackProtocol  proto,
-                                                 uint                   address) = 0;
+    virtual layout::Locomotive createLocomotive (const std::string&                      name,
+                                                 layout::trackProtocol                  proto,
+                                                 uint                                   address,
+                                                 const std::vector<layout::funcInfo>&   functions) = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the health of the conenction to this controller

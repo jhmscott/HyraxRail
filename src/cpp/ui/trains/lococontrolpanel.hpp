@@ -11,9 +11,13 @@
 
 #include <control/controllers/manager.hpp>
 
+#include <ui/common/addbtn.hpp>
+#include <ui/common/pointedwidget.hpp>
+
+#include <ui/controllerinfo.hpp>
+
 #include <ui/trains/speedcontrol.hpp>
 #include <ui/trains/functionpanel.hpp>
-#include <ui/controllerinfo.hpp>
 
 #include <QComboBox>
 #include <QPushButton>
@@ -44,12 +48,20 @@ public:
 private:
     control::ControllerManager& m_controllers;      ///< List of controllers being managed
     layout::Locomotive          m_currentLoco;      ///< Current loco under control
+
+    // Controller info
+    ControllerInfo*             m_controllerInfo;   ///< Controller info for selected locomotive
+
+    // Locomotive control
     SpeedControlWidget*         m_speed;            ///< Speed control widget
     FunctionPanel*              m_functions;        ///< Function control widget
-    common::SchemeComboBox*     m_locos;            ///< Locomotive selector
-    ControllerInfo*             m_controllerInfo;   ///< Controller info for selected locomotive
-    common::SchemeIconButton*   m_proto;            ///< Track protocol for selected locomotive
 
+    // Locomotive info
+    common::SchemeComboBox*     m_locos;            ///< Locomotive selector
+    common::SchemeIconButton*   m_proto;            ///< Track protocol for selected locomotive
+    common::AddButton*          m_add;              ///< Add Loco button
+    common::PointedIconButton*  m_edit;             ///< Edit loco button
+    common::PointedIconButton*  m_delete;           ///< 
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Add a locomotive to the combobox
@@ -67,6 +79,11 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     void setProtocol (layout::trackProtocol proto);
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Update the enabled/disabled states of the buttons
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void updateButtonStates ();
 private slots:
     ///////////////////////////////////////////////////////////////////////////////
     /// Add a new controller

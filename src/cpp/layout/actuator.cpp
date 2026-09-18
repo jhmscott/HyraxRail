@@ -10,6 +10,7 @@
 
 
 #include <layout/actuator.hpp>
+#include <layout/utils.hpp>
 
 namespace layout
 {
@@ -27,35 +28,29 @@ Actuator::Actuator (ActuatorController* controller,
                 (actuatorState{ name, icon, state, mode, address, duration }))
     {}
 
+actuatorIcon Actuator::getIcon () const
+    LAYOUT_DEFINE_GETTER (m_icon, NO_ICON)
+
+actuatorMode Actuator::getMode () const
+    LAYOUT_DEFINE_GETTER (m_mode, actuatorMode::SWITCH)
+
+std::string Actuator::getName () const
+    LAYOUT_DEFINE_GETTER (m_name)
+
 void Actuator::setIcon (actuatorIcon icon)
-    {
-    m_controller->setActuatorIcon (m_id, icon);
-    m_state->m_icon = icon;
-    }
+    LAYOUT_DEFINE_SETTER (m_icon, setActuatorIcon, icon)
 
 void Actuator::setName (const std::string& name)
-    {
-    m_controller->setActuatorName (m_id, name);
-    m_state->m_name = name;
-    }
+    LAYOUT_DEFINE_SETTER (m_name, setActuatorName, name)
 
 void Actuator::setMode (actuatorMode mode)
-    {
-    m_controller->setActuatorMode (m_id, mode);
-    m_state->m_mode = mode;
-    }
+    LAYOUT_DEFINE_SETTER (m_mode, setActuatorMode, mode)
 
 void Actuator::setAddress (uint address)
-    {
-    m_controller->setActuatorAddress (m_id, address);
-    m_state->m_address = address;
-    }
+    LAYOUT_DEFINE_SETTER (m_address, setActuatorAddress, address)
 
 void Actuator::setDuration (uint duration)
-    {
-    m_controller->setActuatorDuration (m_id, duration);
-    m_state->m_duration = duration;
-    }
+    LAYOUT_DEFINE_SETTER (m_duration, setActuatorDuration, duration)
 
 void Actuator::set (bool val)
     {
@@ -66,6 +61,12 @@ void Actuator::set (bool val)
         callAll (&Actuator::stateChanged, val);
         }
     }
+
+uint Actuator::getDuration () const
+    LAYOUT_DEFINE_GETTER (m_duration, 0)
+
+bool Actuator::get () const
+    LAYOUT_DEFINE_GETTER (m_state, false)
 
 void Actuator::request ()
     {
@@ -89,5 +90,8 @@ void Actuator::remove ()
     destroyThis ();
     deregister ();
     }
+
+uint Actuator::getAddress () const
+    LAYOUT_DEFINE_GETTER (m_address, 0)
 
 }

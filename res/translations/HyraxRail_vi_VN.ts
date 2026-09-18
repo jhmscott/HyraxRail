@@ -890,12 +890,12 @@ Would you like to pause it or keep it running?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="465"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="470"/>
         <source>Delete Function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="466"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="471"/>
         <source>Would you like to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -913,12 +913,12 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::trains::LocoControlPanel</name>
     <message>
-        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="291"/>
+        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="321"/>
         <source>Would you like to delete locomotive &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="295"/>
+        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="325"/>
         <source>Delete Locomotive</source>
         <translation type="unfinished"></translation>
     </message>

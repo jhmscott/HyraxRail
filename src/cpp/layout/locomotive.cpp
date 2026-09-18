@@ -9,25 +9,27 @@
 
 
 #include <layout/locomotive.hpp>
+#include <layout/utils.hpp>
 
 namespace layout
 {
 
-Locomotive::Locomotive (LocomotiveController*   controller,
-                        const std::string&      name,
-                        trackProtocol           proto,
-                        uint                    address,
-                        size_t                  id) :
+Locomotive::Locomotive (LocomotiveController*           controller,
+                        const std::string&              name,
+                        trackProtocol                   proto,
+                        uint                            address,
+                        const std::vector<funcInfo>&    functions,
+                        size_t                          id) :
     Base (controller,
           id,
-          std::make_shared<locomotiveState> (locomotiveState{ name, proto, address }))
+          std::make_shared<locomotiveState> (locomotiveState{ name, proto, address, functions }))
     {}
 
+std::string Locomotive::getName () const
+    LAYOUT_DEFINE_GETTER (locomotiveState::m_name)
+
 void Locomotive::setName (const std::string& name)
-    {
-    m_controller->setLocomotiveName (m_id, name);
-    m_state->m_name = name;
-    }
+    LAYOUT_DEFINE_SETTER (m_name, setLocomotiveName, name)
 
 void Locomotive::setSpeed (int8_t speed)
     {
@@ -61,22 +63,20 @@ void Locomotive::setFunc (uint8_t func, bool enable)
         }
     }
 
+trackProtocol Locomotive::getProtocol () const
+    LAYOUT_DEFINE_GETTER (m_proto, TRACK_PROTO_UNKNOWN);
+
 std::vector<funcInfo> Locomotive::getFunctions () const
-    {
-    return NULL != m_controller ? m_controller->getFunctions (m_id) : std::vector<funcInfo>();
-    }
+    LAYOUT_DEFINE_GETTER (m_functions)
 
 void Locomotive::setProtocol (trackProtocol protocol)
-    {
-    m_controller->setLocomotiveProtocol (m_id, protocol);
-    m_state->m_proto = protocol;
-    }
+    LAYOUT_DEFINE_SETTER (m_proto, setLocomotiveProtocol, protocol)
 
 void Locomotive::setAddress (uint address)
-    {
-    m_controller->setLocomotiveAddress (m_id, address);
-    m_state->m_address = address;
-    }
+    LAYOUT_DEFINE_SETTER (m_address, setLocomotiveAddress, address)
+
+void Locomotive::setFunctions (const std::vector<funcInfo>& functions)
+    LAYOUT_DEFINE_SETTER (m_functions, setLocomotiveFunctions, functions)
 
 void Locomotive::remove ()
     {
@@ -108,4 +108,7 @@ QString funcInfo::uiName () const
 
     return friendlyName;
     }
+
+uint Locomotive::getAddress () const LAYOUT_DEFINE_GETTER (m_address, 0);
+
 }

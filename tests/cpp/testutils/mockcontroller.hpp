@@ -90,9 +90,10 @@ public:
                                              layout::actuatorMode   mode,
                                              uint                   duration) override { return {}; }
 
-    virtual layout::Locomotive createLocomotive (const std::string&     name,
-                                                 layout::trackProtocol  proto,
-                                                 uint                   address) override { return {}; }
+    virtual layout::Locomotive createLocomotive (const std::string&                     name,
+                                                 layout::trackProtocol                  proto,
+                                                 uint                                   address,
+                                                 const std::vector<layout::funcInfo>&   functions) override { return {}; }
 
     virtual void eStop (bool stop) override {}
 
@@ -100,7 +101,8 @@ public:
 
     // Locomotive controller stubs
 
-    virtual const layout::LocomotiveControllerMetaClass& getLocoMetaClass () const override { return {}; }
+    virtual const layout::LocomotiveControllerMetaClass& getLocoMetaClass () const override
+        { static layout::LocomotiveControllerMetaClass meta; return meta; }
 
     virtual uint getNumberOfFunctions (layout::trackProtocol proto) const override { return 0; }
 private:
@@ -109,7 +111,7 @@ private:
 
     virtual void setFunc (size_t id, uint8_t func, bool enable) override {}
 
-    virtual std::vector<layout::funcInfo> getFunctions (size_t id) const override { return {}; }
+    virtual void setLocomotiveFunctions (size_t id, const std::vector<layout::funcInfo>& functions) override {}
 
     virtual void setLocomotiveName (size_t id, const std::string& name) override {}
 

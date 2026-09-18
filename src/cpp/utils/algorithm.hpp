@@ -473,5 +473,28 @@ auto bindMemFn (Func func, const typename traits::memberFuncTraits<Func>::class_
     return internal::makeMemberBinder (func, &instance, traits::envelope<Args>{});
     }
 
+///////////////////////////////////////////////////////////////////////////////
+/// Get a member variable from a pointer to an object. If that pointer is NULL,
+/// this returns some default value
+///
+/// @tparam     Ptr         Pointer or smart pointer type
+/// @tparam     MemType     Member variable type
+/// @tparam     Elem        Pointer element type. Inferred from Ptr
+///
+/// @param[in]  ptr         Pointer to get value from
+/// @param[in]  memVar      Member variable to get
+/// @param[in]  defaultVal  (optional) Value to use if ptr is NULL.
+///                         Defaults to a default constructor object
+///
+/// @return     Member variable
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class Ptr, class MemType, class Elem = typename std::pointer_traits<Ptr>::element_type>
+MemType safeGet (Ptr                            ptr,
+                 MemType Elem::*                memVar,
+                 const identityType<MemType>&   defaultVal = {})
+    {
+    return NULL == ptr ? defaultVal : (*ptr).*memVar;
+    }
 
 } // namespace utils::algorithm
