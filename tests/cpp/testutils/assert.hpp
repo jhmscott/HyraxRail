@@ -45,7 +45,15 @@ std::string rangeToString (const Rng& range)
 
         for (const auto& val : range)
             {
-            ss << val << ", ";
+            /// @todo make this more generic to all classes with QDataStream support
+            if constexpr (std::is_same_v<QString, typename Rng::value_type>)
+                {
+                ss << val.toStdString () << ", ";
+                }
+            else
+                {
+                ss << val << ", ";
+                }
             }
 
         ss.seekp (-2, ss.cur);
