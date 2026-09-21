@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>qrc;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Header Files\control">
       <UniqueIdentifier>{e5cf4eb3-0dbc-4554-ab9d-63d8bbe4ccdb}</UniqueIdentifier>
     </Filter>
@@ -55,15 +51,6 @@
     <Filter Include="Header Files\ui\sensors">
       <UniqueIdentifier>{fd85090a-c29c-4e06-aa0e-6f3009a0e406}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\fonts">
-      <UniqueIdentifier>{25a39658-4977-4adf-8616-feb3b49e9e42}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\fonts\DSEG7-Classic">
-      <UniqueIdentifier>{07ab8700-b154-4410-9395-bba6c70749fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons">
-      <UniqueIdentifier>{41522a5e-839c-40ef-ad78-7cdb2971c59d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\control\proto">
       <UniqueIdentifier>{c8b3a86c-4664-461d-a859-96b1f3a5b487}</UniqueIdentifier>
     </Filter>
@@ -88,56 +75,11 @@
     <Filter Include="Source Files\layout">
       <UniqueIdentifier>{ee1ebd11-2161-4538-91d1-1d572f0696a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\text">
-      <UniqueIdentifier>{ff2c86b4-d540-4086-878d-7ed683e80954}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\ui\routes">
       <UniqueIdentifier>{27861a2f-175a-4d0a-b776-f9ed73664dda}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\ui\sensors">
       <UniqueIdentifier>{cce3f107-16b8-47dd-a160-d0bfb15db664}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons\app">
-      <UniqueIdentifier>{6f765961-96db-45e1-88bd-4dca06bd253f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons\common">
-      <UniqueIdentifier>{8f94bca7-f91c-4753-b3c7-0bfe5150107a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons\common\misc">
-      <UniqueIdentifier>{929c090d-0696-464b-8011-f1d43b600127}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons\light">
-      <UniqueIdentifier>{2edeb6d2-9a2e-42b1-af41-69e028fa0ebe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons\dark">
-      <UniqueIdentifier>{e6dd47d3-a36c-4f27-bf59-9857b995812c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons\light\misc">
-      <UniqueIdentifier>{c6ed85e7-d7b8-4a57-b698-34bb71662f96}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons\light\switches">
-      <UniqueIdentifier>{7f62e966-316d-4b5a-b68a-2f76e78bdcc4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons\light\trains">
-      <UniqueIdentifier>{8716b2ee-d0bf-4df6-a8f1-20c9d2548d4c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons\light\functions">
-      <UniqueIdentifier>{d23e8cf5-be8c-4add-ad92-9ec1736d5664}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons\dark\functions">
-      <UniqueIdentifier>{b06e2e68-506d-48d1-956d-30f094abab33}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons\dark\misc">
-      <UniqueIdentifier>{1c020f57-e90f-4341-b96b-8ef4b567a29f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons\dark\switches">
-      <UniqueIdentifier>{a28ce88d-9a5c-47a2-8dd8-7e75eb690d6e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\icons\dark\trains">
-      <UniqueIdentifier>{67d5b922-5af7-4f83-801b-5a638309b895}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\translations">
-      <UniqueIdentifier>{8101c5f9-066b-42ca-b52a-29b7d75dac5f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\control\automation">
       <UniqueIdentifier>{a93de1c9-7741-4e2a-91c7-541fc6ae93f2}</UniqueIdentifier>
@@ -151,14 +93,72 @@
     <Filter Include="Source Files\ui\clock">
       <UniqueIdentifier>{fb4f1ed4-b8f2-41d8-b655-005f3cf0984e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\fonts\DSEG14-Classic">
-      <UniqueIdentifier>{142d9b3a-2aa7-4fb1-b205-2313e3e3f044}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ext">
       <UniqueIdentifier>{f0edd527-3b7b-4e55-8f9a-0b49d302201b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\ext">
       <UniqueIdentifier>{629d2610-dd1d-44bd-91c5-2290f43370b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>qrc;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\fonts">
+      <UniqueIdentifier>{25a39658-4977-4adf-8616-feb3b49e9e42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\fonts\DSEG7-Classic">
+      <UniqueIdentifier>{07ab8700-b154-4410-9395-bba6c70749fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\fonts\DSEG14-Classic">
+      <UniqueIdentifier>{142d9b3a-2aa7-4fb1-b205-2313e3e3f044}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons">
+      <UniqueIdentifier>{41522a5e-839c-40ef-ad78-7cdb2971c59d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\app">
+      <UniqueIdentifier>{6f765961-96db-45e1-88bd-4dca06bd253f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\common">
+      <UniqueIdentifier>{8f94bca7-f91c-4753-b3c7-0bfe5150107a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\common\misc">
+      <UniqueIdentifier>{929c090d-0696-464b-8011-f1d43b600127}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\light">
+      <UniqueIdentifier>{2edeb6d2-9a2e-42b1-af41-69e028fa0ebe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\light\misc">
+      <UniqueIdentifier>{c6ed85e7-d7b8-4a57-b698-34bb71662f96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\light\switches">
+      <UniqueIdentifier>{7f62e966-316d-4b5a-b68a-2f76e78bdcc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\light\trains">
+      <UniqueIdentifier>{8716b2ee-d0bf-4df6-a8f1-20c9d2548d4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\light\functions">
+      <UniqueIdentifier>{d23e8cf5-be8c-4add-ad92-9ec1736d5664}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\dark">
+      <UniqueIdentifier>{e6dd47d3-a36c-4f27-bf59-9857b995812c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\dark\functions">
+      <UniqueIdentifier>{b06e2e68-506d-48d1-956d-30f094abab33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\dark\misc">
+      <UniqueIdentifier>{1c020f57-e90f-4341-b96b-8ef4b567a29f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\dark\switches">
+      <UniqueIdentifier>{a28ce88d-9a5c-47a2-8dd8-7e75eb690d6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\icons\dark\trains">
+      <UniqueIdentifier>{67d5b922-5af7-4f83-801b-5a638309b895}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\text">
+      <UniqueIdentifier>{ff2c86b4-d540-4086-878d-7ed683e80954}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\translations">
+      <UniqueIdentifier>{8101c5f9-066b-42ca-b52a-29b7d75dac5f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

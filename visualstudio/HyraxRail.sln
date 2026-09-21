@@ -44,6 +44,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "testutils", "testutils", "{78E57CD6-878C-44A7-855B-A53346DD19C4}"
 	ProjectSection(SolutionItems) = preProject
 		..\tests\cpp\testutils\assert.hpp = ..\tests\cpp\testutils\assert.hpp
+		..\tests\cpp\testutils\lang.hpp = ..\tests\cpp\testutils\lang.hpp
 		..\tests\cpp\testutils\logspy.hpp = ..\tests\cpp\testutils\logspy.hpp
 		..\tests\cpp\testutils\mockcontroller.hpp = ..\tests\cpp\testutils\mockcontroller.hpp
 		..\tests\cpp\testutils\ui.hpp = ..\tests\cpp\testutils\ui.hpp
@@ -79,6 +80,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "assert", "tests\assert.vcxproj", "{9BE0AA8B-0ECE-444E-9E16-93793EE0B0D2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "traits", "tests\traits.vcxproj", "{E204AE2D-9863-4DE0-83C1-AD60FC562F39}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lang", "tests\lang.vcxproj", "{E5D2C077-9AA0-4D3B-8DA0-6B49CD8FBC3D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testlang", "tests\testlang.vcxproj", "{3016C136-7571-4907-AE47-0109475425F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -177,6 +182,14 @@ Global
 		{E204AE2D-9863-4DE0-83C1-AD60FC562F39}.Release|x64.ActiveCfg = Release|x64
 		{E204AE2D-9863-4DE0-83C1-AD60FC562F39}.Test|x64.ActiveCfg = Test|x64
 		{E204AE2D-9863-4DE0-83C1-AD60FC562F39}.Test|x64.Build.0 = Test|x64
+		{E5D2C077-9AA0-4D3B-8DA0-6B49CD8FBC3D}.Debug|x64.ActiveCfg = Debug|x64
+		{E5D2C077-9AA0-4D3B-8DA0-6B49CD8FBC3D}.Release|x64.ActiveCfg = Release|x64
+		{E5D2C077-9AA0-4D3B-8DA0-6B49CD8FBC3D}.Test|x64.ActiveCfg = Test|x64
+		{E5D2C077-9AA0-4D3B-8DA0-6B49CD8FBC3D}.Test|x64.Build.0 = Test|x64
+		{3016C136-7571-4907-AE47-0109475425F8}.Debug|x64.ActiveCfg = Debug|x64
+		{3016C136-7571-4907-AE47-0109475425F8}.Release|x64.ActiveCfg = Release|x64
+		{3016C136-7571-4907-AE47-0109475425F8}.Test|x64.ActiveCfg = Test|x64
+		{3016C136-7571-4907-AE47-0109475425F8}.Test|x64.Build.0 = Test|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -214,6 +227,8 @@ Global
 		{9689D14A-BF7E-4343-897D-C08D0F0E9CCA} = {E1A3BEC1-DC5A-486C-881F-7BAF9230949F}
 		{9BE0AA8B-0ECE-444E-9E16-93793EE0B0D2} = {FB01A98B-D8D1-46EE-8905-19DF1FB8CC8B}
 		{E204AE2D-9863-4DE0-83C1-AD60FC562F39} = {E7603EE2-0F6A-4991-9C02-5C69E3D99F69}
+		{E5D2C077-9AA0-4D3B-8DA0-6B49CD8FBC3D} = {F3D6AEB3-D7EB-4959-813E-D9490D538B9F}
+		{3016C136-7571-4907-AE47-0109475425F8} = {FB01A98B-D8D1-46EE-8905-19DF1FB8CC8B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4ACFF0E3-DFF5-489E-866F-8829724F0C54}

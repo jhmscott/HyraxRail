@@ -215,10 +215,7 @@ void MainWindow::closeEvent (QCloseEvent* event)
 
 void MainWindow::setTitle ()
     {
-    const QString appName = tr ("Hyrax Rail");
-
-    QApplication::setApplicationDisplayName (appName);
-    setWindowTitle (appName);
+    setWindowTitle (QApplication::applicationDisplayName ());
     }
 
 

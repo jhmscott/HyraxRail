@@ -42,7 +42,7 @@ Translator& Translator::instance ()
 
 void Translator::setLocale (const QLocale& locale)
     {
-    QString translationLibray = QLibraryInfo::path (QLibraryInfo::TranslationsPath);
+    QString translationLibrary = QLibraryInfo::path (QLibraryInfo::TranslationsPath);
 
     QLocale::setDefault (locale);
 
@@ -57,7 +57,7 @@ void Translator::setLocale (const QLocale& locale)
         if (m_sysTranslator.load (locale,
                                   "qt",
                                   "_",
-                                  translationLibray))
+                                  translationLibrary))
             {
             if (qApp->installTranslator (&m_sysTranslator))
                 {
@@ -92,7 +92,13 @@ void Translator::setLocale (const QLocale& locale)
             qDebug () << "No app translation for language" << locale.name ();
             }
         }
+
+    // Update the application name
+    const QString appName = QObject::tr ("Hyrax Rail");
+
+    QApplication::setApplicationDisplayName (appName);
     }
+
 #ifdef Q_OS_MACOS
 void Translator::onLanguageChanged ()
     {

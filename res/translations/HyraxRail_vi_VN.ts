@@ -149,6 +149,11 @@
         <source>Slow Locomotive</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../src/cpp/ui/lang.cpp" line="97"/>
+        <source>Hyrax Rail</source>
+        <translation type="unfinished">Đường sắt Hyrax</translation>
+    </message>
 </context>
 <context>
     <name>layout::Locomotive</name>
@@ -243,40 +248,39 @@
 <context>
     <name>ui::MainWindow</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="235"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="232"/>
         <source>Shutdown</source>
         <translation>Tắt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="236"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="233"/>
         <source>The Fast Clock is still running.
 Would you like to pause it or keep it running?</source>
         <translation>Đồng hồ nhanh đang chạy. Bạn muốn dừng hay tắc đồng hồ?</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="240"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="237"/>
         <source>Pause</source>
         <translation>Dừng</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="243"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="240"/>
         <source>Always do this on shutdown</source>
         <translation>Luôn thực hiện thao tác này khi tắt máy</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="239"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="236"/>
         <source>Run</source>
         <translation>Chạy</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="241"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="238"/>
         <source>Cancel</source>
         <translation>Hủy</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="218"/>
         <source>Hyrax Rail</source>
-        <translation>Đường sắt Hyrax</translation>
+        <translation type="vanished">Đường sắt Hyrax</translation>
     </message>
 </context>
 <context>

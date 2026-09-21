@@ -66,6 +66,13 @@ auto makeMemberBinder (Func func, Obj* obj, traits::envelope<std::tuple<Args...>
     }
 } // namespace internal
 
+
+/// Fake type used by EnumRange to signal an inclusive range
+struct inclusive_t {};
+
+/// Pass to EnumRange constructor to create an inclusive range
+inline constexpr inclusive_t inclusive{};
+
 ///////////////////////////////////////////////////////////////////////////////
 /// Iterable range from an enum start and end value
 ///
@@ -170,8 +177,9 @@ public:
         Underlying m_current;   ///< Integer value of current enum
         };
 
+
     ///////////////////////////////////////////////////////////////////////////////
-    /// Constructor
+    /// Constructor for an exclusive enum range
     ///
     /// @param[in]  start       Start of range
     /// @param[in]  end         End of range, not inclusive
@@ -181,6 +189,19 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     EnumRange (Enum start, Enum end) :
         m_pair (start, end)
+        {}
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor for an inclusive enum range
+    ///
+    /// @param[in]  start       Start of range
+    /// @param[in]  end         End of range, not inclusive
+    ///
+    /// @remarks    Range is [start,end]
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    EnumRange (Enum start, Enum end, inclusive_t) :
+        m_pair (start, static_cast<Enum> (end + 1))
         {}
 
     ///////////////////////////////////////////////////////////////////////////////

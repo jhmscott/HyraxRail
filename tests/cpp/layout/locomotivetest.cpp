@@ -54,6 +54,12 @@ static void assertInitState (const layout::Locomotive& loco)
     QCOMPARE (loco.getAddress (),   INIT_ADDR);
     }
 
+///////////////////////////////////////////////////////////////////////////////
+/// Assert the locomotive contains the new state
+///
+/// @param[in]  loco        Locomotive to test
+///
+///////////////////////////////////////////////////////////////////////////////
 static void assertNewState (const layout::Locomotive& loco)
     {
     QCOMPARE (loco.getId (),        ID);

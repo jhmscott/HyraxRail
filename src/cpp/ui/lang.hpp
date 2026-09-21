@@ -14,8 +14,9 @@
 #include <../objective-c/lang.hpp>
 #endif // Q_OS_MACOS
 
-#include <QTranslator>
 #include <QEvent>
+#include <QLocale>
+#include <QTranslator>
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Generates boiler plate to handle a language change. Only use if you aren't
@@ -51,9 +52,6 @@ namespace ui::lang
 /// the app starts
 ///
 /// @return     System locale
-///
-/// @todo       Currently only implemented on windows. For other systems, this
-///             behaves the same as QLocale::system()
 ///
 ///////////////////////////////////////////////////////////////////////////////
 QLocale system ();
