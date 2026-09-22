@@ -106,6 +106,14 @@ private slots:
         QCOMPARE (testutils::assert_internal::rangeToString (vec),
                   "[ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]");
         }
+
+    void rangeFormatQStringTest ()
+        {
+        std::vector<QString> vec = { "Test 1", "Test 2" };
+
+        QCOMPARE (testutils::assert_internal::rangeToString (vec),
+                  "[ Test 1, Test 2 ]");
+        }
     };
 
 QTEST_MAIN (AssertTest)

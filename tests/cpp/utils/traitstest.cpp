@@ -203,7 +203,7 @@ private slots:
         asserNullPointer<std::shared_ptr<int>> ();
 
         QCOMPARE (null<std::optional<int>>,     NULLOPT);
-        QVERIFY ((std::is_same_v<std::nullopt_t, decltype (null<std::optional<int>>)>));
+        QVERIFY ((std::is_same_v<std::nullopt_t, std::remove_const_t<decltype (null<std::optional<int>>)>>));
         }
     };
 

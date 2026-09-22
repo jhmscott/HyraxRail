@@ -11,7 +11,9 @@
 
 #include <utils/resources.hpp>
 
+#include <QTextStream>
 #include <QtTest>
+#include <QtTypeTraits>
 
 #include <algorithm>
 #include <sstream>
@@ -39,28 +41,50 @@ std::string rangeToString (const Rng& range)
         }
     else
         {
-        std::stringstream ss;
+        using Value = typename Rng::value_type;
+
+        constexpr bool hasTextStream= QTypeTraits::has_ostream_operator_v<QTextStream, Value>;
+        constexpr bool hasOstream   = QTypeTraits::has_ostream_operator_v<std::ostream, Value>;
+
+        constexpr bool useTextStream= hasTextStream && not hasOstream;
+
+        using Stream = std::conditional_t<useTextStream, QTextStream, std::stringstream>;
+
+        QString qstr;
+
+        Stream ss;
+
+        if constexpr (useTextStream)
+            {
+            ss.setString (&qstr);
+            }
 
         ss << "[ ";
 
         for (const auto& val : range)
             {
-            /// @todo make this more generic to all classes with QDataStream support
-            if constexpr (std::is_same_v<QString, typename Rng::value_type>)
-                {
-                ss << val.toStdString () << ", ";
-                }
-            else
-                {
-                ss << val << ", ";
-                }
+            ss << val << ", ";
             }
 
-        ss.seekp (-2, ss.cur);
+        if constexpr (useTextStream)
+            {
+            qstr.chop (2);
+            }
+        else
+            {
+            ss.seekp (-2, ss.cur);
+            }
 
         ss << " ]";
 
-        str = ss.str ();
+        if constexpr (useTextStream)
+            {
+            str = qstr.toStdString ();
+            }
+        else
+            {
+            str = ss.str ();
+            }
         }
 
     return str;
