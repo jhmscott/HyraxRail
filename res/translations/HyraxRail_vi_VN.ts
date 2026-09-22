@@ -248,33 +248,33 @@
 <context>
     <name>ui::MainWindow</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="232"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="231"/>
         <source>Shutdown</source>
         <translation>Tắt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="233"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="232"/>
         <source>The Fast Clock is still running.
 Would you like to pause it or keep it running?</source>
         <translation>Đồng hồ nhanh đang chạy. Bạn muốn dừng hay tắc đồng hồ?</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="237"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="236"/>
         <source>Pause</source>
         <translation>Dừng</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="240"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="239"/>
         <source>Always do this on shutdown</source>
         <translation>Luôn thực hiện thao tác này khi tắt máy</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="236"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="235"/>
         <source>Run</source>
         <translation>Chạy</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="238"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="237"/>
         <source>Cancel</source>
         <translation>Hủy</translation>
     </message>

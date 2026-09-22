@@ -13,9 +13,8 @@
 #include <ui/dismiss.hpp>
 
 #include <QtWidgets/QMainWindow>
+#include <QSessionManager>
 
-
-#include <future>
 
 namespace ui
 {

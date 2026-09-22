@@ -118,7 +118,11 @@ private:
     UILANG_ON_CHANGE (QWidget,
         {
         refreshHealthIcon ();
-        setController (*m_controller);
+
+        if (NULL != m_controller)
+            {
+            setController (*m_controller);
+            }
         })
     };
 

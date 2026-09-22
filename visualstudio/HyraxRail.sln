@@ -85,6 +85,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lang", "tests\lang.vcxproj"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testlang", "tests\testlang.vcxproj", "{3016C136-7571-4907-AE47-0109475425F8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mainwindow", "tests\mainwindow.vcxproj", "{B8E6824D-626E-47D2-9363-F5817B91C1B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -190,6 +192,10 @@ Global
 		{3016C136-7571-4907-AE47-0109475425F8}.Release|x64.ActiveCfg = Release|x64
 		{3016C136-7571-4907-AE47-0109475425F8}.Test|x64.ActiveCfg = Test|x64
 		{3016C136-7571-4907-AE47-0109475425F8}.Test|x64.Build.0 = Test|x64
+		{B8E6824D-626E-47D2-9363-F5817B91C1B7}.Debug|x64.ActiveCfg = Debug|x64
+		{B8E6824D-626E-47D2-9363-F5817B91C1B7}.Release|x64.ActiveCfg = Release|x64
+		{B8E6824D-626E-47D2-9363-F5817B91C1B7}.Test|x64.ActiveCfg = Test|x64
+		{B8E6824D-626E-47D2-9363-F5817B91C1B7}.Test|x64.Build.0 = Test|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -229,6 +235,7 @@ Global
 		{E204AE2D-9863-4DE0-83C1-AD60FC562F39} = {E7603EE2-0F6A-4991-9C02-5C69E3D99F69}
 		{E5D2C077-9AA0-4D3B-8DA0-6B49CD8FBC3D} = {F3D6AEB3-D7EB-4959-813E-D9490D538B9F}
 		{3016C136-7571-4907-AE47-0109475425F8} = {FB01A98B-D8D1-46EE-8905-19DF1FB8CC8B}
+		{B8E6824D-626E-47D2-9363-F5817B91C1B7} = {F3D6AEB3-D7EB-4959-813E-D9490D538B9F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4ACFF0E3-DFF5-489E-866F-8829724F0C54}

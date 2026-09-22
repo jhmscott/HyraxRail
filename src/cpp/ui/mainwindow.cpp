@@ -218,7 +218,6 @@ void MainWindow::setTitle ()
     setWindowTitle (QApplication::applicationDisplayName ());
     }
 
-
 bool MainWindow::handleClose ()
     {
     bool    allowClose  = true;
