@@ -61,7 +61,7 @@ private:
     common::SchemeIconButton*   m_proto;            ///< Track protocol for selected locomotive
     common::AddButton*          m_add;              ///< Add Loco button
     common::PointedIconButton*  m_edit;             ///< Edit loco button
-    common::PointedIconButton*  m_delete;           ///< 
+    common::PointedIconButton*  m_delete;           ///< Delete loco button
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Add a locomotive to the combobox
@@ -84,6 +84,7 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void updateButtonStates ();
+
 private slots:
     ///////////////////////////////////////////////////////////////////////////////
     /// Add a new controller
@@ -124,6 +125,14 @@ private slots:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void deleteLoco ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle a controller being deleted
+    ///
+    /// @param[in]  controller      Controller being deleted
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void controllerDeleted (const control::ControllerBase& controller);
     };
 
 } // namespace ui::trains

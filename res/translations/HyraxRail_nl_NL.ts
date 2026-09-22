@@ -884,12 +884,12 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::trains::LocoControlPanel</name>
     <message>
-        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="321"/>
+        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="326"/>
         <source>Would you like to delete locomotive &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="325"/>
+        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="330"/>
         <source>Delete Locomotive</source>
         <translation type="unfinished"></translation>
     </message>

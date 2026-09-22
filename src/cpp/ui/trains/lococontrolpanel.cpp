@@ -114,6 +114,11 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
              this,
             &LocoControlPanel::deleteLoco);
 
+    connect (&controllers,
+             &control::ControllerManager::controllerDeleted,
+              this,
+             &LocoControlPanel::controllerDeleted);
+
     m_speed = new SpeedControlWidget{ this };
     m_speed->setLocomotive (m_currentLoco);
 
@@ -326,6 +331,14 @@ void LocoControlPanel::deleteLoco ()
                                                    msg))
         {
         m_currentLoco.remove ();
+        }
+    }
+
+void LocoControlPanel::controllerDeleted (const control::ControllerBase& controller)
+    {
+    if (&controller == m_controllerInfo->getController ())
+        {
+        m_controllerInfo->clear ();
         }
     }
 }

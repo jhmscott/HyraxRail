@@ -33,8 +33,8 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
-    /// @param[in]  controller          Controller to display
-    /// @param[in]  parent                   Parent widget
+    /// @param[in]  controller      Controller to display
+    /// @param[in]  parent          Parent widget
     /// @param[in]  includeDelete   If true, include the delete button
     ///
     ///////////////////////////////////////////////////////////////////////////////
@@ -54,11 +54,12 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     void setController (control::ControllerBase& controller);
 
+    control::ControllerBase* getController () { return m_controller; }
 signals:
     ///////////////////////////////////////////////////////////////////////////////
     /// Signal to indicate the "delete" button had been pressed
     ///
-    /// @param[in]  controller          Controller the delte was requested for
+    /// @param[in]  controller          Controller the delete was requested for
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void deleted (control::ControllerBase& controller);
