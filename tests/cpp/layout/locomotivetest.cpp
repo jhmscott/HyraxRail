@@ -252,6 +252,129 @@ private slots:
             QCOMPARE (actual.str (), expected);
             }
         }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for funcInfoByNumTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void funcInfoByNumTest_data ()
+        {
+        QTest::addColumn<int> ("num");
+        QTest::addColumn<int> ("idx");
+
+        QTest::addRow ("0") << 0 << -1;
+        QTest::addRow ("1") << 1 << 0;
+        QTest::addRow ("2") << 2 << -1;
+        QTest::addRow ("3") << 3 << 1;
+        QTest::addRow ("4") << 4 << -1;
+        QTest::addRow ("5") << 5 << 2;
+        QTest::addRow ("6") << 6 << -1;
+        QTest::addRow ("7") << 7 << -1;
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test the getFunctionByNumber() member function
+    ///
+    /// @see    layout::Locomotive::getFunctionByNumber()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void funcInfoByNumTest ()
+        {
+        QFETCH (int, num);
+        QFETCH (int, idx);
+
+        layout::Locomotive loco{ &mockController->get (),
+                                  INIT_NAME,
+                                  INIT_PROTO,
+                                  INIT_ADDR,
+                                  INIT_FUNCS,
+                                  ID };
+
+        auto info = loco.getFunctionByNumber (num);
+
+        if (idx < 0)
+            {
+            QCOMPARE (info, std::nullopt);
+            }
+        else
+            {
+            QCOMPARE (info, INIT_FUNCS[idx]);
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for deleteFunctionSignalTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void deleteFunctionSignalTest_data ()
+        {
+        QTest::addColumn<int> ("toDelete");
+
+        for (int ii = 0; ii < std::size (INIT_FUNCS); ++ii)
+            {
+            QTest::addRow ("%d", ii) << ii;
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Tests that a signal is emitted when a function is deleted
+    ///
+    /// @see    layout::Locomotive::functionDeleted()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void deleteFunctionSignalTest ()
+        {
+        QFETCH (int, toDelete);
+
+        fakeit::When (Method (*mockController, setLocomotiveFunctions)).AlwaysReturn ();
+
+        layout::Locomotive loco{ &mockController->get (),
+                                  INIT_NAME,
+                                  INIT_PROTO,
+                                  INIT_ADDR,
+                                  INIT_FUNCS,
+                                  ID };
+
+        auto newFuncs = INIT_FUNCS;
+
+        newFuncs.erase (newFuncs.begin () + toDelete);
+
+        QSignalSpy spy{ &loco, &layout::Locomotive::functionDeleted };
+
+        loco.setFunctions (newFuncs);
+
+        QCOMPARE (spy.count (), 1);
+        QCOMPARE (spy[0][0].toInt (), INIT_FUNCS[toDelete].id);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Tests that a signal is emitted for each function when multiples function
+    /// are deleted
+    ///
+    /// @see    layout::Locomotive::functionDeleted()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void deleteAllFunctionsTest ()
+        {
+        fakeit::When (Method (*mockController, setLocomotiveFunctions)).AlwaysReturn ();
+
+        layout::Locomotive loco{ &mockController->get (),
+                                  INIT_NAME,
+                                  INIT_PROTO,
+                                  INIT_ADDR,
+                                  INIT_FUNCS,
+                                  ID };
+        QSignalSpy spy{ &loco, &layout::Locomotive::functionDeleted };
+
+        loco.setFunctions (NEW_FUNCS);
+
+        QCOMPARE (spy.count (), INIT_FUNCS.size ());
+
+        for (int ii = 0; ii < spy.count (); ++ii)
+            {
+            QCOMPARE (spy[ii][0].toInt (), INIT_FUNCS[ii].id);
+            }
+        }
     };
 
 QTEST_GUILESS_MAIN (LocomotiveTest)

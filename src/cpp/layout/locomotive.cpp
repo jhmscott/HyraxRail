@@ -57,10 +57,35 @@ void Locomotive::releaseControl ()
 
 void Locomotive::setFunc (uint8_t func, bool enable)
     {
-    if (NULL != m_controller)
+    if (NULL != m_controller && NULL != m_state)
         {
-        m_controller->setFunc (m_id, func, enable);
+        auto function = getFunctionByNumber (func);
+
+        if (function.has_value () && enable != function->state)
+            {
+            m_controller->setFunc (m_id, func, enable);
+            }
         }
+    }
+
+std::optional<funcInfo> Locomotive::getFunctionByNumber (uint8_t num) const
+    {
+    std::optional<funcInfo> info;
+
+    if (NULL != m_state)
+        {
+        auto it = std::find_if (m_state->m_functions.begin (),
+                                m_state->m_functions.end (),
+                                [num] (const funcInfo& info) -> bool
+                                { return info.id == num; });
+
+        if (m_state->m_functions.end () != it)
+            {
+            info = *it;
+            }
+        }
+
+    return info;
     }
 
 trackProtocol Locomotive::getProtocol () const
@@ -76,7 +101,34 @@ void Locomotive::setAddress (uint address)
     LAYOUT_DEFINE_SETTER (m_address, setLocomotiveAddress, address)
 
 void Locomotive::setFunctions (const std::vector<funcInfo>& functions)
-    LAYOUT_DEFINE_SETTER (m_functions, setLocomotiveFunctions, functions)
+    {
+    if (NULL != m_state && NULL != m_controller)
+        {
+        std::vector<funcInfo> deleted;
+
+        deleted.reserve (m_state->m_functions.size ());
+
+        std::copy_if (m_state->m_functions.begin (),
+                      m_state->m_functions.end (),
+                      std::back_inserter (deleted),
+            [&functions] (const funcInfo& func) -> bool
+            {
+            return functions.end () ==
+                        std::find_if (functions.begin (),
+                                      functions.end (),
+                                      [num = func.id] (const funcInfo& func) -> bool
+                                      { return num == func.id; });
+            });
+
+        m_state->m_functions = functions;
+        m_controller->setLocomotiveFunctions (m_id, functions);
+
+        for (const funcInfo& func : deleted)
+            {
+            callAll (&Locomotive::functionDeleted, func.id);
+            }
+        }
+    }
 
 void Locomotive::remove ()
     {

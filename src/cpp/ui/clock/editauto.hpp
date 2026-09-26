@@ -16,6 +16,7 @@
 #include <ui/clock/condition.hpp>
 #include <ui/common/formdialog.hpp>
 #include <ui/common/optionaldropdown.hpp>
+#include <ui/common/tiereddropdown.hpp>
 #include <ui/lang.hpp>
 
 #include <QCheckBox>
@@ -59,7 +60,7 @@ private:
 
     QFormLayout*                m_layout;           ///< Main form layout
     QLineEdit*                  m_name;             ///< Name field
-    common::SchemeComboBox*     m_items;            ///< List of items available to automate
+    common::TieredDropdown*     m_items;            ///< List of items available to automate
     common::OptionalDropdown*   m_actions;          ///< List of actions compatible with the selected item
     QComboBox*                  m_conditions;       ///< List of automation conditons
     QCheckBox*                  m_doOnce;           ///< Do the automation only once

@@ -26,6 +26,12 @@ AutomationItem::AutomationItem (const layout::Route& route) :
     connectSignals ();
     }
 
+AutomationItem::AutomationItem (const layout::Locomotive& loco, uint8_t num) :
+    m_item (function{ loco, num })
+    {
+    connectSignals ();
+    }
+
 AutomationItem::AutomationItem (const AutomationItem& other) :
     m_item (other.m_item)
     {
@@ -44,6 +50,7 @@ AutomationItem::actions AutomationItem::getActions () const
             break;
             }
 
+        case type::LOCO_FUNC:
         case type::ACTUATOR:
             {
             utils::algorithm::makeBitset (actions,
@@ -65,30 +72,22 @@ void AutomationItem::doAction (action action)
             {
             case ACTION_SET:
                 {
-                if (type::ACTUATOR == getType ())
-                    {
-                    getActuator ()->set (true);
-                    }
-                else
-                    {
-                    getRoute ()->set ();
-                    }
+                setState (true);
                 break;
                 }
 
             case ACTION_UNSET:
                 {
-                getActuator ()->set (false);
+                setState (false);
                 break;
                 }
 
             case ACTION_TOGGLE:
                 {
-                auto actuator = *getActuator ();
-
-                actuator.set (not actuator.get ());
+                setState (not getState ());
                 break;
                 }
+
             case NUM_ACTIONS:
                 {
                 // ignore delimiter
@@ -126,6 +125,31 @@ std::optional<layout::Route> AutomationItem::getRoute () const
     return route;
     }
 
+std::optional<AutomationItem::function> AutomationItem::getFunction () const
+    {
+    std::optional<function> func;
+
+    if (type::LOCO_FUNC == getType ())
+        {
+        func = std::get<2> (m_item);
+        }
+
+    return func;
+    }
+
+std::optional<layout::funcInfo> AutomationItem::getFunctionInfo () const
+    {
+    std::optional<function>         func = getFunction ();
+    std::optional<layout::funcInfo> info;
+
+    if (func.has_value ())
+        {
+        info = func->loco.getFunctionByNumber (func->func);
+        }
+
+    return info;
+    }
+
 std::string AutomationItem::name () const
     {
     std::string name;
@@ -143,6 +167,16 @@ std::string AutomationItem::name () const
             name = getRoute ()->getName ();
             break;
             }
+        case type::LOCO_FUNC:
+            {
+            auto info = getFunctionInfo ();
+
+            if (info.has_value ())
+                {
+                name = info->uiName ().toStdString ();
+                }
+            break;
+            }
         }
 
     return name;
@@ -152,24 +186,98 @@ void AutomationItem::connectSignals ()
     {
     switch (getType ())
         {
-        case type::ROUTE:
-            {
-            connect (&std::get<1> (m_item),
-                     &layout::Route::destroyed,
-                     this,
-                     &AutomationItem::destroyed);
-            break;
-            }
-
         case type::ACTUATOR:
             {
             connect (&std::get<0> (m_item),
                      &layout::Actuator::destroyed,
-                     this,
+                      this,
                      &AutomationItem::destroyed);
             break;
             }
+        case type::ROUTE:
+            {
+            connect (&std::get<1> (m_item),
+                     &layout::Route::destroyed,
+                      this,
+                     &AutomationItem::destroyed);
+            break;
+            }
+
+        case type::LOCO_FUNC:
+            {
+            auto& [loco, num] = std::get<2> (m_item);
+
+            connect (&loco,
+                     &layout::Locomotive::destroyed,
+                      this,
+                     &AutomationItem::destroyed);
+
+            connect (&loco,
+                     &layout::Locomotive::functionDeleted,
+                      this,
+                     [filterNum = num, this] (uint8_t num)
+                     {
+                     if (filterNum == num)
+                         {
+                         emit AutomationItem::destroyed ();
+                         }
+                     });
+            break;
+            }
         }
+    }
+
+void AutomationItem::setState (bool state)
+    {
+    switch (getType ())
+        {
+        case type::ACTUATOR:
+            {
+            getActuator ()->set (state);
+            break;
+            }
+        case type::ROUTE:
+            {
+            getRoute ()->set ();
+            break;
+            }
+        case type::LOCO_FUNC:
+            {
+            auto& [loco, func] = std::get<2> (m_item);
+
+            loco.setFunc (func, state);
+            break;
+            }
+        }
+    }
+
+bool AutomationItem::getState () const
+    {
+    bool state = false;
+
+    switch (getType ())
+        {
+        case type::ACTUATOR:
+            {
+            state = getActuator ()->get ();
+            break;
+            }
+        case type::ROUTE:
+            {
+            break;
+            }
+        case type::LOCO_FUNC:
+            {
+            auto info = getFunctionInfo ();
+
+            if (info.has_value ())
+                {
+                state = info->state;
+                }
+            break;
+            }
+        }
+    return state;
     }
 
 

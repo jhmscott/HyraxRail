@@ -88,8 +88,18 @@ std::vector<AutomationItem> ControllerBase::getAutomationItems () const
 
     auto actuators  = getActuators ();
     auto routes     = getRoutes ();
+    auto locos      = getLocomotives ();
 
-    items.reserve (routes.size () + actuators.size ());
+
+    size_t numFunction = std::accumulate (locos.begin (),
+                                          locos.end (),
+                                          0LLU,
+        [] (size_t count, const layout::Locomotive& loco) -> size_t
+        {
+        return count + loco.getFunctions ().size ();
+        });
+
+    items.reserve (routes.size () + actuators.size () + numFunction);
 
     std::copy (actuators.begin (),
                actuators.end (),
@@ -98,6 +108,17 @@ std::vector<AutomationItem> ControllerBase::getAutomationItems () const
     std::copy (routes.begin (),
                routes.end (),
                std::back_inserter (items));
+
+    for (const layout::Locomotive& loco : locos)
+        {
+        auto functions = loco.getFunctions ();
+
+        std::transform (functions.begin (),
+                        functions.end (),
+                        std::back_inserter (items),
+                        [&loco] (const layout::funcInfo& info) -> AutomationItem
+                        { return { loco, info.id }; });
+        }
 
     return items;
     }

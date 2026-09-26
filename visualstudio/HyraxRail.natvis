@@ -34,6 +34,53 @@
         <DisplayString>{major}.{minor}.{micro}</DisplayString>
     </Type>
 
+	<!-- Layout Components -->
+
+	<Type Name="layout::ComponentDerived&lt;*&gt;">
+		<DisplayString>{m_state->m_name,s8b}</DisplayString>
+		<Expand>
+			<Item Name="ID">m_id</Item>
+			<Item Name="Controller" Condition="nullptr != m_controller">*m_controller</Item>
+			<ExpandedItem Condition="nullptr != m_state._Ptr">*m_state._Ptr</ExpandedItem>
+		</Expand>
+	</Type>
+
+	<Type Name="layout::funcInfo">
+		<DisplayString>{{ ID = {(int)id}, icon = {icon,en} }} </DisplayString>
+	</Type>
+
+	<Type Name="layout::routeMember">
+		<DisplayString Condition="state">{actuator} (ON)</DisplayString>
+		<DisplayString Condition="!state">{actuator} (OFF)</DisplayString>
+	</Type>
+
+	<Type Name="layout::locomotiveState">
+		<Expand>
+			<Item Name="Name">m_name,s8b</Item>
+			<Item Name="Track Protocol">m_proto,en</Item>
+			<Item Name="Track Address">m_address</Item>
+			<Item Name="Functions">m_functions</Item>
+		</Expand>
+	</Type>
+
+	<Type Name="layout::routeState">
+		<Expand>
+			<Item Name="Name">m_name,s8b</Item>
+			<Item Name="Members">m_members</Item>
+		</Expand>
+	</Type>
+
+	<Type Name="layout::actuatorState">
+		<Expand>
+			<Item Name="Name">m_name,s8b</Item>
+			<Item Name="Icon">m_icon,en</Item>
+			<Item Name="State">m_state</Item>
+			<Item Name="Mode">m_mode,en</Item>
+			<Item Name="Address">m_address</Item>
+			<Item Name="Duration">m_duration</Item>
+		</Expand>
+	</Type>
+
     <!-- Protocols -->
     <Type Name="control::ProtocolMetaClassBase">
         <DisplayString>{friendlyName,s8b}</DisplayString>
@@ -53,7 +100,10 @@
         <Expand>
             <Item Name="[Name]">m_friendlyName,s8b</Item>
             <Item Name="[Thread]">m_thread</Item>
-        </Expand>
+			<Item Name="[Actuators]">((layout::ControllerBase&lt;layout::Actuator&gt;&amp;)*this).m_components</Item>
+			<Item Name="[Locomotives]">((layout::ControllerBase&lt;layout::Locomotive&gt;&amp;)*this).m_components</Item>
+			<Item Name="[Routes]">((layout::ControllerBase&lt;layout::Route&gt;&amp;)*this).m_components</Item>
+		</Expand>
     </Type>
 
     <Type Name="control::ControllerManager">
@@ -107,7 +157,7 @@
 
     <!-- Automations -->
     <Type Name="control::FastClock">
-        <!-- TODO: Figure out the eunning case-->
+        <!-- TODO: Figure out the running case-->
         <!--
         <DisplayString Condition="m_running">
             {reinterpret_cast&lt;control::FastClock::time_point&gt;
@@ -125,6 +175,72 @@
             <Item Name="[State]" Condition="!m_running">"Stopped",s8b</Item>
         </Expand>
     </Type>
+
+
+	<Type Name="control::AutomationItem::function">
+		<DisplayString>{loco} - {(int)func}</DisplayString>
+		<Expand>
+			<Item Name="Locomotive">loco</Item>
+			<Item Name="Function Number">(int)func</Item>
+		</Expand>
+	</Type>
+
+	<Type Name="control::AutomationItem">
+		<DisplayString Condition="m_item.index() == 0" Optional="true">Actuator : {m_item._Head}</DisplayString>
+		<DisplayString Condition="m_item.index() == 1" Optional="true">Route : {m_item._Tail._Head}</DisplayString>
+		<DisplayString Condition="m_item.index() == 2" Optional="true">Locomotive Function : {m_item._Tail._Tail._Head}</DisplayString>
+		<Expand>
+			<ExpandedItem Condition="m_item.index() == 0" Optional="true">m_item._Head</ExpandedItem>
+			<ExpandedItem Condition="m_item.index() == 1" Optional="true">m_item._Tail._Head</ExpandedItem>
+			<ExpandedItem Condition="m_item.index() == 2" Optional="true">m_item._Tail._Tail._Head</ExpandedItem>
+		</Expand>
+	</Type>
+
+	<Type Name="control::AutomationManager">
+		<DisplayString>{m_tasks}</DisplayString>
+		<Expand>
+			<ExpandedItem>m_tasks</ExpandedItem>
+		</Expand>
+	</Type>
+
+	<Type Name="control::AutomationAlarm">
+		<DisplayString>At {m_time.hour()}:{m_time.minute()/10,d}{m_time.minute()%10,d}:{m_time.second()/10,d}{m_time.second()%10,d}</DisplayString>
+	</Type>
+
+	<Type Name="control::AutomationTimer">
+		<DisplayString>Every {m_duration}</DisplayString>
+	</Type>
+
+	<Type Name="control::AutomationTask">
+		<DisplayString>{name}</DisplayString>
+		<Expand>
+			<Item Name="Name">name</Item>
+			<Synthetic Name="Task">
+				<DisplayString Condition="ACTION_SET == action">{*condition} set {*m_item}</DisplayString>
+				<DisplayString Condition="ACTION_UNSET == action">{*condition} unset {*m_item}</DisplayString>
+				<DisplayString Condition="ACTION_TOGGLE == action">{*condition} toggle {*m_item}</DisplayString>
+				<Expand>
+					<Item Name="Action">action,en</Item>
+					<Item Name="Condition">*condition</Item>
+					<Item Name="Item">*m_item</Item>
+				</Expand>
+			</Synthetic>
+			<Synthetic Name="Config">
+				<DisplayString>{{ Enabled = {enabled}, Do Once = {doOnce} }}</DisplayString>
+				<Expand>
+					<Item Name="Enabled">enabled</Item>
+					<Item Name="Do Once">doOnce</Item>
+				</Expand>
+			</Synthetic>
+			<Synthetic Name="Times">
+				<DisplayString>{{ Last Check = {m_lastChecked}, Last Run = {m_lastRun} }}</DisplayString>
+				<Expand>
+					<Item Name="Last Check">m_lastChecked</Item>
+					<Item Name="Last Run">m_lastRun</Item>
+				</Expand>
+			</Synthetic>
+		</Expand>
+	</Type>
 
     <!-- Common UI Elements-->
     <Type Name="ui::common::SchemeTabWidget">

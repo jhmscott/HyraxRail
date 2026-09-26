@@ -15,6 +15,10 @@
 
 #include <string>
 
+#ifdef LAYOUT_TEST_CLASS
+class LAYOUT_TEST_CLASS;
+#endif // LAYOUT_TEST_CLASS
+
 namespace layout
 {
 
@@ -157,6 +161,10 @@ private:
 class RouteController : public ControllerBase<Route>
     {
     friend class Route;
+
+#ifdef LAYOUT_TEST_CLASS
+    friend class ::LAYOUT_TEST_CLASS;
+#endif // LAYOUT_TEST_CLASS
 private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Activate a route

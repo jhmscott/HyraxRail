@@ -9,11 +9,14 @@
 
 
 #include <ui/actuators/resources.hpp>
+#include <ui/trains/resources.hpp>
+
 #include <ui/clock/alarm.hpp>
 #include <ui/clock/editauto.hpp>
 #include <ui/clock/monthly.hpp>
 #include <ui/clock/timer.hpp>
 #include <ui/clock/weekly.hpp>
+
 #include <ui/common/duration.hpp>
 #include <ui/common/utils.hpp>
 
@@ -27,6 +30,8 @@
 namespace ui::clock
 {
 
+static const int ACTUATOR_PARENT_IDX    = 0;
+static const int ROUTE_PARENT_IDX       = 1;
 
 //////////////////////////////////////////////////////////////////////////////
 /// Get the icon for an automation item
@@ -52,11 +57,17 @@ static utils::resources::Icon getIcon (const control::AutomationItem& item)
             icon = "misc/path";
             break;
             }
+        case control::AutomationItem::type::LOCO_FUNC:
+            {
+            auto info = item.getFunctionInfo ();
+
+            icon = trains::resources::getFunctionInfo (info->icon).icon;
+            break;
+            }
         }
 
     return icon;
     }
-
 
 EditAutoDialog::EditAutoDialog (control::ControllerManager& controllers,
                                 QWidget*                    parent,
@@ -69,7 +80,7 @@ EditAutoDialog::EditAutoDialog (control::ControllerManager& controllers,
     m_layout = new QFormLayout;
 
     m_layout->addRow (new QLabel{ this }, m_name        = new QLineEdit{ this });
-    m_layout->addRow (new QLabel{ this }, m_items       = new common::SchemeComboBox{ this });
+    m_layout->addRow (new QLabel{ this }, m_items       = new common::TieredDropdown{ this });
     m_layout->addRow (new QLabel{ this }, m_actions     = new common::OptionalDropdown{ this });
     m_layout->addRow (new QLabel{ this }, m_conditions  = new QComboBox{ this });
     m_layout->addRow (new QLabel{ this }, m_doOnce      = new QCheckBox{ this });
@@ -77,16 +88,57 @@ EditAutoDialog::EditAutoDialog (control::ControllerManager& controllers,
 
     common::refreshStyleSheetOnColorSchemeChange (*m_conditions);
 
+    m_items->addParentItem ("", "misc/split");
+    m_items->addParentItem ("", "misc/path");
+
+    std::map<layout::Locomotive, int> locoToParent;
+
+    int locoParentCounter = 2;
+
+    for (auto& controller : controllers)
+        {
+        for (auto& loco : controller.getLocomotives ())
+            {
+            m_items->addParentItem (loco.getName ().c_str (), "misc/train");
+
+            locoToParent[loco] = locoParentCounter;
+            ++locoParentCounter;
+            }
+        }
+
     for (auto& controller : controllers)
         {
         for (auto& item : controller.getAutomationItems ())
             {
-            std::string name = item.name ();
-            auto        icon = getIcon (item);
+            std::string name    = item.name ();
+            auto        icon    = getIcon (item);
+            int         parent  = -1;
 
-            m_items->addItem (icon,
-                              name.c_str (),
-                              QVariant::fromValue (std::move (item)));
+            switch (item.getType ())
+                {
+                case control::AutomationItem::type::ACTUATOR:
+                    {
+                    parent = ACTUATOR_PARENT_IDX;
+                    break;
+                    }
+                case control::AutomationItem::type::ROUTE:
+                    {
+                    parent = ROUTE_PARENT_IDX;
+                    break;
+                    }
+                case control::AutomationItem::type::LOCO_FUNC:
+                    {
+                    auto [loco, _] = *item.getFunction ();
+
+                    parent = locoToParent[loco];
+                    break;
+                    }
+                }
+
+            m_items->addChildItem (name.c_str (),
+                                   QVariant::fromValue (std::move (item)),
+                                   icon,
+                                   parent);
             }
         }
 
@@ -148,11 +200,6 @@ EditAutoDialog::EditAutoDialog (control::ControllerManager& controllers,
              this,
             &EditAutoDialog::conditionChanged);
 
-    connect (m_conditions,
-            &QComboBox::currentIndexChanged,
-             this,
-            &EditAutoDialog::inputChanged);
-
     connect (m_name,
             &QLineEdit::textChanged,
              this,
@@ -179,6 +226,7 @@ void EditAutoDialog::setTaskParameters (control::AutomationTask& task) const
 bool EditAutoDialog::hasAcceptableInput () const
     {
     return m_name->hasAcceptableInput () &&
+       not m_items->isParentItem (m_items->currentIndex ()) &&
            activeConditionForm ()->hasAcceptableInput ();
     }
 
@@ -218,30 +266,42 @@ void EditAutoDialog::setLabels ()
         {
         setWindowTitle (tr ("Add Automation"));
         }
+
+    m_items->setParentItemText (ACTUATOR_PARENT_IDX,    tr ("Actuators"));
+    m_items->setParentItemText (ROUTE_PARENT_IDX,       tr ("Routes"));
+
+    for (int ii = 0; ii < m_items->count (); ++ii)
+        {
+        if (not m_items->isParentItem (ii))
+            {
+            const auto& item = m_items->itemData (ii).value<control::AutomationItem> ();
+
+            if (control::AutomationItem::type::LOCO_FUNC == item.getType ())
+                {
+                m_items->setItemText (ii, item.name ().c_str ());
+                }
+            }
+        }
     }
 
 
 void EditAutoDialog::updateActions (int item)
     {
     const auto& currentItem = m_items->itemData (item).value<control::AutomationItem> ();
-    auto        lastAction  = 0 == m_actions->count () ?
-                              control::AutomationItem::NUM_ACTIONS :
-                              m_actions->currentData ().value<control::AutomationItem::action> ();
 
-    m_actions->clear ();
-
-    for (auto ii : utils::algorithm::bitsetToSet (currentItem.getActions()))
+    m_actions->refreshComboboxItems (
+        [&] () -> void
         {
-        auto action = static_cast<control::AutomationItem::action> (ii);
+        for (auto ii : utils::algorithm::bitsetToSet (currentItem.getActions ()))
+            {
+            auto action = static_cast<control::AutomationItem::action> (ii);
 
-        m_actions->addItem (control::actionText (action),
-                            QVariant::fromValue (action));
-        }
+            m_actions->addItem (control::actionText (action),
+                                QVariant::fromValue (action));
+            }
+        });
 
-    if (control::AutomationItem::NUM_ACTIONS != lastAction)
-        {
-        m_actions->setIndexByUserData (lastAction);
-        }
+    emit inputChanged ();
     }
 
 ConditionForm* EditAutoDialog::activeConditionForm ()
@@ -271,6 +331,8 @@ void EditAutoDialog::conditionChanged (int idx)
     hideConditionForms ();
 
     activeConditionForm ()->show ();
+
+    emit inputChanged ();
     }
 
 } // namespace ui::automation

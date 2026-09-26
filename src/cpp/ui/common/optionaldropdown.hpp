@@ -143,6 +143,24 @@ public:
     void setIndexByUserData (const T& ud)
         { setComboBoxIndexByUserData (*m_dropdown, ud); }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Refresh the list without signalling. This empties and refills the combobox
+    /// and then sets the current index to the previous items new position.
+    /// This will only emit currentIndexChanged() if that previous item doesn't exist
+    /// in the new list
+    ///
+    /// @tparam         Func        Refill callback function type
+    ///
+    /// @param[in]      refill      Callback to fill the emptied combobox
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<class Func>
+    void refreshComboboxItems (Func refill)
+        {
+        common::refreshComboboxItems (*m_dropdown, refill);
+        refreshActiveWidget ();
+        }
+
 signals:
     //////////////////////////////////////////////////////////////////////////////
     /// Signals the selected item as changed

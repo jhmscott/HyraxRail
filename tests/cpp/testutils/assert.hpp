@@ -210,3 +210,36 @@ std::string createRangeAssertMessage (const R1&     actual,
                                                                     #actual,    \
                                                                     #expected,  \
                                                                     true).c_str ())
+
+///////////////////////////////////////////////////////////////////////////////
+/// Equivalent to COMPARE(), but check both == and != evaluate as you'd expect
+/// Designed to test overloaded equality operators
+///
+/// @param[in]  c1      First object to test
+/// @param[in]  c2      Second object to test
+///
+///////////////////////////////////////////////////////////////////////////////
+#define COMPARE_OP_EQ(c1, c2)   \
+    {                           \
+    QCOMPARE (c1, c2);          \
+    QCOMPARE (c2, c1);          \
+    QVERIFY (not (c1 != c2));   \
+    QVERIFY (not (c2 != c1));   \
+    }
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Equivalent to COMPARE_NE(), but check both == and != evaluate as you'd expect
+/// Designed to test overloaded equality operators
+///
+/// @param[in]  c1      First object to test
+/// @param[in]  c2      Second object to test
+///
+///////////////////////////////////////////////////////////////////////////////
+#define COMPARE_OP_NE(c1, c2)   \
+    {                           \
+    QCOMPARE_NE (c1, c2);       \
+    QCOMPARE_NE (c2, c1);       \
+    QVERIFY (not (c1 == c2));   \
+    QVERIFY (not (c2 == c1));   \
+    }

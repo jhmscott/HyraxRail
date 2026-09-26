@@ -251,6 +251,17 @@ public:
     std::vector<funcInfo> getFunctions () const;
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Get the function info by the function number
+    ///
+    /// @param[in]  num     Function number
+    ///
+    /// @return     Function info for function num
+    ///             std::nullopt if function does not exist
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::optional<funcInfo> getFunctionByNumber (uint8_t num) const;
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Get the protocol the controller uses to communicate with the train over
     /// the track
     ///
@@ -296,10 +307,15 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void remove ();
-signals:
-    // TODO: not used
-    void funcSet (uint8_t func, bool enable);
 
+signals:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Signals a function is deleted from this locomotive
+    ///
+    /// @param[in]  num     Function number being deleted
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void functionDeleted (uint8_t num);
     };
 
 

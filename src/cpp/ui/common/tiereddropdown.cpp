@@ -126,7 +126,8 @@ void TieredDropdown::addParentItem (const QString&                  text,
 
 void TieredDropdown::addChildItem (const QString&                   text,
                                    const QVariant&                  data,
-                                   const utils::resources::Icon&    icon)
+                                   const utils::resources::Icon&    icon,
+                                   const int                        parent)
     {
     QStandardItem*  item = new QStandardItem{ text + INDENT };
 
@@ -139,7 +140,7 @@ void TieredDropdown::addChildItem (const QString&                   text,
         {
         for (int ii = count () - 1; ii >= 0; --ii)
             {
-            if (tier::PARENT == itemData (ii, dropDownTier).value<tier> ())
+            if (isParentItem (ii))
                 {
                 if (itemData (ii, schemeIcon).value<utils::resources::Icon> ())
                     {
@@ -151,7 +152,59 @@ void TieredDropdown::addChildItem (const QString&                   text,
         }
 
     QStandardItemModel* itemModel = static_cast<QStandardItemModel*> (model ());
-    itemModel->appendRow (item);
+
+    if (parent < 0)
+        {
+        itemModel->appendRow (item);
+        }
+    else
+        {
+        int parentCount = -1;
+        int ii;
+
+        for (ii = 0; ii < count (); ++ii)
+            {
+            if (isParentItem (ii))
+                {
+                ++parentCount;
+                }
+
+            if (parentCount == parent + 1)
+                {
+                break;
+                }
+            }
+
+        itemModel->insertRow (ii, item);
+        }
+    }
+
+
+void TieredDropdown::setParentItemText (int idx, const QString& text)
+    {
+    int parentCount = -1;
+    int ii;
+
+    QStandardItemModel* itemModel = static_cast<QStandardItemModel*> (model ());
+
+    for (ii = 0; ii < count (); ++ii)
+        {
+        if (isParentItem (ii))
+            {
+            ++parentCount;
+            }
+
+        if (parentCount == idx)
+            {
+            itemModel->item (ii)->setText (text);
+            break;
+            }
+        }
+    }
+
+bool TieredDropdown::isParentItem (int idx) const
+    {
+    return tier::PARENT == itemData (idx, dropDownTier).value<tier> ();
     }
 
 } // namespace ui::common

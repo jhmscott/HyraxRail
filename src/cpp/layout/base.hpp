@@ -34,7 +34,8 @@ class ComponentBase : public QObject
 signals:
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Signals that this component's controller is being destroyed, and this component should be removed
+    /// Signals that this component's controller is being destroyed, and this
+    /// component should be removed
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void destroyed ();
@@ -42,9 +43,9 @@ signals:
 
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Component base class template implementation. Each component is identified by an ID that is unqiue for
-/// that component type and controller. This ID is passed from the componebtto the controller throuh the
-/// controller interface
+/// Component base class template implementation. Each component is identified
+/// by an ID that is unique for that component type and controller. This ID is
+/// passed from the component to the controller though the controller interface
 ///
 /// @tparam     Controller      Must inherit from ControllerBase
 /// @tparam     State           Component state
@@ -186,9 +187,10 @@ public:
         }
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Comparison operator. Evaluates to true if these reference the same object on the same controller
+    /// Comparison operator. Evaluates to true if these reference the same object on
+    /// the same controller
     ///
-    /// @param[in]  other           Component to compare to
+    /// @param[in]  other       Component to compare to
     ///
     /// @return     True if this and other are the same component
     ///
@@ -197,6 +199,34 @@ public:
         {
         return other.m_controller   == m_controller &&
                other.m_id           == m_id;
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Comparison operator. Evaluates to false if these reference the same object on
+    /// the same controller
+    ///
+    /// @param[in]  other       Component to compare to
+    ///
+    /// @return     True if this and other are different components
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool operator!= (const ComponentDerived& other) const { return !(other == *this); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Less than operator, used to sort components or build a tree. Components
+    /// will be ordered first by their controller, then their ID
+    ///
+    /// @param[in]  other       Component to compare to
+    ///
+    /// @return     If these components belong to the same controller, then true if
+    ///             the ID of this component is less than other's ID
+    ///             If these components belong to different components, then true if
+    ///             the pointer to the controller is less
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool operator< (const ComponentDerived& other) const
+        {
+        return m_controller < other.m_controller || m_id < other.m_id;
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -253,7 +283,8 @@ protected:
         { m_controller->callAll (m_id, func, args...); }
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// De-register this with the controller, so it no longer receives the destroyed signal
+    /// De-register this with the controller, so it no longer receives the
+    /// destroyed signal
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void deregister ()
@@ -266,7 +297,8 @@ protected:
         }
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Register this with the controller, so it recieves the signal when the controller is destroyed
+    /// Register this with the controller, so it receives the signal when the
+    /// controller is destroyed
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void register_ ()

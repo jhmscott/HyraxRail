@@ -10,6 +10,7 @@
 #pragma once
 
 #include <layout/actuator.hpp>
+#include <layout/locomotive.hpp>
 #include <layout/route.hpp>
 
 #include <QObject>
@@ -36,7 +37,8 @@ public:
     enum class type
         {
         ACTUATOR,   ///< layout::Actuator
-        ROUTE       ///< layout:::Route
+        ROUTE,      ///< layout:::Route,
+        LOCO_FUNC   ///< layout::Locomotive (function)
         };
 
     /// Action type; action to perform when condition is met
@@ -51,6 +53,36 @@ public:
 
     /// used to represent a list of supported actions
     using actions = std::bitset<NUM_ACTIONS>;
+
+    /// Represents a locomotive function being automated
+    struct function
+        {
+        layout::Locomotive  loco;   ///< Locomotive whose function is automated
+        uint8_t             func;   ///< Function number to automate
+
+        ///////////////////////////////////////////////////////////////////////////////
+        /// Comparison operator
+        ///
+        /// @param[in]  other   Function to compare to
+        ///
+        /// @return     True if this == other
+        ///
+        ///////////////////////////////////////////////////////////////////////////////
+        bool operator== (const function& other) const
+            {
+            return loco == other.loco && func == other.func;
+            }
+
+        ///////////////////////////////////////////////////////////////////////////////
+        /// Comparison operator
+        ///
+        /// @param[in]  other   Function to compare to
+        ///
+        /// @return     True if this != other
+        ///
+        ///////////////////////////////////////////////////////////////////////////////
+        bool operator!= (const function& other) const { return !(*this == other); }
+        };
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Compare two automation items
@@ -84,7 +116,7 @@ public:
     /// @param[in]  actuator        Actuator to copy
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    AutomationItem (const layout::Actuator& actuator);
+    implicit AutomationItem (const layout::Actuator& actuator);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Copy constructor from route
@@ -92,7 +124,16 @@ public:
     /// @param[in]  route       Route to copy
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    AutomationItem (const layout::Route& route);
+    implicit AutomationItem (const layout::Route& route);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Copy constructor from locomotive function
+    ///
+    /// @param[in]  loco        Locomotive to automate a function
+    /// @param[in]  num         Function number to automate
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    AutomationItem (const layout::Locomotive& loco, uint8_t num);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Copy constructor
@@ -150,12 +191,29 @@ public:
     std::optional<layout::Actuator> getActuator () const;
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Get the route this wrap, or std::nullopt if not an actuator
+    /// Get the route this wraps, or std::nullopt if not a route
     ///
     /// @return     Route
     ///
     ///////////////////////////////////////////////////////////////////////////////
     std::optional<layout::Route> getRoute () const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the function this wraps, or std::nullopt if not a function
+    ///
+    /// @return     Locomotive function
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::optional<function> getFunction () const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the function info for the function being automated, or std::nullopt if
+    /// not a function
+    ///
+    /// @return     Function info
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::optional<layout::funcInfo> getFunctionInfo () const;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the user defined name of this item
@@ -173,13 +231,29 @@ signals:
     void destroyed ();
 
 private:
-    std::variant<layout::Actuator, layout::Route> m_item;   ///< Underlying item being automated
+    std::variant<layout::Actuator, layout::Route, function> m_item;   ///< Underlying item being automated
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Connect the signals from the automated item
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void connectSignals ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the state of the item being automated
+    ///
+    /// @param[in]  state       New item state
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setState (bool state);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the state of the item being automated
+    ///
+    /// @return     Item state
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool getState () const;
     };
 
 

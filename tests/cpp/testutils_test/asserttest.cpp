@@ -12,6 +12,14 @@
 #include <QIcon>
 #include <QtTest>
 
+struct comparisonTestStruct
+    {
+    int num;
+
+    bool operator== (const comparisonTestStruct& other) const { return num == other.num; }
+
+    bool operator!= (const comparisonTestStruct& other) const { return not (other == *this); }
+    };
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Test suite for the test assert library
@@ -107,12 +115,87 @@ private slots:
                   "[ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]");
         }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Tests with a type that isn't ostream formattable, but is QTextStream
+    /// formattable. Uses QString as it's a simple example
+    ///
+    /// @see    testutils::assert_internal::rangeToString()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     void rangeFormatQStringTest ()
         {
         std::vector<QString> vec = { "Test 1", "Test 2" };
 
         QCOMPARE (testutils::assert_internal::rangeToString (vec),
                   "[ Test 1, Test 2 ]");
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for compareOpEqualTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void compareOpEqualTest_data ()
+        {
+        QTest::addColumn<int> ("num");
+
+        for (int ii = 0; ii < 1000; ++ii)
+            {
+            QTest::addRow ("%d", ii) << ii;
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test the operator==/operator!= assert COMPARE_OP_EQ()
+    ///
+    /// @see    COMPARE_OP_EQ()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void compareOpEqualTest ()
+        {
+        QFETCH (int, num);
+
+        comparisonTestStruct s1{ num };
+        comparisonTestStruct s2{ num };
+
+        COMPARE_OP_EQ (s1, s2);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for compareOpNotEqualTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void compareOpNotEqualTest_data ()
+        {
+        QTest::addColumn<int> ("num1");
+        QTest::addColumn<int> ("num2");
+
+        for (int ii = 0; ii < 100; ++ii)
+            {
+            for (int jj = 0; jj < 100; ++jj)
+                {
+                if (ii != jj)
+                    {
+                    QTest::addRow ("%d != %d", ii, jj) << ii << jj;
+                    }
+                }
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test the operator==/operator!= assert COMPARE_OP_NE()
+    ///
+    /// @see    COMPARE_OP_NE()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void compareOpNotEqualTest ()
+        {
+        QFETCH (int, num1);
+        QFETCH (int, num2);
+
+        comparisonTestStruct s1{ num1 };
+        comparisonTestStruct s2{ num2 };
+
+        COMPARE_OP_NE (s1, s2);
         }
     };
 

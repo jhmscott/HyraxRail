@@ -42,19 +42,19 @@
         <translation>Tắt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/item.hpp" line="198"/>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="272"/>
         <source>Set</source>
         <translatorcomment>Đặt</translatorcomment>
         <translation>Đặt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/item.hpp" line="199"/>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="273"/>
         <source>Unset</source>
         <translatorcomment>Bỏ Đặt</translatorcomment>
         <translation>Bỏ Đặt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/item.hpp" line="200"/>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="274"/>
         <source>Toggle</source>
         <translatorcomment>Chuyển</translatorcomment>
         <translation>Chuyển</translation>
@@ -158,20 +158,20 @@
 <context>
     <name>layout::Locomotive</name>
     <message>
-        <location filename="../../src/cpp/layout/locomotive.cpp" line="94"/>
-        <location filename="../../src/cpp/layout/locomotive.cpp" line="101"/>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="146"/>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="153"/>
         <source>Function %1 : %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tác dụng %1 : %2</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/layout/locomotive.cpp" line="102"/>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="154"/>
         <source>Headlights</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Đèn pha</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/layout/locomotive.cpp" line="106"/>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="158"/>
         <source>Function %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tác dụng %1</translation>
     </message>
 </context>
 <context>
@@ -468,42 +468,52 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::clock::EditAutoDialog</name>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="188"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="270"/>
+        <source>Actuators</source>
+        <translation type="unfinished">Bộ Truyền Động</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="271"/>
+        <source>Routes</source>
+        <translation type="unfinished">Tuyến Đường</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="236"/>
         <source>Name</source>
         <translation>Tên</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="189"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="237"/>
         <source>Item</source>
         <translation>Tiết mục</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="190"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="238"/>
         <source>Action</source>
         <translation>Hành động</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="191"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="239"/>
         <source>Condition</source>
         <translation>Tình trạng</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="192"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="240"/>
         <source>Do Once</source>
         <translation>Làm một lần</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="193"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="241"/>
         <source>Enabled</source>
         <translation>Đã bật</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="215"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="263"/>
         <source>Edit Automation</source>
         <translation>Thay đổi quy trình tự động</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="219"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="267"/>
         <source>Add Automation</source>
         <translation>Thêm quy trình tự động</translation>
     </message>
