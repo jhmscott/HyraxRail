@@ -7,6 +7,8 @@
  * @copyright   Copyright (c) 2026 Justin Scott
  */
 
+#include <names.hpp>
+
 #include <ui/common/pointedwidget.hpp>
 #include <ui/common/seperator.hpp>
 #include <ui/common/utils.hpp>
@@ -109,7 +111,7 @@ EditLocoDialog::EditLocoDialog (const control::ControllerManager&   manager,
             controller = &m_manager[0];
             }
 
-        m_controllerCb->setObjectName ("EditLocoController");
+        m_controllerCb->setObjectName (OBJNAME_EDITLOCO_CONTROLLER);
 
         connect (m_controllerCb,
                 &QComboBox::currentIndexChanged,
@@ -122,7 +124,7 @@ EditLocoDialog::EditLocoDialog (const control::ControllerManager&   manager,
         m_form->addRow (new QLabel{ this },
                         m_controllerWdgt = new QLabel{ controller->getFriendlyName ().c_str (), this });
 
-        m_controllerWdgt->setObjectName ("EditLocoControllerLabel");
+        m_controllerWdgt->setObjectName (OBJNAME_EDITLOCO_CONTROLLER_LABEL);
 
         for (const layout::funcInfo func : loco->getFunctions ())
             {
@@ -142,9 +144,14 @@ EditLocoDialog::EditLocoDialog (const control::ControllerManager&   manager,
 
     // Set object names
 
-    m_name->setObjectName     ("EditLocoName");
-    m_protocol->setObjectName ("EditLocoProtocol");
-    m_address->setObjectName  ("EditLocoAddress");
+    m_name          ->setObjectName (OBJNAME_EDITLOCO_NAME);
+    m_protocol      ->setObjectName (OBJNAME_EDITLOCO_PROTO);
+    m_address       ->setObjectName (OBJNAME_EDITLOCO_ADDRESS);
+    m_functions     ->setObjectName (OBJNAME_EDITLOCO_FUNC_DROPDOWN);
+    m_plus          ->setObjectName (OBJNAME_EDITLOCO_ADD_FUNC);
+    m_trash         ->setObjectName (OBJNAME_EDITLOCO_DELETE_FUNC);
+    m_funcIcons     ->setObjectName (OBJNAME_EDITLOCO_FUNC_ICON);
+    m_funcNumbers   ->setObjectName (OBJNAME_EDITLOCO_FUNC_NUM);
 
     // Fill dropdowns
 

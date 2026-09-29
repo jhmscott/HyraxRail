@@ -165,6 +165,25 @@ class RouteController : public ControllerBase<Route>
 #ifdef LAYOUT_TEST_CLASS
     friend class ::LAYOUT_TEST_CLASS;
 #endif // LAYOUT_TEST_CLASS
+public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the routes configured for this controller. A route is a group of
+    /// actuators and associated state that can be triggered
+    ///
+    /// @return     List of routes
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual std::vector<layout::Route> getRoutes () const = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Create a route on  the controller
+    ///
+    /// @param[in]  name               Name of the route
+    /// @param[in]  actuators   List of actuators and the state to set them to
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual layout::Route createRoute (const std::string&       name,
+                                       const layout::routeList& actuators) = 0;
 private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Activate a route

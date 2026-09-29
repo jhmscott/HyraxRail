@@ -54,9 +54,13 @@ class MockController : public control::ControllerBase
     {
     CONTROLLER_DEFINE (MockController, "Mocked Controller", MockControllerProtocol)
 public:
-    MockPtr<layout::ActuatorController>    actuatorController;      ///< Mocked actuator controller interface
-    MockPtr<layout::LocomotiveController>  locomotiveController;    ///< Mocked loco controller interface
-    MockPtr<layout::RouteController>       routeController;         ///< Mocked route controller interface
+    MockPtr<layout::ActuatorController>     actuatorController;     ///< Mocked actuator controller interface
+    MockPtr<layout::LocomotiveController>   locomotiveController;   ///< Mocked loco controller interface
+    MockPtr<layout::RouteController>        routeController;        ///< Mocked route controller interface
+
+    std::vector<layout::Actuator>           actuators;
+    std::vector<layout::Locomotive>         locomotives;
+    std::vector<layout::Route>              routes;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Mocked controller constructor
@@ -71,7 +75,16 @@ public:
         locomotiveController    (new fakeit::Mock<layout::LocomotiveController> { *this }),
         routeController         (new fakeit::Mock<layout::RouteController>      { *this }),
         control::ControllerBase (friendlyName, std::move (proto))
-        {}
+        {
+        fakeit::When (Method (*actuatorController, getActuators)).AlwaysDo (
+            [this] () { return actuators; });
+
+        fakeit::When (Method (*locomotiveController, getLocomotives)).AlwaysDo (
+            [this] () { return locomotives; });
+
+        fakeit::When (Method (*routeController, getRoutes)).AlwaysDo (
+            [this] () { return routes; });
+        }
 
     // Base controller stubs
 

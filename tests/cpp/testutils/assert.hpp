@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <utils/algorithm.hpp>
 #include <utils/resources.hpp>
 
 #include <QTextStream>
@@ -122,6 +123,8 @@ std::string createRangeAssertMessage (const R1&     actual,
 
     return msg;
     }
+
+
 } // namespace testutils::assert_internal
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -183,15 +186,12 @@ std::string createRangeAssertMessage (const R1&     actual,
 ///
 ///////////////////////////////////////////////////////////////////////////////
 #define COMPARE_RANGE(actual, expected)                                         \
-    QVERIFY2 ((std::equal ((actual).begin (),                                   \
-                           (actual).end (),                                     \
-                           (expected).begin (),                                 \
-                           (expected).end ())),                                 \
+    QVERIFY2 (utils::algorithm::equalRange ((actual), (expected)),              \
               testutils::assert_internal::createRangeAssertMessage ((actual),   \
-                                                         (expected),            \
-                                                         #actual,               \
-                                                         #expected,             \
-                                                         false).c_str ())
+                                                                    (expected), \
+                                                                    #actual,    \
+                                                                    #expected,  \
+                                                                    false).c_str ())
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Compare two containers/ranges
@@ -201,10 +201,7 @@ std::string createRangeAssertMessage (const R1&     actual,
 ///
 ///////////////////////////////////////////////////////////////////////////////
 #define COMPARE_RANGE_NE(actual, expected)                                      \
-    QVERIFY2 (not (std::equal ((actual).begin (),                               \
-                               (actual).end (),                                 \
-                               (expected).begin (),                             \
-                               (expected).end ())),                             \
+    QVERIFY2 (not utils::algorithm::equalRange ((actual), (expected)),          \
               testutils::assert_internal::createRangeAssertMessage ((actual),   \
                                                                     (expected), \
                                                                     #actual,    \

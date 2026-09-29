@@ -345,6 +345,30 @@ class LocomotiveController : public ControllerBase<Locomotive>
 
 public:
     ///////////////////////////////////////////////////////////////////////////////
+    /// Get the locomotives under the control of this controller
+    ///
+    /// @return     List of locomotives
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual std::vector<layout::Locomotive> getLocomotives () const = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Create a locomotive
+    ///
+    /// @param[in]  name        Locomotive name
+    /// @param[in]  proto       Track protocol
+    /// @param[in]  address     Track protocol address
+    /// @param[in]  functions   List of locomotive functions
+    ///
+    /// @return     Created locomotive
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual layout::Locomotive createLocomotive (const std::string& name,
+                                                 layout::trackProtocol                  proto,
+                                                 uint                                   address,
+                                                 const std::vector<layout::funcInfo>& functions) = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Get the locomotive meta class instance
     ///
     /// @return     Meta class instance

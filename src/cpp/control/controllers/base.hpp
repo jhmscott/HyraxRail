@@ -209,81 +209,12 @@ public:
     virtual ~ControllerBase () {}
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Get the locomotives under the control of this controller
-    ///
-    /// @return     List of locomotives
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    virtual std::vector<layout::Locomotive> getLocomotives () const = 0;
-
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Get the actuators (e.g. turnouts) under the control of this controller
-    ///
-    /// @return     List of actuators
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    virtual std::vector<layout::Actuator> getActuators () const = 0;
-
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Get the routes configured for this controller. A route is a group of
-    /// actuators and associated state that can be triggered
-    ///
-    /// @return     List of routes
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    virtual std::vector<layout::Route> getRoutes () const = 0;
-
-    ///////////////////////////////////////////////////////////////////////////////
     /// Get a list of the items controlled by this controller than can be automated
     ///
     /// @return     List of automatable items
     ///
     ///////////////////////////////////////////////////////////////////////////////
     std::vector<AutomationItem> getAutomationItems () const;
-
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Create a route on  the controller
-    ///
-    /// @param[in]  name               Name of the route
-    /// @param[in]  actuators   List of actuators and the state to set them to
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    virtual layout::Route createRoute (const std::string&       name,
-                                       const layout::routeList& actuators) = 0;
-
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Create a new actuator
-    ///
-    /// @param[in]  name        Friendly name
-    /// @param[in]  address     Track protocol address
-    /// @param[in]  icon        UI Icon
-    /// @param[in]  mode        Actuator mode
-    /// @param[in]  duration    Actuation duration
-    ///
-    /// @return     Created actuator
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    virtual layout::Actuator createActuator (const std::string&     name,
-                                             uint                   address,
-                                             layout::actuatorIcon   icon,
-                                             layout::actuatorMode   mode,
-                                             uint                   duration) = 0;
-
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Create a locomotive
-    ///
-    /// @param[in]  name        Locomotive name
-    /// @param[in]  proto       Track protocol
-    /// @param[in]  address     Track protocol address
-    /// @param[in]  functions   List of locomotive functions
-    ///
-    /// @return     Created locomotive
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    virtual layout::Locomotive createLocomotive (const std::string&                      name,
-                                                 layout::trackProtocol                  proto,
-                                                 uint                                   address,
-                                                 const std::vector<layout::funcInfo>&   functions) = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the health of the conenction to this controller

@@ -450,52 +450,52 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::clock::EditAutoDialog</name>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="270"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="280"/>
         <source>Actuators</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="271"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="281"/>
         <source>Routes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="236"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="246"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="237"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="247"/>
         <source>Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="238"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="248"/>
         <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="239"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="249"/>
         <source>Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="240"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="250"/>
         <source>Do Once</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="241"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="251"/>
         <source>Enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="263"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="273"/>
         <source>Edit Automation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="267"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="277"/>
         <source>Add Automation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -816,77 +816,77 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::trains::EditLocoDialog</name>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="257"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="264"/>
         <source>Edit Locomotive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="257"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="264"/>
         <source>Add Locomotive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="259"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="266"/>
         <source>Function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="261"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="268"/>
         <source>Controller</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="262"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="269"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="264"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="271"/>
         <source>Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="265"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="272"/>
         <source>Functions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="267"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="274"/>
         <source>Icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="268"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="275"/>
         <source>Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="329"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="336"/>
         <source>Lights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="334"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="341"/>
         <source>Sounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="339"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="346"/>
         <source>Miscellaneous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="470"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="477"/>
         <source>Delete Function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="471"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="478"/>
         <source>Would you like to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="263"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="270"/>
         <source>Protocol</source>
         <translation type="unfinished"></translation>
     </message>

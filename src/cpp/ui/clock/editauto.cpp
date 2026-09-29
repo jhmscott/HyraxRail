@@ -8,6 +8,8 @@
  */
 
 
+#include <names.hpp>
+
 #include <ui/actuators/resources.hpp>
 #include <ui/trains/resources.hpp>
 
@@ -90,6 +92,14 @@ EditAutoDialog::EditAutoDialog (control::ControllerManager& controllers,
 
     m_items->addParentItem ("", "misc/split");
     m_items->addParentItem ("", "misc/path");
+
+    // set the widget object names
+    m_name      ->setObjectName (OBJNAME_EDITAUTO_NAME);
+    m_items     ->setObjectName (OBJNAME_EDITAUTO_ITEMS);
+    m_actions   ->setObjectName (OBJNAME_EDITAUTO_ACTIONS);
+    m_conditions->setObjectName (OBJNAME_EDITAUTO_CONDITIONS);
+    m_doOnce    ->setObjectName (OBJNAME_EDITAUTO_DO_ONCE);
+    m_enabled   ->setObjectName (OBJNAME_EDITAUTO_ENABLED);
 
     std::map<layout::Locomotive, int> locoToParent;
 

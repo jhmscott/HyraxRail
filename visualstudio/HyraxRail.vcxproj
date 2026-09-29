@@ -308,6 +308,7 @@
     <ClCompile Include="..\src\cpp\utils\time.cpp" />
     <ClInclude Include="..\res\version.h" />
     <ClInclude Include="..\src\cpp\layout\utils.hpp" />
+    <ClInclude Include="..\src\cpp\names.hpp" />
     <ClInclude Include="..\src\cpp\ui\trains\resources.hpp" />
     <ClInclude Include="..\src\cpp\utils\qobj.hpp" />
     <ClInclude Include="..\src\cpp\utils\traits.hpp" />
@@ -365,7 +366,7 @@
     <ClInclude Include="..\src\cpp\ui\common\stringdialog.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\toggleswitch.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\schemeicon.hpp" />
-    <ClInclude Include="..\src\cpp\ui\common\tiereddropdown.hpp" />
+    <QtMoc Include="..\src\cpp\ui\common\tiereddropdown.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\touchslider.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\utils.hpp" />
     <QtMoc Include="..\src\cpp\ui\config\helpgroup.hpp" />

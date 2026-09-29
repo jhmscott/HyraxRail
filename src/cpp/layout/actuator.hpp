@@ -239,6 +239,33 @@ class ActuatorController : public ControllerBase<Actuator>
     friend class ::LAYOUT_TEST_CLASS;
 #endif // LAYOUT_TEST_CLASS
 
+public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the actuators (e.g. turnouts) under the control of this controller
+    ///
+    /// @return     List of actuators
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual std::vector<layout::Actuator> getActuators () const = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Create a new actuator
+    ///
+    /// @param[in]  name        Friendly name
+    /// @param[in]  address     Track protocol address
+    /// @param[in]  icon        UI Icon
+    /// @param[in]  mode        Actuator mode
+    /// @param[in]  duration    Actuation duration
+    ///
+    /// @return     Created actuator
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual layout::Actuator createActuator (const std::string&     name,
+                                             uint                   address,
+                                             layout::actuatorIcon   icon,
+                                             layout::actuatorMode   mode,
+                                             uint                   duration) = 0;
+
     // private, so only the actuator can call this
 private:
     ///////////////////////////////////////////////////////////////////////////////

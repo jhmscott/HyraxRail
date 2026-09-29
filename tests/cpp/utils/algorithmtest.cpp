@@ -503,6 +503,49 @@ private slots:
 
         safeGetTestImpl<safeGetTestRec> (&safeGetTestRec::pt, pt);
         }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Compares the same data in different container types using equalRange()
+    ///
+    /// @see    utils::algorithm::equalRange()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void equalRangeTest ()
+        {
+        std::vector<int>    vec     = { 1, 2, 3, 4, 5 };
+        int                 arr[]   = { 1, 2, 3, 4, 5 };
+        std::list<int>      list    = { 1, 2, 3, 4, 5 };
+
+        QVERIFY (equalRange (vec, arr));
+        QVERIFY (equalRange (vec, list));
+        QVERIFY (equalRange (list, arr));
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Compares different data in different and the like container types using
+    /// equalRange()
+    ///
+    /// @see    utils::algorithm::equalRange()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void notEqualRangeTest ()
+        {
+        std::vector<int>    vec1    = { 1, 2, 3, 4, 5 };
+        std::vector<int>    vec2    = { 1, 2, 3, 4 };
+        std::vector<int>    vec3    = { 1, 2, 3, 4, 5, 6 };
+        int                 arr[]   = { 1, 2, 3, 4, 5 };
+        std::list<int>      list    = { 1, 2, 3, 4, 5 };
+
+        QVERIFY (not equalRange (vec1, vec2));
+        QVERIFY (not equalRange (vec1, vec3));
+        QVERIFY (not equalRange (vec3, vec2));
+
+        QVERIFY (not equalRange (vec2, list));
+        QVERIFY (not equalRange (vec3, list));
+
+        QVERIFY (not equalRange (vec2, arr));
+        QVERIFY (not equalRange (vec3, arr));
+        }
     };
 
 

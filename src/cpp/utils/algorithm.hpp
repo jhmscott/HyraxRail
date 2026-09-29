@@ -518,4 +518,26 @@ MemType safeGet (const Ptr&                     ptr,
     return traits::null<Ptr> == ptr ? defaultVal : (*ptr).*memVar;
     }
 
+
+///////////////////////////////////////////////////////////////////////////////
+/// Check if two ranges are equal. Equivalent to std::ranges::equal() in c++20
+///
+/// @tparam     R1      Range 1 type
+/// @tparam     R2      Range 2 type
+///
+/// @param[in]  r1      Range 1
+/// @param[in]  r2      Range 2
+///
+/// @return     true if r1 == r2
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class R1, class R2>
+bool equalRange (const R1& r1, const R2& r2)
+    {
+    return std::equal (std::begin (r1),
+                       std::end (r1),
+                       std::begin (r2),
+                       std::end (r2));
+    }
+
 } // namespace utils::algorithm

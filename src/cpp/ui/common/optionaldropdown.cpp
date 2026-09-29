@@ -8,6 +8,8 @@
  * @copyright   Copyright (c) 2026 Justin Scott
  */
 
+#include <names.hpp>
+
 #include <ui/common/optionaldropdown.hpp>
 
 namespace ui::common
@@ -19,6 +21,9 @@ OptionalDropdown::OptionalDropdown (QWidget* parent) :
 
     m_singleItem    = new QLabel{ this };
     m_dropdown      = new QComboBox{ this };
+
+    m_singleItem->setObjectName (OBJNAME_OPT_DROPDOWN_SINGLE_ITEM);
+    m_dropdown->setObjectName   (OBJNAME_OPT_DROPDOWN_DROPDOWN);
 
     m_dropdown->setVisible (false);
 

@@ -252,9 +252,6 @@
     <ClInclude Include="..\src\cpp\utils\draw.hpp">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\common\tiereddropdown.hpp">
-      <Filter>Header Files\ui\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\cpp\docs.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -287,6 +284,9 @@
     </ClInclude>
     <ClInclude Include="..\src\cpp\layout\utils.hpp">
       <Filter>Header Files\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\names.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -749,6 +749,9 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\utils\battery.hpp">
       <Filter>Header Files\utils</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\common\tiereddropdown.hpp">
+      <Filter>Header Files\ui\common</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
