@@ -44,6 +44,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "testutils", "testutils", "{78E57CD6-878C-44A7-855B-A53346DD19C4}"
 	ProjectSection(SolutionItems) = preProject
 		..\tests\cpp\testutils\assert.hpp = ..\tests\cpp\testutils\assert.hpp
+		..\tests\cpp\testutils\controllerstubs.hpp = ..\tests\cpp\testutils\controllerstubs.hpp
 		..\tests\cpp\testutils\lang.hpp = ..\tests\cpp\testutils\lang.hpp
 		..\tests\cpp\testutils\logspy.hpp = ..\tests\cpp\testutils\logspy.hpp
 		..\tests\cpp\testutils\mockcontroller.hpp = ..\tests\cpp\testutils\mockcontroller.hpp
@@ -100,6 +101,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "clock", "clock", "{38F4333B-0279-41E0-8732-FFCCDCE27F42}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "editauto", "tests\editauto.vcxproj", "{AF6B7F0F-9DA2-4706-A5A0-D2B824E0B6B7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "controllerbase", "tests\controllerbase.vcxproj", "{2DDE451B-BA6F-4281-8C6A-B3444D0C8113}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{F188ADD6-095C-4782-997B-307704A26B7C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "configdialog", "tests\configdialog.vcxproj", "{E1412674-78E2-44F3-8124-CBB80570E505}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -230,6 +237,14 @@ Global
 		{AF6B7F0F-9DA2-4706-A5A0-D2B824E0B6B7}.Release|x64.ActiveCfg = Release|x64
 		{AF6B7F0F-9DA2-4706-A5A0-D2B824E0B6B7}.Test|x64.ActiveCfg = Test|x64
 		{AF6B7F0F-9DA2-4706-A5A0-D2B824E0B6B7}.Test|x64.Build.0 = Test|x64
+		{2DDE451B-BA6F-4281-8C6A-B3444D0C8113}.Debug|x64.ActiveCfg = Debug|x64
+		{2DDE451B-BA6F-4281-8C6A-B3444D0C8113}.Release|x64.ActiveCfg = Release|x64
+		{2DDE451B-BA6F-4281-8C6A-B3444D0C8113}.Test|x64.ActiveCfg = Test|x64
+		{2DDE451B-BA6F-4281-8C6A-B3444D0C8113}.Test|x64.Build.0 = Test|x64
+		{E1412674-78E2-44F3-8124-CBB80570E505}.Debug|x64.ActiveCfg = Debug|x64
+		{E1412674-78E2-44F3-8124-CBB80570E505}.Release|x64.ActiveCfg = Release|x64
+		{E1412674-78E2-44F3-8124-CBB80570E505}.Test|x64.ActiveCfg = Test|x64
+		{E1412674-78E2-44F3-8124-CBB80570E505}.Test|x64.Build.0 = Test|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -277,6 +292,9 @@ Global
 		{718667CD-4DEA-4EE7-A6BD-84CE297A2859} = {E1A3BEC1-DC5A-486C-881F-7BAF9230949F}
 		{38F4333B-0279-41E0-8732-FFCCDCE27F42} = {F3D6AEB3-D7EB-4959-813E-D9490D538B9F}
 		{AF6B7F0F-9DA2-4706-A5A0-D2B824E0B6B7} = {38F4333B-0279-41E0-8732-FFCCDCE27F42}
+		{2DDE451B-BA6F-4281-8C6A-B3444D0C8113} = {A7E46AFC-761F-4960-8489-E5E63ECAED9E}
+		{F188ADD6-095C-4782-997B-307704A26B7C} = {F3D6AEB3-D7EB-4959-813E-D9490D538B9F}
+		{E1412674-78E2-44F3-8124-CBB80570E505} = {F188ADD6-095C-4782-997B-307704A26B7C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4ACFF0E3-DFF5-489E-866F-8829724F0C54}

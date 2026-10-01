@@ -149,8 +149,6 @@ void ActuatorButton::editActuator ()
     {
     EditActuatorDialog dlg
         {
-       *static_cast<control::ControllerBase*>
-                            (m_actuator.getController ()),
         this,
        &m_actuator
         };

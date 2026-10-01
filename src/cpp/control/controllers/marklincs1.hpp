@@ -28,7 +28,12 @@ namespace control
 /// fimrware, not the "reloaded" firmware from ESU. Uses the ESU ECoSProtocol version 0.1
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class MarklinCS1 : public ControllerBase
+class MarklinCS1 :
+    public ControllerBase,
+    public layout::LocomotiveController,
+    public layout::ActuatorController,
+    public layout::RouteController,
+    public layout::EmergencyStopController
     {
     CONTROLLER_DEFINE (MarklinCS1, "Märklin Central Station 1", ECoSProtocol)
     LOCOMOTIVE_CONTROLLER_DEFINE (layout::TRACK_PROTO_MFX,

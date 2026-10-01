@@ -38,14 +38,12 @@ public:
     //////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
-    /// @param[in]  controller  Controller to add or edit actuator for
     /// @param[in]  parent      Parent widget
     /// @param[in]  actuator    (optional) Actuator to edit. If NULL, this will
     ///                         be an "Add" dialog box
     ///
     //////////////////////////////////////////////////////////////////////////////
-    EditActuatorDialog (control::ControllerBase&    controller,
-                        QWidget*                    parent,
+    EditActuatorDialog (QWidget*                    parent,
                         const layout::Actuator*     actuator = NULL);
 
     //////////////////////////////////////////////////////////////////////////////

@@ -309,6 +309,52 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     void clear ();
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the controller controlling a given component
+    ///
+    /// @tparam     Controller      layout controller type
+    /// @tparam     State           Component state
+    ///
+    /// @param[in]  component       Component to get controller for
+    ///
+    /// @return     Controller instance or NULL
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<class Controller, class State>
+    ControllerBase* fromComponent (layout::ComponentDerived<Controller, State>& component)
+        {
+        auto it = std::find_if (begin (),
+                                end (),
+            [&] (ControllerBase& controller)
+            { return component.getController () == controller.getCapabilityController<Controller> (); });
+
+        if (end () == it)
+            {
+            return NULL;
+            }
+        else
+            {
+            return &(*it);
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the controller controlling a given component. const version
+    ///
+    /// @tparam     Controller      layout controller type
+    /// @tparam     State           Component state
+    ///
+    /// @param[in]  component       Component to get controller for
+    ///
+    /// @return     Controller instance or NULL
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<class Controller, class State>
+    const ControllerBase* fromComponent (const layout::ComponentDerived<Controller, State>& component) const
+        {
+        return const_cast<ControllerManager*>(this)->fromComponent (
+                    const_cast<layout::ComponentDerived<Controller, State>&> (component));
+        }
 signals:
     ///////////////////////////////////////////////////////////////////////////////
     /// Signals a controller has been added

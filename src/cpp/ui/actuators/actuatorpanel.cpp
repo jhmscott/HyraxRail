@@ -29,7 +29,10 @@ ActuatorPanel::ActuatorPanel (control::ControllerManager&   controllers,
 
     for (control::ControllerBase& controller : m_controllers)
         {
-        layout->addWidget (new ActuatorGroup{ automations, controller, this });
+        if (controller.getMetaClass ().hasCapability (control::CAPABILITY_ACTUATOR))
+            {
+            layout->addWidget (new ActuatorGroup{ automations, controller, this });
+            }
         }
 
     layout->setAlignment (Qt::AlignTop);

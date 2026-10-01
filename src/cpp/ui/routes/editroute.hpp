@@ -39,6 +39,7 @@ public:
     /// @param[in]  parent          Parent widget
     /// @param[in]  route           Route to edit. If NULL, this is an add route
     ///                             dialog
+    ///
     //////////////////////////////////////////////////////////////////////////////
     EditRouteDialog (control::ControllerBase&   controller,
                      QWidget*                   parent,

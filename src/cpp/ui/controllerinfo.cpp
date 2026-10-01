@@ -114,7 +114,6 @@ ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* pa
              this,
             &ControllerInfo::onConfig);
 
-
     setLayout (layout);
     }
 
@@ -139,7 +138,17 @@ void ControllerInfo::setController (control::ControllerBase& controller)
     m_settings->setDisabled (false);
     m_nameLabel->setText (controller.getFriendlyName ().c_str ());
 
-    m_stop->setChecked (m_controller->isEStopped ());
+    m_stopper = controller.getCapabilityController<layout::EmergencyStopController> ();
+
+    if (NULL == m_stopper)
+        {
+        m_stop->setDisabled (true);
+        }
+    else
+        {
+        m_stop->setEnabled (true);
+        m_stop->setChecked (m_stopper->isEStopped ());
+        }
 
     setToolTip (tr ("Model : %1").arg (controller.getMetaClass ().friendlyName.c_str ()));
 
@@ -190,7 +199,6 @@ void ControllerInfo::onConfig ()
 
     dialog.exec ();
     }
-
 
 void ControllerInfo::onDelete ()
     {

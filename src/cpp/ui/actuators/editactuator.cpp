@@ -13,8 +13,7 @@
 namespace ui::actuators
 {
 
-EditActuatorDialog::EditActuatorDialog (control::ControllerBase&    controller,
-                                        QWidget*                    parent,
+EditActuatorDialog::EditActuatorDialog (QWidget*                    parent,
                                         const layout::Actuator*     actuator) :
     common::FormDialog (parent),
     m_edit (NULL != actuator)

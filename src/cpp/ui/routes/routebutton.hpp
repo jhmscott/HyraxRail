@@ -10,6 +10,7 @@
 #pragma once
 
 #include <control/automation/manager.hpp>
+#include <control/controllers/base.hpp>
 
 #include <layout/route.hpp>
 
@@ -34,11 +35,13 @@ public:
     /// Constructor
     ///
     /// @param[in]  route       Route to control
+    /// @param[in]  controller  Controller for route
     /// @param[in]  automations List of automations
     /// @param[in]  parent      Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
     RouteButton (const layout::Route&           route,
+                 control::ControllerBase&       controller,
                  control::AutomationManager&    automations,
                  QWidget*                       parent);
 
@@ -52,6 +55,7 @@ signals:
 
 private:
     layout::Route               m_route;        ///< Route being controlled
+    control::ControllerBase&    m_controller;
     control::AutomationManager& m_automations;  ///< List of automations
     QLabel*                     m_name;         ///< Name of the route
 

@@ -231,9 +231,7 @@ void LocoControlPanel::onLocoChange (int idx)
 
         proto = m_currentLoco.getProtocol ();
 
-        m_controllerInfo->setController (
-            *static_cast<control::ControllerBase*> (
-                m_currentLoco.getController ()));
+        m_controllerInfo->setController (*m_controllers.fromComponent (m_currentLoco));
         }
 
     setProtocol (proto);
@@ -255,7 +253,7 @@ void LocoControlPanel::addLoco ()
         {
         m_controllers,
         this,
-        static_cast<control::ControllerBase*> (m_currentLoco.getController ())
+        m_controllers.fromComponent (m_currentLoco)
         };
 
     if (QDialog::Accepted == dlg.exec ())

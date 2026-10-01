@@ -65,11 +65,12 @@ signals:
     void deleted (control::ControllerBase& controller);
 
 private:
-    control::ControllerBase*    m_controller;       ///< Controller being displayed
-    common::SchemeIconButton*   m_connectionIcon;   ///< Connection status icon
-    QPushButton*                m_stop;             ///< Emergency/global stop button
-    common::SchemeIconButton*   m_settings;         ///< Settinsg button. Opens the config dialog
-    QLabel*                     m_nameLabel;        ///< Controller friendly name label
+    control::ControllerBase*        m_controller;       ///< Controller being displayed
+    layout::EmergencyStopController*m_stopper;          ///< Stop controller
+    common::SchemeIconButton*       m_connectionIcon;   ///< Connection status icon
+    QPushButton*                    m_stop;             ///< Emergency/global stop button
+    common::SchemeIconButton*       m_settings;         ///< Settings button. Opens the config dialog
+    QLabel*                         m_nameLabel;        ///< Controller friendly name label
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Update the health icon to the current connection health
@@ -92,7 +93,7 @@ private:
     /// controllers
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    void eStop () { m_controller->eStop (m_stop->isChecked ()); }
+    void eStop () { m_stopper->eStop (m_stop->isChecked ()); }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the controller health icon

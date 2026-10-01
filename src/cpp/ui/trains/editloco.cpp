@@ -288,7 +288,8 @@ void EditLocoDialog::setLabels ()
 
 void EditLocoDialog::populateProtocols (const control::ControllerBase& controller)
     {
-    const auto& metaClass = controller.getLocoMetaClass ();
+    const auto& metaClass =
+        controller.getCapabilityController<layout::LocomotiveController> ()->getLocoMetaClass ();
 
     m_controller = &controller;
 
@@ -435,8 +436,10 @@ void EditLocoDialog::updateWidgetStates ()
 
 uint EditLocoDialog::getMaxFunctions () const
     {
-    return m_controller->getNumberOfFunctions (
-             m_protocol->currentData ().value<layout::trackProtocol> ());
+    auto* controller    = m_controller->getCapabilityController<layout::LocomotiveController> ();
+    auto  proto         = m_protocol->currentData ().value<layout::trackProtocol> ();
+
+    return controller->getNumberOfFunctions (proto);
     }
 
 

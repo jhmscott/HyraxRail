@@ -307,6 +307,7 @@
     <ClCompile Include="..\src\cpp\utils\string.cpp" />
     <ClCompile Include="..\src\cpp\utils\time.cpp" />
     <ClInclude Include="..\res\version.h" />
+    <ClInclude Include="..\src\cpp\layout\estop.hpp" />
     <ClInclude Include="..\src\cpp\layout\utils.hpp" />
     <ClInclude Include="..\src\cpp\names.hpp" />
     <ClInclude Include="..\src\cpp\ui\trains\resources.hpp" />

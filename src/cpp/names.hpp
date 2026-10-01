@@ -40,3 +40,11 @@ inline const QString OBJNAME_EDITAUTO_ENABLED           = "EditAutoDialog_Enable
 
 inline const QString OBJNAME_OPT_DROPDOWN_SINGLE_ITEM   = "OptionalDropdown_SingleItem";
 inline const QString OBJNAME_OPT_DROPDOWN_DROPDOWN      = "OptionalDropdown_Dropdown";
+
+
+// Controller settings dialog
+
+inline const QString OBJNAME_CONFIG_DIALOG_NAME         = "ConfigDialog_ControllerName";
+inline const QString OBJNAME_CONFIG_DIALOG_CONTROLLER   = "ConfigDialog_ControllerDropdown";
+inline const QString OBJNAME_CONFIG_DIALOG_PROTOCOL     = "ConfigDialog_ControllerProtocol";
+inline const QString OBJNAME_CONFIG_DIALOG_TRANSPORT    = "ConfigDialog_TransportProtocol";

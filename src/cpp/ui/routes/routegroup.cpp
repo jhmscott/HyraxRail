@@ -68,7 +68,7 @@ RouteGroup::RouteGroup (control::ControllerBase&    controller,
 
 void RouteGroup::addRouteToGrid (const layout::Route& route)
     {
-    RouteButton* btn = new RouteButton{ route, m_automations, this };
+    RouteButton* btn = new RouteButton{ route, m_controller, m_automations, this };
 
     m_gridLayout->addWidget (btn);
 

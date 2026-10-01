@@ -64,7 +64,7 @@ public:
                     const layout::Locomotive&           loco) :
         EditLocoDialog (manager,
                         parent,
-                        static_cast<const control::ControllerBase*> (loco.getController ()),
+                        manager.fromComponent (loco),
                        &loco)
         {}
 

@@ -16,16 +16,49 @@
 namespace control
 {
 
+//////////////////////////////////////////////////////////////////////////////
+/// Determine the capabilities that can be emulated in software, given the
+/// controller's hardware capabilities
+///
+/// @param[in]  hardware        Hardware capabilitier
+///
+/// @return     Software capabilities
+///
+//////////////////////////////////////////////////////////////////////////////
+static controllerCapabilitySet getSoftwareCapabilities (const controllerCapabilitySet& hardware)
+    {
+    controllerCapabilitySet software{ 0 };
+
+    if (hardware[CAPABILITY_ACTUATOR] && not hardware[CAPABILITY_ROUTE])
+        {
+        software[CAPABILITY_ROUTE] = true;
+        }
+
+    if (hardware[CAPABILITY_LOCOMOTIVE] && not hardware[CAPABILITY_ESTOP])
+        {
+        software[CAPABILITY_ESTOP] = true;
+        }
+
+    return software;
+    }
 
 
-ControllerMetaClassBase::ControllerMetaClassBase (const std::string&        name,
-                                                  const std::string&        friendlyName,
-                                                  const protocolMetaList&   protocols) :
+ControllerMetaClassBase::ControllerMetaClassBase (const std::string&                name,
+                                                  const std::string&                friendlyName,
+                                                  const protocolMetaList&           protocols,
+                                                  const controllerCapabilitySet&    capabilities) :
     name (name),
     friendlyName (friendlyName),
-    protocols (protocols)
+    protocols (protocols),
+    hardwareCapabilities (capabilities),
+    softwareCapabilities (getSoftwareCapabilities (capabilities))
     {
     controllerTypes.emplace (name, this);
+    }
+
+const ControllerMetaClassBase& ControllerMetaClassBase::fromController (const ControllerBase& controller)
+    {
+    return controller.getMetaClass ();
     }
 
 const ProtocolMetaClassBase& ControllerMetaClassBase::findProtocol (const std::string& name) const
@@ -81,6 +114,104 @@ ControllerBase::ControllerBase (const std::string&              friendlyName,
     m_thread (friendlyName, std::move (proto)),
     m_friendlyName (friendlyName)
     {}
+
+std::vector<layout::Locomotive> ControllerBase::getLocomotives () const
+    {
+    const auto* controller = getCapabilityController<layout::LocomotiveController> ();
+
+    if (NULL != controller)
+        {
+        return controller->getLocomotives ();
+        }
+    else
+        {
+        return {};
+        }
+    }
+
+std::vector<layout::Actuator> ControllerBase::getActuators () const
+    {
+    const auto* controller = getCapabilityController<layout::ActuatorController> ();
+
+    if (NULL != controller)
+        {
+        return controller->getActuators ();
+        }
+    else
+        {
+        return {};
+        }
+    }
+
+std::vector<layout::Route> ControllerBase::getRoutes () const
+    {
+    const auto* controller = getCapabilityController<layout::RouteController> ();
+
+    if (NULL != controller)
+        {
+        return controller->getRoutes ();
+        }
+    else
+        {
+        return {};
+        }
+    }
+
+layout::Route ControllerBase::createRoute (const std::string& name, const layout::routeList& actuators)
+    {
+    auto* controller = getCapabilityController<layout::RouteController> ();
+
+    if (NULL != controller)
+        {
+        return controller->createRoute (name, actuators);
+        }
+    else
+        {
+        return {};
+        }
+    }
+
+layout::Actuator ControllerBase::createActuator (const std::string&     name,
+                                                 uint                   address,
+                                                 layout::actuatorIcon   icon,
+                                                 layout::actuatorMode   mode,
+                                                 uint                   duration)
+    {
+    auto* controller = getCapabilityController<layout::ActuatorController> ();
+
+    if (NULL != controller)
+        {
+        return controller->createActuator (name,
+                                           address,
+                                           icon,
+                                           mode,
+                                           duration);
+        }
+    else
+        {
+        return {};
+        }
+    }
+
+layout::Locomotive ControllerBase::createLocomotive (const std::string&                     name,
+                                                     layout::trackProtocol                  proto,
+                                                     uint                                   address,
+                                                     const std::vector<layout::funcInfo>&   functions)
+    {
+    auto* controller = getCapabilityController<layout::LocomotiveController> ();
+
+    if (NULL != controller)
+        {
+        return controller->createLocomotive (name,
+                                             proto,
+                                             address,
+                                             functions);
+        }
+    else
+        {
+        return {};
+        }
+    }
 
 std::vector<AutomationItem> ControllerBase::getAutomationItems () const
     {

@@ -7,6 +7,7 @@
  * @copyright   Copyright (c) 2026 Justin Scott
  */
 
+#include <names.hpp>
 
 #include <ui/config/cominfo.hpp>
 #include <ui/config/dialog.hpp>
@@ -25,18 +26,21 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
     m_edit (NULL != controller)
     {
     auto controllers = control::getControllers ();
+    const control::ControllerMetaClassBase* meta;
 
     QVBoxLayout*        layout  = new QVBoxLayout{ this };
     utils::device::portNumber_t port;
 
     if (NULL == controller)
         {
-        port = controllers[0]->protocols[0]->defaultPort;
+        meta = controllers[0];
         }
     else
         {
-        port = controller->getMetaClass ().protocols[0]->defaultPort;
+        meta = &controller->getMetaClass ();
         }
+
+    port = meta->protocols[0]->defaultPort;
 
     m_layout = new QFormLayout{ this };
 
@@ -56,19 +60,43 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
         new QRegularExpressionValidator{
                 QRegularExpression{ utils::str::NON_EMPTY_REGEX }, this });
 
-    for (auto controller : controllers)
+    auto addControllerType =
+        [this] (const control::ControllerMetaClassBase* meta)
         {
-        m_controller->addItem (controller->friendlyName.c_str (),
-                               QVariant::fromValue (controller));
+        m_controller->addItem (meta->friendlyName.c_str (),
+                               QVariant::fromValue (meta));
+        };
+
+    if (NULL == controller)
+        {
+        for (auto controller : controllers)
+            {
+            addControllerType (controller);
+            }
+        }
+    else
+        {
+        addControllerType (meta);
         }
 
-    for (auto protocol : controllers[0]->protocols)
+    for (auto protocol : meta->protocols)
         {
         m_protocol->addItem (protocol->friendlyName.c_str (),
                              QVariant::fromValue (protocol));
         }
 
-    for (auto transport : controllers[0]->protocols[0]->types)
+    const control::ProtocolMetaClassBase* protocol;
+
+    if (NULL == controller)
+        {
+        protocol = meta->protocols[0];
+        }
+    else
+        {
+        protocol = &controller->getProtocol ();
+        }
+
+    for (auto transport : protocol->types)
         {
         m_transport->addItem (utils::device::typeNames[transport],
                               QVariant::fromValue (transport));
@@ -79,6 +107,11 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
     m_layout->addRow (new QLabel{ this }, m_protocol);
     m_layout->addRow (new QLabel{ this }, m_transport);
 
+    m_name      ->setObjectName (OBJNAME_CONFIG_DIALOG_NAME);
+    m_controller->setObjectName (OBJNAME_CONFIG_DIALOG_CONTROLLER);
+    m_protocol  ->setObjectName (OBJNAME_CONFIG_DIALOG_PROTOCOL);
+    m_transport ->setObjectName (OBJNAME_CONFIG_DIALOG_TRANSPORT);
+
     if (NULL == controller)
         {
         setNetworkMode ();
@@ -88,8 +121,8 @@ Dialog::Dialog (QWidget* parent, control::ControllerBase* controller) :
         utils::device::deviceInfo device = controller->getDeviceInfo ();
 
         m_name->setText (controller->getFriendlyName ().c_str ());
-        m_controller->setIndexByUserData (&controller->getMetaClass ());
-        m_protocol->setIndexByUserData (&controller->getProtocol ());
+        m_controller->setIndexByUserData (meta);
+        m_protocol->setIndexByUserData (protocol);
         m_transport->setIndexByUserData (device.type);
 
         if (utils::device::TYPE_SERIAL == device.type)
@@ -168,6 +201,7 @@ void Dialog::setTransportProto (int idx)
         setNetworkMode ();
         }
 
+    setControllerTooltip ();
     inputChanged ();
     }
 
@@ -222,6 +256,51 @@ void Dialog::setLabels ()
         {
         setWindowTitle (tr ("Add Controller"));
         }
+
+    setControllerTooltip ();
+    }
+
+void Dialog::setControllerTooltip ()
+    {
+    const QString CAPABILITY_NAMES[] =
+        {
+        tr ("Locomotive Controller"),
+        tr ("Actuator Controller"),
+        tr ("Route Controller"),
+        tr ("Emergency Stop")
+        };
+    ASSERT_ARRAY_LENGTH (CAPABILITY_NAMES, control::NUM_CAPABILITIES);
+
+    const auto& meta = *m_controller->currentData ().value<const control::ControllerMetaClassBase*> ();
+    QString     tooltip;
+    QString     hardware;
+    QString     software;
+
+    for (control::controllerCapability capability :
+            utils::algorithm::EnumRange{ control::CAPABILITY_LOCOMOTIVE,
+                                         control::NUM_CAPABILITIES })
+        {
+        if (meta.hardwareCapabilities[capability])
+            {
+            hardware += "  " + CAPABILITY_NAMES[capability] + "\n";
+            }
+
+        if (meta.softwareCapabilities[capability])
+            {
+            software += "  " + CAPABILITY_NAMES[capability] + "\n";
+            }
+        }
+
+    tooltip += tr ("Hardware Capabilities:") + "\n";
+    tooltip += hardware;
+
+    if (not software.isEmpty ())
+        {
+        tooltip += "\n" + tr ("Software Capabilities:") + "\n";
+        tooltip += software;
+        }
+
+    m_controller->setToolTip (tooltip);
     }
 
 } // namespace ui::config

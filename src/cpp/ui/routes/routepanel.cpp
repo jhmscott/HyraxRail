@@ -16,7 +16,6 @@
 #include <ui/routes/routepanel.hpp>
 
 
-
 namespace ui::routes
 {
 
@@ -31,7 +30,10 @@ RoutePanel::RoutePanel (control::ControllerManager& controllers,
 
     for (control::ControllerBase& controller : controllers)
         {
-        layout->addWidget (new RouteGroup{ controller, automations, this });
+        if (controller.getMetaClass ().hasCapability (control::CAPABILITY_ROUTE))
+            {
+            layout->addWidget (new RouteGroup{ controller, automations, this });
+            }
         }
 
     layout->setAlignment (Qt::AlignTop);

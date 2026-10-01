@@ -26,10 +26,12 @@ namespace ui::routes
 {
 
 RouteButton::RouteButton (const layout::Route&          route,
+                          control::ControllerBase&      controller,
                           control::AutomationManager&   automations,
                           QWidget*                      parent) :
     common::HoldToOpenMenu<QWidget> (parent),
     m_route (layout::Route{ route }),
+    m_controller (controller),
     m_automations (automations)
     {
     QVBoxLayout* layout = new QVBoxLayout{ this };
@@ -123,8 +125,7 @@ void RouteButton::editRoute ()
     {
     EditRouteDialog dlg
         {
-        *static_cast<control::ControllerBase*>
-                            (m_route.getController ()),
+        m_controller,
         this,
        &m_route
         };

@@ -94,7 +94,7 @@ void ActuatorGroup::addActuator ()
     layout::Actuator actuator;
 
     {
-    EditActuatorDialog dlg{ m_controller, this };
+    EditActuatorDialog dlg{ this };
 
     if (QDialog::Accepted == dlg.exec ())
         {

@@ -288,6 +288,9 @@
     <ClInclude Include="..\src\cpp\names.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\cpp\layout\estop.hpp">
+      <Filter>Header Files\layout</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cpp\control\controllers\base.cpp">
