@@ -10,11 +10,17 @@ Protocols provide the application layer protocol abstraction per controller. By 
 
 New Protocols must inherit from ProtocolBase in order to use the WorkerThread class described in [Utilities](#utils). Otherwise you are free to design the interface of this derived class in any way that serves your controller model best. The derived class must include the PROTOCOL_DEFINE macro to register it with the meta class system.
 
-### Controller Base Class
+### <a name="controller"></a> Controller Base Class
 
-The ControllerBase class inherits from the various [Layout](../layout/README.md) controllers. Derived classes must implement both the virtual functions in ControllerBase and the functions in the layout controllers.
+All controller models must derive from this base class, as well as any [Layout](../layout/README.md) controller classes that it can implement. Any [Capabilities](#capabilities) not implemented directly will be handled in software in the base class.
 
 Like the protocols, controllers use a meta class system, and all derived controller class must include the CONTROLLER_DEFINE macro.
+
+## <a name="capabilities"></a> Capabilities
+
+A capability is a feature avaialble with a given model of controller. A controller can have two types of camapbilities, hardware and software. Hardware capabilities are achieved by implemening the [Layout](../layout/README.md) controller classes. Software capabilities are implemented in the [Controller Base Class](#controller). Capability classes are defined in capabilityControllerTypes in [utils.hpp](controllers/utils.hpp).
+
+If a hardware capability is available, it is always chosen over the software capability
 
 ## <a name="meta"></a>Meta Classes
 
@@ -42,6 +48,7 @@ The controller meta class provides the following metadata about the controller m
 * Type name (this is the same as the name of the class)
 * Friendly name (used in UI)
 * Supported protocols
+* Supported [Capabilities](#capabilities)
 
 ## Automation
 

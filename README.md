@@ -13,19 +13,74 @@ Hyrax Rail is a cross platform model train controller app, based on QT 6, using 
 
 ## Architecture
 
-```text
-├── Control : Logic for communicating with the train controllers
-│   ├── controllers : Controller communication implementation
-│   └── protocols : Application layer protocols used for communication
-├── Layout : Abstraction layer, provides objects to represent common layout elements
-├── UI : User Interface layer. Modules within are broken down by tab within the main app
-│   ├── actuators : Configuration and operation of switching devices, like turnouts
-│   ├── common : Common UI elements and functions for re-use throughout UI
-│   ├── config : Settings tab and associated dialogs
-│   ├── routes : Configuation and control of routes. These group together switching devices into a common action
-│   ├── sensors : Devices for detecting the location of trains. Allows viewing of state and associating with routes
-│   └── trains : Control of train speed and functions
-└──  Utils : Common utilities
+```mermaid
+%%{ init : { "flowchart" : { "curve" : "stepAfter" }, 'block': { 'padding': 12 } }}%%
+block
+    columns 1
+    block:UI
+        columns 6
+
+        UILabel["UI"]:6
+        style UILabel fill:transparent,stroke:none;
+
+        Actuators
+        Clock
+        Config
+        Routes
+        Sensors
+        Trains
+
+        space:6
+
+        space:1
+        Common:4
+
+        Common --> Actuators
+        Common --> Clock
+        Common --> Config
+        Common --> Routes
+        Common --> Sensors
+        Common --> Trains
+    end
+
+    block:Control
+        columns 5
+
+        space:2
+        ControlLabel["Control"]
+        style ControlLabel fill:transparent,stroke:none;
+        space:2
+
+        Automation
+        space
+        Controllers
+        space
+        Protocols
+
+        Automation --> Controllers
+        Protocols --> Controllers
+    end
+
+    block:Layout
+        columns 3
+
+        space:1
+        LayoutLabel["Layout"]
+        style LayoutLabel fill:transparent,stroke:none;
+        space:1
+
+        Components
+        space
+        Virtual
+
+        Components --> Virtual
+    end
+
+    Components --> Controllers
+    Components --> Automation
+    Virtual --> Controllers
+
+    Utils
 ```
 
 ## Controller Support

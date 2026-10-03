@@ -28,6 +28,15 @@ The following components are currently implemented:
 * Locomotive : a powered train
 * Route : a group of actuators that can be triggered together
 
+## Virtual Controllers
+
+Some capabilities are not available on certain controllers. However, they can be emulated in software. An example of this is if a locomotive controller lacks the emergency stop command, this can be achieved by sending a speed of 0 to all the locomotives it managed.
+
+The following virtual controllers are available with the corresponding hardware capability dependency:
+
+* Emergency Stop -> Locomotive
+* Routes -> Actuators
+
 ## Rules
 
-When adding new features to a component, add the corresponding function to both the Component and Controller clases. This will neccessitate a change in the [Control](../control/README.md) module to implement. When adding a new Component class, create a new file and add the corresponding Controller class as described in [Structure](#structure). ControllerBase in the [Control](../control/README.md) must derive from this.
+When adding new features to a component, add the corresponding function to both the Component and Controller clases. This will neccessitate a change in the [Control](../control/README.md) module to implement. When adding a new Component class, create a new file and add the corresponding Controller class as described in [Structure](#structure). The new controller class will then have to be added to capabilityControllerTypes in [utils.hpp](../control/controllers/utils.hpp).

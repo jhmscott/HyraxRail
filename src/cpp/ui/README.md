@@ -3,6 +3,7 @@
 This contains the implementation for the QWidgets UI. This module is broken down based on the tab in the main window. These tabs are:
 
 * Actuators : Creation, configuration and operation of the actuator layout component.
+* Clock : Fast clock and automation UI.
 * Common : Common UI utilities, not specific to a tab, or even to model train operation in general.
 * Config : Miscellaneous settings, including creation of controllers.
 * Routes : Creation, configuration and operation of the route layout component.
