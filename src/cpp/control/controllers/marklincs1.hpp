@@ -24,8 +24,8 @@ namespace control
 {
 
 ///////////////////////////////////////////////////////////////////////////////
-/// The Märklin Central Station 1, model number 60212. This supports the oirginal
-/// fimrware, not the "reloaded" firmware from ESU. Uses the ESU ECoSProtocol version 0.1
+/// The Märklin Central Station 1, model number 60212. This supports the original
+/// firmware, not the "reloaded" firmware from ESU. Uses the ESU ECoSProtocol version 0.1
 ///
 ///////////////////////////////////////////////////////////////////////////////
 class MarklinCS1 :
@@ -141,7 +141,7 @@ public:
     /// @return     True if the emergency stop state is active
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual bool isEStopped () override;
+    virtual bool isEStopped () const override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the number of functions available for a given protocol on this controller

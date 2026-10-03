@@ -19,10 +19,11 @@ Locomotive::Locomotive (LocomotiveController*           controller,
                         trackProtocol                   proto,
                         uint                            address,
                         const std::vector<funcInfo>&    functions,
+                        int8_t                          speed,
                         size_t                          id) :
     Base (controller,
           id,
-          std::make_shared<locomotiveState> (locomotiveState{ name, proto, address, functions }))
+          std::make_shared<locomotiveState> (locomotiveState{ name, functions, proto, address, speed }))
     {}
 
 std::string Locomotive::getName () const
@@ -31,13 +32,11 @@ std::string Locomotive::getName () const
 void Locomotive::setName (const std::string& name)
     LAYOUT_DEFINE_SETTER (m_name, setLocomotiveName, name)
 
+int8_t Locomotive::getSpeed () const
+    LAYOUT_DEFINE_GETTER (locomotiveState::m_speed, 0)
+
 void Locomotive::setSpeed (int8_t speed)
-    {
-    if (NULL != m_controller)
-        {
-        m_controller->setSpeed (m_id, speed);
-        }
-    }
+    LAYOUT_DEFINE_SETTER (m_speed, setSpeed, speed)
 
 void Locomotive::requestControl ()
     {
@@ -46,6 +45,7 @@ void Locomotive::requestControl ()
         m_controller->requestControl (m_id);
         }
     }
+
 
 void Locomotive::releaseControl ()
     {

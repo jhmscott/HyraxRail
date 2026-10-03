@@ -160,6 +160,12 @@
     <Filter Include="Resource Files\translations">
       <UniqueIdentifier>{8101c5f9-066b-42ca-b52a-29b7d75dac5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\layout\virtual">
+      <UniqueIdentifier>{6225d6d9-c14e-4043-aa68-e1a52dbcb019}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\layout\virtual">
+      <UniqueIdentifier>{f07679c3-824e-4853-9d02-b7b80b4a7d37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\stdafx.h">
@@ -267,9 +273,6 @@
     <ClInclude Include="..\src\cpp\ui\common\centeredslider.hpp">
       <Filter>Header Files\ui\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\trains\editloco.hpp">
-      <Filter>Header Files\ui\trains</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\cpp\layout\protocol.hpp">
       <Filter>Header Files\layout</Filter>
     </ClInclude>
@@ -290,6 +293,21 @@
     </ClInclude>
     <ClInclude Include="..\src\cpp\layout\estop.hpp">
       <Filter>Header Files\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\layout\virtual\vestop.hpp">
+      <Filter>Header Files\layout\virtual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\layout\virtual\base.hpp">
+      <Filter>Header Files\layout\virtual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\control\controllers\meta.hpp">
+      <Filter>Header Files\control\controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\control\controllers\utils.hpp">
+      <Filter>Header Files\control\controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\layout\virtual\vroute.hpp">
+      <Filter>Header Files\layout\virtual</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -548,6 +566,15 @@
     <ClCompile Include="..\src\cpp\ui\trains\resources.cpp">
       <Filter>Source Files\ui\trains</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cpp\layout\virtual\vestop.cpp">
+      <Filter>Source Files\layout\virtual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\control\controllers\meta.cpp">
+      <Filter>Source Files\control\controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\layout\virtual\vroute.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\control\protocols\base.hpp">
@@ -755,6 +782,9 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\common\tiereddropdown.hpp">
       <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\trains\editloco.hpp">
+      <Filter>Header Files\ui\trains</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

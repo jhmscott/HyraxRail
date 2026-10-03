@@ -238,6 +238,14 @@ public:
     size_t getId () const { return m_id; }
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Get the name of the component, for use in the UI
+    ///
+    /// @return     Name of the component
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual std::string getName () const = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Get the controller controlling this locomotive
     ///
     /// @return     Locomotive controller
@@ -259,8 +267,22 @@ public:
     /// @return     false if not a valid component
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    operator bool () const { return 0 != m_id; }
+    operator bool () const { return 0 != m_id && NULL != m_controller; }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Format a component
+    ///
+    /// @param[in,out]  os          Output stream
+    /// @param[in]      actuator    Route to format
+    ///
+    /// @return         Output stream
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    friend std::ostream& operator<< (std::ostream& os, const ComponentDerived& component)
+        {
+        os << component.getName ()  << " (" << component.getId () << ")";
+        return os;
+        }
 protected:
     StatePtr    m_state;                    ///< State shared amongst all instances of
                                             ///  this component
@@ -331,6 +353,17 @@ public:
 
     static_assert (std::is_base_of_v<componentBase_t, Component>,
                    "Component must derive from ComponentBase");
+
+    /// Default constructable
+    ControllerBase () = default;
+
+    /// Non copyable
+    ControllerBase (const ControllerBase&) = delete;
+    ControllerBase& operator= (const ControllerBase&) = delete;
+
+    /// Non movable
+    ControllerBase (ControllerBase&&) = delete;
+    ControllerBase& operator= (ControllerBase&&) = delete;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Destructor. Signals to all its components it is being destroyed

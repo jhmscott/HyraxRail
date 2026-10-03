@@ -212,6 +212,7 @@
     <ClCompile Include="..\src\cpp\control\controllers\base.cpp" />
     <ClCompile Include="..\src\cpp\control\controllers\manager.cpp" />
     <ClCompile Include="..\src\cpp\control\controllers\marklincs1.cpp" />
+    <ClCompile Include="..\src\cpp\control\controllers\meta.cpp" />
     <ClCompile Include="..\src\cpp\control\protocols\base.cpp" />
     <ClCompile Include="..\src\cpp\ext\gpc.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -221,6 +222,8 @@
     <ClCompile Include="..\src\cpp\layout\actuator.cpp" />
     <ClCompile Include="..\src\cpp\layout\locomotive.cpp" />
     <ClCompile Include="..\src\cpp\layout\route.cpp" />
+    <ClCompile Include="..\src\cpp\layout\virtual\vestop.cpp" />
+    <ClCompile Include="..\src\cpp\layout\virtual\vroute.cpp" />
     <ClCompile Include="..\src\cpp\ui\actuators\actuatorbutton.cpp" />
     <ClCompile Include="..\src\cpp\ui\actuators\actuatorgroup.cpp" />
     <ClCompile Include="..\src\cpp\ui\actuators\actuatorpanel.cpp" />
@@ -307,8 +310,13 @@
     <ClCompile Include="..\src\cpp\utils\string.cpp" />
     <ClCompile Include="..\src\cpp\utils\time.cpp" />
     <ClInclude Include="..\res\version.h" />
+    <ClInclude Include="..\src\cpp\control\controllers\meta.hpp" />
+    <ClInclude Include="..\src\cpp\control\controllers\utils.hpp" />
     <ClInclude Include="..\src\cpp\layout\estop.hpp" />
     <ClInclude Include="..\src\cpp\layout\utils.hpp" />
+    <ClInclude Include="..\src\cpp\layout\virtual\base.hpp" />
+    <ClInclude Include="..\src\cpp\layout\virtual\vestop.hpp" />
+    <ClInclude Include="..\src\cpp\layout\virtual\vroute.hpp" />
     <ClInclude Include="..\src\cpp\names.hpp" />
     <ClInclude Include="..\src\cpp\ui\trains\resources.hpp" />
     <ClInclude Include="..\src\cpp\utils\qobj.hpp" />
@@ -395,7 +403,7 @@
     <ClInclude Include="..\src\cpp\ui\trains\dualcontrol.hpp" />
     <QtMoc Include="..\src\cpp\ui\trains\functionpanel.hpp" />
     <QtMoc Include="..\src\cpp\ui\trains\lococontrolpanel.hpp" />
-    <ClInclude Include="..\src\cpp\ui\trains\editloco.hpp" />
+    <QtMoc Include="..\src\cpp\ui\trains\editloco.hpp" />
     <ClInclude Include="..\src\cpp\ui\trains\speedcontrol.hpp" />
     <ClInclude Include="..\src\cpp\utils\algorithm.hpp" />
     <QtMoc Include="..\src\cpp\utils\battery.hpp" />

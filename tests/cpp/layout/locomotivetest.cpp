@@ -121,6 +121,7 @@ private slots:
                                   INIT_PROTO,
                                   INIT_ADDR,
                                   INIT_FUNCS,
+                                  0,
                                   ID };
         layout::Locomotive locoCopy = loco;
 
@@ -164,6 +165,7 @@ private slots:
                                   INIT_PROTO,
                                   INIT_ADDR,
                                   INIT_FUNCS,
+                                  0,
                                   ID };
         loco.setSpeed (speed);
 
@@ -194,6 +196,7 @@ private slots:
                                   INIT_PROTO,
                                   INIT_ADDR,
                                   INIT_FUNCS,
+                                  0,
                                   ID };
         layout::Locomotive locoCopy = loco;
 
@@ -288,6 +291,7 @@ private slots:
                                   INIT_PROTO,
                                   INIT_ADDR,
                                   INIT_FUNCS,
+                                  0,
                                   ID };
 
         auto info = loco.getFunctionByNumber (num);
@@ -333,6 +337,7 @@ private slots:
                                   INIT_PROTO,
                                   INIT_ADDR,
                                   INIT_FUNCS,
+                                  0,
                                   ID };
 
         auto newFuncs = INIT_FUNCS;
@@ -363,6 +368,7 @@ private slots:
                                   INIT_PROTO,
                                   INIT_ADDR,
                                   INIT_FUNCS,
+                                  0,
                                   ID };
         QSignalSpy spy{ &loco, &layout::Locomotive::functionDeleted };
 

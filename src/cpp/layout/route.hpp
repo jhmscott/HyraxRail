@@ -25,8 +25,8 @@ namespace layout
 /// Represents an actuator's membership in a route
 struct routeMember
     {
-    layout::Actuator    actuator;   ///< Actuator in thr route
-    bool                state;      ///< State to set the actuator to when this route is active
+    Actuator    actuator;   ///< Actuator in thr route
+    bool        state;      ///< State to set the actuator to when this route is active
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Check for equality with another route member
@@ -51,6 +51,21 @@ struct routeMember
     ///
     ///////////////////////////////////////////////////////////////////////////////
     bool operator!= (const routeMember& other) const { return !(*this == other); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Format a route member
+    ///
+    /// @param[in,out]  os      Output stream
+    /// @param[in]      member  Route member to format
+    ///
+    /// @return         Output stream
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    friend std::ostream& operator<< (std::ostream& os, const routeMember& member)
+        {
+        os << member.actuator << " " << (member.state ? "[ON]" : "[OFF]");
+        return os;
+        }
     };
 
 /// Components of a route
@@ -100,7 +115,7 @@ public:
     /// @return     Route friendly name
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    std::string getName () const;
+    virtual std::string getName () const override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the name of this route
@@ -149,7 +164,6 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void release ();
-
 private:
     };
 
@@ -173,7 +187,7 @@ public:
     /// @return     List of routes
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual std::vector<layout::Route> getRoutes () const = 0;
+    virtual std::vector<Route> getRoutes () const = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Create a route on  the controller
@@ -182,8 +196,8 @@ public:
     /// @param[in]  actuators   List of actuators and the state to set them to
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual layout::Route createRoute (const std::string&       name,
-                                       const layout::routeList& actuators) = 0;
+    virtual Route createRoute (const std::string&   name,
+                               const routeList&     actuators) = 0;
 private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Activate a route

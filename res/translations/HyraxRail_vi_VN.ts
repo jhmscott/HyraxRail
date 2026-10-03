@@ -42,19 +42,19 @@
         <translation>Tắt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/item.hpp" line="272"/>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="279"/>
         <source>Set</source>
         <translatorcomment>Đặt</translatorcomment>
         <translation>Đặt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/item.hpp" line="273"/>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="280"/>
         <source>Unset</source>
         <translatorcomment>Bỏ Đặt</translatorcomment>
         <translation>Bỏ Đặt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/item.hpp" line="274"/>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="281"/>
         <source>Toggle</source>
         <translatorcomment>Chuyển</translatorcomment>
         <translation>Chuyển</translation>

@@ -35,6 +35,6 @@ public:
     /// @return     True if the emergency stop state is active
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual bool isEStopped () = 0;
+    virtual bool isEStopped () const = 0;
     };
 }

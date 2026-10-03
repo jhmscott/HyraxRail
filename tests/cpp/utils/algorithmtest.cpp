@@ -546,6 +546,64 @@ private slots:
         QVERIFY (not equalRange (vec2, arr));
         QVERIFY (not equalRange (vec3, arr));
         }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Tests for each type
+    ///
+    /// @see    utils::algorithm::forEachType()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void forEachTypeTest ()
+        {
+        using TupleTest = std::tuple<int, int&, const int, std::string, MemberFuncTest>;
+
+        bool intFound       = false;
+        bool strFound       = false;
+        bool refFound       = false;
+        bool constFound     = false;
+        bool polyBaseFound  = false;
+        int  numCall        = 0;
+
+        forEachType<TupleTest> (
+            [&] (auto envelope)
+            {
+            using Type = typename decltype (envelope)::type;
+
+            if constexpr (std::is_same_v<Type, int>)
+                {
+                intFound = true;
+                }
+            if constexpr (std::is_same_v<Type, int&>)
+                {
+                refFound = true;
+                }
+
+            if constexpr (std::is_same_v<Type, const int>)
+                {
+                constFound = true;
+                }
+
+            if constexpr (std::is_same_v<Type, std::string>)
+                {
+                strFound = true;
+                }
+
+            if constexpr (std::is_same_v<Type, MemberFuncTest>)
+                {
+                polyBaseFound = true;
+                }
+
+            ++numCall;
+            });
+
+        QCOMPARE (numCall, std::tuple_size_v<TupleTest>);
+
+        QVERIFY (intFound);
+        QVERIFY (refFound);
+        QVERIFY (constFound);
+        QVERIFY (strFound);
+        QVERIFY (polyBaseFound);
+        }
     };
 
 

@@ -36,9 +36,11 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     enum class type
         {
-        ACTUATOR,   ///< layout::Actuator
-        ROUTE,      ///< layout:::Route,
-        LOCO_FUNC   ///< layout::Locomotive (function)
+        ACTUATOR,   ///< @see layout::Actuator
+        ROUTE,      ///< @see layout:::Route,
+        LOCO_FUNC,  ///< @see layout::Locomotive (function)
+
+        NUM_TYPES   ///< delimeter only
         };
 
     /// Action type; action to perform when condition is met
@@ -231,7 +233,12 @@ signals:
     void destroyed ();
 
 private:
-    std::variant<layout::Actuator, layout::Route, function> m_item;   ///< Underlying item being automated
+    /// Holds the automated item
+    using ItemContainer = std::variant<layout::Actuator, layout::Route, function>;
+
+    ASSERT_VARIANT_SIZE (ItemContainer, static_cast<size_t> (type::NUM_TYPES));
+
+    ItemContainer m_item;   ///< Underlying item being automated
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Connect the signals from the automated item

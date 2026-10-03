@@ -94,6 +94,8 @@ struct memberFuncTraits<RetT (Class::*) (Args...) const >
 template<class T>
 struct envelope
     {
+    constexpr envelope () = default;
+
     using type = T;
     };
 

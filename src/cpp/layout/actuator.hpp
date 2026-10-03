@@ -124,7 +124,7 @@ public:
     /// @return     Name of the actuator in the UI
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    std::string getName () const;
+    virtual std::string getName () const override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the friendly name of this actuator
@@ -215,7 +215,6 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void remove ();
-
 signals:
     ///////////////////////////////////////////////////////////////////////////////
     /// Signals the state of the actuator has changed
@@ -246,7 +245,7 @@ public:
     /// @return     List of actuators
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual std::vector<layout::Actuator> getActuators () const = 0;
+    virtual std::vector<Actuator> getActuators () const = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Create a new actuator
@@ -260,11 +259,11 @@ public:
     /// @return     Created actuator
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual layout::Actuator createActuator (const std::string&     name,
-                                             uint                   address,
-                                             layout::actuatorIcon   icon,
-                                             layout::actuatorMode   mode,
-                                             uint                   duration) = 0;
+    virtual Actuator createActuator (const std::string& name,
+                                    uint                address,
+                                    actuatorIcon        icon,
+                                    actuatorMode        mode,
+                                    uint                duration) = 0;
 
     // private, so only the actuator can call this
 private:

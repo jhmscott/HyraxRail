@@ -102,6 +102,7 @@ private slots:
                                  OLD_PROTO,
                                  OLD_ADDR,
                                  {},
+                                 0,
                                  ID };
 
         loco.setName (NEW_NAME);
@@ -132,6 +133,7 @@ private slots:
                                  OLD_PROTO,
                                  OLD_ADDR,
                                  {},
+                                 0,
                                  ID };
 
         loco.setAddress (NEW_ADDR);
@@ -162,6 +164,7 @@ private slots:
                                  OLD_PROTO,
                                  OLD_ADDR,
                                  {},
+                                 0,
                                  ID };
 
         loco.setProtocol (NEW_PROTO);
@@ -215,6 +218,7 @@ private slots:
                                  OLD_PROTO,
                                  OLD_ADDR,
                                  {},
+                                 0,
                                  ID };
 
         loco.remove ();

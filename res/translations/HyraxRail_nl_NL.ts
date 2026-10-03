@@ -79,17 +79,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/item.hpp" line="272"/>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="279"/>
         <source>Set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/item.hpp" line="273"/>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="280"/>
         <source>Unset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/item.hpp" line="274"/>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="281"/>
         <source>Toggle</source>
         <translation type="unfinished"></translation>
     </message>

@@ -64,6 +64,24 @@ auto makeMemberBinder (Func func, Obj* obj, traits::envelope<std::tuple<Args...>
     {
     return [=] (Args... args) { return (obj->*func) (std::forward<Args> (args)...); };
     }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Implementation for forEachType()
+///
+/// @tparam     Tuple       Tuple to loop through
+/// @tparam     Func        Callback functor type
+/// @tparam     Is          Index sequence for indexing Tuple
+///
+/// @param[in]  func        Callback function
+/// @param[in]  unused      Used to pass index sequence
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class Tuple, class Func, size_t... Is>
+constexpr void forEachTypeImpl (Func func, std::index_sequence<Is...> unused)
+    {
+    (func (traits::envelope<typename std::tuple_element_t<Is, Tuple>>{}), ...);
+    }
+
 } // namespace internal
 
 
@@ -540,4 +558,25 @@ bool equalRange (const R1& r1, const R2& r2)
                        std::end (r2));
     }
 
+///////////////////////////////////////////////////////////////////////////////
+/// Call a callback for each type in a tuple
+///
+/// @tparam     Tuple       Tuple to loop through
+/// @tparam     Func        Callback functor type
+///
+/// @param[in]  func        Callback function
+///
+/// @remarks    Each type is passed to the first paramater of the callback using
+///             a type envelope instance. This allows for the iteration of non
+///             trivial/non-concrete types
+///
+/// @see        utils::traits::envelope
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class Tuple, class Func>
+constexpr void forEachType (Func func)
+    {
+    constexpr auto size = std::tuple_size_v<Tuple>;
+    internal::forEachTypeImpl<Tuple> (func, std::make_index_sequence<size>{});
+    }
 } // namespace utils::algorithm

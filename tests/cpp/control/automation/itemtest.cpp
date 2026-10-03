@@ -304,6 +304,7 @@ private slots:
                                  layout::TRACK_PROTO_MFX,
                                  1,
                                  LOCO_FUNCS,
+                                 0,
                                  ID };
         control::AutomationItem item{ loco, 3 };
 
@@ -367,6 +368,7 @@ private slots:
                                  layout::TRACK_PROTO_MFX,
                                  1,
                                  LOCO_FUNCS,
+                                 0,
                                  ID };
         control::AutomationItem item{ loco, LOCO_FUNCS[idx].id };
 
@@ -402,6 +404,7 @@ private slots:
                                  layout::TRACK_PROTO_MFX,
                                  1,
                                  LOCO_FUNCS,
+                                 0,
                                  ID };
         control::AutomationItem item{ loco, 3 };
         QSignalSpy              spy{ &item, &control::AutomationItem::destroyed };
@@ -442,6 +445,7 @@ private slots:
                                  layout::TRACK_PROTO_MFX,
                                  1,
                                  LOCO_FUNCS,
+                                 0,
                                  ID };
         control::AutomationItem item{ loco, LOCO_FUNCS[idx].id };
         QSignalSpy              spy{ &item, &control::AutomationItem::destroyed };

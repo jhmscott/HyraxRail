@@ -11,102 +11,55 @@
 
 #include <control/controllers/base.hpp>
 
+#include <layout/virtual/vestop.hpp>
+
 #include <map>
 
 namespace control
 {
 
+
 //////////////////////////////////////////////////////////////////////////////
-/// Determine the capabilities that can be emulated in software, given the
-/// controller's hardware capabilities
+/// Create a software capability for a hardware controller. Implementation
 ///
-/// @param[in]  hardware        Hardware capabilitier
+/// @tparam     VirtualController   Controller to create controller for
+/// @tparam     Dependencies        Dependent controller types
 ///
-/// @return     Software capabilities
+/// @param[in]  controller          Controller to create software capability for
+/// @param[in]  unused              Tuple type to pass dependent types
+///
+/// @return     Created capability
 ///
 //////////////////////////////////////////////////////////////////////////////
-static controllerCapabilitySet getSoftwareCapabilities (const controllerCapabilitySet& hardware)
+template<class VirtualController, class Dependencies, size_t... Is>
+static std::unique_ptr<layout::VirtualControllerBase>
+createSoftwareCapability (control::ControllerBase&      controller,
+                          std::index_sequence<Is...>    is)
     {
-    controllerCapabilitySet software{ 0 };
+    auto* capability = new VirtualController{
+        *ControllerMetaClassBase::cast<typename std::tuple_element_t<Is, Dependencies>> (&controller)... };
 
-    if (hardware[CAPABILITY_ACTUATOR] && not hardware[CAPABILITY_ROUTE])
-        {
-        software[CAPABILITY_ROUTE] = true;
-        }
-
-    if (hardware[CAPABILITY_LOCOMOTIVE] && not hardware[CAPABILITY_ESTOP])
-        {
-        software[CAPABILITY_ESTOP] = true;
-        }
-
-    return software;
+    return std::unique_ptr<layout::VirtualControllerBase>{ capability };
     }
 
-
-ControllerMetaClassBase::ControllerMetaClassBase (const std::string&                name,
-                                                  const std::string&                friendlyName,
-                                                  const protocolMetaList&           protocols,
-                                                  const controllerCapabilitySet&    capabilities) :
-    name (name),
-    friendlyName (friendlyName),
-    protocols (protocols),
-    hardwareCapabilities (capabilities),
-    softwareCapabilities (getSoftwareCapabilities (capabilities))
+//////////////////////////////////////////////////////////////////////////////
+/// Create a software capability for a hardware controller
+///
+/// @tparam     VirtualController   Controller to create controller for
+///
+/// @param[in]  controller          Controller to create software capability for
+///
+/// @return     Created capability
+///
+//////////////////////////////////////////////////////////////////////////////
+template<class VirtualController>
+static std::unique_ptr<layout::VirtualControllerBase>
+createSoftwareCapability (control::ControllerBase& controller)
     {
-    controllerTypes.emplace (name, this);
-    }
+    using Dependencies  = typename traits::virtualController<VirtualController>::dependencies;
+    constexpr size_t size = std::tuple_size_v<Dependencies>;
 
-const ControllerMetaClassBase& ControllerMetaClassBase::fromController (const ControllerBase& controller)
-    {
-    return controller.getMetaClass ();
-    }
-
-const ProtocolMetaClassBase& ControllerMetaClassBase::findProtocol (const std::string& name) const
-    {
-    auto it = std::find_if (protocols.begin (),
-                            protocols.end (),
-                            [&name] (const ProtocolMetaClassBase* proto) -> bool
-                            { return proto->name == name; });
-
-    if (it == protocols.end ())
-        {
-        throw std::runtime_error ("Unknown protocol");
-        }
-
-    return **it;
-    }
-
-std::unique_ptr<ControllerBase> createController (const createControllerInfo& info)
-    {
-    std::unique_ptr<ControllerBase> controller = NULL;
-
-    auto it = ControllerMetaClassBase::controllerTypes.find (info.name);
-
-    if (ControllerMetaClassBase::controllerTypes.end () != it)
-        {
-        controller = it->second->create (info.friendlyName,
-                                         info.protocol,
-                                         info.device);
-        }
-
-    return controller;
-    }
-
-const std::vector<const ControllerMetaClassBase*> getControllers ()
-    {
-    using MetaPair = decltype (ControllerMetaClassBase::controllerTypes)::value_type;
-
-    std::vector<const ControllerMetaClassBase*> controllers;
-
-    controllers.reserve (ControllerMetaClassBase::controllerTypes.size ());
-
-    std::transform (ControllerMetaClassBase::controllerTypes.begin (),
-                    ControllerMetaClassBase::controllerTypes.end (),
-                    std::back_inserter (controllers),
-                    [] (const MetaPair& pair) -> const ControllerMetaClassBase*
-                    { return pair.second; });
-
-    return controllers;
+    return createSoftwareCapability<VirtualController, Dependencies> (controller, std::make_index_sequence<size>{});
     }
 
 ControllerBase::ControllerBase (const std::string&              friendlyName,
@@ -252,6 +205,43 @@ std::vector<AutomationItem> ControllerBase::getAutomationItems () const
         }
 
     return items;
+    }
+
+void ControllerBase::initSoftwareCapabilitiesOnce ()
+    {
+    std::call_once (m_swInitOnce, &ControllerBase::initSoftwareCapabilities, this);
+    }
+
+void ControllerBase::initSoftwareCapabilities ()
+    {
+    const auto& meta = getMetaClass ();
+
+    utils::algorithm::forEachType<softwareControllerTypes> (
+        [&] (auto envelope)
+        {
+        using VirtualController     = typename decltype (envelope)::type;
+        using CapabilityController  = typename traits::virtualController<VirtualController>::base;
+
+        constexpr controllerCapability type = traits::capability<CapabilityController>::value;
+
+        m_softwareControllers[type] = createSoftwareCapability<VirtualController> (*this);
+        });
+    }
+
+std::unique_ptr<ControllerBase> createController (const createControllerInfo& info)
+    {
+    std::unique_ptr<ControllerBase> controller = NULL;
+
+    auto it = ControllerMetaClassBase::controllerTypes.find (info.name);
+
+    if (ControllerMetaClassBase::controllerTypes.end () != it)
+        {
+        controller = it->second->create (info.friendlyName,
+                                         info.protocol,
+                                         info.device);
+        }
+
+    return controller;
     }
 
 } // namespace control

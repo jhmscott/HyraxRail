@@ -143,7 +143,7 @@ static void resolveReplyVector (std::vector<std::future<ECoSProtocol::reply>>&  
 
 MarklinCS1::MarklinCS1 (const std::string&              friendlyName,
                         std::unique_ptr<ProtocolBase>&& proto) :
-    ControllerBase (friendlyName, std::move (proto))
+    control::ControllerBase (friendlyName, std::move (proto))
     {
     }
 
@@ -169,37 +169,47 @@ std::vector<layout::Locomotive> MarklinCS1::getLocomotives () const
             std::transform (res.lines.begin (),
                             res.lines.end (),
                             std::back_inserter (locos),
-                            [this] (const control::ECoSProtocol::replyLine& line)
-                            {
-                            auto future     = issueDynamicCommand (ECoSProtocol::get,
-                                                                   line.id,
-                                                                   ECoSProtocol::ARG_PROTOCOL);
-                            auto protoReply = future.get ();
-                            auto it         = std::find (PROTOCOLS,
-                                                         PROTOCOLS + std::size (PROTOCOLS),
-                                                         protoReply.lines[0].arg->val.value ());
+                [this] (const control::ECoSProtocol::replyLine& line)
+                {
+                auto future     = issueDynamicCommand (ECoSProtocol::get,
+                                                        line.id,
+                                                        ECoSProtocol::ARG_PROTOCOL);
+                auto protoReply = future.get ();
+                auto it         = std::find (PROTOCOLS,
+                                                PROTOCOLS + std::size (PROTOCOLS),
+                                                protoReply.lines[0].arg->val.value ());
 
-                            layout::trackProtocol proto = layout::TRACK_PROTO_UNKNOWN;
+                layout::trackProtocol proto = layout::TRACK_PROTO_UNKNOWN;
 
-                            if ((PROTOCOLS + std::size (PROTOCOLS)) != it)
-                                {
-                                proto = static_cast<layout::trackProtocol> (
-                                                        std::distance (PROTOCOLS, it));
-                                }
-                            auto addrFuture = issueDynamicCommand (ECoSProtocol::get,
-                                                                   line.id,
-                                                                   ECoSProtocol::ARG_ADDR);
-                            auto addrReply  = addrFuture.get ();
-                            auto address    = addrReply.lines[0].arg->val.value ();
+                if ((PROTOCOLS + std::size (PROTOCOLS)) != it)
+                    {
+                    proto = static_cast<layout::trackProtocol> (
+                                            std::distance (PROTOCOLS, it));
+                    }
 
-                            return layout::Locomotive{ const_cast<MarklinCS1*> (this),
-                                                       line.arg->val.value (),
-                                                       proto,
-                                                       static_cast<uint> (
-                                                           atoi (address.c_str ())),
-                                                       getFunctions (line.id),
-                                                       line.id, };
-                            });
+                auto addrFuture = issueDynamicCommand (ECoSProtocol::get,
+                                                        line.id,
+                                                        ECoSProtocol::ARG_ADDR);
+                auto addrReply  = addrFuture.get ();
+                auto address    = addrReply.lines[0].arg->val.value ();
+
+
+                auto speedFuture = issueDynamicCommand (ECoSProtocol::get,
+                                                        line.id,
+                                                        ECoSProtocol::ARG_SPEED);
+                auto speedReply = speedFuture.get ();
+                auto speed      = speedReply.lines[0].arg->val.value ();
+
+                return layout::Locomotive{ const_cast<MarklinCS1*> (this),
+                                            line.arg->val.value (),
+                                            proto,
+                                            static_cast<uint> (
+                                                atoi (address.c_str ())),
+                                            getFunctions (line.id),
+                                            static_cast<int8_t> (
+                                                atoi (speed.c_str ())),
+                                            line.id, };
+                });
             }
         }
 
@@ -261,14 +271,14 @@ std::vector<layout::Actuator> MarklinCS1::getActuators () const
                                iconReplies);
 
     issueDynamicBatchCommands (reply,
-                                ECoSProtocol::get,
-                                ECoSProtocol::ARG_MODE,
-                                modeReplies);
+                               ECoSProtocol::get,
+                               ECoSProtocol::ARG_MODE,
+                               modeReplies);
 
     issueDynamicBatchCommands (reply,
-                                ECoSProtocol::get,
-                                ECoSProtocol::ARG_ADDR,
-                                addressReplies);
+                               ECoSProtocol::get,
+                               ECoSProtocol::ARG_ADDR,
+                               addressReplies);
 
     issueDynamicBatchCommands (reply,
                                ECoSProtocol::get,
@@ -365,19 +375,20 @@ std::vector<layout::Route> MarklinCS1::getRoutes () const
         std::transform (members.lines.begin (),
                         members.lines.end (),
                         std::back_inserter (routeList),
-                        [this, routeId] (const ECoSProtocol::replyLine& line) -> layout::routeMember
-                        {
-                        auto                stateFuture = issueDynamicCommand (ECoSProtocol::get,
-                                                                                routeId,
-                                                                                ARG (ECoSProtocol::ARG_ID, line.id),
-                                                                                ECoSProtocol::ARG_STATE);
+            [this, routeId] (const ECoSProtocol::replyLine& line) -> layout::routeMember
+            {
+            auto                stateFuture =
+                issueDynamicCommand (ECoSProtocol::get,
+                                     routeId,
+                                     ARG (ECoSProtocol::ARG_ID, line.id),
+                                     ECoSProtocol::ARG_STATE);
 
-                        layout::Actuator    actuator    = getActuatorSingle (line.id);
-                        auto                stateRes    = stateFuture.get ();
-                        bool                state       = "1" == stateRes.lines[0].arg->val;
+            layout::Actuator    actuator    = getActuatorSingle (line.id);
+            auto                stateRes    = stateFuture.get ();
+            bool                state       = "1" == stateRes.lines[0].arg->val;
 
-                        return { std::move (actuator), state };
-                        });
+            return { std::move (actuator), state };
+            });
 
         routes.emplace_back (const_cast<MarklinCS1*> (this),
                              *names[ii].lines[0].arg->val,
@@ -478,7 +489,7 @@ layout::Locomotive MarklinCS1::createLocomotive (const std::string&             
         setLocomotiveFunctions  (locoId, functions);
         }
 
-    return layout::Locomotive{ this, name, proto, address, functions, locoId };
+    return layout::Locomotive{ this, name, proto, address, functions, 0, locoId };
     }
 
 
@@ -498,7 +509,7 @@ void MarklinCS1::eStop (bool stop)
         }
     }
 
-bool MarklinCS1::isEStopped ()
+bool MarklinCS1::isEStopped () const
     {
     bool eStop = false;
     auto res = issueStaticCommand (ECoSProtocol::get,

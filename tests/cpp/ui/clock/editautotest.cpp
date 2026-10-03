@@ -78,8 +78,8 @@ private slots:
 
         controller.locomotives =
             {
-                { &controller, "Loco 1", layout::TRACK_PROTO_DCC28, 1, FUNCS1, 1 },
-                { &controller, "Loco 2", layout::TRACK_PROTO_DCC28, 2, FUNCS2, 2 },
+                { &controller, "Loco 1", layout::TRACK_PROTO_DCC28, 1, FUNCS1, 0, 1 },
+                { &controller, "Loco 2", layout::TRACK_PROTO_DCC28, 2, FUNCS2, 0, 2 },
             };
         }
 

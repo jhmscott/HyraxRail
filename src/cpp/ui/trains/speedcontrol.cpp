@@ -52,7 +52,8 @@ SpeedControlWidget::SpeedControlWidget (QWidget* parent) :
 
     m_stop->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
 
-    int     id      = QFontDatabase::addApplicationFont (":/fonts/DSEG7-Classic/DSEG7Classic-Regular.ttf");
+    int     id      = QFontDatabase::addApplicationFont (
+                            ":/fonts/DSEG7-Classic/DSEG7Classic-Regular.ttf");
     QString family  = QFontDatabase::applicationFontFamilies (id).at (0);
     QFont   font{ family };
 
@@ -91,6 +92,8 @@ void SpeedControlWidget::setLocomotive (const layout::Locomotive& loco)
     m_slider->setDisabled (false);
     m_stop  ->setDisabled (false);
     m_label ->setDisabled (false);
+
+    m_slider->setValue (loco.getSpeed ());
     }
 
 void SpeedControlWidget::clear ()

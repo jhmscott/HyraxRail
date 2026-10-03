@@ -161,9 +161,10 @@ class LocomotiveController;
 struct locomotiveState
     {
     std::string             m_name;     ///< Friendly name
+    std::vector<funcInfo>   m_functions;///< List of loco functions
     trackProtocol           m_proto;    ///< Protocol to communicate between the controller and loco
     uint                    m_address;  ///< Track protocol address
-    std::vector<funcInfo>   m_functions;///< List of loco functions
+    int8_t                  m_speed;    ///< Current Locomotive Speed
     };
 
 
@@ -195,6 +196,7 @@ public:
                 trackProtocol                   proto,
                 uint                            address,
                 const std::vector<funcInfo>&    functions,
+                int8_t                          speed,
                 size_t                          id);
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -203,7 +205,7 @@ public:
     /// @return     Name for use in UI
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    std::string getName () const;
+    virtual std::string getName () const override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the locomotive name
@@ -212,6 +214,14 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void setName (const std::string& name);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the current speed of the locomotive
+    ///
+    /// @return     Current locomotive speed
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    int8_t getSpeed () const;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the locomotive speed
@@ -406,7 +416,6 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void setFunc (size_t id, uint8_t func, bool enable) = 0;
-
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the locomotive name

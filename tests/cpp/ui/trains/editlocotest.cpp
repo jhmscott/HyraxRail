@@ -388,6 +388,7 @@ private slots:
                                  PROTO,
                                  ADDR,
                                  FUNCS,
+                                 0,
                                  ID };
 
         EditLocoDialog dlg{ controllers, NULL, loco };
@@ -442,6 +443,7 @@ private slots:
                                  PROTO,
                                  ADDR,
                                  {},
+                                 0,
                                  ID };
 
         EditLocoDialog dlg{ controllers, NULL, loco };

@@ -1,6 +1,6 @@
 /**
- * @file        controlllers/basetest.hpp
- * @brief       Test suite for the Controller base and meta classes
+ * @file        controlllers/basetest.cpp
+ * @brief       Test suite for the Controller base class
  * @author      Justin Scott
  * @date        2026-09-30
  *
@@ -92,7 +92,44 @@ static void testSingleCapability (control::controllerCapability capability)
 
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Test suite for the Controller base and meta classes
+/// Test a controller type with a single hardware capability implements an expected
+/// software capability
+///
+/// @tparam     Controller      Controller type to test
+/// @tparam     Capability      Capability controller to test it against
+/// @tparam     SwCapability    Virtual controller class for that capability
+///
+/// @param[in]  capability      Capability we expect
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class Controller, class Capability, class SwCapability>
+void testSwCapability (control::controllerCapability capability)
+    {
+    // Sanity tests
+    static_assert (std::is_base_of_v<control::ControllerBase, Controller>,
+                   "Must be controller type");
+    static_assert (not std::is_base_of_v<Capability, Controller>,
+                   "Must not derive from the capability we are testing");
+    static_assert (std::is_base_of_v<Capability, SwCapability>,
+                   "SW Capability must impliment capability");
+    static_assert (std::is_base_of_v<layout::VirtualControllerBase, SwCapability>,
+                   "Must be a virtual controller type");
+
+    Controller controller{ "Test Controller",
+        std::make_unique<testutils::MockControllerProtocol> (utils::device::deviceInfo{}) };
+
+    QVERIFY (controller.getMetaClass ().softwareCapabilities[capability]);
+
+    auto* swController = controller.getCapabilityController<Capability> ();
+
+    // Check that there's a capability controller, and it's virtual (not hardware defined)
+    QCOMPARE_NE (swController, NULL);
+    QCOMPARE_NE (dynamic_cast<SwCapability*> (swController), NULL);
+    }
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Test suite for the Controller base class
 ///
 /// @ingroup    UNIT_TEST
 ///
@@ -151,6 +188,38 @@ private slots:
         {
         testSingleCapability<EmergencyStopController,
                              layout::EmergencyStopController> (control::CAPABILITY_ESTOP);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test that a locomotive controller without hardware estop support implements
+    /// a estop in software
+    ///
+    /// @see    control::ControllerBase
+    /// @see    control::CAPABILITY_LOCOMOTIVE
+    /// @see    control::CAPABILITY_ESTOP
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void virtualEstopControllerTest ()
+        {
+        testSwCapability<LocomotiveController,
+                         layout::EmergencyStopController,
+                         layout::VirtualEmergencyStopController> (control::CAPABILITY_ESTOP);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test that an actuator controller without hardware route support implements
+    /// a route database in software
+    ///
+    /// @see    control::ControllerBase
+    /// @see    control::CAPABILITY_ACTUATOR
+    /// @see    control::CAPABILITY_ROUTE
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void virtualRouteControllerTest ()
+        {
+        testSwCapability<ActuatorController,
+                         layout::RouteController,
+                         layout::VirtualRouteController> (control::CAPABILITY_ROUTE);
         }
     };
 

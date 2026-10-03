@@ -22,7 +22,13 @@ struct TrivialState
     {};
 
 /// Component with no state associated with it
-using TrivialComponent = layout::ComponentDerived<TrivialController, TrivialState>;
+class TrivialComponent : public layout::ComponentDerived<TrivialController, TrivialState>
+    {
+public:
+    using layout::ComponentDerived<TrivialController, TrivialState>::ComponentDerived;
+
+    virtual std::string getName () const override { return "Trivial Component"; }
+    };
 
 /// Controller for TrivialComponents
 class TrivialController : public layout::ControllerBase<TrivialComponent> {};

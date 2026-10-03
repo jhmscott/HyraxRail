@@ -123,7 +123,7 @@ class EmergencyStopControllerStubs : public layout::EmergencyStopController
 public:
     virtual void eStop (bool stop) override {}
 
-    virtual bool isEStopped () override { return false; }
+    virtual bool isEStopped () const override { return false; }
     };
 
 /// All stubs needed for a controller meta class
@@ -138,13 +138,8 @@ public:
                 const utils::device::deviceInfo&    info) const override { return NULL; }
 
 private:
-    virtual layout::ActuatorController* asActuatorController (control::ControllerBase* controller) const override { return NULL; }
-
-    virtual layout::LocomotiveController* asLocomotiveController (control::ControllerBase* controller)  const override { return NULL; }
-
-    virtual layout::RouteController* asRouteController (control::ControllerBase* controller) const override { return NULL; }
-
-    virtual layout::EmergencyStopController* asEstopController (control::ControllerBase* controller) const override { return NULL; }
+    virtual void* asCapabilityController (control::ControllerBase*  controller,
+                                          const std::type_info&     info) const override { return NULL; };
     };
 
 class ControllerBaseStubs : public control::ControllerBase

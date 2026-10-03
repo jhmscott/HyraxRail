@@ -53,8 +53,8 @@
 
 
 //////////////////////////////////////////////////////////////////////////////
-// Static assert that an array is an expected length
-// Useful when array is tied to enum values
+/// Static assert that an array is an expected length
+/// Useful when array is tied to enum values
 ///
 /// @param[in]  array       Array to check size of
 /// @param[in]  len         Expected length of array
@@ -63,6 +63,27 @@
 #define ASSERT_ARRAY_LENGTH(array, len) static_assert (std::size (array) == len,\
                                                        "Array size mismatch")
 
+//////////////////////////////////////////////////////////////////////////////
+/// Static assert that a tuple is an expected size
+/// Useful when tuple is tied to enum values
+///
+/// @param[in]  tuple       Tuple to check size of
+/// @param[in]  size        Expected size of tuple
+///
+//////////////////////////////////////////////////////////////////////////////
+#define ASSERT_TUPLE_SIZE(tuple, size)  static_assert (std::tuple_size_v<tuple> == size, \
+                                                       "Tuple size mismatch")
+
+//////////////////////////////////////////////////////////////////////////////
+/// Static assert that a variant is an expected size
+/// Useful when variant is tied to enum values
+///
+/// @param[in]  variant     Tuple to check size of
+/// @param[in]  size        Expected size of tuple
+///
+//////////////////////////////////////////////////////////////////////////////
+#define ASSERT_VARIANT_SIZE(variant, size)  static_assert (std::variant_size_v<variant> == size, \
+                                                           "Variant size mismatch")
 /// Horizontal alignment
 enum class hAlignment
     {
