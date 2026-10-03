@@ -6,7 +6,7 @@
     <message>
         <location filename="../../src/cpp/ui/actuators/resources.hpp" line="43"/>
         <source>Street Light</source>
-        <translation type="unfinished"></translation>
+        <translation>Réverbère</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/resources.hpp" line="47"/>
@@ -66,7 +66,7 @@
     <message>
         <location filename="../../src/cpp/control/automation/condition.hpp" line="259"/>
         <source>%1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 à %2</translation>
     </message>
     <message>
         <location filename="../../src/cpp/control/automation/condition.hpp" line="329"/>
@@ -155,17 +155,17 @@
         <location filename="../../src/cpp/layout/locomotive.cpp" line="146"/>
         <location filename="../../src/cpp/layout/locomotive.cpp" line="153"/>
         <source>Function %1 : %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Fonction %1 : %2</translation>
     </message>
     <message>
         <location filename="../../src/cpp/layout/locomotive.cpp" line="154"/>
         <source>Headlights</source>
-        <translation type="unfinished"></translation>
+        <translation>Phares</translation>
     </message>
     <message>
         <location filename="../../src/cpp/layout/locomotive.cpp" line="158"/>
         <source>Function %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fonction %1</translation>
     </message>
 </context>
 <context>
@@ -178,12 +178,12 @@
     <message>
         <location filename="../../src/cpp/ui/controllerinfo.cpp" line="180"/>
         <source>Disconnected</source>
-        <translation type="unfinished"></translation>
+        <translation>Déconnecté</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/controllerinfo.cpp" line="188"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Connecté</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/controllerinfo.cpp" line="192"/>
@@ -193,12 +193,12 @@
     <message>
         <location filename="../../src/cpp/ui/controllerinfo.cpp" line="205"/>
         <source>Are you sure you want to delete %1 ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Êtes-vous sûr de vouloir supprimer %1 ?</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/controllerinfo.cpp" line="209"/>
         <source>Delete Controller</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer le contrôleur</translation>
     </message>
 </context>
 <context>
@@ -206,32 +206,32 @@
     <message>
         <location filename="../../src/cpp/ui/mainwidget.cpp" line="237"/>
         <source>Trains</source>
-        <translation type="unfinished"></translation>
+        <translation>Trains</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/mainwidget.cpp" line="238"/>
         <source>Actuators</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Actionneurs</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/mainwidget.cpp" line="239"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Capteurs</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/mainwidget.cpp" line="240"/>
         <source>Routes</source>
-        <translation type="unfinished"></translation>
+        <translation>Chemins</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/mainwidget.cpp" line="241"/>
         <source>Fast Clock</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Horloge Rapide</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/mainwidget.cpp" line="242"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres</translation>
     </message>
 </context>
 <context>
@@ -277,12 +277,12 @@ Would you like to pause it or keep it running?</source>
     <message>
         <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="101"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="102"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifier</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="129"/>
@@ -292,7 +292,7 @@ Would you like to pause it or keep it running?</source>
     <message>
         <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="140"/>
         <source>Delete Actuator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer l’actionneur</translation>
     </message>
     <message>
         <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="108"/>
