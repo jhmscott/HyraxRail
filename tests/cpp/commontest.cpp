@@ -79,7 +79,7 @@ private slots:
                     {
                     std::stringstream ss;
 
-                    sprintf (expected, "%u.%u.%u", ii, jj, kk);
+                    snprintf (expected, std::size (expected) - 1, "%u.%u.%u", ii, jj, kk);
 
                     ss << version{ ii, jj, kk };
 

@@ -109,6 +109,7 @@ The app will automatically populate the trains, actuators, routes and sensors co
 ### Localization Team
 
 * [Long Dương](https://github.com/longd1999) : Vietnamese
+* [Ebi Sadeghi](https://github.com/EbiSadeghi) : French
 
 ### Other Credits
 

@@ -18,6 +18,7 @@ using namespace utils::os;
 static const char* const THREAD_NAME = "Test thread";
 
 
+#if defined (Q_OS_WIN) || defined (DOXYGEN)
 ///////////////////////////////////////////////////////////////////////////////
 /// Fake message only window class, needed to provide a concrete instance to call
 /// a constructor for
@@ -31,6 +32,7 @@ private:
         return 0;
         }
     };
+#endif // defined (Q_OS_WIN) || defined (DOXYGEN)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Test suite for the OS utility library

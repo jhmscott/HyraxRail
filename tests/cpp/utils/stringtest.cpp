@@ -102,7 +102,7 @@ private slots:
         QTest::newRow ("Wrapped")   << "abc=<To Extract>=def"s
                                     << "=<"s << ">="s << "To Extract"s;
 
-        QTest::newRow ("No Start")  << "--(Extract this)----(Not this)--"s
+        QTest::newRow ("Multiple")  << "--(Extract this)----(Not this)--"s
                                     << "--("s << ")--"s << "Extract this"s;
         }
 
@@ -347,7 +347,7 @@ private slots:
             for (const QChar unaccented : UNACCENTED_STRING)
                 {
                 accentedString.append (unaccented);
-                accentedString.append (accent);
+                accentedString.append (QChar::fromUcs2 (accent));
                 }
 
             accentedString = accentedString.normalized (QString::NormalizationForm_C);

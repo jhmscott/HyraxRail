@@ -86,7 +86,7 @@ static void testSingleCapability (control::controllerCapability capability)
         }
 
     // Test that this is available in hardware
-    QCOMPARE (controller.getCapabilityController<Capability> (),
+    QCOMPARE (controller.template getCapabilityController<Capability> (),
               static_cast<Capability*> (&controller));
     }
 
@@ -120,7 +120,7 @@ void testSwCapability (control::controllerCapability capability)
 
     QVERIFY (controller.getMetaClass ().softwareCapabilities[capability]);
 
-    auto* swController = controller.getCapabilityController<Capability> ();
+    auto* swController = controller.template getCapabilityController<Capability> ();
 
     // Check that there's a capability controller, and it's virtual (not hardware defined)
     QCOMPARE_NE (swController, NULL);

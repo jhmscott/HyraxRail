@@ -15,6 +15,7 @@
 #include <QApplication>
 #include <QComboBox>
 #include <QFormLayout>
+#include <QLabel>
 #include <QLayout>
 #include <QLayoutItem>
 #include <QPushButton>

@@ -80,19 +80,6 @@ if(APPLE)
     set_source_files_properties(${APP_ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 endif()
 
-
-# create target
-qt_add_executable(HyraxRail
-    WIN32 MACOSX_BUNDLE
-    ${SOURCES}
-    ${APP_ICON_PATH}
-)
-
-target_include_directories(HyraxRail
-    PRIVATE src/cpp ${CMAKE_SOURCE_DIR})
-target_precompile_headers(HyraxRail PRIVATE src/cpp/stdafx.h)
-
-
 set(DEPENDENCIES
     Qt::Core
     Qt::Widgets
@@ -104,8 +91,31 @@ if (ANDROID)
     list(APPEND DEPENDENCIES android log)
 endif ()
 
+# Static library target for unit testing
+
+add_library(HyraxRailTestCore STATIC ${SOURCES})
+target_link_libraries(HyraxRailTestCore PUBLIC ${DEPENDENCIES})
+
+
+target_include_directories(HyraxRailTestCore
+    PRIVATE src/cpp ${CMAKE_SOURCE_DIR})
+target_precompile_headers(HyraxRailTestCore PRIVATE src/cpp/stdafx.h)
+
+# Actual executable target
+
+qt_add_executable(HyraxRail
+    WIN32 MACOSX_BUNDLE
+    ${SOURCES}
+    ${APP_ICON_PATH}
+)
+
+target_include_directories(HyraxRail
+    PRIVATE src/cpp ${CMAKE_SOURCE_DIR})
+target_precompile_headers(HyraxRail PRIVATE src/cpp/stdafx.h)
+
 target_link_libraries(HyraxRail
     PRIVATE ${DEPENDENCIES})
+
 
 install(TARGETS HyraxRail
     BUNDLE  DESTINATION .
@@ -119,3 +129,50 @@ qt_generate_deploy_app_script(
     NO_UNSUPPORTED_PLATFORM_ERROR
 )
 install(SCRIPT ${deploy_script})
+
+# Unit Test Sub-projects
+
+# Common tests
+add_subdirectory (cmake/tests/common/)
+
+# Utilities tests
+add_subdirectory (cmake/tests/algorithm/)
+add_subdirectory (cmake/tests/device/)
+add_subdirectory (cmake/tests/log/)
+add_subdirectory (cmake/tests/math/)
+add_subdirectory (cmake/tests/os/)
+add_subdirectory (cmake/tests/pp/)
+add_subdirectory (cmake/tests/qobj/)
+add_subdirectory (cmake/tests/string/)
+add_subdirectory (cmake/tests/traits/)
+
+# Test utilities tests
+add_subdirectory (cmake/tests/assert/)
+add_subdirectory (cmake/tests/logspy/)
+add_subdirectory (cmake/tests/testlang/)
+add_subdirectory (cmake/tests/ui/)
+
+# Layout tests
+add_subdirectory (cmake/tests/actuator/)
+add_subdirectory (cmake/tests/layoutbase/)
+add_subdirectory (cmake/tests/locomotive/)
+add_subdirectory (cmake/tests/vestop/)
+add_subdirectory (cmake/tests/vroute/)
+
+# Control controller tests
+add_subdirectory (cmake/tests/controllerbase/)
+add_subdirectory (cmake/tests/controllermeta/)
+add_subdirectory (cmake/tests/marklincs1/)
+
+
+# Top level UI tests
+add_subdirectory (cmake/tests/lang/)
+add_subdirectory (cmake/tests/mainwindow/)
+
+# Common UI Tests
+add_subdirectory (cmake/tests/gesture/)
+add_subdirectory (cmake/tests/optionaldropdown/)
+add_subdirectory (cmake/tests/schemeicon/)
+add_subdirectory (cmake/tests/tiereddropdown/)
+add_subdirectory (cmake/tests/uiutils/)
+
