@@ -1,0 +1,1206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="fr_CA">
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/resources.hpp" line="43"/>
+        <source>Street Light</source>
+        <translation>Lampadaire</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/resources.hpp" line="47"/>
+        <source>Mast Light</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/resources.hpp" line="51"/>
+        <source>Layout Lighting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/resources.hpp" line="55"/>
+        <source>Straight Turnout Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/resources.hpp" line="59"/>
+        <source>Straight Turnout Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/string.hpp" line="85"/>
+        <source>On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/string.hpp" line="85"/>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="279"/>
+        <source>Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="280"/>
+        <source>Unset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="281"/>
+        <source>Toggle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="119"/>
+        <source>Every %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="188"/>
+        <source>Each day at %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="259"/>
+        <source>%1 at %2</source>
+        <translation type="unfinished">%1 à %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="329"/>
+        <source>Day % of every month at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="363"/>
+        <source>Timer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="364"/>
+        <source>Daily Alarm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="365"/>
+        <source>Weekly Alarm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="366"/>
+        <source>Monthly Alarm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="21"/>
+        <source>Headlight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="23"/>
+        <source>Cabin Lighting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="27"/>
+        <source>Horn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="29"/>
+        <source>Brakes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="31"/>
+        <source>Coupling Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="33"/>
+        <source>Generic Sounds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="35"/>
+        <source>Operating Sounds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="39"/>
+        <source>Pantograph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="41"/>
+        <source>ABV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/resources.cpp" line="43"/>
+        <source>Slow Locomotive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/lang.cpp" line="97"/>
+        <source>Hyrax Rail</source>
+        <translation type="unfinished">Râle Daman</translation>
+    </message>
+</context>
+<context>
+    <name>layout::Locomotive</name>
+    <message>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="146"/>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="153"/>
+        <source>Function %1 : %2</source>
+        <translation>Fonction %1 : %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="154"/>
+        <source>Headlights</source>
+        <translation>Phares</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="158"/>
+        <source>Function %1</source>
+        <translation>Fonction %1</translation>
+    </message>
+</context>
+<context>
+    <name>ui::ControllerInfo</name>
+    <message>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="153"/>
+        <source>Model : %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="180"/>
+        <source>Disconnected</source>
+        <translation>Déconnecté</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="188"/>
+        <source>Connected</source>
+        <translation>Connecté</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="192"/>
+        <source>Ping %1 ms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="205"/>
+        <source>Are you sure you want to delete %1 ?</source>
+        <translation>Êtes-vous certain de vouloir supprimer %1 ?</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="209"/>
+        <source>Delete Controller</source>
+        <translation type="unfinished">Supprimer le contrôleur</translation>
+    </message>
+</context>
+<context>
+    <name>ui::MainWidget</name>
+    <message>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="237"/>
+        <source>Trains</source>
+        <translation>Trains</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="238"/>
+        <source>Actuators</source>
+        <translation type="unfinished">Actionneurs</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="239"/>
+        <source>Sensors</source>
+        <translation type="unfinished">Capteurs</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="240"/>
+        <source>Routes</source>
+        <translation>Chemins</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="241"/>
+        <source>Fast Clock</source>
+        <translation type="unfinished">Horloge Rapide</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="242"/>
+        <source>Settings</source>
+        <translation>Paramètres</translation>
+    </message>
+</context>
+<context>
+    <name>ui::MainWindow</name>
+    <message>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="231"/>
+        <source>Shutdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="232"/>
+        <source>The Fast Clock is still running.
+Would you like to pause it or keep it running?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="236"/>
+        <source>Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="239"/>
+        <source>Always do this on shutdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="235"/>
+        <source>Run</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="237"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hyrax Rail</source>
+        <translation type="vanished">Râle Daman</translation>
+    </message>
+</context>
+<context>
+    <name>ui::actuators::ActuatorButton</name>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="101"/>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="102"/>
+        <source>Edit</source>
+        <translation>Modifier</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="129"/>
+        <source>The following automations will also be deleted:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="140"/>
+        <source>Delete Actuator</source>
+        <translation type="unfinished">Supprimer l’actionneur</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="108"/>
+        <source>Would you like to delete actuator &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::actuators::ActuatorGroup</name>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/actuatorgroup.hpp" line="55"/>
+        <source>Add Switching Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::actuators::EditActuatorDialog</name>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="119"/>
+        <source>Edit Switching Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="119"/>
+        <source>Add Switching Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="121"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="122"/>
+        <source>Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="123"/>
+        <source>Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="124"/>
+        <source>Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="125"/>
+        <source>Duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="60"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="111"/>
+        <source>Switch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="61"/>
+        <location filename="../../src/cpp/ui/actuators/editactuator.cpp" line="112"/>
+        <source>Pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::clock::AlarmConditionForm</name>
+    <message>
+        <location filename="../../src/cpp/ui/clock/alarm.cpp" line="32"/>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::clock::AutomationGroup</name>
+    <message>
+        <location filename="../../src/cpp/ui/clock/automation.cpp" line="62"/>
+        <source>Automations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/automation.cpp" line="64"/>
+        <source>Add Automation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::clock::ClockPanel</name>
+    <message>
+        <location filename="../../src/cpp/ui/clock/clockpanel.cpp" line="60"/>
+        <source>Clock Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::clock::ConfigForm</name>
+    <message>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="36"/>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="112"/>
+        <source>Digital</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="31"/>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="108"/>
+        <source>Analog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="32"/>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="37"/>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="109"/>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="113"/>
+        <source>Basic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="33"/>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="110"/>
+        <source>Sub</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="34"/>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="111"/>
+        <source>Snowbank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="102"/>
+        <source>Running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="103"/>
+        <source>Ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="104"/>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="105"/>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/config.cpp" line="106"/>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::clock::EditAutoDialog</name>
+    <message>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="280"/>
+        <source>Actuators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="281"/>
+        <source>Routes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="246"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="247"/>
+        <source>Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="248"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="249"/>
+        <source>Condition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="250"/>
+        <source>Do Once</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="251"/>
+        <source>Enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="273"/>
+        <source>Edit Automation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="277"/>
+        <source>Add Automation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::clock::MonthlyAlarmConditionForm</name>
+    <message>
+        <location filename="../../src/cpp/ui/clock/monthly.cpp" line="63"/>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/monthly.cpp" line="64"/>
+        <source>Day</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::clock::TimerConditionForm</name>
+    <message>
+        <location filename="../../src/cpp/ui/clock/timer.cpp" line="59"/>
+        <source>Timer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::clock::WeeklyAlarmConditionForm</name>
+    <message>
+        <location filename="../../src/cpp/ui/clock/weekly.cpp" line="59"/>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/weekly.cpp" line="60"/>
+        <source>Days</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::common::IpField</name>
+    <message>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="226"/>
+        <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="231"/>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="236"/>
+        <source>Cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/common/ipfield.cpp" line="152"/>
+        <source>Copy IP Address to Clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::config::ComPortInfoWidget</name>
+    <message>
+        <location filename="../../src/cpp/ui/config/cominfo.cpp" line="81"/>
+        <source>Baud Rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/cominfo.cpp" line="82"/>
+        <source>COM Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::config::ControllerGroup</name>
+    <message>
+        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="98"/>
+        <source>Controllers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="97"/>
+        <source>New Controller</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::config::CreditsDialog</name>
+    <message>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="46"/>
+        <source>App icon by Rose Spencer-Spreeuw </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="57"/>
+        <source>Long Dương (%1) : Vietnamese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="82"/>
+        <source>Third Party Software Notices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/credits.cpp" line="83"/>
+        <source>Credits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/credits.hpp" line="36"/>
+        <source>Third Party Licenses &amp; Credits</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::config::Dialog</name>
+    <message>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="246"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="247"/>
+        <source>Controller Model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="248"/>
+        <source>Protocol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="249"/>
+        <source>Transport Protocol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="257"/>
+        <source>Add Controller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="267"/>
+        <source>Locomotive Controller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="268"/>
+        <source>Actuator Controller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="269"/>
+        <source>Route Controller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="270"/>
+        <source>Emergency Stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="294"/>
+        <source>Hardware Capabilities:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="299"/>
+        <source>Software Capabilities:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="253"/>
+        <source>Edit Controller Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="234"/>
+        <source>Enter a controller name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::config::HelpGroup</name>
+    <message>
+        <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="220"/>
+        <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="253"/>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="222"/>
+        <source>View Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="223"/>
+        <source>About Hyrax Rail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="224"/>
+        <source>About Qt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="225"/>
+        <source>License Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="241"/>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/helpgroup.cpp" line="268"/>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::config::NetworkDeviceInfoWidget</name>
+    <message>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="40"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="236"/>
+        <source>IPv4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="44"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="240"/>
+        <source>IPv6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="47"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="231"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="243"/>
+        <source>Host Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="228"/>
+        <source>Network Protocol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="229"/>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="230"/>
+        <source>Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="232"/>
+        <source>Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="169"/>
+        <source>Invalid host name format &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/networkinfo.cpp" line="174"/>
+        <source>Host &quot;%1&quot; does not exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::config::NotifyGroup</name>
+    <message>
+        <location filename="../../src/cpp/ui/config/notifygroup.cpp" line="58"/>
+        <source>Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/notifygroup.cpp" line="60"/>
+        <source>Global Stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/notifygroup.cpp" line="61"/>
+        <source>Sensors</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::routes::EditRouteDialog</name>
+    <message>
+        <location filename="../../src/cpp/ui/routes/editroute.cpp" line="126"/>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/routes/editroute.cpp" line="135"/>
+        <source>Add Route - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/routes/editroute.cpp" line="130"/>
+        <source>Edit Route - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::routes::RouteButton</name>
+    <message>
+        <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="81"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="82"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="66"/>
+        <source>Actuators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="105"/>
+        <source>The following automations will also be deleted:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="115"/>
+        <source>Delete Route</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="87"/>
+        <source>Would you like to delete route &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::routes::RouteGroup</name>
+    <message>
+        <location filename="../../src/cpp/ui/routes/routegroup.cpp" line="83"/>
+        <source>Add Route</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::trains::EditLocoDialog</name>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="264"/>
+        <source>Edit Locomotive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="264"/>
+        <source>Add Locomotive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="266"/>
+        <source>Function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="268"/>
+        <source>Controller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="269"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="271"/>
+        <source>Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="272"/>
+        <source>Functions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="274"/>
+        <source>Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="275"/>
+        <source>Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="337"/>
+        <source>Lights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="342"/>
+        <source>Sounds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="347"/>
+        <source>Miscellaneous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="480"/>
+        <source>Delete Function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="481"/>
+        <source>Would you like to delete %1?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="270"/>
+        <source>Protocol</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::trains::LocoControlPanel</name>
+    <message>
+        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="324"/>
+        <source>Would you like to delete locomotive &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="328"/>
+        <source>Delete Locomotive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>utils::time::internal::TimeStringConstants</name>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="174"/>
+        <source>Monday</source>
+        <translation>lundi</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="175"/>
+        <source>Tuesday</source>
+        <translation>mardi</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="176"/>
+        <source>Wednesday</source>
+        <translation>mercredi</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="177"/>
+        <source>Thursday</source>
+        <translation>jeudi</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="178"/>
+        <source>Friday</source>
+        <translation>vendredi</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="179"/>
+        <source>Saturday</source>
+        <translation>samedi</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="180"/>
+        <source>Sunday</source>
+        <translation>dimanche</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="204"/>
+        <source>Mon</source>
+        <translatorcomment>Short for lundi</translatorcomment>
+        <translation>lun</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="205"/>
+        <source>Tue</source>
+        <translatorcomment>Short for mardi</translatorcomment>
+        <translation>mar</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="206"/>
+        <source>Wed</source>
+        <translatorcomment>Short for mecredi</translatorcomment>
+        <translation>mer</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="207"/>
+        <source>Thu</source>
+        <translatorcomment>Short for jeudi</translatorcomment>
+        <translation>jeu</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="208"/>
+        <source>Fri</source>
+        <translatorcomment>Short for vendredi</translatorcomment>
+        <translation>ven</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="209"/>
+        <source>Sat</source>
+        <translatorcomment>Short for samedi</translatorcomment>
+        <translation>sam</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="210"/>
+        <source>Sun</source>
+        <translatorcomment>Short for dimanche</translatorcomment>
+        <translation>dim</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="234"/>
+        <source>Jan</source>
+        <translation>Jan</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="235"/>
+        <source>Feb</source>
+        <translation>Fév</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="236"/>
+        <source>Mar</source>
+        <translation>Mar</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="237"/>
+        <source>Apr</source>
+        <translation>Avr</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="238"/>
+        <source>May</source>
+        <translation>Mai</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="239"/>
+        <source>Jun</source>
+        <translation>Jun</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="240"/>
+        <source>Jul</source>
+        <translation>Jul</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="241"/>
+        <source>Aug</source>
+        <translation>Aoû</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="242"/>
+        <source>Sep</source>
+        <translation>Sep</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="243"/>
+        <source>Oct</source>
+        <translation>Oct</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="244"/>
+        <source>Nov</source>
+        <translation>Nov</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="245"/>
+        <source>Dec</source>
+        <translation>Déc</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/cpp/utils/time.hpp" line="267"/>
+        <source>%n nanosecond(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/cpp/utils/time.hpp" line="268"/>
+        <source>%n microsecond(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/cpp/utils/time.hpp" line="269"/>
+        <source>%n millisecond(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/cpp/utils/time.hpp" line="270"/>
+        <source>%n second(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/cpp/utils/time.hpp" line="271"/>
+        <source>%n minute(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/cpp/utils/time.hpp" line="272"/>
+        <source>%n hour(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/cpp/utils/time.hpp" line="273"/>
+        <source>%n day(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/cpp/utils/time.hpp" line="274"/>
+        <source>%n week(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="295"/>
+        <source>ns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="296"/>
+        <source>μs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="297"/>
+        <source>ms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="298"/>
+        <source>s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="299"/>
+        <source>min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="300"/>
+        <source>hrs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="301"/>
+        <source>days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.hpp" line="302"/>
+        <source>wks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.cpp" line="52"/>
+        <source>Weekdays</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.cpp" line="56"/>
+        <source>Weekends</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.cpp" line="60"/>
+        <source>Every other day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.cpp" line="68"/>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/utils/time.cpp" line="76"/>
+        <source>Everyday</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+</TS>
