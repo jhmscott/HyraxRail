@@ -43,7 +43,7 @@ public:
     ///                     (sometimes called a go command)
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual void eStop (bool stop);
+    virtual void eStop (bool stop) override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Check if the controller is in the emergency stop state

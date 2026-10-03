@@ -59,6 +59,11 @@ AutomationItem::actions AutomationItem::getActions () const
                                           ACTION_UNSET);
             break;
             }
+        case type::NUM_TYPES:
+            {
+            // Delimeter value
+            break;
+            }
         }
 
     return actions;
@@ -177,6 +182,11 @@ std::string AutomationItem::name () const
                 }
             break;
             }
+        case type::NUM_TYPES:
+            {
+            // Delimeter value
+            break;
+            }
         }
 
     return name;
@@ -224,6 +234,11 @@ void AutomationItem::connectSignals ()
                      });
             break;
             }
+        case type::NUM_TYPES:
+            {
+            // Delimeter value
+            break;
+            }
         }
     }
 
@@ -246,6 +261,11 @@ void AutomationItem::setState (bool state)
             auto& [loco, func] = std::get<2> (m_item);
 
             loco.setFunc (func, state);
+            break;
+            }
+        case type::NUM_TYPES:
+            {
+            // Delimeter value
             break;
             }
         }
@@ -274,6 +294,11 @@ bool AutomationItem::getState () const
                 {
                 state = info->state;
                 }
+            break;
+            }
+        case type::NUM_TYPES:
+            {
+            // Delimeter value
             break;
             }
         }

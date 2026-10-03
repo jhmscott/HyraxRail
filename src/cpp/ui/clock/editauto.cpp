@@ -66,6 +66,11 @@ static utils::resources::Icon getIcon (const control::AutomationItem& item)
             icon = trains::resources::getFunctionInfo (info->icon).icon;
             break;
             }
+        case control::AutomationItem::type::NUM_TYPES:
+            {
+            // Delimeter value
+            break;
+            }
         }
 
     return icon;
@@ -141,6 +146,11 @@ EditAutoDialog::EditAutoDialog (control::ControllerManager& controllers,
                     auto [loco, _] = *item.getFunction ();
 
                     parent = locoToParent[loco];
+                    break;
+                    }
+                case control::AutomationItem::type::NUM_TYPES:
+                    {
+                    // Delimeter value
                     break;
                     }
                 }
