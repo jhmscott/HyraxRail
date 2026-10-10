@@ -13,12 +13,12 @@
 #include <control/controllers/base.hpp>
 #include <control/controllers/manager.hpp>
 
-#include <ui/actuators/actuatorpanel.hpp>
+
+#include <ui/actuators/actuatordelegate.hpp>
 #include <ui/common/schemeicon.hpp>
-#include <ui/config/configpanel.hpp>
+#include <ui/routes/routedelegate.hpp>
+
 #include <ui/lang.hpp>
-#include <ui/routes/routepanel.hpp>
-#include <ui/trains/dualcontrol.hpp>
 
 #include <QSettings>
 #include <QTabWidget>
@@ -40,7 +40,7 @@ public:
     /// @param[in]  parent          Parent widget
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    MainWidget (QWidget* parent);
+    MainWidget (control::ControllerManager& controllers, QWidget* parent);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Destructor
@@ -48,8 +48,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     ~MainWidget ();
 private:
-    control::ControllerManager*     m_controllers;  ///< List of controllers
+    control::ControllerManager&     m_controllers;  ///< List of controllers
     control::AutomationManager*     m_automations;  ///< List of automations
+    actuators::ActuatorDelegate     m_actuatorDel;
+    routes::RouteDelegate           m_routeDel;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the tab tooltips

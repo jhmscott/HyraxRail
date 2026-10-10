@@ -31,7 +31,8 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
     QHBoxLayout* controlLayout  = new QHBoxLayout;
     QHBoxLayout* trainSelLayout = new QHBoxLayout;
 
-    m_controllerInfo = new ControllerInfo{ controllers.size () > 0 ?
+    m_controllerInfo = new ControllerInfo{ m_controllers,
+                                           controllers.size () > 0 ?
                                           &(controllers[0]) : NULL,
                                            this,
                                            false };
@@ -119,6 +120,16 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
               this,
              &LocoControlPanel::controllerDeleted);
 
+    connect (&controllers,
+             &control::ControllerManager::disconnected,
+              this,
+             &LocoControlPanel::disconnected);
+
+    connect (&controllers,
+             &control::ControllerManager::cacheRebuilt,
+              this,
+             &LocoControlPanel::cacheRebuilt);
+
     m_speed = new SpeedControlWidget{ this };
     m_speed->setLocomotive (m_currentLoco);
 
@@ -159,16 +170,22 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
     setLayout (mainLayout);
     }
 
-void LocoControlPanel::addLocoToCb (const layout::Locomotive& loco)
+void LocoControlPanel::addLocoToCb (const layout::Locomotive& loco, int idx)
     {
     std::string         name        = loco.getName ();
     layout::Locomotive* locoInCb    = new layout::Locomotive{ loco };
 
+    if (-1 == idx)
+        {
+        idx = m_locos->count ();
+        }
+
     locoInCb->setParent (m_locos);
 
-    m_locos->addItem ("misc/train",
-                      name.c_str (),
-                      QVariant::fromValue (locoInCb));
+    m_locos->insertItem (idx,
+                         "misc/train",
+                         name.c_str (),
+                         QVariant::fromValue (locoInCb));
 
     connect (locoInCb,
             &layout::Locomotive::destroyed,
@@ -191,10 +208,21 @@ void LocoControlPanel::updateButtonStates ()
                                        m_controllers.end (),
                                        [] (const control::ControllerBase& controller) -> bool
                                        { return controller.getConnectionHealth ().isConnected (); });
+    bool isConnected    = false;
 
-    m_delete->setEnabled (hasLocos && hasController);
-    m_edit->setEnabled (hasLocos && hasController);
-    m_add->setEnabled (hasController);
+    if (m_currentLoco)
+        {
+        auto* controller = m_controllers.fromComponent (m_currentLoco);
+
+        isConnected = NULL != controller && controller->getConnectionHealth ().isConnected();
+        }
+
+    m_delete->setEnabled (hasLocos && hasController && isConnected);
+    m_edit->setEnabled (hasLocos && hasController && isConnected);
+    m_add->setEnabled (hasController && isConnected);
+
+    m_speed->setEnabled (isConnected);
+    m_functions->setEnabled (isConnected);
     }
 
 void LocoControlPanel::addController (control::ControllerBase& controller)
@@ -234,6 +262,7 @@ void LocoControlPanel::onLocoChange (int idx)
         m_controllerInfo->setController (*m_controllers.fromComponent (m_currentLoco));
         }
 
+    updateButtonStates ();
     setProtocol (proto);
     }
 
@@ -337,6 +366,45 @@ void LocoControlPanel::controllerDeleted (const control::ControllerBase& control
     if (&controller == m_controllerInfo->getController ())
         {
         m_controllerInfo->clear ();
+        }
+    }
+
+void LocoControlPanel::disconnected (const control::ControllerBase &controller)
+    {
+    auto* current = m_controllers.fromComponent (m_currentLoco);
+
+    if (current == &controller)
+        {
+        updateButtonStates ();
+        }
+    }
+
+void LocoControlPanel::cacheRebuilt (const control::ControllerBase &controller)
+    {
+    int startIndex = -1;
+
+    for (int ii = m_locos->count () - 1; ii >= 0; --ii)
+        {
+        auto* loco = m_locos->itemData(ii).value<layout::Locomotive*> ();
+        auto* current = m_controllers.fromComponent (*loco);
+
+        if (current == &controller)
+            {
+            m_locos->removeItem (ii);
+            startIndex = ii;
+            }
+        }
+
+    if (-1 == startIndex)
+        {
+        startIndex = m_locos->count ();
+        }
+
+
+    for (const layout::Locomotive& loco : controller.getLocomotives ())
+        {
+        addLocoToCb (loco, startIndex);
+        ++startIndex;
         }
     }
 }

@@ -14,6 +14,7 @@
 #include <QWidget>
 
 #include <control/controllers/base.hpp>
+#include <control/controllers/manager.hpp>
 
 #include <ui/common/icontoggle.hpp>
 #include <ui/lang.hpp>
@@ -38,7 +39,10 @@ public:
     /// @param[in]  includeDelete   If true, include the delete button
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    ControllerInfo (control::ControllerBase* controller, QWidget* parent, bool includeDelete);
+    ControllerInfo (control::ControllerManager& manager,
+                    control::ControllerBase*    controller,
+                    QWidget*                    parent,
+                    bool                        includeDelete);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Clear the controller info from the widget
@@ -54,38 +58,23 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     void setController (control::ControllerBase& controller);
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the controller this is managing
+    ///
+    /// @return     Controller instance
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     control::ControllerBase* getController () { return m_controller; }
-signals:
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Signal to indicate the "delete" button had been pressed
-    ///
-    /// @param[in]  controller          Controller the delete was requested for
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    void deleted (control::ControllerBase& controller);
 
 private:
+    control::ControllerManager&     m_manager;
     control::ControllerBase*        m_controller;       ///< Controller being displayed
     layout::EmergencyStopController*m_stopper;          ///< Stop controller
     common::SchemeIconButton*       m_connectionIcon;   ///< Connection status icon
     QPushButton*                    m_stop;             ///< Emergency/global stop button
     common::SchemeIconButton*       m_settings;         ///< Settings button. Opens the config dialog
     QLabel*                         m_nameLabel;        ///< Controller friendly name label
-
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Update the health icon to the current connection health
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    void refreshHealthIcon ()
-        {
-        setHealth (NULL == m_controller ?
-                   control::ConnectionWorkerThread::health
-                   {
-                        control::ConnectionWorkerThread::HEALTH_UNAVAILABLE,
-                        std::chrono::milliseconds { 0 }
-                    } :
-                    m_controller->getConnectionHealth ());
-        }
+    QPushButton*                    m_deleteBtn = NULL;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Handle the toggle of the emergency stop button. If there is no emergency stop present, this triggers an
@@ -116,13 +105,44 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     void onDelete ();
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Update the health icon to the current connection health
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void refreshHealthIcon (const control::ControllerBase& controller);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set this to display no controller configured
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setNoControllerConfigured ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle the start of a refresh operation
+    ///
+    /// @param[in]  controller      Controller being refreshed
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void refreshStarted (const control::ControllerBase& controller);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle the completion of a refresh, with a newly rebuilt cache
+    ///
+    /// @param[in]  controller      Controller refreshed
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void refreshComplete (const control::ControllerBase& controller);
+
     UILANG_ON_CHANGE (QWidget,
         {
-        refreshHealthIcon ();
-
         if (NULL != m_controller)
             {
+            refreshHealthIcon (*m_controller);
             setController (*m_controller);
+            }
+        else
+            {
+            setNoControllerConfigured ();
             }
         })
     };

@@ -14,6 +14,51 @@
 namespace control
 {
 
+///////////////////////////////////////////////////////////////////////////////
+/// Create a device
+///
+/// @param[in]  deviceInfo  Device configuration info
+///
+/// @return    Created device
+///
+///////////////////////////////////////////////////////////////////////////////
+static std::unique_ptr<QIODevice> createDevice (const utils::device::deviceInfo& deviceInfo)
+    {
+    std::unique_ptr<QIODevice> device;
+
+    switch (deviceInfo.type)
+        {
+        case utils::device::TYPE_SERIAL:
+            {
+            auto com  = std::get<utils::device::serialInfo> (deviceInfo.info);
+            auto port = std::make_unique<QSerialPort> (com.port);
+
+            port->setBaudRate (com.baud);
+
+            device = std::move (port);
+            break;
+            }
+        case utils::device::TYPE_TCP:
+            {
+            device = std::make_unique<QTcpSocket> ();
+            break;
+            }
+        case utils::device::TYPE_UDP:
+            {
+            device = std::make_unique<QUdpSocket> ();
+            break;
+            }
+        default:
+            {
+            throw std::runtime_error ("Invalide device type");
+            break;
+            }
+        }
+
+    return device;
+    }
+
+
 ProtocolBase::ProtocolBase (const utils::device::deviceInfo& deviceInfo, int timeout) :
     m_deviceInfo (deviceInfo),
     m_timeout (timeout)
@@ -23,34 +68,7 @@ ProtocolBase::ProtocolBase (const utils::device::deviceInfo& deviceInfo, int tim
         throw std::runtime_error ("IO Device not supported by protocol");
         }
 
-    switch (deviceInfo.type)
-        {
-        case utils::device::TYPE_SERIAL:
-            {
-            auto com = std::get<utils::device::serialInfo> (m_deviceInfo.info);
-            auto port = std::make_unique<QSerialPort> (com.port);
-
-            port->setBaudRate (com.baud);
-
-            m_device = std::move (port);
-            break;
-            }
-        case utils::device::TYPE_TCP:
-            {
-            m_device = std::make_unique<QTcpSocket> ();
-            break;
-            }
-        case utils::device::TYPE_UDP:
-            {
-            m_device = std::make_unique<QUdpSocket> ();
-            break;
-            }
-        default:
-            {
-            throw std::runtime_error ("Invalide device type");
-            break;
-            }
-        }
+    m_device = createDevice (deviceInfo);
     }
 
 bool ProtocolBase::maintainConnection ()
@@ -74,7 +92,7 @@ bool ProtocolBase::maintainConnection ()
 
                 skt->connectToHost (sktInfo.host.toAddress (),
                                     sktInfo.port);
-                if (not (connected = skt->waitForConnected (500)))
+                if (not (connected = skt->waitForConnected (1000)))
                     {
                     skt->disconnect ();
                     }
@@ -113,4 +131,13 @@ void ProtocolBase::waitForData ()
         }
     }
 
+void ProtocolBase::setDeviceInfo (const utils::device::deviceInfo& info)
+    {
+    {
+    std::lock_guard lk{ m_deviceLock };
+    m_deviceInfo = info;
+    }
+
+    m_device = createDevice (info);
+    }
 }

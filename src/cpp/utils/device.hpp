@@ -131,6 +131,25 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     static HostInfo fromString (const QString& string, type type);
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Comparison operator
+    ///
+    /// @param[in]  other       Info to compare with
+    ///
+    /// @return     true if this == other
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool operator== (const HostInfo& other) const { return toString () == other.toString (); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Comparison operator
+    ///
+    /// @param[in]  other       Info to compare with
+    ///
+    /// @return     true if this != other
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool operator!= (const HostInfo& other) const { return !(*this == other); }
 private:
     /// Host info storage
     std::variant<QHostAddress, QString, std::nullopt_t> m_value = std::nullopt;
@@ -141,6 +160,27 @@ struct socketInfo
     {
     HostInfo        host;       ///< IPv4/IPv6 address, or DNS hostname
     portNumber_t    port;       ///< TCP/UDP port number
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Comparison operator
+    ///
+    /// @param[in]  other       Info to compare with
+    ///
+    /// @return     true if this == other
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool operator== (const socketInfo& other) const
+        { return host == other.host && port == other.port; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Comparison operator
+    ///
+    /// @param[in]  other       Info to compare with
+    ///
+    /// @return     true if this != other
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool operator!= (const socketInfo& other) const { return !(*this == other); }
     };
 
 /// Information needed to bind to a serial/COM port
@@ -148,6 +188,27 @@ struct serialInfo
     {
     QSerialPortInfo port;       ///< COM port
     int             baud;       ///< Baud rate (bits/second)
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Comparison operator
+    ///
+    /// @param[in]  other       Info to compare with
+    ///
+    /// @return     true if this == other
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool operator== (const serialInfo& other) const
+        { return port.portName () == other.port.portName () && baud == other.baud; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Comparison operator
+    ///
+    /// @param[in]  other       Info to compare with
+    ///
+    /// @return     true if this != other
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool operator!= (const serialInfo& other) const { return !(*this == other); }
     };
 
 
@@ -161,6 +222,27 @@ struct deviceInfo
     info_t  info;       ///< Device info
                         ///  socketInfo if type == TYPE_TCP or type == TYPE_UDP
                         ///  serialInfo if type == TYPE_SERIAL
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Comparison operator
+    ///
+    /// @param[in]  other       Info to compare with
+    ///
+    /// @return     true if this == other
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool operator== (const deviceInfo& other) const
+        { return info == other.info && type == other.type; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Comparison operator
+    ///
+    /// @param[in]  other       Info to compare with
+    ///
+    /// @return     true if this != other
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool operator!= (const deviceInfo& other) const { return !(*this == other); }
     };
 
 ///////////////////////////////////////////////////////////////////////////////

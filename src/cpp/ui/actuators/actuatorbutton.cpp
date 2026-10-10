@@ -21,7 +21,7 @@ ActuatorButton::ActuatorButton (const layout::Actuator&     actuator,
                                 QWidget*                    parent,
                                 bool                        dummy,
                                 control::AutomationManager* automations) :
-    common::HoldToOpenMenu<QWidget> (parent),
+    LayoutButton (parent),
     m_actuator (actuator),
     m_dummy (dummy),
     m_automations (automations)
@@ -141,7 +141,7 @@ void ActuatorButton::removeActuator ()
                                                    msg))
         {
         m_actuator.remove ();
-        emit actuatorDeleted ();
+        emit removeRequested ();
         }
     }
 

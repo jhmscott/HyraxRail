@@ -16,6 +16,9 @@
 
 #include <ui/common/gesture.hpp>
 #include <ui/common/utils.hpp>
+
+#include <ui/common/layout/button.hpp>
+
 #include <ui/lang.hpp>
 
 #include <QLabel>
@@ -27,7 +30,7 @@ namespace ui::routes
 /// Button to control a route
 ///
 //////////////////////////////////////////////////////////////////////////////
-class RouteButton : public common::HoldToOpenMenu<QWidget>
+class RouteButton : public common::LayoutButton
     {
     Q_OBJECT
 public:
@@ -44,14 +47,6 @@ public:
                  control::ControllerBase&       controller,
                  control::AutomationManager&    automations,
                  QWidget*                       parent);
-
-
-signals:
-    //////////////////////////////////////////////////////////////////////////////
-    /// Signals the user has requested this route be deleted
-    ///
-    //////////////////////////////////////////////////////////////////////////////
-    void routeDeleted ();
 
 private:
     layout::Route               m_route;        ///< Route being controlled

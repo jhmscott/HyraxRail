@@ -14,6 +14,9 @@
 #include <ui/common/gesture.hpp>
 #include <ui/common/icontoggle.hpp>
 #include <ui/common/utils.hpp>
+
+#include <ui/common/layout/button.hpp>
+
 #include <ui/lang.hpp>
 
 #include <layout/actuator.hpp>
@@ -27,7 +30,7 @@ namespace ui::actuators
 /// Button to set the state of an actuator
 ///
 //////////////////////////////////////////////////////////////////////////////
-class ActuatorButton : public common::HoldToOpenMenu<QWidget>
+class ActuatorButton : public common::LayoutButton
     {
     Q_OBJECT
 public:
@@ -65,13 +68,6 @@ public:
     ///
     //////////////////////////////////////////////////////////////////////////////
     void setState (bool state);
-
-signals:
-    //////////////////////////////////////////////////////////////////////////////
-    /// Signals this actuator has been deleted by the user
-    ///
-    //////////////////////////////////////////////////////////////////////////////
-    void actuatorDeleted ();
 
 private:
     layout::Actuator            m_actuator;     ///< Actuator under control

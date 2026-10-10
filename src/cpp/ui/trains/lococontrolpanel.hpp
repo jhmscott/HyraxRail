@@ -69,7 +69,7 @@ private:
     /// @param[in]  loco        Locomotive to add
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    void addLocoToCb (const layout::Locomotive& loco);
+    void addLocoToCb (const layout::Locomotive& loco, int idx = -1);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the protocol icon
@@ -133,6 +133,10 @@ private slots:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void controllerDeleted (const control::ControllerBase& controller);
+
+    void disconnected (const control::ControllerBase& controller);
+
+    void cacheRebuilt (const control::ControllerBase& controller);
     };
 
 } // namespace ui::trains

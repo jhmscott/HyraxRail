@@ -13,6 +13,8 @@
 #include <control/controllers/base.hpp>
 
 #include <QObject>
+#include <QTimer>
+
 
 namespace control
 {
@@ -26,8 +28,14 @@ class ControllerManager : public QObject
     {
     Q_OBJECT
 
+    struct controllerInstance
+        {
+        std::unique_ptr<ControllerBase> controller;
+        ConnectionWorkerThread::health  lastHealth;
+        };
+
     /// List implementation type
-    using controllerList = std::vector<std::unique_ptr<ControllerBase>>;
+    using controllerList = std::vector<controllerInstance>;
 
 public:
     ///////////////////////////////////////////////////////////////////////////////
@@ -64,7 +72,7 @@ public:
         /// @return     Pointer to controller
         ///
         ///////////////////////////////////////////////////////////////////////////////
-        [[nodiscard]] pointer operator-> () const noexcept { return m_it->get (); }
+        [[nodiscard]] pointer operator-> () const noexcept { return m_it->controller.get (); }
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Pointer de-reference operator
@@ -72,7 +80,7 @@ public:
         /// @return     Reference to controller
         ///
         ///////////////////////////////////////////////////////////////////////////////
-        [[nodiscard]] reference operator* () const noexcept { return **m_it; }
+        [[nodiscard]] reference operator* () const noexcept { return *(m_it->controller); }
 
         ///////////////////////////////////////////////////////////////////////////////
         /// Iterator increment operator
@@ -204,9 +212,7 @@ public:
     /// @param[in]  parent      Object owning the controllers
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    explicit ControllerManager (QObject* parent) :
-        QObject (parent)
-        {}
+    explicit ControllerManager (QObject* parent = NULL);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Index operator
@@ -216,7 +222,7 @@ public:
     /// @return     Reference to controller at index at idx
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    ControllerBase& operator[] (size_t idx) { return *m_controllers[idx].get (); }
+    ControllerBase& operator[] (size_t idx) { return *m_controllers[idx].controller.get (); }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Index operator, const version
@@ -226,7 +232,7 @@ public:
     /// @return     Reference to controller at index at idx
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    const ControllerBase& operator[] (size_t idx) const { return *m_controllers[idx].get (); }
+    const ControllerBase& operator[] (size_t idx) const { return *m_controllers[idx].controller.get (); }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the start iterator
@@ -266,7 +272,7 @@ public:
     /// @param[in]  info        Controller info
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    void append (const createControllerInfo& info);
+    void append (const createControllerInfo& info, bool block = false);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Remove a controller from the list
@@ -275,6 +281,14 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void remove (const ControllerBase& controller);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Refresh the cache for a controller
+    ///
+    /// @param[in]  controller      Controller to refesh
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void refresh (const ControllerBase& controller);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Remove a controller from the list by iterator
@@ -378,8 +392,98 @@ signals:
     ///////////////////////////////////////////////////////////////////////////////
     void controllerDeleted (const ControllerBase& controller);
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Signals we re-connected to a controller
+    ///
+    /// @param[in]  controller      Controller we reconnected to
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void reconnected (const ControllerBase& controller);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Signals connection to a controller was lost
+    ///
+    /// @param[in]  controller      Controller we lost connection to
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void disconnected (const ControllerBase& controller);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Signals the connection health for a controller has changed
+    ///
+    /// @param[in]  controller      Controller who's health has changed
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void connectionHealthChanged (const ControllerBase& controller);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Signals the component cache for a controller has been rebuilt
+    ///
+    /// @param[in]  controller      Controller cache has been rebuilt for
+    ///
+    /// @remarks    We refresh the cache after reconnecting. You probably want to 
+    ///             connect to this rather than reconnected() if you want the new
+    ///             components
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void cacheRebuilt (const ControllerBase& controller);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Signals a cache rebuild has started
+    ///
+    /// @param[in]  controller      Controller a cache refresh has started for
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void refreshStarted (const ControllerBase& controller);
 private:
-    controllerList m_controllers;   ///< List of controllers we are managing
+    controllerList  m_controllers;  ///< List of controllers we are managing
+    QTimer*         m_timer;        ///< Timer to monitor the connection health
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Check the health of all the controllers being managed
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void refreshConnectionHealth ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Find a controller in the internal list
+    ///
+    /// @param[in]  controller      Controller to look for
+    ///
+    /// @return     Iterator pointing to that controller
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    controllerList::iterator findController (const ControllerBase& controller);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Find a controller in the internal list (cont version)
+    ///
+    /// @param[in]  controller      Controller to look for
+    ///
+    /// @return     Iterator pointing to that controller
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    controllerList::const_iterator findController (const ControllerBase& controller) const;
     };
 
+
+///////////////////////////////////////////////////////////////////////////////
+/// Loads all the controllers for the current users
+///
+/// @param[in]  progress        (optional) Callback that reports the name of
+///                             each controller as it is loaded
+///
+/// @return     Manager for loaded controllers
+///
+///////////////////////////////////////////////////////////////////////////////
+std::unique_ptr<ControllerManager>
+loadControllersFromUserSettings (std::function<void (const std::string&)> progress);
+
+///////////////////////////////////////////////////////////////////////////////
+/// Saves the controllers in a manager back to the current user's settings
+///
+/// @param[in]  controllers     List of controllers to save
+///
+///////////////////////////////////////////////////////////////////////////////
+void saveControllersToUserSettings (const ControllerManager& controllers);
 } // namespace control

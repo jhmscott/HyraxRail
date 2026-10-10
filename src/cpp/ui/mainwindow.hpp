@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <control/controllers/manager.hpp>
+
 #include <ui/dismiss.hpp>
 
 #include <QtWidgets/QMainWindow>
@@ -34,7 +36,7 @@ public:
     /// @param[in]  parent      Parent widget
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    explicit MainWindow (QWidget *parent = NULL);
+    explicit MainWindow (control::ControllerManager& controllers, QWidget *parent = NULL);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Destructor

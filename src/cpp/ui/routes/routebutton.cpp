@@ -29,7 +29,7 @@ RouteButton::RouteButton (const layout::Route&          route,
                           control::ControllerBase&      controller,
                           control::AutomationManager&   automations,
                           QWidget*                      parent) :
-    common::HoldToOpenMenu<QWidget> (parent),
+    LayoutButton (parent),
     m_route (layout::Route{ route }),
     m_controller (controller),
     m_automations (automations)
@@ -117,7 +117,7 @@ void RouteButton::removeRoute ()
         {
         m_route.remove ();
 
-        emit routeDeleted ();
+        emit removeRequested ();
         }
     }
 

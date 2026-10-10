@@ -37,6 +37,7 @@
 
 #define COMPANY_DOMAIN      "justinlab.ca"
 #define COMPANY_NAME        "JustinLab"
-#define COPYRIGHT           "Copyright " COPYRIGHT_SYMBOL " 2026 Justin H. Scott"
+#define COPYRIGHT_YEAR      2026
+#define COPYRIGHT           "Copyright " COPYRIGHT_SYMBOL " " STRINGIFY (COPYRIGHT_YEAR) " Justin H. Scott"
 
 

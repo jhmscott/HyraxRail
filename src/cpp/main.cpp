@@ -14,6 +14,7 @@
 
 #include <ui/lang.hpp>
 #include <ui/mainwindow.hpp>
+#include <ui/splash.hpp>
 
 #include <utils/os.hpp>
 
@@ -22,6 +23,7 @@
 #include <QDebug>
 #include <QTranslator>
 #include <QImageReader>
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Main application entry point
@@ -57,15 +59,27 @@ int main (int argc, char *argv[])
     defaultFont.setPointSize (16);
     app.setFont (defaultFont);
 #endif
+    ui::SplashScreen  splash;
+
+    splash.show ();
 
     QFontDatabase::addApplicationFont (":/fonts/CascadiaMono.ttf");
 
     int rc;
 
     {
-    ui::MainWindow window;
+    auto controllers = control::loadControllersFromUserSettings (
+        [&] (const std::string& controller)
+        {
+        splash.showControllerMessage (controller);
+        });
 
-    window.show();
+    splash.showAppStartingMessage ();
+
+    ui::MainWindow window{ *controllers };
+
+    window.show ();
+    splash.finish (&window);
 
     rc = app.exec ();
     }

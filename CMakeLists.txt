@@ -28,6 +28,7 @@ find_package(Qt6 6.11
     Network
     SerialPort
     LinguistTools
+    Concurrent
 )
 
 qt_standard_project_setup()
@@ -85,7 +86,8 @@ set(DEPENDENCIES
     Qt::Widgets
     Qt::Gui
     Qt6::Network
-    Qt6::SerialPort)
+    Qt6::SerialPort
+    Qt6::Concurrent)
 
 if (ANDROID)
     list(APPEND DEPENDENCIES android log)

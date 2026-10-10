@@ -53,6 +53,12 @@ ControllerGroup::ControllerGroup (control::ControllerManager&   controllers,
               this,
              &ControllerGroup::addControllerInfo);
 
+
+    connect (&m_controllers,
+             &control::ControllerManager::controllerDeleted,
+              this,
+             &ControllerGroup::onControllerDeleted);
+
     setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Maximum);
     }
 
@@ -60,7 +66,7 @@ void ControllerGroup::addControllerInfo (control::ControllerBase& controller)
     {
     QVBoxLayout* myLayout = static_cast<QVBoxLayout*> (layout ());
 
-    ui::ControllerInfo* info = new ui::ControllerInfo{ &controller, this, true };
+    ui::ControllerInfo* info = new ui::ControllerInfo{ m_controllers, &controller, this, true };
 
     info->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
 
@@ -75,12 +81,7 @@ void ControllerGroup::addControllerInfo (control::ControllerBase& controller)
         myLayout->addWidget (new common::Separator{ this });
         }
 
-    connect (info,
-            &ui::ControllerInfo::deleted,
-             this,
-            &ControllerGroup::onControllerDeleted);
     }
-
 
 void ControllerGroup::addController ()
     {
@@ -101,13 +102,22 @@ void ControllerGroup::setLabels ()
 
 void ControllerGroup::onControllerDeleted (const control::ControllerBase& controller)
     {
-    ControllerInfo* info    = static_cast<ControllerInfo*> (sender ());
-    int             idx     = layout ()->indexOf (info);
+    auto controllerWidgets = findChildren<ControllerInfo*> ();
 
-    // Remove both the controller info and the spacer
-    common::removeWidgetFromLayout (*layout (), idx + 1);
-    common::removeWidgetFromLayout (*layout (), idx);
+    auto it = std::find_if (controllerWidgets.begin (),
+                            controllerWidgets.end (),
+                            [&controller] (ControllerInfo* wdgt) -> bool
+                            { return wdgt->getController () == &controller; });
 
-    m_controllers.remove (controller);
+    if (controllerWidgets.end () != it)
+        {
+        int             idx     = layout ()->indexOf (*it);
+
+        // Remove both the controller info and the spacer
+        common::removeWidgetFromLayout (*layout (), idx + 1);
+        common::removeWidgetFromLayout (*layout (), idx);
+
+        m_controllers.remove (controller);
+        }
     }
 }

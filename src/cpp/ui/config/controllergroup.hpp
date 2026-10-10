@@ -74,6 +74,7 @@ private slots:
     ///
     //////////////////////////////////////////////////////////////////////////////
     void addControllerInfo (control::ControllerBase& controller);
+
     };
 
 } // ui::config

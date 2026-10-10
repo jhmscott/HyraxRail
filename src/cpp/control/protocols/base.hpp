@@ -245,8 +245,19 @@ public:
     /// @return     Device info
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    utils::device::deviceInfo getDeviceInfo () const { return m_deviceInfo; }
+    utils::device::deviceInfo getDeviceInfo () const
+        {
+        std::lock_guard lk{ m_deviceLock };
+        return m_deviceInfo; 
+        }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the device info for the protocol. This recreates the device
+    ///
+    /// @param[in]  info        Device info
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setDeviceInfo (const utils::device::deviceInfo& info);
 protected:
     std::unique_ptr<QIODevice> m_device;        ///< IO Device used to communicate with controller
 
@@ -259,7 +270,7 @@ protected:
 private:
     int                         m_timeout;      ///< Timeout in MS
     utils::device::deviceInfo   m_deviceInfo;   ///< Device info
-
+    mutable std::mutex          m_deviceLock;   ///< Protects device info
     };
 
 }

@@ -44,15 +44,19 @@ using namespace std::chrono_literals;
 namespace ui
 {
 
-MainWindow::MainWindow (QWidget *parent) :
+MainWindow::MainWindow (control::ControllerManager& controllers, QWidget *parent) :
     QMainWindow (parent)
     {
+#ifdef Q_OS_ANDROID
+    setTabPosition (QTabWidget::South);
+#endif // Q_OS_ANDROID
+
     restoreFastClockSettings ();
 
     setTitle ();
     setAttribute (Qt::WA_SetLocale);
 
-    setCentralWidget (new ui::MainWidget{ this });
+    setCentralWidget (new ui::MainWidget{ controllers, this });
     setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Minimum);
 
 #ifdef Q_OS_ANDROID

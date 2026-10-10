@@ -66,48 +66,67 @@ ControllerBase::ControllerBase (const std::string&              friendlyName,
                                 std::unique_ptr<ProtocolBase>&& proto) :
     m_thread (friendlyName, std::move (proto)),
     m_friendlyName (friendlyName)
-    {}
+    {
+    }
 
 std::vector<layout::Locomotive> ControllerBase::getLocomotives () const
     {
-    const auto* controller = getCapabilityController<layout::LocomotiveController> ();
+    const auto&                     meta = getMetaClass ();
+    std::vector<layout::Locomotive> locos;
 
-    if (NULL != controller)
+    if (meta.hardwareCapabilities[CAPABILITY_LOCOMOTIVE])
         {
-        return controller->getLocomotives ();
+        std::lock_guard lk{ m_cacheLock };
+        locos = m_locoCache;
         }
-    else
+    else if (meta.softwareCapabilities[CAPABILITY_LOCOMOTIVE])
         {
-        return {};
+        const auto* controller = dynamic_cast<layout::LocomotiveController*> (
+                                        m_softwareControllers[CAPABILITY_LOCOMOTIVE].get ());
+        locos = controller->getLocomotives ();
         }
+
+    return locos;
     }
 
 std::vector<layout::Actuator> ControllerBase::getActuators () const
     {
-    const auto* controller = getCapabilityController<layout::ActuatorController> ();
+    const auto&                     meta = getMetaClass ();
+    std::vector<layout::Actuator>   actuators;
 
-    if (NULL != controller)
+    if (meta.hardwareCapabilities[CAPABILITY_ACTUATOR])
         {
-        return controller->getActuators ();
+        std::lock_guard lk{ m_cacheLock };
+        actuators = m_actuatorCache;
         }
-    else
+    else if (meta.softwareCapabilities[CAPABILITY_ACTUATOR])
         {
-        return {};
+        const auto* controller = dynamic_cast<layout::ActuatorController*> (
+                                        m_softwareControllers[CAPABILITY_ACTUATOR].get ());
+        actuators = controller->getActuators ();
         }
+
+    return actuators;
     }
 
 std::vector<layout::Route> ControllerBase::getRoutes () const
     {
-    const auto* controller = getCapabilityController<layout::RouteController> ();
+    const auto&                     meta = getMetaClass ();
+    std::vector<layout::Route>      routes;
 
-    if (NULL != controller)
+    if (meta.hardwareCapabilities[CAPABILITY_ROUTE])
         {
-        return controller->getRoutes ();
+        std::lock_guard lk{ m_cacheLock };
+        routes = m_routeCache;
         }
-    else
+    else if (meta.softwareCapabilities[CAPABILITY_ROUTE])
         {
-        return {};
+        const auto* controller = dynamic_cast<layout::RouteController*> (
+                                        m_softwareControllers[CAPABILITY_ROUTE].get ());
+        routes = controller->getRoutes ();
         }
+
+    return routes;
     }
 
 layout::Route ControllerBase::createRoute (const std::string& name, const layout::routeList& actuators)
@@ -116,7 +135,15 @@ layout::Route ControllerBase::createRoute (const std::string& name, const layout
 
     if (NULL != controller)
         {
-        return controller->createRoute (name, actuators);
+        auto route = controller->createRoute (name, actuators);
+
+        if (getMetaClass ().hardwareCapabilities[CAPABILITY_ROUTE])
+            {
+            std::lock_guard lk{ m_cacheLock };
+            m_routeCache.push_back (route);
+            }
+
+        return route;
         }
     else
         {
@@ -134,11 +161,19 @@ layout::Actuator ControllerBase::createActuator (const std::string&     name,
 
     if (NULL != controller)
         {
-        return controller->createActuator (name,
-                                           address,
-                                           icon,
-                                           mode,
-                                           duration);
+        auto actuator = controller->createActuator (name,
+                                                    address,
+                                                    icon,
+                                                    mode,
+                                                    duration);
+
+        if (getMetaClass ().hardwareCapabilities[CAPABILITY_ACTUATOR])
+            {
+            std::lock_guard lk{ m_cacheLock };
+            m_actuatorCache.push_back (actuator);
+            }
+
+        return actuator;
         }
     else
         {
@@ -155,10 +190,18 @@ layout::Locomotive ControllerBase::createLocomotive (const std::string&         
 
     if (NULL != controller)
         {
-        return controller->createLocomotive (name,
-                                             proto,
-                                             address,
-                                             functions);
+        auto loco = controller->createLocomotive (name,
+                                                   proto,
+                                                   address,
+                                                   functions);
+
+        if (getMetaClass ().hardwareCapabilities[CAPABILITY_LOCOMOTIVE])
+            {
+            std::lock_guard lk{ m_cacheLock };
+            m_locoCache.push_back (loco);
+            }
+
+        return loco;
         }
     else
         {
@@ -228,6 +271,24 @@ void ControllerBase::initSoftwareCapabilities ()
         });
     }
 
+
+void ControllerBase::refresh ()
+    {
+    auto actuators  = getActuatorsSync ();
+    auto locos      = getLocomotivesSync ();
+    auto routes     = getRoutesSync ();
+
+    std::lock_guard lk{ m_cacheLock };
+    m_actuatorCache = std::move (actuators);
+    m_locoCache     = std::move (locos);
+    m_routeCache    = std::move (routes);
+    }
+
+void ControllerBase::setDeviceInfo (const utils::device::deviceInfo& info)
+    {
+    m_thread.updateDeviceInfo (info);
+    }
+
 std::unique_ptr<ControllerBase> createController (const createControllerInfo& info)
     {
     std::unique_ptr<ControllerBase> controller = NULL;
@@ -244,4 +305,54 @@ std::unique_ptr<ControllerBase> createController (const createControllerInfo& in
     return controller;
     }
 
+std::vector<layout::Locomotive> ControllerBase::getLocomotivesSync () const
+    {
+    std::vector<layout::Locomotive> locos;
+
+    if (getMetaClass ().hardwareCapabilities[CAPABILITY_LOCOMOTIVE])
+        {
+        try
+            {
+            locos = getCapabilityController<layout::LocomotiveController> ()->getLocomotives();
+            }
+        catch (...)
+            {}
+        }
+
+    return locos;
+    }
+
+std::vector<layout::Actuator> ControllerBase::getActuatorsSync () const
+    {
+    std::vector<layout::Actuator> actuators;
+
+    if (getMetaClass ().hardwareCapabilities[CAPABILITY_ACTUATOR])
+        {
+        try
+            {
+            actuators = getCapabilityController<layout::ActuatorController> ()->getActuators ();
+            }
+        catch (...)
+            {}
+        }
+
+    return actuators;
+    }
+
+std::vector<layout::Route> ControllerBase::getRoutesSync () const
+    {
+    std::vector<layout::Route> routes;
+
+    if (getMetaClass ().hardwareCapabilities[CAPABILITY_ROUTE])
+        {
+        try
+            {
+            routes = getCapabilityController<layout::RouteController> ()->getRoutes ();
+            }
+        catch (...)
+            {}
+        }
+
+    return routes;
+    }
 } // namespace control

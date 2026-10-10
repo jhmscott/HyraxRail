@@ -53,7 +53,8 @@ private slots:
         QFETCH (QLocale, locale);
         QFETCH (QString, title);
 
-        ui::MainWindow window;
+        control::ControllerManager manager{};
+        ui::MainWindow window{ manager };
 
         testutils::AppLocaleGuard grd{ locale };
 

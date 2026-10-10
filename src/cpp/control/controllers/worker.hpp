@@ -245,6 +245,17 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void waitForNetworkQueue () const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Tells the worker thread to update the device info. Note this must recreate
+    /// device.
+    ///
+    /// @param[in]  info    New device info
+    ///
+    /// @remarks    This is async
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void updateDeviceInfo (utils::device::deviceInfo info);
 private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Polymorphic task base class
@@ -375,6 +386,7 @@ private:
     health                                  m_health =          ///< Connection health
                                                 { HEALTH_DEAD,  std::chrono::milliseconds{ 0 } };
     mutable std::condition_variable         m_emptySignal;      ///< Signals the queue has been emptied
+        std::optional<utils::device::deviceInfo>m_updateDeviceTask; ///< New device info 
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Worker thread loop function

@@ -223,6 +223,14 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     std::string getFriendlyName () const { return m_friendlyName; }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the friendly name of the controller
+    ///
+    /// @param[in]  name        New friendly name
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setFriendlyName (std::string name) { m_friendlyName = std::move (name); }
+    
     //////////////////////////////////////////////////////////////////////////////
     /// Wait for the network thread to finish processing the queued messages
     ///
@@ -276,6 +284,20 @@ public:
         return const_cast<control::ControllerBase*> (this)->getCapabilityController<CapabiltyController> ();
         }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Rebuilds the cache of components by requesting them from the controller
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void refresh ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the device info for this controller
+    ///
+    /// @param[in]  info        New device info
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setDeviceInfo (const utils::device::deviceInfo& info);
+
 protected:
     mutable ConnectionWorkerThread m_thread;        ///< Thread used to communicate with this controller
 
@@ -286,18 +308,56 @@ private:
     /// List of controllers implemented in software
     using softwareCapabilityList    = std::array<softwareController, NUM_CAPABILITIES>;
 
-    softwareCapabilityList  m_softwareControllers;  ///< Controller capabilities implemented in software
-    const std::string       m_friendlyName;         ///< Name used in UI
-    std::once_flag          m_swInitOnce;           ///< Once flag for the software capability init
+    softwareCapabilityList          m_softwareControllers;  ///< Controller capabilities implemented in software
+    std::string                     m_friendlyName;         ///< Name used in UI
+    std::once_flag                  m_swInitOnce;           ///< Once flag for the software capability init
 
+    std::vector<layout::Actuator>   m_actuatorCache;        ///< Cache of actuators fetched from controller
+    std::vector<layout::Locomotive> m_locoCache;            ///< Cache of locomotives fetched from controller
+    std::vector<layout::Route>      m_routeCache;           ///< Cache of routes fetched from controller
+    mutable std::mutex              m_cacheLock;            ///< Mutex protection for caches
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Initializes the software capabilities once, thread safely. Future calls
+    /// are a no-op
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     void initSoftwareCapabilitiesOnce ();
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Initialize the software capabilities
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     void initSoftwareCapabilities ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Synchronously request the locomotives from the controller
+    ///
+    /// @return     List of locomotives
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::vector<layout::Locomotive> getLocomotivesSync () const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Synchronously request the actuators from the controller
+    ///
+    /// @return     List of actuators
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::vector<layout::Actuator> getActuatorsSync () const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Synchronously request the actuators from the controller
+    ///
+    /// @return     List of routes
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::vector<layout::Route> getRoutesSync () const;
     };
 ;
 
 /// Information for creating a controller
-struct createControllerInfo
+    struct createControllerInfo
     {
     std::string                 name;           ///< Controller type name
     std::string                 friendlyName;   ///< Controller instance friendly name

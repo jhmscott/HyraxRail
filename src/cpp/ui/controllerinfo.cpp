@@ -1,4 +1,4 @@
-/**
+            /**
  * @file        controllerinfo.cpp
  * @brief       Widget to display the state of a controller
  * @author      Justin Scott
@@ -20,13 +20,15 @@
 
 namespace ui
 {
-ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* parent, bool includeDelete) :
+ControllerInfo::ControllerInfo (control::ControllerManager& manager,
+                                control::ControllerBase*    controller,
+                                QWidget*                    parent,
+                                bool                        includeDelete) :
     QWidget (parent),
+    m_manager (manager),
     m_controller (controller)
     {
     QHBoxLayout* layout = new QHBoxLayout{ this };
-
-    QPushButton* deleteBtn;
 
     m_settings = new common::PointedIconButton{ "misc/gear", this };
 
@@ -72,17 +74,27 @@ ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* pa
 
     if (includeDelete)
         {
-        deleteBtn = new common::PointedIconButton{ "misc/trash", this };
-        deleteBtn->setIconSize (utils::resources::ICON_SIZE_NORMAL);
+        m_deleteBtn = new common::PointedIconButton{ "misc/trash", this };
+        m_deleteBtn->setIconSize (utils::resources::ICON_SIZE_NORMAL);
 
-        common::makeFrameless (*deleteBtn);
+        common::makeFrameless (*m_deleteBtn);
 
-        layout->addWidget (deleteBtn, 0, Qt::AlignRight);
+        layout->addWidget (m_deleteBtn, 0, Qt::AlignRight);
 
-        connect (deleteBtn,
-                 &QPushButton::released,
+        connect (m_deleteBtn,
+                &QPushButton::released,
                  this,
-                 &ControllerInfo::onDelete);
+                &ControllerInfo::onDelete);
+
+        connect (&m_manager,
+                 &control::ControllerManager::refreshStarted,
+                  this,
+                 &ControllerInfo::refreshStarted);
+
+        connect (&m_manager,
+                 &control::ControllerManager::cacheRebuilt,
+                  this,
+                 &ControllerInfo::refreshComplete);
         }
 
     if (NULL == controller)
@@ -94,16 +106,6 @@ ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* pa
         setController (*controller);
         }
 
-    QTimer* timer = new QTimer{ this };
-
-    timer->setInterval (1000);
-    timer->start ();
-
-    connect (timer,
-             &QTimer::timeout,
-             this,
-             &ControllerInfo::refreshHealthIcon);
-
     connect (m_stop,
             &QPushButton::toggled,
              this,
@@ -113,6 +115,11 @@ ControllerInfo::ControllerInfo (control::ControllerBase* controller, QWidget* pa
             &QPushButton::released,
              this,
             &ControllerInfo::onConfig);
+
+    connect (&m_manager,
+             &control::ControllerManager::connectionHealthChanged,
+              this,
+             &ControllerInfo::refreshHealthIcon);
 
     setLayout (layout);
     }
@@ -127,7 +134,7 @@ void ControllerInfo::clear ()
 
     setToolTip ("");
 
-    refreshHealthIcon ();
+    setNoControllerConfigured ();
     }
 
 void ControllerInfo::setController (control::ControllerBase& controller)
@@ -140,7 +147,8 @@ void ControllerInfo::setController (control::ControllerBase& controller)
 
     m_stopper = controller.getCapabilityController<layout::EmergencyStopController> ();
 
-    if (NULL == m_stopper)
+    if (NULL == m_stopper ||
+        not m_controller->getConnectionHealth ().isConnected ())
         {
         m_stop->setDisabled (true);
         }
@@ -152,7 +160,40 @@ void ControllerInfo::setController (control::ControllerBase& controller)
 
     setToolTip (tr ("Model : %1").arg (controller.getMetaClass ().friendlyName.c_str ()));
 
-    refreshHealthIcon ();
+    setHealth (m_controller->getConnectionHealth ());
+    }
+
+void ControllerInfo::refreshHealthIcon (const control::ControllerBase& controller)
+    {
+    if (&controller == m_controller)
+        {
+        setHealth (m_controller->getConnectionHealth ());
+        }
+    }
+
+void ControllerInfo::setNoControllerConfigured ()
+    {
+    setHealth (control::ConnectionWorkerThread::health
+              {
+                  control::ConnectionWorkerThread::HEALTH_UNAVAILABLE,
+                  std::chrono::milliseconds { 0 }
+              });
+    }
+
+void ControllerInfo::refreshStarted (const control::ControllerBase &controller)
+    {
+    if (&controller == m_controller)
+        {
+        m_deleteBtn->setDisabled (true);
+        }
+    }
+
+void ControllerInfo::refreshComplete(const control::ControllerBase &controller)
+    {
+    if (&controller == m_controller)
+        {
+        m_deleteBtn->setDisabled (false);
+        }
     }
 
 void ControllerInfo::setHealth (control::ConnectionWorkerThread::health health)
@@ -191,13 +232,29 @@ void ControllerInfo::setHealth (control::ConnectionWorkerThread::health health)
         {
         m_connectionIcon->setToolTip (tr ("Ping %1 ms").arg (health.ping.count ()));
         }
+
+    // Disable stop if connection cannot be established
+    m_stop->setEnabled (health.isConnected ());
     }
 
 void ControllerInfo::onConfig ()
     {
-    config::Dialog dialog{ this, m_controller };
+    config::Dialog dlg{ this, m_controller };
 
-    dialog.exec ();
+    if (QDialog::Accepted == dlg.exec ())
+        {
+        auto info = dlg.createController ();
+
+        if (m_controller->getDeviceInfo () != info.device)
+            {
+            m_controller->setDeviceInfo (info.device);
+            }    
+        
+        if (m_controller->getFriendlyName () != info.friendlyName)
+            {
+            m_controller->setFriendlyName (info.friendlyName);
+            }
+        }
     }
 
 void ControllerInfo::onDelete ()
@@ -209,7 +266,7 @@ void ControllerInfo::onDelete ()
                                                    tr ("Delete Controller"),
                                                    msg))
         {
-        emit deleted (*m_controller);
+        m_manager.remove (*m_controller);
         }
     }
 }

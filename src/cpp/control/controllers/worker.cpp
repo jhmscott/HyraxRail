@@ -72,6 +72,15 @@ void ConnectionWorkerThread::waitForNetworkQueue () const
         }
     }
 
+void ConnectionWorkerThread::updateDeviceInfo (utils::device::deviceInfo info)
+    {
+    std::unique_lock lk{ m_mtx };
+
+    m_updateDeviceTask = std::move (info);
+
+    m_cv.notify_all ();
+    }
+
 void ConnectionWorkerThread::loop ()
     {
     using namespace std::chrono_literals;
@@ -91,6 +100,12 @@ void ConnectionWorkerThread::loop ()
         {
         std::unique_lock lk (m_mtx);
         m_cv.wait_for (lk, waitInterval);
+
+        if (m_updateDeviceTask.has_value ())
+            {
+            m_proto->setDeviceInfo (m_updateDeviceTask.value ());
+            m_updateDeviceTask = std::nullopt;
+            }
         }
 
         health                  newHealth       = m_health;
