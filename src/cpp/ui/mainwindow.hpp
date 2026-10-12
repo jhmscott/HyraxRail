@@ -33,7 +33,8 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
-    /// @param[in]  parent      Parent widget
+    /// @param[in]  controllers     List of controllers
+    /// @param[in]  parent          Parent widget
     ///
     ///////////////////////////////////////////////////////////////////////////////
     explicit MainWindow (control::ControllerManager& controllers, QWidget *parent = NULL);

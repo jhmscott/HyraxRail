@@ -136,6 +136,7 @@ void CenteredSlider::paintEvent (QPaintEvent* event)
     int     handlePos   = 0;
     QRect   widgetRect  = rect ();
     bool    darkMode    = Qt::ColorScheme::Dark == qApp->styleHints ()->colorScheme ();
+    bool    isDisabled  = not isEnabled ();
 
     if (Qt::Horizontal == orientation ())
         {
@@ -213,12 +214,12 @@ void CenteredSlider::paintEvent (QPaintEvent* event)
     painter.drawRoundedRect (grooveRect, 5, 5);
 
     //draw progress
-    painter.setBrush (Qt::cyan);
+    painter.setBrush (isDisabled ? Qt::darkGray : Qt::cyan);
     painter.setPen (Qt::darkGray);
     painter.drawRect (progressRect);
 
     //draw handle
-    painter.setBrush (Qt::gray);
+    painter.setBrush (isDisabled ? Qt::lightGray : Qt::gray);
     painter.setPen (Qt::darkGray);
     painter.drawRoundedRect (handleRect,
                              HANDLE_RADIUS,
@@ -233,7 +234,14 @@ void CenteredSlider::paintEvent (QPaintEvent* event)
                                         (minimum () % tickInterval ())) % tickInterval ());
         const int       maxTick     = maximum () - (maximum () % tickInterval ());
 
-        painter.setPen (darkMode ? Qt::white : Qt::black);
+        if (isDisabled)
+            {
+            painter.setPen (Qt::lightGray);
+            }
+        else
+            {
+            painter.setPen (darkMode ? Qt::white : Qt::black);
+            }
 
         for (int ii = minimum (); ii < maximum (); ++ii)
             {

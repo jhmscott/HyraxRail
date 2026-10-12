@@ -22,6 +22,7 @@
 #include <QTabWidget>
 
 #include <qevent.h>
+#include <QStyleHints>
 
 #include <res/version.h>
 
@@ -47,10 +48,6 @@ namespace ui
 MainWindow::MainWindow (control::ControllerManager& controllers, QWidget *parent) :
     QMainWindow (parent)
     {
-#ifdef Q_OS_ANDROID
-    setTabPosition (QTabWidget::South);
-#endif // Q_OS_ANDROID
-
     restoreFastClockSettings ();
 
     setTitle ();

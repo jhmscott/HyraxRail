@@ -243,16 +243,24 @@ void ControllerInfo::onConfig ()
 
     if (QDialog::Accepted == dlg.exec ())
         {
-        auto info = dlg.createController ();
+        bool changed    = false;
+        auto info       = dlg.createController ();
 
         if (m_controller->getDeviceInfo () != info.device)
             {
             m_controller->setDeviceInfo (info.device);
-            }    
-        
+            changed = true;
+            }
+
         if (m_controller->getFriendlyName () != info.friendlyName)
             {
             m_controller->setFriendlyName (info.friendlyName);
+            changed = true;
+            }
+
+        if (changed)
+            {
+            control::saveControllersToUserSettings (m_manager);
             }
         }
     }
@@ -267,6 +275,7 @@ void ControllerInfo::onDelete ()
                                                    msg))
         {
         m_manager.remove (*m_controller);
+        control::saveControllersToUserSettings (m_manager);
         }
     }
 }

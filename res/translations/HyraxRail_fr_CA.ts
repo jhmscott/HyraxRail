@@ -191,12 +191,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="262"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="270"/>
         <source>Are you sure you want to delete %1 ?</source>
         <translation>Êtes-vous certain de vouloir supprimer %1 ?</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="266"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="274"/>
         <source>Delete Controller</source>
         <translation type="unfinished">Supprimer le contrôleur</translation>
     </message>
@@ -204,32 +204,32 @@
 <context>
     <name>ui::MainWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="137"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="141"/>
         <source>Trains</source>
         <translation>Trains</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="138"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="142"/>
         <source>Actuators</source>
         <translation type="unfinished">Actionneurs</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="139"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="143"/>
         <source>Sensors</source>
         <translation type="unfinished">Capteurs</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="140"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="144"/>
         <source>Routes</source>
         <translation>Chemins</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="141"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="145"/>
         <source>Fast Clock</source>
         <translation type="unfinished">Horloge Rapide</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="142"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="146"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
@@ -237,33 +237,33 @@
 <context>
     <name>ui::MainWindow</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="235"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="232"/>
         <source>Shutdown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="236"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="233"/>
         <source>The Fast Clock is still running.
 Would you like to pause it or keep it running?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="240"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="237"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="243"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="240"/>
         <source>Always do this on shutdown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="239"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="236"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="241"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="238"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -596,12 +596,12 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::config::ControllerGroup</name>
     <message>
-        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="99"/>
+        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="100"/>
         <source>Controllers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="98"/>
+        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="99"/>
         <source>New Controller</source>
         <translation type="unfinished"></translation>
     </message>

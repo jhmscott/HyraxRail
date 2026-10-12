@@ -90,6 +90,7 @@ void ControllerGroup::addController ()
     if (QDialog::Accepted == dlg.exec ())
         {
         m_controllers.append (dlg.createController ());
+        control::saveControllersToUserSettings (m_controllers);
         }
     }
 

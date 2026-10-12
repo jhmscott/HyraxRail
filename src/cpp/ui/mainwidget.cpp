@@ -90,6 +90,10 @@ MainWidget::MainWidget (control::ControllerManager& controllers, QWidget* parent
     m_routeDel (*m_automations),
     m_actuatorDel (*m_automations)
     {
+#ifdef Q_OS_ANDROID
+    setTabPosition (QTabWidget::South);
+#endif // Q_OS_ANDROID
+
     setUsesScrollButtons (false);
 
     addTab (new trains::DualControlWidget{ m_controllers, this },

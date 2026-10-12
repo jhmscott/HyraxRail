@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file        testutils_test/testlangtest.hpp
  * @brief       Test suite for the UI language test utilities
  * @author      Justin Scott
@@ -87,8 +87,7 @@ private slots:
 
         // Extract locale codes from the locale info
         std::transform (testutils::SUPPORTED_LOCALES,
-                        testutils::SUPPORTED_LOCALES +
-                        std::size (testutils::SUPPORTED_LOCALES),
+                        std::end (testutils::SUPPORTED_LOCALES),
                         std::back_inserter (supported),
                         [] (const testutils::localeInfo& info) -> QString
                         { return info.locale.name (); });
