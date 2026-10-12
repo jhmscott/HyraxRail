@@ -166,6 +166,12 @@
     <Filter Include="Source Files\layout\virtual">
       <UniqueIdentifier>{f07679c3-824e-4853-9d02-b7b80b4a7d37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ui\common\layout">
+      <UniqueIdentifier>{88c7fbce-f406-4fc0-81b0-6b025eb96bb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\common\layout">
+      <UniqueIdentifier>{de72aa9b-4c1a-4bfe-8281-f315407fdc31}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\stdafx.h">
@@ -309,6 +315,18 @@
     <ClInclude Include="..\src\cpp\layout\virtual\vroute.hpp">
       <Filter>Header Files\layout\virtual</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\layout\delegate.hpp">
+      <Filter>Header Files\ui\common\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\layout\panel.hpp">
+      <Filter>Header Files\ui\common\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\routes\routedelegate.hpp">
+      <Filter>Header Files\ui\routes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\actuators\actuatordelegate.hpp">
+      <Filter>Header Files\ui\actuators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cpp\control\controllers\base.cpp">
@@ -339,9 +357,6 @@
       <Filter>Source Files\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\src\cpp\ui\actuators\actuatorbutton.cpp">
-      <Filter>Source Files\ui\actuators</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\cpp\ui\actuators\actuatorpanel.cpp">
       <Filter>Source Files\ui\actuators</Filter>
     </ClCompile>
     <ClCompile Include="..\src\cpp\ui\common\autogrid.cpp">
@@ -377,9 +392,6 @@
     <ClCompile Include="..\src\cpp\ui\config\configpanel.cpp">
       <Filter>Source Files\ui\config</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\cpp\ui\actuators\actuatorgroup.cpp">
-      <Filter>Source Files\ui\actuators</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\cpp\ui\config\helpgroup.cpp">
       <Filter>Source Files\ui\config</Filter>
     </ClCompile>
@@ -395,14 +407,8 @@
     <ClCompile Include="..\src\cpp\ui\sensors\sensorstate.cpp">
       <Filter>Source Files\ui\sensors</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\cpp\ui\routes\routepanel.cpp">
-      <Filter>Source Files\ui\routes</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\cpp\ui\common\stringdialog.cpp">
       <Filter>Source Files\ui\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\cpp\ui\routes\routegroup.cpp">
-      <Filter>Source Files\ui\routes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\cpp\ui\common\hexvalidator.cpp">
       <Filter>Source Files\ui\common</Filter>
@@ -575,6 +581,21 @@
     <ClCompile Include="..\src\cpp\layout\virtual\vroute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\layout\group.cpp">
+      <Filter>Source Files\ui\common\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\layout\panel.cpp">
+      <Filter>Source Files\ui\common\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\actuators\actuatordelegate.cpp">
+      <Filter>Source Files\ui\actuators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\routes\routedelegate.cpp">
+      <Filter>Source Files\ui\routes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\splash.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\control\protocols\base.hpp">
@@ -619,9 +640,6 @@
     <ClInclude Include="..\src\cpp\utils\math.hpp">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\actuators\actuatorpanel.hpp">
-      <Filter>Header Files\ui\actuators</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\cpp\ui\common\hexvalidator.hpp">
       <Filter>Header Files\ui\common</Filter>
     </ClInclude>
@@ -630,9 +648,6 @@
     </ClInclude>
     <ClInclude Include="..\src\cpp\ui\sensors\sensorpanel.hpp">
       <Filter>Header Files\ui\sensors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\routes\routepanel.hpp">
-      <Filter>Header Files\ui\routes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cpp\layout\route.hpp">
       <Filter>Header Files\layout</Filter>
@@ -693,9 +708,6 @@
     <QtMoc Include="..\src\cpp\ui\config\credits.hpp">
       <Filter>Header Files\ui\config</Filter>
     </QtMoc>
-    <QtMoc Include="..\src\cpp\ui\actuators\actuatorgroup.hpp">
-      <Filter>Header Files\ui\actuators</Filter>
-    </QtMoc>
     <QtMoc Include="..\src\cpp\ui\actuators\editactuator.hpp">
       <Filter>Header Files\ui\actuators</Filter>
     </QtMoc>
@@ -706,9 +718,6 @@
       <Filter>Header Files\ui\config</Filter>
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\routes\editroute.hpp">
-      <Filter>Header Files\ui\routes</Filter>
-    </QtMoc>
-    <QtMoc Include="..\src\cpp\ui\routes\routegroup.hpp">
       <Filter>Header Files\ui\routes</Filter>
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\trains\functionpanel.hpp">
@@ -785,6 +794,15 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\trains\editloco.hpp">
       <Filter>Header Files\ui\trains</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\common\layout\button.hpp">
+      <Filter>Header Files\ui\common\layout</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\common\layout\group.hpp">
+      <Filter>Header Files\ui\common\layout</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\splash.hpp">
+      <Filter>Header Files\ui</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -1107,6 +1125,9 @@
       <Filter>Resource Files\translations</Filter>
     </QtTranslation>
     <QtTranslation Include="..\res\translations\HyraxRail_nl_NL.ts">
+      <Filter>Resource Files\translations</Filter>
+    </QtTranslation>
+    <QtTranslation Include="..\res\translations\HyraxRail_fr_CA.ts">
       <Filter>Resource Files\translations</Filter>
     </QtTranslation>
   </ItemGroup>

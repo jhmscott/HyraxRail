@@ -177,32 +177,32 @@
 <context>
     <name>ui::ControllerInfo</name>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="153"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="161"/>
         <source>Model : %1</source>
         <translation>Mô Hình : %1</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="180"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="221"/>
         <source>Disconnected</source>
         <translation>Ngắt Kết Nối</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="188"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="229"/>
         <source>Connected</source>
         <translation>Kết Nối</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="192"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="233"/>
         <source>Ping %1 ms</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="205"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="262"/>
         <source>Are you sure you want to delete %1 ?</source>
         <translation>Xác Nhận Muốn Xóa %1?</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="209"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="266"/>
         <source>Delete Controller</source>
         <translation>Xóa Bộ Điều Khiển</translation>
     </message>
@@ -210,28 +210,28 @@
 <context>
     <name>ui::MainWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="237"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="137"/>
         <source>Trains</source>
         <translation>Tàu</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="238"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="138"/>
         <source>Actuators</source>
         <translatorcomment>actuators</translatorcomment>
         <translation>Bộ Truyền Động</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="239"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="139"/>
         <source>Sensors</source>
         <translation>Cảm Biến Điện Tử</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="240"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="140"/>
         <source>Routes</source>
         <translation>Tuyến Đường</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="241"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="141"/>
         <source>Fast Clock</source>
         <translation>Đồng Hồ Nhanh</translation>
     </message>
@@ -240,7 +240,7 @@
         <translation type="obsolete">Lập Trình</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="242"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="142"/>
         <source>Settings</source>
         <translation>Cài Đặt</translation>
     </message>
@@ -248,39 +248,57 @@
 <context>
     <name>ui::MainWindow</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="231"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="235"/>
         <source>Shutdown</source>
         <translation>Tắt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="232"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="236"/>
         <source>The Fast Clock is still running.
 Would you like to pause it or keep it running?</source>
         <translation>Đồng hồ nhanh đang chạy. Bạn muốn dừng hay tắc đồng hồ?</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="236"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="240"/>
         <source>Pause</source>
         <translation>Dừng</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="239"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="243"/>
         <source>Always do this on shutdown</source>
         <translation>Luôn thực hiện thao tác này khi tắt máy</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="235"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="239"/>
         <source>Run</source>
         <translation>Chạy</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwindow.cpp" line="237"/>
+        <location filename="../../src/cpp/ui/mainwindow.cpp" line="241"/>
         <source>Cancel</source>
         <translation>Hủy</translation>
     </message>
     <message>
         <source>Hyrax Rail</source>
         <translation type="vanished">Đường sắt Hyrax</translation>
+    </message>
+</context>
+<context>
+    <name>ui::SplashScreen</name>
+    <message>
+        <location filename="../../src/cpp/ui/splash.cpp" line="34"/>
+        <source>Copyright © %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/splash.cpp" line="56"/>
+        <source>Connecting to %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/splash.cpp" line="63"/>
+        <source>Starting App...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -314,9 +332,8 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::actuators::ActuatorGroup</name>
     <message>
-        <location filename="../../src/cpp/ui/actuators/actuatorgroup.hpp" line="55"/>
         <source>Add Switching Item</source>
-        <translation>Thêm mục chuyển đổi</translation>
+        <translation type="vanished">Thêm mục chuyển đổi</translation>
     </message>
 </context>
 <context>
@@ -468,52 +485,52 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::clock::EditAutoDialog</name>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="280"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="290"/>
         <source>Actuators</source>
         <translation type="unfinished">Bộ Truyền Động</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="281"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="291"/>
         <source>Routes</source>
         <translation type="unfinished">Tuyến Đường</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="246"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="256"/>
         <source>Name</source>
         <translation>Tên</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="247"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="257"/>
         <source>Item</source>
         <translation>Tiết mục</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="248"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="258"/>
         <source>Action</source>
         <translation>Hành động</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="249"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="259"/>
         <source>Condition</source>
         <translation>Tình trạng</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="250"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="260"/>
         <source>Do Once</source>
         <translation>Làm một lần</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="251"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="261"/>
         <source>Enabled</source>
         <translation>Đã bật</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="273"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="283"/>
         <source>Edit Automation</source>
         <translation>Thay đổi quy trình tự động</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="277"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="287"/>
         <source>Add Automation</source>
         <translation>Thêm quy trình tự động</translation>
     </message>
@@ -576,6 +593,19 @@ Would you like to pause it or keep it running?</source>
     </message>
 </context>
 <context>
+    <name>ui::common::LayoutGroup</name>
+    <message>
+        <location filename="../../src/cpp/ui/common/layout/group.cpp" line="73"/>
+        <source>Add Route</source>
+        <translation type="unfinished">Thêm Tuyến Đường</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/common/layout/group.cpp" line="78"/>
+        <source>Add Switching Item</source>
+        <translation type="unfinished">Thêm mục chuyển đổi</translation>
+    </message>
+</context>
+<context>
     <name>ui::config::ComPortInfoWidget</name>
     <message>
         <location filename="../../src/cpp/ui/config/cominfo.cpp" line="81"/>
@@ -591,12 +621,12 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::config::ControllerGroup</name>
     <message>
-        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="98"/>
+        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="99"/>
         <source>Controllers</source>
         <translation>Bộ Điều Khiển</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="97"/>
+        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="98"/>
         <source>New Controller</source>
         <translation>Bộ điều khiển mới</translation>
     </message>
@@ -856,9 +886,8 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::routes::RouteGroup</name>
     <message>
-        <location filename="../../src/cpp/ui/routes/routegroup.cpp" line="83"/>
         <source>Add Route</source>
-        <translation>Thêm Tuyến Đường</translation>
+        <translation type="vanished">Thêm Tuyến Đường</translation>
     </message>
 </context>
 <context>
@@ -957,12 +986,12 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::trains::LocoControlPanel</name>
     <message>
-        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="324"/>
+        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="353"/>
         <source>Would you like to delete locomotive &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="328"/>
+        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="357"/>
         <source>Delete Locomotive</source>
         <translation type="unfinished"></translation>
     </message>

@@ -17,6 +17,7 @@
 #include <utils/device.hpp>
 
 #include <memory>
+#include <mutex>
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Add this macro the defintion of your protocol class to associate with a
@@ -248,7 +249,7 @@ public:
     utils::device::deviceInfo getDeviceInfo () const
         {
         std::lock_guard lk{ m_deviceLock };
-        return m_deviceInfo; 
+        return m_deviceInfo;
         }
 
     ///////////////////////////////////////////////////////////////////////////////

@@ -40,21 +40,21 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>6.11.0</QtInstall>
-    <QtModules>core;gui;network;widgets;serialport</QtModules>
+    <QtModules>core;gui;network;widgets;concurrent;serialport</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
     <QtLinkNatvisFile>true</QtLinkNatvisFile>
     <QtDeployNoVirtualKeyboard>true</QtDeployNoVirtualKeyboard>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'" Label="QtSettings">
     <QtInstall>6.11.0</QtInstall>
-    <QtModules>core;gui;network;widgets;serialport</QtModules>
+    <QtModules>core;gui;network;widgets;concurrent;serialport</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
     <QtLinkNatvisFile>true</QtLinkNatvisFile>
     <QtDeployNoVirtualKeyboard>true</QtDeployNoVirtualKeyboard>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>6.11.0</QtInstall>
-    <QtModules>core;gui;network;widgets;serialport</QtModules>
+    <QtModules>core;gui;network;widgets;concurrent;serialport</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
     <QtDeploy>true</QtDeploy>
     <QtDeployNoVirtualKeyboard>true</QtDeployNoVirtualKeyboard>
@@ -225,8 +225,7 @@
     <ClCompile Include="..\src\cpp\layout\virtual\vestop.cpp" />
     <ClCompile Include="..\src\cpp\layout\virtual\vroute.cpp" />
     <ClCompile Include="..\src\cpp\ui\actuators\actuatorbutton.cpp" />
-    <ClCompile Include="..\src\cpp\ui\actuators\actuatorgroup.cpp" />
-    <ClCompile Include="..\src\cpp\ui\actuators\actuatorpanel.cpp" />
+    <ClCompile Include="..\src\cpp\ui\actuators\actuatordelegate.cpp" />
     <ClCompile Include="..\src\cpp\ui\actuators\editactuator.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\alarm.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\analogclock.cpp" />
@@ -258,6 +257,8 @@
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\layout\group.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\layout\panel.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\optionaldropdown.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\shortcutlineedit.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\stringdialog.cpp" />
@@ -288,11 +289,11 @@
     </ClCompile>
     <ClCompile Include="..\src\cpp\ui\routes\includebutton.cpp" />
     <ClCompile Include="..\src\cpp\ui\routes\routebutton.cpp" />
-    <ClCompile Include="..\src\cpp\ui\routes\routegroup.cpp" />
-    <ClCompile Include="..\src\cpp\ui\routes\routepanel.cpp" />
+    <ClCompile Include="..\src\cpp\ui\routes\routedelegate.cpp" />
     <ClCompile Include="..\src\cpp\ui\sensors\sensorbar.cpp" />
     <ClCompile Include="..\src\cpp\ui\sensors\sensorpanel.cpp" />
     <ClCompile Include="..\src\cpp\ui\sensors\sensorstate.cpp" />
+    <ClCompile Include="..\src\cpp\ui\splash.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\dualcontrol.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\editloco.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\functionpanel.cpp" />
@@ -318,6 +319,13 @@
     <ClInclude Include="..\src\cpp\layout\virtual\vestop.hpp" />
     <ClInclude Include="..\src\cpp\layout\virtual\vroute.hpp" />
     <ClInclude Include="..\src\cpp\names.hpp" />
+    <QtMoc Include="..\src\cpp\ui\common\layout\button.hpp" />
+    <ClInclude Include="..\src\cpp\ui\actuators\actuatordelegate.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\layout\delegate.hpp" />
+    <QtMoc Include="..\src\cpp\ui\common\layout\group.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\layout\panel.hpp" />
+    <ClInclude Include="..\src\cpp\ui\routes\routedelegate.hpp" />
+    <QtMoc Include="..\src\cpp\ui\splash.hpp" />
     <ClInclude Include="..\src\cpp\ui\trains\resources.hpp" />
     <ClInclude Include="..\src\cpp\utils\qobj.hpp" />
     <ClInclude Include="..\src\cpp\utils\traits.hpp" />
@@ -351,8 +359,6 @@
     <QtMoc Include="..\src\cpp\layout\locomotive.hpp" />
     <ClInclude Include="..\src\cpp\layout\route.hpp" />
     <QtMoc Include="..\src\cpp\ui\actuators\actuatorbutton.hpp" />
-    <QtMoc Include="..\src\cpp\ui\actuators\actuatorgroup.hpp" />
-    <ClInclude Include="..\src\cpp\ui\actuators\actuatorpanel.hpp" />
     <QtMoc Include="..\src\cpp\ui\actuators\editactuator.hpp" />
     <ClInclude Include="..\src\cpp\ui\actuators\resources.hpp" />
     <ClInclude Include="..\src\cpp\ui\clock\analogclock.hpp" />
@@ -391,12 +397,10 @@
     <QtMoc Include="..\src\cpp\ui\routes\editroute.hpp" />
     <QtMoc Include="..\src\cpp\ui\routes\includebutton.hpp" />
     <QtMoc Include="..\src\cpp\ui\routes\routebutton.hpp" />
-    <QtMoc Include="..\src\cpp\ui\routes\routegroup.hpp" />
     <QtMoc Include="..\src\cpp\ui\config\networkinfo.hpp" />
     <QtMoc Include="..\src\cpp\ui\config\cominfo.hpp" />
     <ClInclude Include="..\src\cpp\ui\dismiss.hpp" />
     <ClInclude Include="..\src\cpp\ui\lang.hpp" />
-    <ClInclude Include="..\src\cpp\ui\routes\routepanel.hpp" />
     <ClInclude Include="..\src\cpp\ui\sensors\sensorbar.hpp" />
     <ClInclude Include="..\src\cpp\ui\sensors\sensorpanel.hpp" />
     <QtMoc Include="..\src\cpp\ui\sensors\sensorstate.hpp" />
@@ -546,6 +550,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtTranslation Include="..\res\translations\HyraxRail_fr.ts" />
+    <QtTranslation Include="..\res\translations\HyraxRail_fr_CA.ts" />
     <QtTranslation Include="..\res\translations\HyraxRail_nl_NL.ts" />
     <QtTranslation Include="..\res\translations\HyraxRail_vi_VN.ts" />
   </ItemGroup>

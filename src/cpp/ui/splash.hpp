@@ -19,6 +19,7 @@ namespace ui
 ///////////////////////////////////////////////////////////////////////////////
 class SplashScreen : public QSplashScreen
     {
+    Q_OBJECT
 public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Default constructor
@@ -27,7 +28,7 @@ public:
     SplashScreen ();
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Show a cotroller connection message
+    /// Show a controller connection message
     ///
     /// @param[in]  controller      Name of the controller we are connecting to
     ///

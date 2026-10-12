@@ -194,7 +194,7 @@ private slots:
         QSignalSpy      spy{ &actuator, &layout::Actuator::destroyed };
 
         ActuatorButton  btn{ actuator, NULL };
-        QSignalSpy      btnSpy{ &btn, &ActuatorButton::actuatorDeleted };
+        QSignalSpy      btnSpy{ &btn, &ActuatorButton::removeRequested };
 
         btn.show ();
 

@@ -10,7 +10,11 @@
 #pragma once
 
 #include <utils/algorithm.hpp>
+
+#if __has_include ("QIcon")
 #include <utils/resources.hpp>
+#define ASSERT_HAS_ICON
+#endif
 
 #include <QTextStream>
 #include <QtTest>
@@ -127,6 +131,8 @@ std::string createRangeAssertMessage (const R1&     actual,
 
 } // namespace testutils::assert_internal
 
+#if defined (ASSERT_HAS_ICON) || defined (DOXYGEN)
+
 ///////////////////////////////////////////////////////////////////////////////
 /// Compare that two pixmaps are pixel perfect identical
 ///
@@ -177,6 +183,8 @@ std::string createRangeAssertMessage (const R1&     actual,
 #define COMPARE_ICONS_NE(actual, expected) \
     COMPARE_PIXMAPS_NE ((actual).pixmap (utils::resources::ICON_SIZE_NORMAL), \
                         (expected).pixmap (utils::resources::ICON_SIZE_NORMAL))
+
+#endif // defined (ASSERT_HAS_ICON) || defined (DOXYGEN)
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Compare two containers/ranges

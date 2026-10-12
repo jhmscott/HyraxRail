@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file        testutils/lang.hpp
  * @brief       Utilities for testing languages/localization
  * @author      Justin Scott
@@ -63,10 +63,11 @@ private:
 /// List of supported app languages to test
 inline localeInfo SUPPORTED_LOCALES[] =
     {
-        { QLocale{ "nl_NL" }, "Klipdas Spoorwegen", "Dutch"     },
-        { QLocale{ "en_US" }, "Hyrax Rail",         "English"   },
-        { QLocale{ "fr" },    "Râle Daman",         "French"    },
-        { QLocale{ "vi_VN" }, "Đường sắt Hyrax",    "Vietnamese"}
+        { QLocale{ "nl_NL" }, "Klipdas Spoorwegen", "Dutch"             },
+        { QLocale{ "en_US" }, "Hyrax Rail",         "English"           },
+        { QLocale{ "fr" },    "Râle Daman",         "French"            },
+        { QLocale{ "fr_CA" }, "Râle Daman",         "French (Canadian)" },
+        { QLocale{ "vi_VN" }, "Đường sắt Hyrax",    "Vietnamese"        }
     };
 
 } // namespace testutils
