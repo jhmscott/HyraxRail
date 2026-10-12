@@ -48,9 +48,6 @@ namespace control
 /// internal base controller namespace
 namespace controllerbase_internal
 {
-
-
-
 ///////////////////////////////////////////////////////////////////////////////
 /// Generates a list of the protocol meta-class objects from a varidac list of
 /// protocol types
@@ -230,7 +227,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void setFriendlyName (std::string name) { m_friendlyName = std::move (name); }
-    
+
     //////////////////////////////////////////////////////////////////////////////
     /// Wait for the network thread to finish processing the queued messages
     ///

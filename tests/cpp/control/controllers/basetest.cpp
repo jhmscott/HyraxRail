@@ -15,6 +15,8 @@
 
 #include <QtTest>
 
+using namespace std::string_literals;
+
 class LocomotiveController :
     public control::ControllerBase,
     public testutils::LocomotiveControllerStubs
@@ -49,6 +51,19 @@ class EmergencyStopController :
     CONTROLLER_DEFINE (EmergencyStopController, "Emergency Stop Controller", testutils::MockControllerProtocol);
 public:
     using control::ControllerBase::ControllerBase;
+    };
+
+
+using namespace utils::device;
+
+static const std::pair<std::string, deviceInfo> CONTROLLERS[] =
+    {
+        { "Test 1", { TYPE_SERIAL, serialInfo{ QSerialPortInfo{ "COM1" }, 9600 } } },
+        { "Test 2", { TYPE_SERIAL, serialInfo{ QSerialPortInfo{ "COM2" }, 9600 } } },
+        { "Test 3", { TYPE_TCP, socketInfo{ HostInfo::fromString ("google.ca", HostInfo::type::HOSTNAME), 443} } },
+        { "Test 4", { TYPE_TCP, socketInfo{ HostInfo::fromString ("8.8.8.8",   HostInfo::type::IP), 80 } } },
+        { "Test 5", { TYPE_TCP, socketInfo{ HostInfo::fromString ("google.ca", HostInfo::type::HOSTNAME), 443} } },
+        { "Test 6", { TYPE_TCP, socketInfo{ HostInfo::fromString ("8.8.8.8",   HostInfo::type::IP), 80 } } },
     };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -139,6 +154,40 @@ class ControllerBaseTest : public QObject
     Q_OBJECT
 private slots:
     ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for getterTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void getterTest_data ()
+        {
+        QTest::addColumn<std::string> ("name");
+        QTest::addColumn<deviceInfo> ("device");
+
+        for (const auto& [name, device] : CONTROLLERS)
+            {
+            QTest::newRow (name.c_str ()) << name << device;
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Basic test of getters matching constructor
+    ///
+    /// @see    control::ControllerBase::getFriendlyName()
+    /// @see    control::ControllerBase::getDeviceInfo()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void getterTest ()
+        {
+        QFETCH (std::string, name);
+        QFETCH (deviceInfo,  device);
+
+        testutils::MockController controller{ name,
+            std::make_unique<testutils::MockControllerProtocol> (device) };
+
+        QCOMPARE (controller.getFriendlyName (), name);
+        QCOMPARE (controller.getDeviceInfo (), device);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Test a controller with the hardware actuator capability
     ///
     /// @see    control::ControllerBase
@@ -220,6 +269,107 @@ private slots:
         testSwCapability<ActuatorController,
                          layout::RouteController,
                          layout::VirtualRouteController> (control::CAPABILITY_ROUTE);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test the cache refresh function
+    ///
+    /// @see    control::ControllerBase::refresh()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void refreshTest ()
+        {
+        testutils::MockController controller { "Test Controller",
+            std::make_unique<testutils::MockControllerProtocol> (utils::device::deviceInfo{}) };
+
+        controller.refresh ();
+
+        fakeit::Verify (Method (*controller.actuatorController, getActuators)).Once ();
+        fakeit::Verify (Method (*controller.locomotiveController, getLocomotives)).Once ();
+        fakeit::Verify (Method (*controller.routeController, getRoutes)).Once ();
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for setFriendlyNameTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setFriendlyNameTest_data ()
+        {
+        QTest::addColumn<std::string> ("name");
+
+        for (const auto& [name, _] : CONTROLLERS)
+            {
+            QTest::newRow (name.c_str ()) << name;
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test setting the controller's friendly name
+    ///
+    /// @see    control::ControllerBase::setFriendlyName()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setFriendlyNameTest ()
+        {
+        QFETCH (std::string, name);
+
+        testutils::MockController controller{ "Test Controller",
+            std::make_unique<testutils::MockControllerProtocol> (utils::device::deviceInfo{}) };
+
+        controller.setFriendlyName (name);
+
+        QCOMPARE (controller.getFriendlyName (), name);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for setDeviceInfoTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setDeviceInfoTest_data ()
+        {
+        QTest::addColumn<deviceInfo> ("device");
+
+        for (const auto& [_, device] : CONTROLLERS)
+            {
+            std::string name;
+
+            if (TYPE_SERIAL == device.type)
+                {
+                auto info = std::get<serialInfo> (device.info);
+
+                name = info.port.portName ().toStdString () + "@" +
+                       std::to_string (info.baud);
+                }
+            else
+                {
+                auto        info = std::get<socketInfo> (device.info);
+                const char* type = TYPE_TCP == device.type ? "TCP://" : "UDP://";
+
+                name = type + info.host.toString ().toStdString () + ":" +
+                       std::to_string (info.port);
+                }
+
+            QTest::newRow (name.c_str ()) << device;
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test setting the device info
+    ///
+    /// @see    control::ControllerBase::setDeviceInfo()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setDeviceInfoTest ()
+        {
+        QFETCH (deviceInfo, device);
+
+        testutils::MockController controller{ "Test Controller",
+            std::make_unique<testutils::MockControllerProtocol> (utils::device::deviceInfo{}) };
+
+        controller.setDeviceInfo (device);
+        controller.waitForMessages ();
+
+        QCOMPARE (controller.getDeviceInfo (), device);
         }
     };
 

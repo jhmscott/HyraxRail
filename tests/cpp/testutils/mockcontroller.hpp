@@ -99,18 +99,20 @@ public:
 /// Return a controller info for creating a mocked controller
 ///
 /// @param[in]  name        Controller name
+/// @param[in]  device      (optional) device info
 ///
 /// @return     Controller creation info
 ///
 ///////////////////////////////////////////////////////////////////////////////
-inline control::createControllerInfo mockedControllerInfo (const std::string& name)
+inline control::createControllerInfo mockedControllerInfo (const std::string&               name,
+                                                           const utils::device::deviceInfo& device = {})
     {
     return control::createControllerInfo
         {
         UTILPP_STRINGIFY (MockController),
         name,
         UTILPP_STRINGIFY (MockControllerProtocol),
-        utils::device::deviceInfo{}
+        device
         };
     }
 }

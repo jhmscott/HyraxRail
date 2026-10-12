@@ -66,10 +66,9 @@ void ConnectionWorkerThread::waitForNetworkQueue () const
     {
     std::unique_lock lk{ m_mtx };
 
-    if (not m_taskQueue.empty ())
-        {
-        m_emptySignal.wait (lk);
-        }
+    m_emptySignal.wait (lk,
+        [&] () -> bool
+        { return m_taskQueue.empty () && std::nullopt == m_updateDeviceTask; });
     }
 
 void ConnectionWorkerThread::updateDeviceInfo (utils::device::deviceInfo info)
@@ -105,6 +104,7 @@ void ConnectionWorkerThread::loop ()
             {
             m_proto->setDeviceInfo (m_updateDeviceTask.value ());
             m_updateDeviceTask = std::nullopt;
+            m_emptySignal.notify_all ();
             }
         }
 

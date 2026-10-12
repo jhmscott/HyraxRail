@@ -199,9 +199,6 @@ loadControllersFromUserSettings (std::function<void (const std::string&)> progre
                                                                                .toUtf8      ()
                                                                                .toStdString ();
         QString     transport   = settings.value (controller + "/transport","").toString    ();
-        QString     host        = settings.value (controller + "/host",     "").toString    ();
-        int         port        = settings.value (controller + "/port",      0).toInt       ();
-        int         hostType    = settings.value (controller + "/hostType",  0).toInt       ();
 
         if ("TCP" == transport)
             {
@@ -216,13 +213,41 @@ loadControllersFromUserSettings (std::function<void (const std::string&)> progre
             info.type = utils::device::TYPE_SERIAL;
             }
 
-        utils::device::socketInfo skt;
 
-        skt.host = utils::device::HostInfo::fromString (host,
-                                                       static_cast<utils::device::HostInfo::type> (hostType));
-        skt.port = port;
+        switch(info.type)
+            {
+            case utils::device::TYPE_SERIAL:
+                {
+                utils::device::serialInfo com;
 
-        info.info = skt;
+                QString     portname    = settings.value (controller + "/portname", "").toString();
+                int         baud        = settings.value (controller + "/baud", 0).toInt        ();
+
+                com.port = QSerialPortInfo{ portname };
+                com.baud = baud;
+
+                info.info = std::move (com);
+                break;
+                }
+
+            default:
+                {
+                utils::device::socketInfo skt;
+
+                QString     host        = settings.value (controller + "/host", "").toString    ();
+                int         port        = settings.value (controller + "/port", 0).toInt        ();
+                int         hostType    = settings.value (controller + "/hostType", 0).toInt    ();
+
+                auto type = static_cast<utils::device::HostInfo::type> (hostType);
+
+                skt.host  = utils::device::HostInfo::fromString (host, type);
+                skt.port  = port;
+
+                info.info = std::move (skt);
+                break;
+                }
+            }
+
 
         if (progress)
             {
@@ -245,7 +270,6 @@ void saveControllersToUserSettings (const ControllerManager& controllers)
     for (int ii = 0; ii < numControllers; ++ii)
         {
         utils::device::deviceInfo info  = controllers[ii].getDeviceInfo ();
-        utils::device::socketInfo skt   = std::get<utils::device::socketInfo> (info.info);
 
         QString controller      = "Controller" + QString::number (ii);
         QString transport;
@@ -282,12 +306,33 @@ void saveControllersToUserSettings (const ControllerManager& controllers)
                           controllers[ii].getProtocol ().name.c_str ());
         settings.setValue (controller + "/transport",
                           transport);
-        settings.setValue (controller + "/host",
-                          skt.host.toString ());
-        settings.setValue (controller + "/hostType",
-                          static_cast<int> (skt.host.getType ()));
-        settings.setValue (controller + "/port",
-                          skt.port);
+
+        switch (info.type)
+            {
+            case utils::device::TYPE_SERIAL:
+                {
+                utils::device::serialInfo com = std::get<utils::device::serialInfo> (info.info);
+
+                settings.setValue (controller + "/portname",
+                                   com.port.portName ());
+                settings.setValue (controller + "/baud",
+                                   com.baud);
+                break;
+                }
+
+            default:
+                {
+                utils::device::socketInfo skt = std::get<utils::device::socketInfo> (info.info);
+
+                settings.setValue (controller + "/host",
+                                   skt.host.toString ());
+                settings.setValue (controller + "/hostType",
+                                   static_cast<int> (skt.host.getType ()));
+                settings.setValue (controller + "/port",
+                                   skt.port);
+                break;
+                }
+            }
         }
     }
 } // namespace control

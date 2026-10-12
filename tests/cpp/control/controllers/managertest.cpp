@@ -12,6 +12,8 @@
 
 #include <testutils/mockcontroller.hpp>
 
+#include <res/version.h>
+
 #include <QtTest>
 
 
@@ -104,10 +106,68 @@ private slots:
         QCOMPARE (endSpy.count (), 1);
 
         // Proxy for checking if refresh() is called
-        // Check for twice, intial build in append + refresh
+        // Check for twice, initial build in append + refresh
         fakeit::Verify (Method (*controller.actuatorController,   getActuators)).Twice ();
         fakeit::Verify (Method (*controller.locomotiveController, getLocomotives)).Twice ();
         fakeit::Verify (Method (*controller.routeController,      getRoutes)).Twice ();
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test saving and restoring a controller manager to the user's settings
+    ///
+    /// @see    control::saveControllersToUserSettings()
+    /// @see    control::loadControllersFromUserSettings()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void saveControllersTest ()
+        {
+        using namespace utils::device;
+
+        static const std::pair<std::string, deviceInfo> CONTROLLERS[] =
+            {
+                { "Test 1", { TYPE_SERIAL, serialInfo{ QSerialPortInfo{ "COM1" }, 9600 } } },
+                { "Test 2", { TYPE_SERIAL, serialInfo{ QSerialPortInfo{ "COM2" }, 9600 } } },
+                { "Test 3", { TYPE_TCP, socketInfo{ HostInfo::fromString ("google.ca", HostInfo::type::HOSTNAME), 443} } },
+                { "Test 4", { TYPE_TCP, socketInfo{ HostInfo::fromString ("8.8.8.8",   HostInfo::type::IP), 80 } } },
+                { "Test 5", { TYPE_TCP, socketInfo{ HostInfo::fromString ("google.ca", HostInfo::type::HOSTNAME), 443} } },
+                { "Test 6", { TYPE_TCP, socketInfo{ HostInfo::fromString ("8.8.8.8",   HostInfo::type::IP), 80 } } },
+            };
+        static constexpr size_t NUM_CONTROLLERS = std::size (CONTROLLERS);
+
+        // Set a unique name from app (and other tests) so this doesn't impact actual
+        // settings when run locally
+        QApplication::setApplicationName    (PRODUCT_NAME_SHORT "_ManagerTests");
+        QApplication::setOrganizationName   (COMPANY_NAME);
+        QApplication::setOrganizationDomain (COMPANY_DOMAIN);
+        QApplication::setApplicationVersion (VERSION_STRING);
+
+        control::ControllerManager original;
+
+        for (const auto& [name, device] : CONTROLLERS)
+            {
+            original.append (testutils::mockedControllerInfo (name, device), true);
+            }
+
+        std::vector<std::string> names;
+
+        control::saveControllersToUserSettings (original);
+
+        auto fromSettings = control::loadControllersFromUserSettings (
+            [&names] (const std::string& name) -> void
+            {
+            names.push_back (name);
+            });
+
+        QCOMPARE (fromSettings->size (), NUM_CONTROLLERS);
+        QCOMPARE (names.size (), NUM_CONTROLLERS);
+
+        for (size_t ii = 0; ii < NUM_CONTROLLERS; ++ii)
+            {
+            QCOMPARE (names[ii], CONTROLLERS[ii].first);
+
+            QCOMPARE (original[ii].getFriendlyName (),  (*fromSettings)[ii].getFriendlyName ());
+            QCOMPARE (original[ii].getDeviceInfo (),    (*fromSettings)[ii].getDeviceInfo ());
+            }
         }
     };
 
