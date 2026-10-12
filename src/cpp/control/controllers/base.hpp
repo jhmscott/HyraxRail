@@ -354,7 +354,7 @@ private:
 ;
 
 /// Information for creating a controller
-    struct createControllerInfo
+struct createControllerInfo
     {
     std::string                 name;           ///< Controller type name
     std::string                 friendlyName;   ///< Controller instance friendly name

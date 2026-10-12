@@ -44,6 +44,12 @@ android {
         getByName("main") {
             java.srcDir("../../src/java")
         }
+        getByName("test") {
+            java.srcDirs("../../tests/java")
+        }
+        getByName("androidTest") {
+            java.srcDirs("../../tests/android")
+        }
     }
 }
 
