@@ -179,7 +179,6 @@ loadControllersFromUserSettings (std::function<void (const std::string&)> progre
     {
     std::unique_ptr<ControllerManager> manager{ new ControllerManager };
 
-
     QSettings   settings{ QSettings::UserScope };
     int         numControllers = settings.value ("NumControllers", 0).toInt ();
 

@@ -84,6 +84,7 @@
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ShowProgress>true</ShowProgress>
     </ResourceCompile>
     <QtMoc>
       <QtMocFileName>%(RelativeDir)moc_%(Filename).cpp</QtMocFileName>
@@ -108,6 +109,7 @@
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ShowProgress>true</ShowProgress>
     </ResourceCompile>
     <QtMoc>
       <QtMocFileName>%(RelativeDir)moc_%(Filename).cpp</QtMocFileName>
@@ -132,6 +134,7 @@
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\res;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ShowProgress>true</ShowProgress>
     </ResourceCompile>
     <QtMoc>
       <QtMocFileName>%(RelativeDir)moc_%(Filename).cpp</QtMocFileName>
@@ -540,7 +543,11 @@
     <None Include="..\res\text\LICENSE_PHOSPHOR" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\res\version.rc" />
+    <ResourceCompile Include="..\res\version.rc">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Test|x64'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\res\icons\app\conductor-hyrax.ico" />

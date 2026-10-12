@@ -17,6 +17,7 @@
 #include <QtTest>
 
 Q_DECLARE_METATYPE (utils::device::HostInfo);
+Q_DECLARE_METATYPE (utils::device::deviceInfo);
 
 /// Set of 4 octets in an IPv4 address
 struct ipQuad
@@ -25,6 +26,26 @@ struct ipQuad
     };
 
 using namespace utils::device;
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Test data generator for all standard baud rates
+///
+///////////////////////////////////////////////////////////////////////////////
+static void generateBaudRates ()
+    {
+    QTest::addColumn<QString> ("name");
+    QTest::addColumn<int> ("baud");
+
+    for(int baud : QSerialPortInfo::standardBaudRates ())
+        {
+#ifdef Q_OS_WIN
+        QTest::addRow ("Windows port baud %d", baud) << "COM1" << baud;
+#else
+        QTest::addRow ("Unix port baud %d", baud) << "/dev/tty0" << baud;
+#endif
+        }
+    }
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Test suite for the device utility library
@@ -276,17 +297,7 @@ private slots:
     ///////////////////////////////////////////////////////////////////////////////
     void compareSerialInfoTest_data ()
         {
-        QTest::addColumn<QString> ("name");
-        QTest::addColumn<int> ("baud");
-
-        for (int baud : QSerialPortInfo::standardBaudRates ())
-            {
-#ifdef Q_OS_WIN
-            QTest::addRow ("Windows port baud %d", baud) << "COM1" << baud;
-#else
-            QTest::addRow ("Unix port baud %d", baud) << "/dev/tty0" << baud;
-#endif
-            }
+        generateBaudRates ();
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -346,6 +357,255 @@ private slots:
         serialInfo info2{ QSerialPortInfo{ name2 }, baud2 };
 
         COMPARE_OP_NE (info1, info2);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for compareSocketInfoTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void compareSocketInfoTest_data ()
+        {
+        QTest::addColumn<HostInfo> ("host");
+        QTest::addColumn<int> ("port");
+
+        QTest::addRow ("Hostname")
+            << HostInfo::fromString ("google.ca",
+                                     HostInfo::type::HOSTNAME)
+            << 80;
+
+        QTest::addRow ("IP")
+            << HostInfo::fromString ("8.8.8.8", HostInfo::type::IP)
+            << 53;
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Compare two socket infos
+    ///
+    /// @see    utils::device::socketInfo::operator==()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void compareSocketInfoTest ()
+        {
+        QFETCH (HostInfo, host);
+        QFETCH (int, port);
+
+        socketInfo socket1{ host, (portNumber_t) port };
+        socketInfo socket2{ host, (portNumber_t) port };
+
+        COMPARE_OP_EQ (socket1, socket2);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for compareSocketInfoNotEqualTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void compareSocketInfoNotEqualTest_data ()
+        {
+        QTest::addColumn<HostInfo> ("host1");
+        QTest::addColumn<int> ("port1");
+
+        QTest::addColumn<HostInfo> ("host2");
+        QTest::addColumn<int> ("port2");
+
+
+        QTest::addRow ("Hostname Same")
+            << HostInfo::fromString ("google.ca",
+                                     HostInfo::type::HOSTNAME)
+            << 80
+            << HostInfo::fromString ("google.ca",
+                                     HostInfo::type::HOSTNAME)
+            << 443;
+
+        QTest::addRow ("Hostname Different")
+            << HostInfo::fromString ("google.ca",
+                                     HostInfo::type::HOSTNAME)
+            << 80
+            << HostInfo::fromString ("google.com",
+                                     HostInfo::type::HOSTNAME)
+            << 80;
+
+        QTest::addRow ("IP Same")
+            << HostInfo::fromString ("8.8.8.8", HostInfo::type::IP)
+            << 53
+            << HostInfo::fromString ("8.8.8.8", HostInfo::type::IP)
+            << 853;
+
+        QTest::addRow ("IP Different")
+            << HostInfo::fromString ("8.8.8.8", HostInfo::type::IP)
+            << 53
+            << HostInfo::fromString ("8.8.4.4", HostInfo::type::IP)
+            << 53;
+
+        QTest::addRow ("Hostname and IP")
+            << HostInfo::fromString ("142.250.73.67",
+                                     HostInfo::type::HOSTNAME)
+            << 80
+            << HostInfo::fromString ("google.ca",
+                                     HostInfo::type::HOSTNAME)
+            << 80;
+
+        QTest::addRow ("All different")
+            << HostInfo::fromString ("142.250.73.67",
+                                     HostInfo::type::IP)
+            << 80
+            << HostInfo::fromString ("google.ca",
+                                     HostInfo::type::HOSTNAME)
+            << 443;
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Compare two unalike socket infos
+    ///
+    /// @see    utils::device::socketInfo::operator!=()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void compareSocketInfoNotEqualTest ()
+        {
+        QFETCH (HostInfo, host1);
+        QFETCH (int, port1);
+
+        QFETCH (HostInfo, host2);
+        QFETCH (int, port2);
+
+        socketInfo socket1{ host1, (portNumber_t) port1 };
+        socketInfo socket2{ host2, (portNumber_t) port2 };
+
+        COMPARE_OP_NE (socket1, socket2);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for compareDeviceInfoSerialTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void compareDeviceInfoSerialTest_data ()
+        {
+        generateBaudRates ();
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Compare two serial device infos
+    ///
+    /// @see    utils::device::deviceInfo::operator==()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void compareDeviceInfoSerialTest ()
+        {
+        QFETCH (QString, name);
+        QFETCH (int, baud);
+
+        deviceInfo dev1{ TYPE_SERIAL, serialInfo{ QSerialPortInfo{ name }, baud } };
+        deviceInfo dev2{ TYPE_SERIAL, serialInfo{ QSerialPortInfo{ name }, baud } };
+
+        COMPARE_OP_EQ (dev1, dev2);
+        }
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for compareDeviceInfoSocketTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void compareDeviceInfoSocketTest_data ()
+        {
+        QTest::addColumn<HostInfo> ("host");
+        QTest::addColumn<int> ("port");
+        QTest::addColumn<type> ("type");
+
+        QTest::addRow ("Hostname")
+            << HostInfo::fromString ("google.ca",
+                                     HostInfo::type::HOSTNAME)
+            << 80
+            << TYPE_TCP;
+
+        QTest::addRow ("IP")
+            << HostInfo::fromString ("8.8.8.8", HostInfo::type::IP)
+            << 53
+            << TYPE_TCP;
+
+
+        QTest::addRow ("Hostname")
+            << HostInfo::fromString ("google.ca",
+                                     HostInfo::type::HOSTNAME)
+            << 80
+            << TYPE_UDP;
+
+        QTest::addRow ("IP")
+            << HostInfo::fromString ("8.8.8.8", HostInfo::type::IP)
+            << 53
+            << TYPE_UDP;
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Compare two socket device infos
+    ///
+    /// @see    utils::device::deviceInfo::operator==()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void compareDeviceInfoSocketTest ()
+        {
+        QFETCH (HostInfo, host);
+        QFETCH (int, port);
+        QFETCH (utils::device::type, type);
+
+        deviceInfo dev1{ type, socketInfo{ host, (portNumber_t) port } };
+        deviceInfo dev2{ type, socketInfo{ host, (portNumber_t) port } };
+
+        COMPARE_OP_EQ (dev1, dev2);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for compareDeviceInfoNotEqualTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void compareDeviceInfoNotEqualTest_data ()
+        {
+        static const deviceInfo DEVICES[] =
+            {
+                // Serial ports
+                { TYPE_SERIAL, serialInfo{ QSerialPortInfo{ "COM1" }, 9600  } },
+                { TYPE_SERIAL, serialInfo{ QSerialPortInfo{ "COM2" }, 9600  } },
+                { TYPE_SERIAL, serialInfo{ QSerialPortInfo{ "COM1" }, 115200  } },
+
+                // Sockets
+                { TYPE_TCP, socketInfo{ HostInfo::fromString ("google.ca", HostInfo::type::HOSTNAME), 80 } },
+                { TYPE_TCP, socketInfo{ HostInfo::fromString ("google.ca", HostInfo::type::HOSTNAME), 443 } },
+                { TYPE_TCP, socketInfo{ HostInfo::fromString ("8.8.8.8",   HostInfo::type::IP), 80 } },
+                { TYPE_TCP, socketInfo{ HostInfo::fromString ("8.8.4.4",   HostInfo::type::IP), 443 } },
+
+                { TYPE_UDP, socketInfo{ HostInfo::fromString ("google.ca", HostInfo::type::HOSTNAME), 80 } },
+                { TYPE_UDP, socketInfo{ HostInfo::fromString ("google.ca", HostInfo::type::HOSTNAME), 443 } },
+                { TYPE_UDP, socketInfo{ HostInfo::fromString ("8.8.8.8",   HostInfo::type::IP), 80 } },
+                { TYPE_UDP, socketInfo{ HostInfo::fromString ("8.8.4.4",   HostInfo::type::IP), 443 } },
+            };
+
+
+        QTest::addColumn<deviceInfo> ("dev1");
+        QTest::addColumn<deviceInfo> ("dev2");
+
+        for (size_t ii = 0; ii < std::size (DEVICES); ++ii)
+            {
+            for (size_t jj = 0; jj < std::size (DEVICES); ++jj)
+                {
+                if (ii != jj)
+                    {
+                    QTest::addRow ("DEVICES[%d] != DEVCIES[%d]", ii, jj) << DEVICES[ii] << DEVICES[jj];
+                    }
+                }
+            }
+
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Compare two unalike device infos
+    ///
+    /// @see    utils::device::deviceInfo::operator!=()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void compareDeviceInfoNotEqualTest ()
+        {
+        QFETCH (deviceInfo, dev1);
+        QFETCH (deviceInfo, dev2);
+
+        COMPARE_OP_NE (dev1, dev2);
         }
     };
 

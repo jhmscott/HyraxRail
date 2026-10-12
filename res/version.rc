@@ -11,6 +11,7 @@
 
 #include <windows.h>
 
+
 IDI_ICON1               ICON                    "icons\\app\\conductor-hyrax.ico"
 
 VS_VERSION_INFO VERSIONINFO
@@ -76,6 +77,7 @@ BEGIN
             VALUE "OriginalFilename", "HyraxRail.exe"
         END
     END
+
     BLOCK "VarFileInfo"
     BEGIN
         VALUE "Translation",

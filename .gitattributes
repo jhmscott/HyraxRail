@@ -14,5 +14,5 @@
 
 
 # UTF-16 encoded files
-*.rc working-tree-encoding=UTF-16
-*.RC working-tree-encoding=UTF-16
+*.rc working-tree-encoding=utf-16le-bom
+*.RC working-tree-encoding=utf-16le-bom

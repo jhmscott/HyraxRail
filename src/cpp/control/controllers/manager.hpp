@@ -421,7 +421,7 @@ signals:
     ///
     /// @param[in]  controller      Controller cache has been rebuilt for
     ///
-    /// @remarks    We refresh the cache after reconnecting. You probably want to 
+    /// @remarks    We refresh the cache after reconnecting. You probably want to
     ///             connect to this rather than reconnected() if you want the new
     ///             components
     ///
