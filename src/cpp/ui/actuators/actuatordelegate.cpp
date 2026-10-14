@@ -30,7 +30,7 @@ common::LayoutButton* ActuatorDelegate::openCreate (control::ControllerBase&  co
                                               dlg.getDuration ());
         btn = makeButton (actuator);
         }
-    
+
     return btn;
     }
 

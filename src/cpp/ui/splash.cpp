@@ -15,6 +15,7 @@
 
 #include <QBoxLayout>
 #include <QLabel>
+#include <QScreen>
 #include <QThread>
 
 namespace ui
@@ -23,9 +24,44 @@ namespace ui
 static const int       SPLASH_MSG_ALIGN = Qt::AlignRight | Qt::AlignBottom;
 static const QColor    SPLASH_MSG_COLOR = Qt::yellow;
 
+
+///////////////////////////////////////////////////////////////////////////////
+/// Create the background bitmap pixmap for the splash screen
+///
+/// @return     Splash screen background
+///
+///////////////////////////////////////////////////////////////////////////////
+static QPixmap makeSplashBitmap ()
+    {
+#ifdef PLATFORM_MOBILE
+    QPixmap     pixmap{ ":/images/splash-portrait.png" };
+    QScreen*    screen  = QGuiApplication::primaryScreen ();
+    QSize       size    = screen->size ();
+
+    // Scale to the screen size, leaving extra space
+    auto scaled = pixmap.scaled (size.width (),
+                                 size.height (),
+                                 Qt::KeepAspectRatioByExpanding,
+                                 Qt::SmoothTransformation);
+
+    // Crop off extra space
+    return scaled.copy ((scaled.width ()  - size.width ())  / 2,
+                        (scaled.height () - size.height ()) / 2,
+                        size.width (),
+                        size.height ());
+#else
+    QPixmap pixmap{ ":/images/splash.png" };
+
+    return pixmap.scaled (512,
+                          256,
+                          Qt::KeepAspectRatio,
+                          Qt::SmoothTransformation);
+#endif // PLATFORM_MOBILE
+    }
+
+
 SplashScreen::SplashScreen ():
-    QSplashScreen (QPixmap{ ":/images/splash.png" },
-                   Qt::WindowStaysOnTopHint)
+    QSplashScreen (makeSplashBitmap (), Qt::WindowStaysOnTopHint)
     {
     QVBoxLayout*    layout  = new QVBoxLayout{ this };
     QFont           font    = QApplication::font ();
@@ -45,7 +81,7 @@ SplashScreen::SplashScreen ():
     copyright->setFont (font);
     copyright->setStyleSheet ("color: white;");
 
-    layout->addWidget (title,       0, Qt::AlignRight | Qt::AlignTop);
+    layout->addWidget (title,       0, Qt::AlignLeft  | Qt::AlignTop);
     layout->addWidget (copyright,   0, Qt::AlignLeft  | Qt::AlignBottom);
 
     setLayout (layout);

@@ -13,6 +13,8 @@
 
 #include <ui/common/utils.hpp>
 
+#include <QDialog>
+#include <QDialogButtonBox>
 #include <QtTest>
 #include <QMenu>
 #include <QWidget>
@@ -62,4 +64,27 @@ inline void testMenuItem (const QWidget&                        widget,
     // so we need to manipulate the menu by queuing a timer
     QTest::mouseClick (window, Qt::RightButton);
     }
-}
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// Click a standard button in a dialog
+///
+/// @param[in]  dlg     Dialog box to click
+/// @param[in]  which   Which button to click
+///
+///////////////////////////////////////////////////////////////////////////////
+inline void clickStandardButton (QDialog&                           dlg,
+                                 QDialogButtonBox::StandardButton   which)
+    {
+    auto* box = dlg.findChild<QDialogButtonBox*> ();
+
+    QCOMPARE_NE (box, NULL);
+
+    auto* btn = box->button (which);
+
+    QCOMPARE_NE (btn, NULL);
+
+    QTest::mouseClick (btn, Qt::LeftButton);
+    }
+
+} // namespace testutils

@@ -20,7 +20,6 @@
 namespace ui::common
 {
 
-
 //////////////////////////////////////////////////////////////////////////////
 /// Dropdown/combobox widget which reverts to a static text label if only one
 /// element is added

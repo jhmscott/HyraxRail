@@ -171,32 +171,57 @@
 <context>
     <name>ui::ControllerInfo</name>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="161"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="171"/>
         <source>Model : %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="221"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="229"/>
+        <source>Settings</source>
+        <translation type="unfinished">Paramètres</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="230"/>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="234"/>
+        <source>Delete</source>
+        <translation type="unfinished">Supprimer</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="242"/>
+        <source>Go</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="242"/>
+        <source>Emergency Stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="267"/>
         <source>Disconnected</source>
         <translation>Déconnecté</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="229"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="275"/>
         <source>Connected</source>
         <translation>Connecté</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="233"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="279"/>
         <source>Ping %1 ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="270"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="316"/>
         <source>Are you sure you want to delete %1 ?</source>
         <translation>Êtes-vous certain de vouloir supprimer %1 ?</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="274"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="320"/>
         <source>Delete Controller</source>
         <translation type="unfinished">Supprimer le contrôleur</translation>
     </message>
@@ -275,17 +300,17 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::SplashScreen</name>
     <message>
-        <location filename="../../src/cpp/ui/splash.cpp" line="34"/>
+        <location filename="../../src/cpp/ui/splash.cpp" line="70"/>
         <source>Copyright © %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/splash.cpp" line="56"/>
+        <location filename="../../src/cpp/ui/splash.cpp" line="92"/>
         <source>Connecting to %1...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/splash.cpp" line="63"/>
+        <location filename="../../src/cpp/ui/splash.cpp" line="99"/>
         <source>Starting App...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -939,12 +964,12 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::trains::LocoControlPanel</name>
     <message>
-        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="353"/>
+        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="365"/>
         <source>Would you like to delete locomotive &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="357"/>
+        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="369"/>
         <source>Delete Locomotive</source>
         <translation type="unfinished"></translation>
     </message>

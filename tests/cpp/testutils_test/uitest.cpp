@@ -7,6 +7,7 @@
  * @copyright   Copyright (c) 2026 Justin Scott
  */
 
+
 #include <testutils/ui.hpp>
 
 #include <QtTest>
@@ -25,7 +26,7 @@ static QString MENU_ITEMS[] =
 /// @param[in]  menu        Menu item to validate
 ///
 ///////////////////////////////////////////////////////////////////////////////
-void validateMenu (const QMenu& menu)
+static void validateMenu (const QMenu& menu)
     {
     QList<QAction*> actions = menu.actions ();
 
@@ -113,6 +114,73 @@ private slots:
                 QCOMPARE (spies[ii]->size (), 0);
                 }
             }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for clickStandardButtonTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void clickStandardButtonTest_data ()
+        {
+        QTest::addColumn<QDialogButtonBox::StandardButton> ("button");
+
+        QTest::newRow ("Ok")            << QDialogButtonBox::Ok;
+        QTest::newRow ("Save")          << QDialogButtonBox::Save;
+        QTest::newRow ("Save All")      << QDialogButtonBox::SaveAll;
+        QTest::newRow ("Open")          << QDialogButtonBox::Open;
+        QTest::newRow ("Yes")           << QDialogButtonBox::Yes;
+        QTest::newRow ("Yes to All")    << QDialogButtonBox::YesToAll;
+        QTest::newRow ("No")            << QDialogButtonBox::No;
+        QTest::newRow ("No to All")     << QDialogButtonBox::NoToAll;
+        QTest::newRow ("Abort")         << QDialogButtonBox::Abort;
+        QTest::newRow ("Retry")         << QDialogButtonBox::Retry;
+        QTest::newRow ("Ignore")        << QDialogButtonBox::Ignore;
+        QTest::newRow ("Close")         << QDialogButtonBox::Close;
+        QTest::newRow ("Cancel")        << QDialogButtonBox::Cancel;
+        QTest::newRow ("Discard")       << QDialogButtonBox::Discard;
+        QTest::newRow ("Help")          << QDialogButtonBox::Help;
+        QTest::newRow ("Apply")         << QDialogButtonBox::Apply;
+        QTest::newRow ("Reset")         << QDialogButtonBox::Reset;
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Tests clicking a standard dialog box button
+    ///
+    /// @see    testutils::clickStandardButton()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void clickStandardButtonTest ()
+        {
+        QFETCH (QDialogButtonBox::StandardButton, button);
+
+        QDialog dlg;
+
+        auto* buttons   = new QDialogButtonBox{ QDialogButtonBox::Ok        |
+                                                QDialogButtonBox::Save      |
+                                                QDialogButtonBox::SaveAll   |
+                                                QDialogButtonBox::Open      |
+                                                QDialogButtonBox::Yes       |
+                                                QDialogButtonBox::YesToAll  |
+                                                QDialogButtonBox::No        |
+                                                QDialogButtonBox::NoToAll   |
+                                                QDialogButtonBox::Abort     |
+                                                QDialogButtonBox::Retry     |
+                                                QDialogButtonBox::Ignore    |
+                                                QDialogButtonBox::Cancel    |
+                                                QDialogButtonBox::Discard   |
+                                                QDialogButtonBox::Help      |
+                                                QDialogButtonBox::Apply     |
+                                                QDialogButtonBox::Reset,
+                                               &dlg };
+        auto* btn       = buttons->button (button);
+
+        QCOMPARE_NE (btn, NULL);
+
+        QSignalSpy spy{ btn, &QAbstractButton::released };
+
+        testutils::clickStandardButton (dlg, button);
+
+        QCOMPARE (spy.count (), 1);
         }
     };
 

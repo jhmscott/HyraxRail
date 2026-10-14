@@ -47,6 +47,9 @@
 /// One of the top level application panels associated with a tab in the main
 /// widget.
 ///
+/// @defgroup   STUB_CLASS          Stub classes
+/// Dummy classes with virtual functions defined to return fixed data
+///
 ///////////////////////////////////////////////////////////////////////////////
 
 /*

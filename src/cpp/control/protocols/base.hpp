@@ -259,6 +259,14 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void setDeviceInfo (const utils::device::deviceInfo& info);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the connection worker thread for this protocol
+    ///
+    /// @param[in]  thread      Thread that owns the connection
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setOwnerThread (QThread* thread) { m_device->moveToThread (thread); }
 protected:
     std::unique_ptr<QIODevice> m_device;        ///< IO Device used to communicate with controller
 

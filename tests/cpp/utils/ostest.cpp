@@ -23,6 +23,8 @@ static const char* const THREAD_NAME = "Test thread";
 /// Fake message only window class, needed to provide a concrete instance to call
 /// a constructor for
 ///
+/// @ingroup    STUB_CLASS
+///
 ///////////////////////////////////////////////////////////////////////////////
 class FakeMsgOnlyWindow : public win32::MessageOnlyWindow
     {

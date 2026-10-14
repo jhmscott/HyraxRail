@@ -4,7 +4,7 @@
 
 namespace ui::routes
 {
-common::LayoutButton* RouteDelegate::openCreate (control::ControllerBase&  controller, 
+common::LayoutButton* RouteDelegate::openCreate (control::ControllerBase&  controller,
                                                  QWidget*                  parent)
     {
     common::LayoutButton*   btn = NULL;
@@ -31,10 +31,10 @@ void RouteDelegate::createButtons (control::ControllerBase&                    c
         }
     }
 
-    
 common::LayoutButton* RouteDelegate::makeButton (control::ControllerBase&   controller,
                                                  const layout::Route&       route)
     {
     return new RouteButton{ route, controller, m_automations, NULL };
     }
+
 } // namespace ui::routes

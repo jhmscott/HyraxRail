@@ -28,13 +28,8 @@ ControllerInfo::ControllerInfo (control::ControllerManager& manager,
     m_manager (manager),
     m_controller (controller)
     {
-    QHBoxLayout* layout = new QHBoxLayout{ this };
-
-    m_settings = new common::PointedIconButton{ "misc/gear", this };
-
-    m_connectionIcon = new common::SchemeIconButton{ "", this};
-
-    QIcon icon;
+    QHBoxLayout*    layout = new QHBoxLayout{ this };
+    QIcon           icon;
 
     icon.addFile (":/icons/common/misc/circle-play.svg",
                   QSize{},
@@ -45,20 +40,26 @@ ControllerInfo::ControllerInfo (control::ControllerManager& manager,
                   QIcon::Normal,
                   QIcon::Off);
 
-    m_stop = new QPushButton{ icon, "", this };
-    common::makeFrameless (*m_stop);
+    m_stop              = new QPushButton{ icon, "", this };
+    m_settings          = new common::PointedIconButton{ "misc/gear",        this };
+    m_refresh           = new common::PointedIconButton{ "misc/refresh-cw",  this };
+    m_connectionIcon    = new common::SchemeIconButton{ "", this };
+    m_nameLabel         = new QLabel{ NULL == controller ?
+                                      "-" :
+                                      controller->getFriendlyName ().c_str (),
+                                      this };
 
     m_stop->setIconSize (utils::resources::ICON_SIZE_NORMAL);
-    m_stop->setCheckable (true);
-    // m_stop->setTooltips ("Go", "Emergency Stop");
-
     m_connectionIcon->setIconSize (utils::resources::ICON_SIZE_NORMAL);
-    ui::common::makeFrameless (*m_connectionIcon);
-
     m_settings->setIconSize (utils::resources::ICON_SIZE_NORMAL);
-    common::makeFrameless (*m_settings);
+    m_refresh->setIconSize (utils::resources::ICON_SIZE_NORMAL);
 
-    m_nameLabel = new QLabel{ NULL == controller ? "-" : controller->getFriendlyName ().c_str (), this};
+    m_stop->setCheckable (true);
+
+    common::makeFrameless (*m_stop);
+    common::makeFrameless (*m_connectionIcon);
+    common::makeFrameless (*m_settings);
+    common::makeFrameless (*m_refresh);
 
     QFont   font = QApplication::font ();
 
@@ -66,11 +67,11 @@ ControllerInfo::ControllerInfo (control::ControllerManager& manager,
 
     m_nameLabel->setFont (font);
 
-
     layout->addWidget (m_connectionIcon,    0, Qt::AlignLeft);
     layout->addWidget (m_nameLabel,         0, Qt::AlignCenter);
     layout->addWidget (m_stop,              0, Qt::AlignRight);
     layout->addWidget (m_settings,          0, Qt::AlignRight);
+    layout->addWidget (m_refresh,           0, Qt::AlignRight);
 
     if (includeDelete)
         {
@@ -85,16 +86,6 @@ ControllerInfo::ControllerInfo (control::ControllerManager& manager,
                 &QPushButton::released,
                  this,
                 &ControllerInfo::onDelete);
-
-        connect (&m_manager,
-                 &control::ControllerManager::refreshStarted,
-                  this,
-                 &ControllerInfo::refreshStarted);
-
-        connect (&m_manager,
-                 &control::ControllerManager::cacheRebuilt,
-                  this,
-                 &ControllerInfo::refreshComplete);
         }
 
     if (NULL == controller)
@@ -106,6 +97,8 @@ ControllerInfo::ControllerInfo (control::ControllerManager& manager,
         setController (*controller);
         }
 
+    setTooltips ();
+
     connect (m_stop,
             &QPushButton::toggled,
              this,
@@ -116,10 +109,25 @@ ControllerInfo::ControllerInfo (control::ControllerManager& manager,
              this,
             &ControllerInfo::onConfig);
 
+    connect (m_refresh,
+            &QPushButton::released,
+             this,
+            &ControllerInfo::refresh);
+
     connect (&m_manager,
              &control::ControllerManager::connectionHealthChanged,
               this,
              &ControllerInfo::refreshHealthIcon);
+
+    connect (&m_manager,
+             &control::ControllerManager::refreshStarted,
+             this,
+             &ControllerInfo::refreshStarted);
+
+    connect (&m_manager,
+             &control::ControllerManager::cacheRebuilt,
+             this,
+             &ControllerInfo::refreshComplete);
 
     setLayout (layout);
     }
@@ -128,6 +136,7 @@ void ControllerInfo::clear ()
     {
     m_controller = NULL;
 
+    m_refresh->setDisabled (true);
     m_stop->setDisabled (true);
     m_settings->setDisabled (true);
     m_nameLabel->setText ("-");
@@ -141,6 +150,7 @@ void ControllerInfo::setController (control::ControllerBase& controller)
     {
     m_controller = &controller;
 
+    m_refresh->setDisabled (false);
     m_stop->setDisabled (false);
     m_settings->setDisabled (false);
     m_nameLabel->setText (controller.getFriendlyName ().c_str ());
@@ -175,25 +185,61 @@ void ControllerInfo::setNoControllerConfigured ()
     {
     setHealth (control::ConnectionWorkerThread::health
               {
-                  control::ConnectionWorkerThread::HEALTH_UNAVAILABLE,
-                  std::chrono::milliseconds { 0 }
+              control::ConnectionWorkerThread::HEALTH_UNAVAILABLE,
+              std::chrono::milliseconds{ 0 }
               });
     }
 
-void ControllerInfo::refreshStarted (const control::ControllerBase &controller)
+void ControllerInfo::refreshStarted (const control::ControllerBase& controller)
     {
     if (&controller == m_controller)
         {
-        m_deleteBtn->setDisabled (true);
+        if (NULL != m_deleteBtn)
+            {
+            m_deleteBtn->setDisabled (true);
+            }
+
+        m_refresh->setDisabled (true);
         }
     }
 
-void ControllerInfo::refreshComplete(const control::ControllerBase &controller)
+void ControllerInfo::refreshComplete (const control::ControllerBase& controller)
     {
     if (&controller == m_controller)
         {
-        m_deleteBtn->setDisabled (false);
+        if (NULL != m_deleteBtn)
+            {
+            m_deleteBtn->setDisabled (false);
+            }
+
+        m_refresh->setDisabled (false);
         }
+    }
+
+void ControllerInfo::refresh ()
+    {
+    if (NULL != m_controller)
+        {
+        m_manager.refresh (*m_controller);
+        }
+    }
+
+void ControllerInfo::setTooltips ()
+    {
+    m_settings->setToolTip (tr ("Settings"));
+    m_refresh->setToolTip (tr ("Refresh"));
+
+    if (NULL != m_deleteBtn)
+        {
+        m_deleteBtn->setToolTip (tr ("Delete"));
+        }
+
+    updateStopTooltips ();
+    }
+
+void ControllerInfo::updateStopTooltips ()
+    {
+    m_stop->setToolTip (m_stop->isChecked () ? tr ("Go") : tr ("Emergency Stop"));
     }
 
 void ControllerInfo::setHealth (control::ConnectionWorkerThread::health health)

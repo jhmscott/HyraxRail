@@ -87,14 +87,15 @@ void ConnectionWorkerThread::loop ()
     const std::chrono::duration pingInterval     = 5000ms;
     const std::chrono::duration queueTimeout     = 1000ms;
 
-
     std::chrono::time_point<std::chrono::system_clock> lastPing;
     std::chrono::time_point<std::chrono::system_clock> lastEvent;
 
+    m_proto->setOwnerThread (QThread::currentThread ());
+
     while (m_continue)
         {
-        std::chrono::duration   eventInterval   = m_proto->getEventPollInterval ();
-        std::chrono::duration   waitInterval    = std::min (eventInterval, queueTimeout);
+        const std::chrono::duration   eventInterval   = m_proto->getEventPollInterval ();
+        const std::chrono::duration   waitInterval    = std::min (eventInterval, queueTimeout);
 
         {
         std::unique_lock lk (m_mtx);
@@ -108,7 +109,7 @@ void ConnectionWorkerThread::loop ()
             }
         }
 
-        health                  newHealth       = m_health;
+        health  newHealth = m_health;
 
         if (m_suspended)
             {
@@ -208,6 +209,9 @@ void ConnectionWorkerThread::loop ()
             m_healthChange.notify_all ();
             }
         }
+
+    // This needs to be destroyed on this thread
+    m_proto.reset ();
     }
 
 void ConnectionWorkerThread::applicationStateChanged (Qt::ApplicationState state)

@@ -45,6 +45,7 @@
         <file>icons/light/misc/clock.svg</file>
         <file>icons/light/misc/pencil.svg</file>
         <file>icons/light/misc/square-function.svg</file>
+        <file>icons/light/misc/refresh-cw.svg</file>
 
         <!--Function Icons - Light-->
         <file>icons/light/functions/engine.svg</file>
@@ -93,6 +94,7 @@
         <file>icons/dark/misc/clock.svg</file>
         <file>icons/dark/misc/pencil.svg</file>
         <file>icons/dark/misc/square-function.svg</file>
+        <file>icons/dark/misc/refresh-cw.svg</file>
 
         <!--Function Icons - Dark-->
         <file>icons/dark/functions/engine.svg</file>
@@ -145,5 +147,6 @@
 
         <!--Images-->
         <file>images/splash.png</file>
+        <file>images/splash-portrait.png</file>
     </qresource>
 </RCC>

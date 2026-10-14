@@ -75,6 +75,7 @@ private:
     common::SchemeIconButton*       m_settings;         ///< Settings button. Opens the config dialog
     QLabel*                         m_nameLabel;        ///< Controller friendly name label
     QPushButton*                    m_deleteBtn = NULL;
+    common::SchemeIconButton*       m_refresh;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Handle the toggle of the emergency stop button. If there is no emergency stop present, this triggers an
@@ -82,7 +83,7 @@ private:
     /// controllers
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    void eStop () { m_stopper->eStop (m_stop->isChecked ()); }
+    void eStop () { m_stopper->eStop (m_stop->isChecked ()); updateStopTooltips (); }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the controller health icon
@@ -133,6 +134,20 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     void refreshComplete (const control::ControllerBase& controller);
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Trigger a manual refresh of the controller cache
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void refresh ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the tooltips
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setTooltips ();
+
+    void updateStopTooltips ();
+
     UILANG_ON_CHANGE (QWidget,
         {
         if (NULL != m_controller)
@@ -144,6 +159,8 @@ private:
             {
             setNoControllerConfigured ();
             }
+
+        setTooltips ();
         })
     };
 

@@ -375,6 +375,54 @@ private slots:
         QCOMPARE (cb.currentIndex (), 3);
         QCOMPARE (spy.count (), 1);
         }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Tests removing a combobox item by user data, when the items have inconsistent
+    /// and sometimes non-existent user data
+    ///
+    /// @see    ui::common::removeComboBoxItemByUserData()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void removeComboBoxItemByUserDataTest ()
+        {
+        QComboBox   cb;
+
+        cb.addItem ("Test 1");                                          // no user data
+        cb.addItem ("Test 2", "Test 2 data");                           // different data type
+        cb.addItem ("Test 3", QVariant::fromValue (customData{ 1 }));   // Same data type, different value
+        cb.addItem ("Test 4", QVariant::fromValue (customData{ 0 }));   // The one we're looking for!
+        cb.addItem ("Test 5", QVariant::fromValue (customData{ 2 }));   // Another dud
+
+        removeComboBoxItemByUserData (cb, customData{ 0 });
+
+        QCOMPARE (cb.count (), 4);
+
+        QCOMPARE (cb.itemText (0), "Test 1");
+        QCOMPARE (cb.itemText (1), "Test 2");
+        QCOMPARE (cb.itemText (2), "Test 3");
+        QCOMPARE (cb.itemText (3), "Test 5");
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Check that an object stored by pointer is deleted by
+    /// removeComboBoxItemByUserData()
+    ///
+    /// @see    ui::common::removeComboBoxItemByUserData()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void removeComboBoxItemByUserDataDeleteTest ()
+        {
+        QObject*    testObj = new QObject;
+        QSignalSpy  spy{ testObj, &QObject::destroyed };
+        QComboBox   cb;
+
+        cb.addItem ("Test", QVariant::fromValue (testObj));
+
+        removeComboBoxItemByUserData (cb,testObj);
+
+        QCOMPARE (cb.count (), 0);
+        QCOMPARE (spy.count (), 1);
+        }
     };
 
 QTEST_MAIN (UtilsTest)

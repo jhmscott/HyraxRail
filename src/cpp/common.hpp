@@ -49,7 +49,13 @@
 #if defined (Q_OS_LINUX) && !defined (Q_OS_ANDROID)
 /// Defined for versions of linux that aren't android
 #define NON_DROID_LINUX
-#endif
+#endif // defined (Q_OS_LINUX) && !defined (Q_OS_ANDROID)
+
+#if defined (Q_OS_ANDROID) || defined (Q_OS_IOS)
+/// Defined for mobile operating systems
+#define PLATFORM_MOBILE
+#endif // defined (Q_OS_ANDROID) || defined (Q_OS_IOS)
+
 
 
 //////////////////////////////////////////////////////////////////////////////

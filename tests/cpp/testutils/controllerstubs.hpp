@@ -14,7 +14,13 @@
 namespace testutils
 {
 
+
+///////////////////////////////////////////////////////////////////////////////
 /// All stubs needed for a locomotive controller
+///
+/// @ingroup    STUB_CLASS
+///
+///////////////////////////////////////////////////////////////////////////////
 class LocomotiveControllerStubs : public layout::LocomotiveController
     {
 public:
@@ -55,7 +61,12 @@ private:
     virtual void releaseControl (size_t id) override {}
     };
 
+///////////////////////////////////////////////////////////////////////////////
 /// All stubs needed for an actuator controller
+///
+/// @ingroup    STUB_CLASS
+///
+///////////////////////////////////////////////////////////////////////////////
 class ActuatorControllerStubs : public layout::ActuatorController
     {
 public:
@@ -90,7 +101,12 @@ private:
     virtual void removeActuator (size_t id) override {}
     };
 
+///////////////////////////////////////////////////////////////////////////////
 /// All stubs needed for a route controller
+///
+/// @ingroup    STUB_CLASS
+///
+///////////////////////////////////////////////////////////////////////////////
 class RouteControllerStubs : public layout::RouteController
     {
 public:
@@ -117,7 +133,12 @@ private:
 
     };
 
+///////////////////////////////////////////////////////////////////////////////
 /// All stubs needed for an emergency stop controller
+///
+/// @ingroup    STUB_CLASS
+///
+///////////////////////////////////////////////////////////////////////////////
 class EmergencyStopControllerStubs : public layout::EmergencyStopController
     {
 public:
@@ -126,7 +147,12 @@ public:
     virtual bool isEStopped () const override { return false; }
     };
 
+///////////////////////////////////////////////////////////////////////////////
 /// All stubs needed for a controller meta class
+///
+/// @ingroup    STUB_CLASS
+///
+///////////////////////////////////////////////////////////////////////////////
 class ControllerMetaClassBaseStubs : public control::ControllerMetaClassBase
     {
 public:
@@ -142,6 +168,12 @@ private:
                                           const std::type_info&     info) const override { return NULL; };
     };
 
+///////////////////////////////////////////////////////////////////////////////
+/// All stubs needed for a controller base class
+///
+/// @ingroup    STUB_CLASS
+///
+///////////////////////////////////////////////////////////////////////////////
 class ControllerBaseStubs : public control::ControllerBase
     {
 public:

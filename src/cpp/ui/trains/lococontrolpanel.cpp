@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file        trains/lococontrolpanel.cpp
  * @brief       Control panel for a single locomotive
  * @author      Justin Scott
@@ -20,6 +20,20 @@
 namespace ui::trains
 {
 
+///////////////////////////////////////////////////////////////////////////////
+/// Predicate to compare two locomitive pointers by the values rather than
+/// address
+///
+/// @param[in]  l1      Locomotive 1
+/// @param[in]  l2      Locomotive 2
+///
+/// @return     True if *l1 == *l2
+///
+///////////////////////////////////////////////////////////////////////////////
+static bool compareLocoPtr (const layout::Locomotive* l1, const layout::Locomotive* l2)
+    {
+    return *l1 == *l2;
+    }
 
 LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
                                     hAlignment                  align,
@@ -233,7 +247,6 @@ void LocoControlPanel::addController (control::ControllerBase& controller)
         }
     }
 
-
 void LocoControlPanel::onLocoChange (int idx)
     {
     m_currentLoco.releaseControl ();
@@ -266,12 +279,11 @@ void LocoControlPanel::onLocoChange (int idx)
     setProtocol (proto);
     }
 
-
 void LocoControlPanel::locoDeleted ()
     {
     layout::Locomotive* loco = static_cast<layout::Locomotive*> (sender ());
 
-    common::removeComboBoxItemByUserData (*m_locos, loco);
+    common::removeComboBoxItemByUserData (*m_locos, loco, &compareLocoPtr);
 
     updateButtonStates ();
     }
@@ -381,16 +393,19 @@ void LocoControlPanel::disconnected (const control::ControllerBase &controller)
 
 void LocoControlPanel::cacheRebuilt (const control::ControllerBase &controller)
     {
-    int startIndex = -1;
+    utils::qobj::SignalGuard grd{ *m_locos, true };
+
+    int     startIndex = -1;
 
     for (int ii = m_locos->count () - 1; ii >= 0; --ii)
         {
-        auto* loco = m_locos->itemData(ii).value<layout::Locomotive*> ();
-        auto* current = m_controllers.fromComponent (*loco);
+        auto* loco      = m_locos->itemData(ii).value<layout::Locomotive*> ();
+        auto* current   = m_controllers.fromComponent (*loco);
 
         if (current == &controller)
             {
             m_locos->removeItem (ii);
+            delete loco;
             startIndex = ii;
             }
         }
@@ -400,11 +415,20 @@ void LocoControlPanel::cacheRebuilt (const control::ControllerBase &controller)
         startIndex = m_locos->count ();
         }
 
-
     for (const layout::Locomotive& loco : controller.getLocomotives ())
         {
         addLocoToCb (loco, startIndex);
         ++startIndex;
         }
+
+    common::setComboBoxIndexByUserData (*m_locos,
+                                        &m_currentLoco,
+                                         false, // notify
+                                         compareLocoPtr);
+    m_currentLoco = *m_locos->currentData ().value<layout::Locomotive*> ();
+
+    // Force a refresh of the function panel, even if the index didn't actually change
+    onLocoChange (m_locos->currentIndex ());
     }
-}
+
+} // namespace ui::trains

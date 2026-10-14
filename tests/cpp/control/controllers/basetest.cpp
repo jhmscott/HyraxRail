@@ -17,6 +17,12 @@
 
 using namespace std::string_literals;
 
+///////////////////////////////////////////////////////////////////////////////
+/// Faked locomotive controller
+///
+/// @ingroup    STUB_CLASS
+///
+///////////////////////////////////////////////////////////////////////////////
 class LocomotiveController :
     public control::ControllerBase,
     public testutils::LocomotiveControllerStubs
@@ -26,6 +32,12 @@ public:
     using control::ControllerBase::ControllerBase;
     };
 
+///////////////////////////////////////////////////////////////////////////////
+/// Faked actuator controller
+///
+/// @ingroup    STUB_CLASS
+///
+///////////////////////////////////////////////////////////////////////////////
 class ActuatorController :
     public control::ControllerBase,
     public testutils::ActuatorControllerStubs
@@ -35,6 +47,12 @@ public:
     using control::ControllerBase::ControllerBase;
     };
 
+///////////////////////////////////////////////////////////////////////////////
+/// Faked route controller
+///
+/// @ingroup    STUB_CLASS
+///
+///////////////////////////////////////////////////////////////////////////////
 class RouteController :
     public control::ControllerBase,
     public testutils::RouteControllerStubs
@@ -44,6 +62,12 @@ public:
     using control::ControllerBase::ControllerBase;
     };
 
+///////////////////////////////////////////////////////////////////////////////
+/// Faked E-Stop controller
+///
+/// @ingroup    STUB_CLASS
+///
+///////////////////////////////////////////////////////////////////////////////
 class EmergencyStopController :
     public control::ControllerBase,
     public testutils::EmergencyStopControllerStubs

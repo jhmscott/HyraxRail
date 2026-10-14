@@ -24,20 +24,43 @@
 namespace ui::common
 {
 
+/// Internal namespace for UI utilities
+namespace utils_internal
+{
+///////////////////////////////////////////////////////////////////////////////
+/// Check that a variant is valid and contains a given type
+///
+/// @tparam     T           Type to check for
+///
+/// @param[in]  variant     Variant to check
+///
+/// @return     True if it contains that type
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T>
+bool checkVariant (const QVariant& variant)
+    {
+    return variant.isValid () && variant.canConvert<T> ();
+    }
+} // namespace utils_internal
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Set the current item in a combobox to the first item with a given user data
 ///
 /// @tparam         T       Type of user data
+/// @tparam         Eq      Equal predicate type
 ///
 /// @param[in,out]  cb      Combobox to set current item for
 /// @param[in]      ud      User data
 /// @param[in]      notify  True to trigger the currentIndexChanged() signal
 ///                         False not to
+/// @param[in]      eq      Predicate to check if the user data matches ud
+///                         Defaults to the == operator
 ///
 ///////////////////////////////////////////////////////////////////////////////
-template<class T>
-void setComboBoxIndexByUserData (QComboBox& cb, const T& ud, bool notify = true)
+template<class T, class Eq = std::equal_to<T>>
+void setComboBoxIndexByUserData (QComboBox& cb, const T& ud, bool notify = true, Eq eq = std::equal_to<T>{})
     {
     utils::qobj::SignalGuard grd{ cb, not notify };
 
@@ -45,9 +68,8 @@ void setComboBoxIndexByUserData (QComboBox& cb, const T& ud, bool notify = true)
         {
         auto variant = cb.itemData (ii);
 
-        if (variant.isValid ()          &&
-            variant.canConvert<T> ()    &&
-            variant.value<T> () == ud)
+        if (utils_internal::checkVariant<T> (variant) &&
+            eq (variant.value<T> (), ud))
             {
             cb.setCurrentIndex (ii);
             break;
@@ -59,34 +81,32 @@ void setComboBoxIndexByUserData (QComboBox& cb, const T& ud, bool notify = true)
 /// Remove the first item in a combobox with a given user data
 ///
 /// @tparam         T       Type of user data
+/// @tparam         Eq      Equal predicate type
 ///
 /// @param[in,out]  cb      Combobox to remove item from
 /// @param[in]      ud      User data
+/// @param[in]      eq      Predicate to check if the user data matches ud
+///                         Defaults to the == operator
 ///
 ///////////////////////////////////////////////////////////////////////////////
-template<class T>
-void removeComboBoxItemByUserData (QComboBox& cb, const T& ud)
+template<class T, class Eq = std::equal_to<T>>
+void removeComboBoxItemByUserData (QComboBox& cb, const T& ud, Eq eq = std::equal_to<T>{})
     {
     for (int ii = 0; ii < cb.count (); ++ii)
         {
-        bool check;
-        if constexpr (std::is_pointer_v<T>)
-            {
-            check = *cb.itemData (ii).value<T> () == *ud;
-            }
-        else
-            {
-            check = cb.itemData (ii).value<T> () == ud;
-            }
+        auto variant = cb.itemData (ii);
 
-        if (check)
+        if (utils_internal::checkVariant<T> (variant) &&
+            eq (variant.value<T> (), ud))
             {
-            cb.removeItem (ii);
+            auto variant = cb.itemData (ii);
 
-            if constexpr (std::is_pointer_v<T>)
+            if constexpr(std::is_pointer_v<T>)
                 {
                 delete cb.itemData (ii).value<T> ();
                 }
+
+            cb.removeItem (ii);
 
             break;
             }
