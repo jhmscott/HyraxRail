@@ -596,6 +596,9 @@
     <ClCompile Include="..\src\cpp\ui\splash.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\elidedlabel.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\control\protocols\base.hpp">
@@ -803,6 +806,9 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\splash.hpp">
       <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\common\elidedlabel.hpp">
+      <Filter>Header Files\ui\common</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

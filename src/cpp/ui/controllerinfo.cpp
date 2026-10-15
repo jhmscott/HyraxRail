@@ -13,9 +13,13 @@
 #include <QMessageBox>
 #include <QTimer>
 
+#include <ui/common/elidedlabel.hpp>
 #include <ui/common/pointedwidget.hpp>
+
 #include <ui/controllerinfo.hpp>
+
 #include <ui/config/dialog.hpp>
+
 
 
 namespace ui
@@ -40,19 +44,19 @@ ControllerInfo::ControllerInfo (control::ControllerManager& manager,
                   QIcon::Normal,
                   QIcon::Off);
 
-    m_stop              = new QPushButton{ icon, "", this };
+    m_stop              = new common::PointedButton{ icon, "", this };
     m_settings          = new common::PointedIconButton{ "misc/gear",        this };
     m_refresh           = new common::PointedIconButton{ "misc/refresh-cw",  this };
     m_connectionIcon    = new common::SchemeIconButton{ "", this };
-    m_nameLabel         = new QLabel{ NULL == controller ?
-                                      "-" :
-                                      controller->getFriendlyName ().c_str (),
-                                      this };
+    m_nameLabel         = new common::ElidedLabel{ NULL == controller ?
+                                                   "-" :
+                                                   controller->getFriendlyName ().c_str (),
+                                                   this };
 
-    m_stop->setIconSize (utils::resources::ICON_SIZE_NORMAL);
+    m_stop          ->setIconSize (utils::resources::ICON_SIZE_NORMAL);
     m_connectionIcon->setIconSize (utils::resources::ICON_SIZE_NORMAL);
-    m_settings->setIconSize (utils::resources::ICON_SIZE_NORMAL);
-    m_refresh->setIconSize (utils::resources::ICON_SIZE_NORMAL);
+    m_settings      ->setIconSize (utils::resources::ICON_SIZE_NORMAL);
+    m_refresh       ->setIconSize (utils::resources::ICON_SIZE_NORMAL);
 
     m_stop->setCheckable (true);
 
@@ -68,7 +72,7 @@ ControllerInfo::ControllerInfo (control::ControllerManager& manager,
     m_nameLabel->setFont (font);
 
     layout->addWidget (m_connectionIcon,    0, Qt::AlignLeft);
-    layout->addWidget (m_nameLabel,         0, Qt::AlignCenter);
+    layout->addWidget (m_nameLabel,         1, Qt::AlignCenter);
     layout->addWidget (m_stop,              0, Qt::AlignRight);
     layout->addWidget (m_settings,          0, Qt::AlignRight);
     layout->addWidget (m_refresh,           0, Qt::AlignRight);

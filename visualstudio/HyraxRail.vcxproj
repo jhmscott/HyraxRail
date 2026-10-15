@@ -247,6 +247,7 @@
     <ClCompile Include="..\src\cpp\ui\common\centeredslider.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\daysofweek.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\duration.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\elidedlabel.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\formdialog.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\hexvalidator.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\hostentry.cpp" />
@@ -324,6 +325,7 @@
     <ClInclude Include="..\src\cpp\names.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\layout\button.hpp" />
     <ClInclude Include="..\src\cpp\ui\actuators\actuatordelegate.hpp" />
+    <QtMoc Include="..\src\cpp\ui\common\elidedlabel.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\layout\delegate.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\layout\group.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\layout\panel.hpp" />

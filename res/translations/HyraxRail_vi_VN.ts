@@ -177,57 +177,57 @@
 <context>
     <name>ui::ControllerInfo</name>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="171"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="175"/>
         <source>Model : %1</source>
         <translation>Mô Hình : %1</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="229"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="233"/>
         <source>Settings</source>
         <translation type="unfinished">Cài Đặt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="230"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="234"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="234"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="238"/>
         <source>Delete</source>
         <translation type="unfinished">Xóa</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="242"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="246"/>
         <source>Go</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="242"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="246"/>
         <source>Emergency Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="267"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="271"/>
         <source>Disconnected</source>
         <translation>Ngắt Kết Nối</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="275"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="279"/>
         <source>Connected</source>
         <translation>Kết Nối</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="279"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="283"/>
         <source>Ping %1 ms</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="316"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="320"/>
         <source>Are you sure you want to delete %1 ?</source>
         <translation>Xác Nhận Muốn Xóa %1?</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="320"/>
+        <location filename="../../src/cpp/ui/controllerinfo.cpp" line="324"/>
         <source>Delete Controller</source>
         <translation>Xóa Bộ Điều Khiển</translation>
     </message>
@@ -646,12 +646,12 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::config::ControllerGroup</name>
     <message>
-        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="100"/>
+        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="99"/>
         <source>Controllers</source>
         <translation>Bộ Điều Khiển</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="99"/>
+        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="98"/>
         <source>New Controller</source>
         <translation>Bộ điều khiển mới</translation>
     </message>

@@ -68,8 +68,6 @@ void ControllerGroup::addControllerInfo (control::ControllerBase& controller)
 
     ui::ControllerInfo* info = new ui::ControllerInfo{ m_controllers, &controller, this, true };
 
-    info->setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
-
     if (m_hasAddController)
         {
         myLayout->insertWidget (myLayout->count () - 1, info);
