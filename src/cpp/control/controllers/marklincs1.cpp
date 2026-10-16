@@ -189,11 +189,25 @@ std::vector<layout::Locomotive> MarklinCS1::getLocomotives () const
                 auto address    = addrReply.lines[0].arg->val.value ();
 
 
-                auto speedFuture = issueDynamicCommand (ECoSProtocol::get,
-                                                        line.id,
-                                                        ECoSProtocol::ARG_SPEED);
+                auto speedFuture= issueDynamicCommand (ECoSProtocol::get,
+                                                       line.id,
+                                                       ECoSProtocol::ARG_SPEED);
+                auto dirFuture  = issueDynamicCommand (ECoSProtocol::get,
+                                                       line.id,
+                                                       ECoSProtocol::ARG_DIR);
+
                 auto speedReply = speedFuture.get ();
                 auto speed      = speedReply.lines[0].arg->val.value ();
+
+                auto dirReply   = dirFuture.get ();
+                auto dir        = dirReply.lines[0].arg->val.value ();
+
+                int8_t speedValue = static_cast<int8_t> (atoi (speed.c_str ()));
+
+                if ("1" == dir)
+                    {
+                    speedValue *= -1;
+                    }
 
                 return layout::Locomotive{ const_cast<MarklinCS1*> (this),
                                             line.arg->val.value (),
@@ -201,8 +215,7 @@ std::vector<layout::Locomotive> MarklinCS1::getLocomotives () const
                                             static_cast<uint> (
                                                 atoi (address.c_str ())),
                                             getFunctions (line.id),
-                                            static_cast<int8_t> (
-                                                atoi (speed.c_str ())),
+                                            speedValue,
                                             line.id, };
                 });
             }

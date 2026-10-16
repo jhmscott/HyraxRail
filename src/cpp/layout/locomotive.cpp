@@ -59,11 +59,12 @@ void Locomotive::setFunc (uint8_t func, bool enable)
     {
     if (NULL != m_controller && NULL != m_state)
         {
-        auto function = getFunctionByNumber (func);
+        auto function = getFunctionByNumberInternal (func);
 
-        if (function.has_value () && enable != function->state)
+        if (m_state->m_functions.end () != function && enable != function->state)
             {
             m_controller->setFunc (m_id, func, enable);
+            function->state = enable;
             }
         }
     }
@@ -71,18 +72,11 @@ void Locomotive::setFunc (uint8_t func, bool enable)
 std::optional<funcInfo> Locomotive::getFunctionByNumber (uint8_t num) const
     {
     std::optional<funcInfo> info;
+    auto it = getFunctionByNumberInternal (num);
 
-    if (NULL != m_state)
+    if (m_state->m_functions.end () != it)
         {
-        auto it = std::find_if (m_state->m_functions.begin (),
-                                m_state->m_functions.end (),
-                                [num] (const funcInfo& info) -> bool
-                                { return info.id == num; });
-
-        if (m_state->m_functions.end () != it)
-            {
-            info = *it;
-            }
+        info = *it;
         }
 
     return info;
@@ -135,6 +129,22 @@ void Locomotive::remove ()
     m_controller->removeLocomotive (m_id);
     destroyThis ();
     deregister ();
+    }
+
+std::vector<funcInfo>::iterator
+Locomotive::getFunctionByNumberInternal (uint8_t num)
+    {
+    std::vector<funcInfo>::iterator it = m_state->m_functions.end ();
+
+    if (NULL != m_state)
+        {
+        it = std::find_if (m_state->m_functions.begin (),
+                           m_state->m_functions.end (),
+                           [num](const funcInfo& info) -> bool
+                           { return info.id == num; });
+        }
+
+    return it;
     }
 
 QString funcInfo::uiName () const

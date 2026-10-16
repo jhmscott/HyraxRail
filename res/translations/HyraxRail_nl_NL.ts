@@ -152,18 +152,18 @@
 <context>
     <name>layout::Locomotive</name>
     <message>
-        <location filename="../../src/cpp/layout/locomotive.cpp" line="146"/>
-        <location filename="../../src/cpp/layout/locomotive.cpp" line="153"/>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="156"/>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="163"/>
         <source>Function %1 : %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/layout/locomotive.cpp" line="154"/>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="164"/>
         <source>Headlights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/layout/locomotive.cpp" line="158"/>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="168"/>
         <source>Function %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -621,12 +621,12 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::config::ControllerGroup</name>
     <message>
-        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="98"/>
+        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="97"/>
         <source>New Controller</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="99"/>
+        <location filename="../../src/cpp/ui/config/controllergroup.cpp" line="98"/>
         <source>Controllers</source>
         <translation type="unfinished"></translation>
     </message>

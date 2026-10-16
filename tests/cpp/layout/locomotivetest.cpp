@@ -381,6 +381,58 @@ private slots:
             QCOMPARE (spy[ii][0].toInt (), INIT_FUNCS[ii].id);
             }
         }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test setting a locomotive function
+    ///
+    /// @see    layout::Locomotive::setFunc()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setFunctionTest ()
+        {
+        fakeit::When (Method (*mockController, setFunc)).AlwaysReturn ();
+
+        layout::Locomotive loco{ &mockController->get (),
+                                  INIT_NAME,
+                                  INIT_PROTO,
+                                  INIT_ADDR,
+                                  INIT_FUNCS,
+                                  0,
+                                  ID };
+
+        for (const auto&[ _, __, num, state ] : INIT_FUNCS)
+            {
+            // Test one, state not changing, don't call controller
+            loco.setFunc (num, state);
+
+            auto func = loco.getFunctionByNumber (num);
+
+            QVERIFY (func.has_value ());
+            QCOMPARE (func->state, state);
+
+            fakeit::Verify (Method (*mockController, setFunc).Using (ID, num, fakeit::_)).Never ();
+
+            // Test two, toggling the state, this should call the controller
+            loco.setFunc (num, not state);
+
+            func = loco.getFunctionByNumber (num);
+
+            QVERIFY (func.has_value ());
+            QCOMPARE (func->state, not state);
+
+            fakeit::Verify (Method (*mockController, setFunc).Using (ID, num, not state)).Once ();
+
+            // Test three, toggle the state back to the original state
+            loco.setFunc (num, state);
+
+            func = loco.getFunctionByNumber (num);
+
+            QVERIFY (func.has_value ());
+            QCOMPARE (func->state, state);
+
+            fakeit::Verify (Method (*mockController, setFunc).Using (ID, num, state)).Once ();
+            }
+        }
     };
 
 QTEST_GUILESS_MAIN (LocomotiveTest)

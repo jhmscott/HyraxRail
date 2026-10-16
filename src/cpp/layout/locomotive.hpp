@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file        layout/locomotive.hpp
  * @brief       Provides an interface for controlling a locomotive
  * @author      Justin Scott
@@ -326,6 +326,31 @@ signals:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void functionDeleted (uint8_t num);
+
+private:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Internal logic for getFunctionByNumber(). Returns an iterator, so the caller
+    /// can modify the underlying list
+    ///
+    /// @param[in]  num     Function number
+    ///
+    /// @return     Iterator to that function number<BR>
+    ///             m_functions.end() if not found
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::vector<funcInfo>::iterator getFunctionByNumberInternal (uint8_t num);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Const version of getFunctionByNumberInternal(). Returns a const iterator
+    ///
+    /// @param[in]  num     Function number
+    ///
+    /// @return     Iterator to that function number<BR>
+    ///             m_functions.end() if not found
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::vector<funcInfo>::const_iterator getFunctionByNumberInternal (uint8_t num) const
+        { return const_cast<Locomotive*> (this)->getFunctionByNumberInternal (num); }
     };
 
 

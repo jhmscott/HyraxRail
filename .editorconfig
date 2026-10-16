@@ -28,7 +28,7 @@ cpp_generate_documentation_comments = doxygen_triple_slash
 # Visual C++ Formatting settings
 
 cpp_indent_braces = true
-cpp_indent_multi_line_relative_to = nnermost_parenthesis
+cpp_indent_multi_line_relative_to = innermost_parenthesis
 cpp_indent_within_parentheses = align_to_parenthesis
 cpp_indent_preserve_within_parentheses = true
 cpp_indent_case_contents = false
@@ -51,12 +51,12 @@ cpp_new_line_close_brace_same_line_empty_function = true
 cpp_new_line_before_catch = false
 cpp_new_line_before_else = false
 cpp_new_line_before_while_in_do_while = false
-cpp_space_before_function_open_parenthesis = ignore
+cpp_space_before_function_open_parenthesis = insert
 cpp_space_within_parameter_list_parentheses = false
 cpp_space_between_empty_parameter_list_parentheses = false
-cpp_space_after_keywords_in_control_flow_statements = false
+cpp_space_after_keywords_in_control_flow_statements = true
 cpp_space_within_control_flow_statement_parentheses = false
-cpp_space_before_lambda_open_parenthesis = false
+cpp_space_before_lambda_open_parenthesis = true
 cpp_space_within_cast_parentheses = false
 cpp_space_after_cast_close_parenthesis = false
 cpp_space_within_expression_parentheses = false
