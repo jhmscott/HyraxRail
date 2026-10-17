@@ -40,25 +40,30 @@ void ControllerManager::append (const createControllerInfo& info, bool block)
 
         if (block)
             {
-            m_controllers.back ().controller->refresh ();
-            emit controllerAdded (*m_controllers.back ().controller);
+            auto& [newController, lastHealth] = m_controllers.back ();
+
+            newController->refresh ();
+            lastHealth = newController->getConnectionHealth ();
+
+            emit controllerAdded (*newController);
             }
         else
             {
             QFutureWatcher<void>* watcher = new QFutureWatcher<void>;
-            auto& newController = *m_controllers.back ().controller;
+            auto& [newController, lastHealth] = m_controllers.back ();
 
             connect (watcher,
                     &QFutureWatcher<void>::finished,
                     this,
-                    [this, &newController, watcher] () -> void
-                    {
-                    emit controllerAdded (newController);
-                    delete watcher;
-                    });
+                [this, &newController, &lastHealth, watcher] () -> void
+                {
+                lastHealth = newController->getConnectionHealth ();
+                emit controllerAdded (*newController);
+                delete watcher;
+                });
 
             watcher->setFuture (QtConcurrent::run (
-                utils::algorithm::bindMemFn (&ControllerBase::refresh, newController)));
+                utils::algorithm::bindMemFn (&ControllerBase::refresh, *newController)));
             }
         }
     }
