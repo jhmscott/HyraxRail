@@ -77,6 +77,22 @@ public:
     using control::ControllerBase::ControllerBase;
     };
 
+///////////////////////////////////////////////////////////////////////////////
+/// Sensor controller
+///
+/// @ingroup    STUB_CLASS
+///
+///////////////////////////////////////////////////////////////////////////////
+class SensorController :
+    public control::ControllerBase,
+    public testutils::SensorControllerStubs
+    {
+    CONTROLLER_DEFINE (SensorController, "Sensor Controller", testutils::MockControllerProtocol);
+public:
+    using control::ControllerBase::ControllerBase;
+    };
+
+
 
 using namespace utils::device;
 
@@ -261,6 +277,19 @@ private slots:
         {
         testSingleCapability<EmergencyStopController,
                              layout::EmergencyStopController> (control::CAPABILITY_ESTOP);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test a controller with the hardware sensor capability
+    ///
+    /// @see    control::ControllerBase
+    /// @see    control::CAPABILITY_SENSOR
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void sensorCapabilityTest ()
+        {
+        testSingleCapability<SensorController,
+                             layout::SensorController> (control::CAPABILITY_SENSOR);
         }
 
     ///////////////////////////////////////////////////////////////////////////////

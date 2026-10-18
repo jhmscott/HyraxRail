@@ -14,6 +14,7 @@
 #include <layout/estop.hpp>
 #include <layout/locomotive.hpp>
 #include <layout/route.hpp>
+#include <layout/sensor.hpp>
 
 #include <layout/virtual/vestop.hpp>
 #include <layout/virtual/vroute.hpp>
@@ -29,6 +30,7 @@ enum controllerCapability
     CAPABILITY_ACTUATOR,    ///< @see layout::ActuatorController
     CAPABILITY_ROUTE,       ///< @see layout::RouteController
     CAPABILITY_ESTOP,       ///< @see layout::EmergencyStopController
+    CAPABILITY_SENSOR,      ///< @see layout::SensorController
 
     NUM_CAPABILITIES        ///< Delimiter only
     };
@@ -40,7 +42,8 @@ using controllerCapabilitySet = std::bitset<NUM_CAPABILITIES>;
 using capabilityControllerTypes = std::tuple<layout::ActuatorController,
                                              layout::LocomotiveController,
                                              layout::RouteController,
-                                             layout::EmergencyStopController>;
+                                             layout::EmergencyStopController,
+                                             layout::SensorController>;
 ASSERT_TUPLE_SIZE (capabilityControllerTypes, NUM_CAPABILITIES);
 
 /// List of type implementing software defined/virtual controller types
@@ -84,6 +87,11 @@ struct capability<layout::EmergencyStopController>
     static constexpr controllerCapability value = CAPABILITY_ESTOP;
     };
 
+template<>
+struct capability<layout::SensorController>
+    {
+    static constexpr controllerCapability value = CAPABILITY_SENSOR;
+    };
 
 //////////////////////////////////////////////////////////////////////////////
 /// Gets the dependencies and base type for a given virtual controller type

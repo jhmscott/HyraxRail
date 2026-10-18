@@ -33,7 +33,8 @@ class MarklinCS1 :
     public layout::LocomotiveController,
     public layout::ActuatorController,
     public layout::RouteController,
-    public layout::EmergencyStopController
+    public layout::EmergencyStopController,
+    public layout::SensorController
     {
     CONTROLLER_DEFINE (MarklinCS1, "Märklin Central Station 1", ECoSProtocol)
     LOCOMOTIVE_CONTROLLER_DEFINE (layout::TRACK_PROTO_MFX,
@@ -81,6 +82,14 @@ public:
     virtual std::vector<layout::Route> getRoutes () const override;
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Get the sensors managed by this controller
+    ///
+    /// @return     List of sensor modules
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual std::vector<layout::SensorModule> getSensors () const;
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Create a route on  the controller
     ///
     /// @param[in]  name        Name of the route
@@ -123,6 +132,16 @@ public:
                                                  layout::trackProtocol                  proto,
                                                  uint                                   address,
                                                  const std::vector<layout::funcInfo>&   functions) override;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Create a sensor module
+    ///
+    /// @param[in]  num     Number of sensors in the module
+    ///
+    /// @return     Newly created sensor
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual layout::SensorModule createSensor (size_t num) override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Trigger or leave an emergency stop state. This typically stops all locomotives

@@ -13,7 +13,6 @@
 #include <control/controllers/base.hpp>
 
 #include <ui/common/addbtn.hpp>
-#include <ui/common/autogrid.hpp>
 
 #include <ui/common/layout/delegate.hpp>
 
@@ -31,19 +30,28 @@ class LayoutGroup : public QGroupBox
     {
     Q_OBJECT
 public:
+    /// Type of layout to use in the group box
+    enum class layoutType
+        {
+        GRID,   ///< Grid style layout, @see ui::common::AutoGridLayout
+        VBOX    ///< Vertical box layout
+        };
+
     //////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
     /// @param[in]  controller      Controller to display routes for
     /// @param[in]  delegate        Delegate for component specific actions
     /// @param[in]  type            Component type
+    /// @param[in]  layoutType      Type of layout to use within the group box
     /// @param[in]  parent          Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
-    LayoutGroup (control::ControllerBase&        controller,
-                 LayoutDelegate&                 delegate,
-                 control::controllerCapability   m_type,
-                 QWidget*                        parent);
+    LayoutGroup (control::ControllerBase&       controller,
+                 LayoutDelegate&                delegate,
+                 control::controllerCapability  type,
+                 layoutType                     layoutType,
+                 QWidget*                       parent);
 
     //////////////////////////////////////////////////////////////////////////////
     /// Get the controller this group is managing components for
@@ -61,7 +69,7 @@ public:
 private:
     control::ControllerBase&        m_controller;   ///< Controller
     LayoutDelegate&                 m_delegate;     ///< Delegate for component specific actions
-    common::AutoGridLayout*         m_gridLayout;   ///< Layout containing route buttons
+    QLayout*                        m_gridLayout;   ///< Layout containing route buttons
     common::AddButton*              m_addLabel;     ///< Button to add a new route
     control::controllerCapability   m_type;         ///< Component type
 

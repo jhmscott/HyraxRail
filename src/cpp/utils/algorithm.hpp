@@ -579,4 +579,81 @@ constexpr void forEachType (Func func)
     constexpr auto size = std::tuple_size_v<Tuple>;
     internal::forEachTypeImpl<Tuple> (func, std::make_index_sequence<size>{});
     }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Get the indexes that don't match between two ranges
+///
+/// @tparam     R1      Type of range 1
+/// @tparam     R2      Type of range 2
+///
+/// @param[in]  r1      Range 1
+/// @param[in]  r2      Range 2
+///
+/// @return     Vector containing indexes into r1/r2 that are not the same
+///
+/// @remarks    This algorithm only continues looking for mismatches until the
+///             min of the r1.size() and r2.size()
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class R1, class R2>
+std::vector<size_t> mismatches (const R1& r1, const R2& r2)
+    {
+    std::vector<size_t> differences;
+
+    differences.reserve (std::min (r1.size (), r2.size ()));
+
+    auto it1 = r1.begin ();
+    auto it2 = r2.begin ();
+
+    while (true)
+        {
+        const auto [dt1, dt2] = std::mismatch (it1, r1.end (), it2, r2.end ());
+
+        if (dt1 == r1.end () || dt2 == r2.end ())
+            {
+            break;
+            }
+
+        differences.push_back (std::distance (r1.begin (), dt1));
+
+        it1 = dt1;
+        it2 = dt2;
+
+        ++it1;
+        ++it2;
+        }
+
+    return differences;
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Convert an integer to a dynamic bitset in the form of std::vector<bool>
+///
+/// @tparam     T       Integer type
+///
+/// @param[in]  bitset  Integer to convert
+/// @param[in]  size    (optional) number of bits in bitset. Defaults to the
+///                     size of the integer passed in bits
+///
+/// @return     Dynamic bitset
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T>
+std::vector<bool> toDynamicBitset (T bitset, size_t size = sizeof (T) * 8)
+    {
+    static_assert (std::numeric_limits<T>::is_integer,
+                   "T must be integer type");
+
+    std::vector<bool> vec;
+
+    vec.resize (size);
+
+    for (size_t ii = 0; ii < vec.size (); ++ii)
+        {
+        vec[ii] = bitset & (static_cast<T> (1) << ii);
+        }
+
+    return vec;
+    }
+
 } // namespace utils::algorithm

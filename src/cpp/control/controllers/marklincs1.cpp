@@ -141,6 +141,16 @@ static void resolveReplyVector (std::vector<std::future<ECoSProtocol::reply>>&  
                     std::mem_fn (&std::future<ECoSProtocol::reply>::get));
     }
 
+static std::vector<bool> parseSensorValues (const ECoSProtocol::reply& ports,
+                                            const ECoSProtocol::reply& state)
+    {
+    size_t  numPorts    = atoi (ports.lines[0].arg->val->c_str ());
+    long    valueBitset = strtol (state.lines[0].arg->val->c_str (), NULL, 0);
+
+    return utils::algorithm::toDynamicBitset (valueBitset, numPorts);
+    }
+
+
 MarklinCS1::MarklinCS1 (const std::string&              friendlyName,
                         std::unique_ptr<ProtocolBase>&& proto) :
     control::ControllerBase (friendlyName, std::move (proto))
@@ -288,8 +298,8 @@ std::vector<layout::Actuator> MarklinCS1::getActuators () const
                                ECoSProtocol::ARG_DURATION,
                                durationReplies);
 
-    resolveReplyVector (nameReplies, names);
-    resolveReplyVector (stateReplies, states);
+    resolveReplyVector (nameReplies,    names);
+    resolveReplyVector (stateReplies,   states);
     resolveReplyVector (iconReplies,    icons);
     resolveReplyVector (modeReplies,    modes);
     resolveReplyVector (addressReplies, addresses);
@@ -396,6 +406,50 @@ std::vector<layout::Route> MarklinCS1::getRoutes () const
     return routes;
     }
 
+std::vector<layout::SensorModule> MarklinCS1::getSensors () const
+    {
+    std::vector<layout::SensorModule> sensors;
+
+    auto future = issueStaticCommand (ECoSProtocol::queryObjects,
+                                      ECoSProtocol::ID_S88_MANAGER);
+
+    auto reply = future.get ();
+
+    std::vector<std::future<ECoSProtocol::reply>>   portReplies;
+    std::vector<ECoSProtocol::reply>                ports;
+
+    std::vector<std::future<ECoSProtocol::reply>>   stateReplies;
+    std::vector<ECoSProtocol::reply>                states;
+    sensors.reserve (reply.lines.size ());
+
+    issueDynamicBatchCommands (reply,
+                               ECoSProtocol::get,
+                               ECoSProtocol::ARG_PORTS,
+                               portReplies);
+
+    issueDynamicBatchCommands (reply,
+                               ECoSProtocol::get,
+                               ECoSProtocol::ARG_STATE,
+                               stateReplies);
+
+    resolveReplyVector (portReplies,  ports);
+    resolveReplyVector (stateReplies, states);
+
+    for (size_t ii = 0; ii < reply.lines.size (); ++ii)
+        {
+        size_t      sensorId    = static_cast<size_t> (reply.lines[ii].id);
+        auto        values      = parseSensorValues (ports[ii], states[ii]);
+        std::string name        = "Module " + std::to_string (ii + 1);
+
+        sensors.emplace_back (const_cast<MarklinCS1*> (this),
+                              std::move (values),
+                              name,
+                              sensorId);
+        }
+
+    return sensors;
+    }
+
 layout::Route MarklinCS1::createRoute (const std::string&       name,
                                        const layout::routeList& actuators)
     {
@@ -487,6 +541,11 @@ layout::Locomotive MarklinCS1::createLocomotive (const std::string&             
         }
 
     return layout::Locomotive{ this, name, proto, address, functions, 0, locoId };
+    }
+
+layout::SensorModule MarklinCS1::createSensor (size_t num)
+    {
+    return layout::SensorModule ();
     }
 
 
@@ -920,4 +979,4 @@ void MarklinCS1::setRouteMembers (size_t id, const layout::routeList & members)
         }
     }
 
-}
+} // namespace control

@@ -40,18 +40,21 @@ public:
     /// @param[in]  controllers     List of controllers
     /// @param[in]  delegate        Delegate for component specific actions
     /// @param[in]  type            Component type
+    /// @param[in]  groupLayout     Layout to use within group boxes
     /// @param[in]  parent          Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
-    LayoutPanel (control::ControllerManager&     controllers,
-                 LayoutDelegate&                 delegate,
-                 control::controllerCapability   type,
-                 QWidget*                        parent);
+    LayoutPanel (control::ControllerManager&    controllers,
+                 LayoutDelegate&                delegate,
+                 control::controllerCapability  type,
+                 LayoutGroup::layoutType        groupLayout,
+                 QWidget*                       parent);
 
 private:
     control::ControllerManager&     m_controllers;  ///< List of controllers
     LayoutDelegate&                 m_delegate;     ///< Delegate to handle component specific actions
     control::controllerCapability   m_type;         ///< Component type
+    LayoutGroup::layoutType         m_groupLayout;  ///< Layout to use within group boxes
 
     //////////////////////////////////////////////////////////////////////////////
     /// Find the component group for a given controller
@@ -62,6 +65,7 @@ private:
     ///
     //////////////////////////////////////////////////////////////////////////////
     LayoutGroup* getGroupForController (const control::ControllerBase& controller);
+
 private slots:
     //////////////////////////////////////////////////////////////////////////////
     /// Remove a controller from this panel
@@ -86,7 +90,7 @@ private slots:
     ///
     //////////////////////////////////////////////////////////////////////////////
     void onDisconnect (const control::ControllerBase& controller);
-    
+
     //////////////////////////////////////////////////////////////////////////////
     /// Called when a refresh has been completed for a controller's cache
     ///

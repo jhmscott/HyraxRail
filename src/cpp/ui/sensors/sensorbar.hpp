@@ -9,7 +9,11 @@
 
 #pragma once
 
-#include <ui/sensors/sensorstate.hpp>
+#include <layout/sensor.hpp>
+
+#include <ui/common/layout/button.hpp>
+
+#include <ui/sensors/managestate.hpp>
 
 #include <QHBoxLayout>
 #include <QWidget>
@@ -17,13 +21,25 @@
 namespace ui::sensors
 {
 
-class SensorBar : public QWidget
+//////////////////////////////////////////////////////////////////////////////
+/// Bar containing indicators for each sensor in a module
+///
+//////////////////////////////////////////////////////////////////////////////
+class SensorBar : public common::LayoutButton
     {
 public:
-    SensorBar (const QString& name, QWidget* parent);
+    //////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  module      Module to create a bar for
+    /// @param[in]  parent      Parent widget
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    SensorBar (const layout::SensorModule& module, QWidget* parent);
 
 private:
-    std::vector<SensorState*> m_states;
+    std::vector<SensorManageState*> m_states;   ///< Sensor state indicators
+    layout::SensorModule            m_module;   ///< Module this is displaying the state of
     };
 
-}
+} // namespace ui::sensors

@@ -12,7 +12,6 @@
 #include <ui/clock/clockpanel.hpp>
 #include <ui/common/layout/panel.hpp>
 #include <ui/config/configpanel.hpp>
-#include <ui/sensors/sensorpanel.hpp>
 #include <ui/trains/dualcontrol.hpp>
 
 #include <utils/algorithm.hpp>
@@ -98,11 +97,23 @@ MainWidget::MainWidget (control::ControllerManager& controllers, QWidget* parent
 
     addTab (new trains::DualControlWidget{ m_controllers, this },
             "misc/train");
-    addTab (new common::LayoutPanel{ m_controllers, m_actuatorDel, control::CAPABILITY_ACTUATOR, this },
+    addTab (new common::LayoutPanel{ m_controllers,
+                                     m_actuatorDel,
+                                     control::CAPABILITY_ACTUATOR,
+                                     common::LayoutGroup::layoutType::GRID,
+                                     this },
             "misc/split");
-    addTab (new sensors::SensorPanel{ this },
+    addTab (new common::LayoutPanel{ m_controllers,
+                                     m_sensorDel,
+                                     control::CAPABILITY_SENSOR,
+                                     common::LayoutGroup::layoutType::VBOX,
+                                     this },
             "misc/train-track");
-    addTab (new common::LayoutPanel{ m_controllers, m_routeDel, control::CAPABILITY_ROUTE, this },
+    addTab (new common::LayoutPanel{ m_controllers,
+                                     m_routeDel,
+                                     control::CAPABILITY_ROUTE,
+                                     common::LayoutGroup::layoutType::GRID,
+                                     this },
             "misc/path");
     addTab (new clock::ClockPanel{ m_controllers, *m_automations, this },
             "misc/clock");

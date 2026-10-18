@@ -129,6 +129,26 @@ std::vector<layout::Route> ControllerBase::getRoutes () const
     return routes;
     }
 
+std::vector<layout::SensorModule> ControllerBase::getSensors () const
+    {
+    const auto&                         meta = getMetaClass ();
+    std::vector<layout::SensorModule>   sensors;
+
+    if (meta.hardwareCapabilities[CAPABILITY_SENSOR])
+        {
+        std::lock_guard lk{ m_cacheLock };
+        sensors = m_sensorCache;
+        }
+    else if (meta.softwareCapabilities[CAPABILITY_SENSOR])
+        {
+        const auto* controller = dynamic_cast<layout::SensorController*> (
+                                        m_softwareControllers[CAPABILITY_SENSOR].get ());
+        sensors = controller->getSensors ();
+        }
+
+    return sensors;
+    }
+
 layout::Route ControllerBase::createRoute (const std::string& name, const layout::routeList& actuators)
     {
     auto* controller = getCapabilityController<layout::RouteController> ();
@@ -209,6 +229,28 @@ layout::Locomotive ControllerBase::createLocomotive (const std::string&         
         }
     }
 
+layout::SensorModule ControllerBase::createSensor (size_t num)
+    {
+    auto* controller = getCapabilityController<layout::SensorController> ();
+
+    if (NULL != controller)
+        {
+        auto sensor = controller->createSensor (num);
+
+        if (getMetaClass ().hardwareCapabilities[CAPABILITY_SENSOR])
+            {
+            std::lock_guard lk{ m_cacheLock };
+            m_sensorCache.push_back (sensor);
+            }
+
+        return sensor;
+        }
+    else
+        {
+        return {};
+        }
+    }
+
 std::vector<AutomationItem> ControllerBase::getAutomationItems () const
     {
     std::vector<AutomationItem> items;
@@ -277,11 +319,13 @@ void ControllerBase::refresh ()
     auto actuators  = getActuatorsSync ();
     auto locos      = getLocomotivesSync ();
     auto routes     = getRoutesSync ();
+    auto sensors    = getSensorsSync ();
 
     std::lock_guard lk{ m_cacheLock };
     m_actuatorCache = std::move (actuators);
     m_locoCache     = std::move (locos);
     m_routeCache    = std::move (routes);
+    m_sensorCache   = std::move (sensors);
     }
 
 void ControllerBase::setDeviceInfo (const utils::device::deviceInfo& info)
@@ -355,4 +399,22 @@ std::vector<layout::Route> ControllerBase::getRoutesSync () const
 
     return routes;
     }
+
+std::vector<layout::SensorModule> ControllerBase::getSensorsSync () const
+    {
+    std::vector<layout::SensorModule> sensors;
+
+    if (getMetaClass ().hardwareCapabilities[CAPABILITY_SENSOR])
+        {
+        try
+            {
+            sensors = getCapabilityController<layout::SensorController> ()->getSensors ();
+            }
+        catch (...)
+            {}
+        }
+
+    return sensors;
+    }
+
 } // namespace control

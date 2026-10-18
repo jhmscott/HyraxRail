@@ -13,10 +13,10 @@
 #include <control/controllers/base.hpp>
 #include <control/controllers/manager.hpp>
 
-
 #include <ui/actuators/actuatordelegate.hpp>
 #include <ui/common/schemeicon.hpp>
 #include <ui/routes/routedelegate.hpp>
+#include <ui/sensors/sensordelegate.hpp>
 
 #include <ui/lang.hpp>
 
@@ -51,8 +51,9 @@ public:
 private:
     control::ControllerManager&     m_controllers;  ///< List of controllers
     control::AutomationManager*     m_automations;  ///< List of automations
-    actuators::ActuatorDelegate     m_actuatorDel;
-    routes::RouteDelegate           m_routeDel;
+    actuators::ActuatorDelegate     m_actuatorDel;  ///< Delegate for actuator panel
+    routes::RouteDelegate           m_routeDel;     ///< Delegate for route panel
+    sensors::SensorDelegate         m_sensorDel;    ///< Delegate for sensor panel
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the tab tooltips

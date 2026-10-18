@@ -21,11 +21,13 @@ namespace ui::common
 LayoutPanel::LayoutPanel (control::ControllerManager&   controllers,
                           LayoutDelegate&               delegate,
                           control::controllerCapability type,
+                          LayoutGroup::layoutType       groupLayout,
                           QWidget*                      parent) :
     QWidget (parent),
     m_controllers (controllers),
     m_delegate (delegate),
-    m_type (type)
+    m_type (type),
+    m_groupLayout (groupLayout)
     {
     QVBoxLayout* layout = new QVBoxLayout{ this };
 
@@ -33,7 +35,7 @@ LayoutPanel::LayoutPanel (control::ControllerManager&   controllers,
         {
         if (controller.getMetaClass ().hasCapability (type))
             {
-            layout->addWidget (new LayoutGroup{ controller, delegate, type, this });
+            layout->addWidget (new LayoutGroup{ controller, delegate, type, groupLayout, this });
             }
         }
 
@@ -78,7 +80,7 @@ void LayoutPanel::addController (control::ControllerBase& controller)
 
     if (controller.getMetaClass ().hasCapability (m_type))
         {
-        myLayout->addWidget (new LayoutGroup{ controller, m_delegate, m_type, this });
+        myLayout->addWidget (new LayoutGroup{ controller, m_delegate, m_type, m_groupLayout, this });
         }
     }
 
@@ -91,12 +93,12 @@ LayoutGroup* LayoutPanel::getGroupForController (const control::ControllerBase& 
                             [&] (LayoutGroup* group) -> bool
                             { return &controller == &group->getController (); });
 
-                            
+
     if (groups.end () == it )
         {
         return NULL;
         }
-    else    
+    else
         {
         return *it;
         }
@@ -112,7 +114,7 @@ void LayoutPanel::onDisconnect (const control::ControllerBase& controller)
         }
     }
 
-    
+
 void LayoutPanel::onRefresh (const control::ControllerBase& controller)
     {
     LayoutGroup* group = getGroupForController (controller);

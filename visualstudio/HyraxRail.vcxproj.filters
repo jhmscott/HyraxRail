@@ -327,6 +327,9 @@
     <ClInclude Include="..\src\cpp\ui\actuators\actuatordelegate.hpp">
       <Filter>Header Files\ui\actuators</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\sensors\sensordelegate.hpp">
+      <Filter>Header Files\ui\sensors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cpp\control\controllers\base.cpp">
@@ -400,9 +403,6 @@
     </ClCompile>
     <ClCompile Include="..\src\cpp\ui\common\optionaldropdown.cpp">
       <Filter>Source Files\ui\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\cpp\ui\sensors\sensorpanel.cpp">
-      <Filter>Source Files\ui\sensors</Filter>
     </ClCompile>
     <ClCompile Include="..\src\cpp\ui\sensors\sensorstate.cpp">
       <Filter>Source Files\ui\sensors</Filter>
@@ -578,9 +578,6 @@
     <ClCompile Include="..\src\cpp\control\controllers\meta.cpp">
       <Filter>Source Files\control\controllers</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\cpp\layout\virtual\vroute.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\cpp\ui\common\layout\group.cpp">
       <Filter>Source Files\ui\common\layout</Filter>
     </ClCompile>
@@ -598,6 +595,18 @@
     </ClCompile>
     <ClCompile Include="..\src\cpp\ui\common\elidedlabel.cpp">
       <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\sensors\sensordelegate.cpp">
+      <Filter>Source Files\ui\sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\sensors\managestate.cpp">
+      <Filter>Source Files\ui\sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\layout\sensor.cpp">
+      <Filter>Source Files\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\layout\virtual\vroute.cpp">
+      <Filter>Source Files\layout\virtual</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -647,9 +656,6 @@
       <Filter>Header Files\ui\common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cpp\ui\sensors\sensorbar.hpp">
-      <Filter>Header Files\ui\sensors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\sensors\sensorpanel.hpp">
       <Filter>Header Files\ui\sensors</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cpp\layout\route.hpp">
@@ -809,6 +815,12 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\common\elidedlabel.hpp">
       <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\layout\sensor.hpp">
+      <Filter>Header Files\layout</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\sensors\managestate.hpp">
+      <Filter>Header Files\ui\sensors</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

@@ -7,42 +7,41 @@
  * @copyright   Copyright (c) 2026 Justin Scott
  */
 
-#include <ui/common/stringdialog.hpp>
 
 #include <ui/sensors/sensorstate.hpp>
 
 #include <QApplication>
-#include <QLabel>
-#include <QMenu>
 #include <QPainter>
 #include <QStyleHints>
-#include <QWidgetAction>
 
 namespace ui::sensors
 {
-SensorState::SensorState (uint radius, bool state, int idx, QWidget* parent) :
+SensorDisplayState::SensorDisplayState (const layout::SensorModule& module,
+                                        size_t                      idx,
+                                        uint                        radius,
+                                        QWidget*                    parent) :
     QWidget (parent),
+    m_module (module),
+    m_idx (idx),
     m_radius (radius),
-    m_state (state),
     m_notified (false),
-    m_idx (idx)
+    m_state (m_module[idx])
     {
-    setFixedSize (radius * 2 + padding,
-                  radius * 2 + padding);
+    static constexpr uint PADDING = 4;
 
-    setToolTip (getName ());
-    setContextMenuPolicy (Qt::CustomContextMenu);
+    setFixedSize (radius * 2 + PADDING,
+                  radius * 2 + PADDING);
 
-    connect (this,
-            &QWidget::customContextMenuRequested,
-             this,
-            &SensorState::openMenu);
+    connect (&m_module,
+             &layout::SensorModule::sensorChanged,
+              this,
+             &SensorDisplayState::stateChanged);
     }
 
-void SensorState::paintEvent (QPaintEvent* event)
+void SensorDisplayState::paintEvent (QPaintEvent* event)
     {
     QPainter        painter{ this };
-    Qt::GlobalColor color   = m_state       ? Qt::green : Qt::red;
+    Qt::GlobalColor color   = m_state ? Qt::green : Qt::red;
     Qt::GlobalColor outline;
     QPoint          center  = rect ().center ();
     bool            darkMode= Qt::ColorScheme::Dark == qApp->styleHints ()->colorScheme ();
@@ -66,70 +65,18 @@ void SensorState::paintEvent (QPaintEvent* event)
     painter.drawEllipse (center, m_radius + 1, m_radius + 1);
     }
 
-void SensorState::openMenu (QPoint pos)
+void SensorDisplayState::stateChanged (size_t idx, bool value)
     {
-    QMenu*          menu    = new QMenu{ this };
-    QAction*        notify;
-    QAction*        rename;
-    QWidgetAction*  header  = new QWidgetAction{ menu };
-    QLabel*         label   = new QLabel{ getName (), menu };
-
-    label->setAlignment (Qt::AlignHCenter);
-    label->setMargin (5);
-
-    header->setDefaultWidget (label);
-
-    menu->addAction (header);
-    menu->addSeparator ();
-
-    notify = menu->addAction ("Notify");
-    rename = menu->addAction ("Rename");
-
-    notify->setCheckable (true);
-    notify->setChecked (m_notified);
-
-    connect (notify,
-            &QAction::toggled,
-             this,
-            &SensorState::setNotified);
-
-    connect (rename,
-            &QAction::triggered,
-             this,
-            &SensorState::rename);
-
-    // TODO: I hate the checkmark style but adding this inexplicably adds a frame to the unchecked
-    // version (but not the unchecked version)
-    // I have tried adde border: none; background: transparent;
-    // It doesn't seem to care
-    //
-#if 0
-    menu->setStyleSheet (menu->styleSheet () +
-                         "QMenu::indicator:checked{  image: url(:/icons/misc/dot.svg); }"
-                         "QMenu::indicator:unchecked{ image: url(:/icons/misc/empty-dot.svg); }");
-#endif
-    menu->popup (mapToGlobal (pos));
-    }
-
-void SensorState::rename (bool checked)
-    {
-    common::StringDialog dlg{ this };
-
-    dlg.setWindowTitle ("Rename Port");
-    dlg.setPlaceholder (getPortName ());
-
-    if (hasCustomName ())
+    if (idx == m_idx)
         {
-        dlg.setText (m_name);
-        }
+        m_state = value;
 
-    if (QDialog::Accepted == dlg.exec ())
-        {
-        setName (dlg.getText ());
+        // redraw
+        update ();
         }
     }
 
-void SensorState::setNotified (bool notified)
+void SensorDisplayState::setNotified (bool notified)
     {
     m_notified = notified;
 

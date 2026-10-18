@@ -124,6 +124,14 @@ public:
     std::vector<layout::Route> getRoutes () const;
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Get the sensors managed by this controller
+    ///
+    /// @return     List of sensor modules
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::vector<layout::SensorModule> getSensors () const;
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Create a route on  the controller
     ///
     /// @param[in]  name        Name of the route
@@ -166,6 +174,16 @@ public:
                                          layout::trackProtocol                  proto,
                                          uint                                   address,
                                          const std::vector<layout::funcInfo>&   functions);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Create a sensor module
+    ///
+    /// @param[in]  num     Number of sensors in the module
+    ///
+    /// @return     Newly created sensor
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    layout::SensorModule createSensor (size_t num);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get a list of the items controlled by this controller than can be automated
@@ -305,14 +323,15 @@ private:
     /// List of controllers implemented in software
     using softwareCapabilityList    = std::array<softwareController, NUM_CAPABILITIES>;
 
-    softwareCapabilityList          m_softwareControllers;  ///< Controller capabilities implemented in software
-    std::string                     m_friendlyName;         ///< Name used in UI
-    std::once_flag                  m_swInitOnce;           ///< Once flag for the software capability init
+    softwareCapabilityList              m_softwareControllers;  ///< Controller capabilities implemented in software
+    std::string                         m_friendlyName;         ///< Name used in UI
+    std::once_flag                      m_swInitOnce;           ///< Once flag for the software capability init
 
-    std::vector<layout::Actuator>   m_actuatorCache;        ///< Cache of actuators fetched from controller
-    std::vector<layout::Locomotive> m_locoCache;            ///< Cache of locomotives fetched from controller
-    std::vector<layout::Route>      m_routeCache;           ///< Cache of routes fetched from controller
-    mutable std::mutex              m_cacheLock;            ///< Mutex protection for caches
+    std::vector<layout::Actuator>       m_actuatorCache;        ///< Cache of actuators fetched from controller
+    std::vector<layout::Locomotive>     m_locoCache;            ///< Cache of locomotives fetched from controller
+    std::vector<layout::Route>          m_routeCache;           ///< Cache of routes fetched from controller
+    std::vector<layout::SensorModule>   m_sensorCache;
+    mutable std::mutex                  m_cacheLock;            ///< Mutex protection for caches
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Initializes the software capabilities once, thread safely. Future calls
@@ -350,6 +369,15 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     std::vector<layout::Route> getRoutesSync () const;
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Synchronously request the sensors managed by this controller
+    ///
+    /// @return     List of sensor modules
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::vector<layout::SensorModule> getSensorsSync () const;
     };
 ;
 

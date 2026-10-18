@@ -56,7 +56,8 @@ class MockController :
     public LocomotiveControllerStubs,
     public ActuatorControllerStubs,
     public RouteControllerStubs,
-    public EmergencyStopControllerStubs
+    public EmergencyStopControllerStubs,
+    public SensorControllerStubs
     {
     CONTROLLER_DEFINE (MockController, "Mocked Controller", MockControllerProtocol)
 public:
@@ -64,10 +65,12 @@ public:
     MockPtr<layout::LocomotiveController>   locomotiveController;   ///< Mocked loco controller interface
     MockPtr<layout::RouteController>        routeController;        ///< Mocked route controller interface
     MockPtr<layout::EmergencyStopController>estopController;        ///< Mocked estop controller interface
+    MockPtr<layout::SensorController>       sensorController;       ///< Mocked sensor controller interface
 
     std::vector<layout::Actuator>           actuators;
     std::vector<layout::Locomotive>         locomotives;
     std::vector<layout::Route>              routes;
+    std::vector<layout::SensorModule>       sensors;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Mocked controller constructor
@@ -82,6 +85,7 @@ public:
         locomotiveController    (new fakeit::Mock<layout::LocomotiveController>     { *this }),
         routeController         (new fakeit::Mock<layout::RouteController>          { *this }),
         estopController         (new fakeit::Mock<layout::EmergencyStopController>  { *this }),
+        sensorController        (new fakeit::Mock<layout::SensorController>         { *this }),
         control::ControllerBase (friendlyName, std::move (proto))
         {
         fakeit::When (Method (*actuatorController, getActuators)).AlwaysDo (
@@ -92,6 +96,9 @@ public:
 
         fakeit::When (Method (*routeController, getRoutes)).AlwaysDo (
             [this] () { return routes; });
+
+        fakeit::When (Method (*sensorController, getSensors)).AlwaysDo (
+            [this] () { return sensors; });
         }
     };
 

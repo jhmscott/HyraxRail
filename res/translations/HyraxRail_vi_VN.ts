@@ -158,18 +158,18 @@
 <context>
     <name>layout::Locomotive</name>
     <message>
-        <location filename="../../src/cpp/layout/locomotive.cpp" line="156"/>
-        <location filename="../../src/cpp/layout/locomotive.cpp" line="163"/>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="155"/>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="162"/>
         <source>Function %1 : %2</source>
         <translation type="unfinished">Tác dụng %1 : %2</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/layout/locomotive.cpp" line="164"/>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="163"/>
         <source>Headlights</source>
         <translation type="unfinished">Đèn pha</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/layout/locomotive.cpp" line="168"/>
+        <location filename="../../src/cpp/layout/locomotive.cpp" line="167"/>
         <source>Function %1</source>
         <translation type="unfinished">Tác dụng %1</translation>
     </message>
@@ -235,28 +235,28 @@
 <context>
     <name>ui::MainWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="141"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="152"/>
         <source>Trains</source>
         <translation>Tàu</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="142"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="153"/>
         <source>Actuators</source>
         <translatorcomment>actuators</translatorcomment>
         <translation>Bộ Truyền Động</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="143"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="154"/>
         <source>Sensors</source>
         <translation>Cảm Biến Điện Tử</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="144"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="155"/>
         <source>Routes</source>
         <translation>Tuyến Đường</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="145"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="156"/>
         <source>Fast Clock</source>
         <translation>Đồng Hồ Nhanh</translation>
     </message>
@@ -265,7 +265,7 @@
         <translation type="obsolete">Lập Trình</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="146"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="157"/>
         <source>Settings</source>
         <translation>Cài Đặt</translation>
     </message>
@@ -620,14 +620,19 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::common::LayoutGroup</name>
     <message>
-        <location filename="../../src/cpp/ui/common/layout/group.cpp" line="73"/>
+        <location filename="../../src/cpp/ui/common/layout/group.cpp" line="81"/>
         <source>Add Route</source>
         <translation type="unfinished">Thêm Tuyến Đường</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/common/layout/group.cpp" line="78"/>
+        <location filename="../../src/cpp/ui/common/layout/group.cpp" line="86"/>
         <source>Add Switching Item</source>
         <translation type="unfinished">Thêm mục chuyển đổi</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/common/layout/group.cpp" line="91"/>
+        <source>Add Sensor Module</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -732,12 +737,17 @@ Would you like to pause it or keep it running?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/dialog.cpp" line="294"/>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="271"/>
+        <source>Track Sensor Controller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="295"/>
         <source>Hardware Capabilities:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/dialog.cpp" line="299"/>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="300"/>
         <source>Software Capabilities:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -913,6 +923,29 @@ Would you like to pause it or keep it running?</source>
     <message>
         <source>Add Route</source>
         <translation type="vanished">Thêm Tuyến Đường</translation>
+    </message>
+</context>
+<context>
+    <name>ui::sensors::SensorManageState</name>
+    <message>
+        <location filename="../../src/cpp/ui/sensors/managestate.cpp" line="51"/>
+        <source>Notify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/sensors/managestate.cpp" line="52"/>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/sensors/managestate.cpp" line="85"/>
+        <source>Rename Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/sensors/managestate.hpp" line="73"/>
+        <source>Port %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

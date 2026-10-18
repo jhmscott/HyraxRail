@@ -38,7 +38,7 @@ static const uint                   NEW_ADDR    = 42;
 /// @param[in]  actuator        Actuator to test
 ///
 ///////////////////////////////////////////////////////////////////////////////
-static void assetNewActuatorState (const layout::Actuator& actuator)
+static void assertNewActuatorState (const layout::Actuator& actuator)
     {
     QCOMPARE (actuator.getName (),      NEW_NAME);
     QCOMPARE (actuator.getIcon (),      NEW_ICON);
@@ -54,7 +54,7 @@ static void assetNewActuatorState (const layout::Actuator& actuator)
 /// @param[in]  actuator        Actuator to test
 ///
 ///////////////////////////////////////////////////////////////////////////////
-static void assetInitActuatorState (const layout::Actuator& actuator)
+static void assertInitActuatorState (const layout::Actuator& actuator)
     {
     QCOMPARE (actuator.getId (),        ID);
     QCOMPARE (actuator.getName (),      INITIAL_NAME);
@@ -124,14 +124,14 @@ private slots:
 
 
         // Assert the copy was correct
-        assetInitActuatorState (actuatorCopy);
+        assertInitActuatorState (actuatorCopy);
 
         layout::Actuator actuatorAssign;
 
         actuatorAssign = actuator;
 
         // Assert the assignment was correct
-        assetInitActuatorState (actuatorAssign);
+        assertInitActuatorState (actuatorAssign);
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -167,8 +167,8 @@ private slots:
         // Since state is shared accross all actuators with the same ID,
         // it should have been updated for both the original and copy
         //
-        assetNewActuatorState (actuator);
-        assetNewActuatorState (actuatorCopy);
+        assertNewActuatorState (actuator);
+        assertNewActuatorState (actuatorCopy);
 
         // Now check that we've tried to write the new state back to the controller
         fakeit::Verify (Method (*mockController, setActuatorMode)       .Using (ID, NEW_MODE));

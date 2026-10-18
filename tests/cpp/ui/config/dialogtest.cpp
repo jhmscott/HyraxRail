@@ -33,7 +33,8 @@ static void testCapabilitiesString (std::string_view string, control::controller
         "Locomotive Controller\n",
         "Actuator Controller\n",
         "Route Controller\n",
-        "Emergency Stop\n"
+        "Emergency Stop\n",
+        "Track Sensor Controller\n"
         };
     ASSERT_ARRAY_LENGTH (CAPABILITY_NAMES, control::NUM_CAPABILITIES);
 

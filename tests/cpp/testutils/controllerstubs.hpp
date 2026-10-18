@@ -148,6 +148,20 @@ public:
     };
 
 ///////////////////////////////////////////////////////////////////////////////
+/// All stubs needed for a sensor controller
+///
+/// @ingroup    STUB_CLASS
+///
+///////////////////////////////////////////////////////////////////////////////
+class SensorControllerStubs : public layout::SensorController
+    {
+public:
+    virtual std::vector<layout::SensorModule> getSensors () const override { return {}; }
+
+    virtual layout::SensorModule createSensor (size_t num) override { return {}; }
+    };
+
+///////////////////////////////////////////////////////////////////////////////
 /// All stubs needed for a controller meta class
 ///
 /// @ingroup    STUB_CLASS

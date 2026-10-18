@@ -29,6 +29,7 @@ namespace ui::common
 LayoutGroup::LayoutGroup (control::ControllerBase&      controller,
                           LayoutDelegate&               delegate,
                           control::controllerCapability type,
+                          layoutType                    layoutType,
                           QWidget*                      parent) :
     QGroupBox (controller.getFriendlyName ().c_str (), parent),
     m_controller (controller),
@@ -37,12 +38,19 @@ LayoutGroup::LayoutGroup (control::ControllerBase&      controller,
     {
     QVBoxLayout*    layout      = new QVBoxLayout{};
 
-    m_gridLayout = new common::AutoGridLayout
+    if (layoutType::GRID == layoutType)
         {
-        common::AutoGridLayout::expand::ROW_FIRST,
-        common::AutoGridLayout::EXPAND,
-        NULL
-        };
+        m_gridLayout = new common::AutoGridLayout
+            {
+            common::AutoGridLayout::expand::ROW_FIRST,
+            common::AutoGridLayout::EXPAND,
+            NULL
+            };
+        }
+    else
+        {
+        m_gridLayout = new QVBoxLayout;
+        }
 
     setEnabled (controller.getConnectionHealth ().isConnected ());
     refresh ();
@@ -74,8 +82,13 @@ void LayoutGroup::setLabels ()
             break;
             }
         case control::CAPABILITY_ACTUATOR:
-            { 
+            {
             m_addLabel->setLabelText (tr ("Add Switching Item"));
+            break;
+            }
+        case control::CAPABILITY_SENSOR:
+            {
+            m_addLabel->setLabelText (tr ("Add Sensor Module"));
             break;
             }
         default:

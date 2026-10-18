@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file        utils/algorithmtest.hpp
  * @brief       Test suite for the algorithm library
  * @author      Justin Scott
@@ -8,6 +8,7 @@
  */
 
 
+#include <testutils/assert.hpp>
 #include <testutils/ext/fakeit.hpp>
 
 #include <utils/algorithm.hpp>
@@ -180,6 +181,49 @@ static void safeGetTestImpl (MemType T::* memVar, const identityType<MemType>& e
     assertSafeGetMember         (memVar, expected);
     }
 
+///////////////////////////////////////////////////////////////////////////////
+/// Templated test case implementation for dynamicBitsetFixedTest
+///
+/// @tparam     T       Integer type to test with
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T>
+static void dynamicBitsetFixedTestImpl ()
+    {
+    // Sanity check
+    static_assert (not std::numeric_limits<T>::is_signed,
+                   "Test logic assumes unisgned int");
+
+    static constexpr size_t EXPECTED_SIZE = sizeof (T) * 8;
+
+    auto isTrue = [] (bool bl) -> bool { return bl; };
+
+    // First test, all 0s
+    auto test1 = toDynamicBitset<T> (0);
+
+    QCOMPARE (test1.size (), EXPECTED_SIZE);
+    QVERIFY (std::none_of (test1.begin (), test1.end (), isTrue));
+
+    // Second test, all 1s
+    auto test2 = toDynamicBitset (std::numeric_limits<T>::max ());
+
+    QCOMPARE (test2.size (), EXPECTED_SIZE);
+    QVERIFY (std::all_of (test2.begin (), test2.end (), isTrue));
+
+    // Third test, single bit
+    for (size_t ii = 0; ii < EXPECTED_SIZE; ++ii)
+        {
+        auto test3 = toDynamicBitset<T> ((static_cast<T> (1) << ii));
+
+        QCOMPARE (test3.size (), EXPECTED_SIZE);
+        QVERIFY (test3[ii]);
+
+        test3[ii] = false;
+
+        QVERIFY (std::none_of (test3.begin (), test3.end (), isTrue));
+        }
+
+    }
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Test suite for the algorithm library
@@ -603,6 +647,81 @@ private slots:
         QVERIFY (constFound);
         QVERIFY (strFound);
         QVERIFY (polyBaseFound);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Basic test to check for mismatches between two ranges
+    ///
+    /// @see    utils::algorithm::mismatches()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void mismatchesTest ()
+        {
+        static const std::vector<size_t> EXPECTED{ 1, 3 };
+
+        std::vector<int> vector{ 1, 2, 3, 4, 5 };
+        std::list<int>   list{ 1, 3, 3, 2, 5 };
+
+        auto differences = mismatches (vector, list);
+
+        COMPARE_RANGE (differences, EXPECTED);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Tests creating a fixed size dynamic bitset from an integer type
+    ///
+    /// @see    utils::algorithm::toDynamicBitset()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void dynamicBitsetFixedTest ()
+        {
+        using Types = std::tuple<uint8_t, uint16_t, uint32_t, uint64_t>;
+
+        forEachType<Types> (
+            [] (auto envelope)
+            {
+            using T = typename decltype (envelope)::type;
+
+            dynamicBitsetFixedTestImpl<T> ();
+            });
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for dynamicBitsetDynamicTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void dynamicBitsetDynamicTest_data ()
+        {
+        QTest::addColumn<int> ("size");
+        QTest::addColumn<int> ("bit");
+
+        for (int size = 1; size <= 16; ++size)
+            {
+            for (int bit = 0; bit < size; ++bit)
+                {
+                QTest::addRow ("Bit %d of %d", bit, size) << size << bit;
+                }
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Tests creating an arbitrarily sized bitset from an integer
+    ///
+    /// @see    utils::algorithm::toDynamicBitset()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void dynamicBitsetDynamicTest ()
+        {
+        QFETCH (int, size);
+        QFETCH (int, bit);
+
+        int bitset = (1 << bit);
+
+        auto bits = toDynamicBitset (bitset, size);
+
+        QVERIFY (bits[bit]);
+        bits[bit] = false;
+        QVERIFY (std::none_of (bits.begin (), bits.end (), [] (bool bl) -> bool { return bl; }));
         }
     };
 

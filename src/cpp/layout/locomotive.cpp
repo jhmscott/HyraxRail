@@ -46,7 +46,6 @@ void Locomotive::requestControl ()
         }
     }
 
-
 void Locomotive::releaseControl ()
     {
     if (NULL != m_controller)

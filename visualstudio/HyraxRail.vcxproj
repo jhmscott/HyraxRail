@@ -225,6 +225,7 @@
     <ClCompile Include="..\src\cpp\layout\actuator.cpp" />
     <ClCompile Include="..\src\cpp\layout\locomotive.cpp" />
     <ClCompile Include="..\src\cpp\layout\route.cpp" />
+    <ClCompile Include="..\src\cpp\layout\sensor.cpp" />
     <ClCompile Include="..\src\cpp\layout\virtual\vestop.cpp" />
     <ClCompile Include="..\src\cpp\layout\virtual\vroute.cpp" />
     <ClCompile Include="..\src\cpp\ui\actuators\actuatorbutton.cpp" />
@@ -294,8 +295,9 @@
     <ClCompile Include="..\src\cpp\ui\routes\includebutton.cpp" />
     <ClCompile Include="..\src\cpp\ui\routes\routebutton.cpp" />
     <ClCompile Include="..\src\cpp\ui\routes\routedelegate.cpp" />
+    <ClCompile Include="..\src\cpp\ui\sensors\managestate.cpp" />
     <ClCompile Include="..\src\cpp\ui\sensors\sensorbar.cpp" />
-    <ClCompile Include="..\src\cpp\ui\sensors\sensorpanel.cpp" />
+    <ClCompile Include="..\src\cpp\ui\sensors\sensordelegate.cpp" />
     <ClCompile Include="..\src\cpp\ui\sensors\sensorstate.cpp" />
     <ClCompile Include="..\src\cpp\ui\splash.cpp" />
     <ClCompile Include="..\src\cpp\ui\trains\dualcontrol.cpp" />
@@ -318,6 +320,7 @@
     <ClInclude Include="..\src\cpp\control\controllers\meta.hpp" />
     <ClInclude Include="..\src\cpp\control\controllers\utils.hpp" />
     <ClInclude Include="..\src\cpp\layout\estop.hpp" />
+    <QtMoc Include="..\src\cpp\layout\sensor.hpp" />
     <ClInclude Include="..\src\cpp\layout\utils.hpp" />
     <ClInclude Include="..\src\cpp\layout\virtual\base.hpp" />
     <ClInclude Include="..\src\cpp\layout\virtual\vestop.hpp" />
@@ -331,6 +334,8 @@
     <ClInclude Include="..\src\cpp\ui\common\layout\panel.hpp" />
     <ClInclude Include="..\src\cpp\ui\routes\routedelegate.hpp" />
     <QtMoc Include="..\src\cpp\ui\splash.hpp" />
+    <QtMoc Include="..\src\cpp\ui\sensors\managestate.hpp" />
+    <ClInclude Include="..\src\cpp\ui\sensors\sensordelegate.hpp" />
     <ClInclude Include="..\src\cpp\ui\trains\resources.hpp" />
     <ClInclude Include="..\src\cpp\utils\qobj.hpp" />
     <ClInclude Include="..\src\cpp\utils\traits.hpp" />
@@ -407,7 +412,6 @@
     <ClInclude Include="..\src\cpp\ui\dismiss.hpp" />
     <ClInclude Include="..\src\cpp\ui\lang.hpp" />
     <ClInclude Include="..\src\cpp\ui\sensors\sensorbar.hpp" />
-    <ClInclude Include="..\src\cpp\ui\sensors\sensorpanel.hpp" />
     <QtMoc Include="..\src\cpp\ui\sensors\sensorstate.hpp" />
     <ClInclude Include="..\src\cpp\ui\trains\dualcontrol.hpp" />
     <QtMoc Include="..\src\cpp\ui\trains\functionpanel.hpp" />

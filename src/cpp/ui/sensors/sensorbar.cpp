@@ -7,32 +7,35 @@
  * @copyright   Copyright (c) 2026 Justin Scott
  */
 
+
 #include <ui/sensors/sensorbar.hpp>
 
 #include <QLabel>
 
 namespace ui::sensors
 {
-SensorBar::SensorBar (const QString& name, QWidget* parent) :
-    QWidget (parent)
+SensorBar::SensorBar (const layout::SensorModule& module, QWidget* parent) :
+    common::LayoutButton (parent),
+    m_module (module)
     {
     QVBoxLayout* layout = new QVBoxLayout{ this };
     QHBoxLayout* states = new QHBoxLayout{ this };
 
-    m_states.reserve (8);
+    m_states.reserve (m_module.size ());
 
-    for (int ii = 0; ii < 8; ++ii)
+    for (size_t ii = 0; ii < m_module.size (); ++ii)
         {
         states->addWidget (
             m_states.emplace_back (
-                new SensorState{ 5, 0 == (ii % 2), ii, this }));
+                new SensorManageState{ m_module, ii, 5, this}));
         }
 
     setSizePolicy (QSizePolicy::Maximum, QSizePolicy::Maximum);
 
     layout->addLayout (states);
-    layout->addWidget (new QLabel{ name, this }, 0, Qt::AlignHCenter);
+    layout->addWidget (new QLabel{ module.getName ().c_str (), this}, 0, Qt::AlignHCenter);
 
     setLayout (layout);
     }
-}
+
+} // namespace ui::sensors

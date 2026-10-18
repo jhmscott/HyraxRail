@@ -267,7 +267,8 @@ void Dialog::setControllerTooltip ()
         tr ("Locomotive Controller"),
         tr ("Actuator Controller"),
         tr ("Route Controller"),
-        tr ("Emergency Stop")
+        tr ("Emergency Stop"),
+        tr ("Track Sensor Controller")
         };
     ASSERT_ARRAY_LENGTH (CAPABILITY_NAMES, control::NUM_CAPABILITIES);
 
