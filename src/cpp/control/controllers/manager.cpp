@@ -178,7 +178,6 @@ ControllerManager::findController (const ControllerBase& controller) const
                          { return inst.controller.get () == &controller; });
     }
 
-
 std::unique_ptr<ControllerManager>
 loadControllersFromUserSettings (std::function<void (const std::string&)> progress)
     {
@@ -340,4 +339,5 @@ void saveControllersToUserSettings (const ControllerManager& controllers)
             }
         }
     }
+
 } // namespace control

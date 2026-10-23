@@ -103,6 +103,12 @@ target_include_directories(HyraxRailTestCore
     PRIVATE src/cpp ${CMAKE_SOURCE_DIR})
 target_precompile_headers(HyraxRailTestCore PRIVATE src/cpp/stdafx.h)
 
+# Compiler specific flags
+
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    add_compile_options (-Wno-c++20-extensions)
+endif ()
+
 # Actual executable target
 
 qt_add_executable(HyraxRail

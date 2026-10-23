@@ -38,7 +38,7 @@ public:
     ///
     //////////////////////////////////////////////////////////////////////////////
     virtual void createButtons (control::ControllerBase&                    controller,
-                                std::function<void (common::LayoutButton*)> addToLayout);
+                                std::function<void (common::LayoutButton*)> addToLayout) override;
     };
 
 } // namespace ui::sensors

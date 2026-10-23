@@ -300,8 +300,8 @@ protected:
     /// @param[in]  args        Arguments to call member with
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    template<class ComponentT, class RetT, class... Args>
-    void callAll (RetT (ComponentT::*func)(Args...), Args... args)
+    template<class ComponentT, class RetT, class... Params, class... Args>
+    void callAll (RetT (ComponentT::*func)(Params...), Args... args)
         { m_controller->callAll (m_id, func, args...); }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -393,8 +393,8 @@ private:
     /// @param[in]  args        Arguments to call member with
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    template<class ComponentT, class RetT, class... Args>
-    void callAll (size_t id, RetT (ComponentT::* func)(Args...), Args... args)
+    template<class ComponentT, class RetT, class... Params, class... Args>
+    void callAll (size_t id, RetT (ComponentT::* func)(Params...), Args... args)
         {
         for (Component* component : m_components)
             {

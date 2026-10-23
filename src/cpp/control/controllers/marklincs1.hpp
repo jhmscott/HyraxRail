@@ -87,7 +87,7 @@ public:
     /// @return     List of sensor modules
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual std::vector<layout::SensorModule> getSensors () const;
+    virtual std::vector<layout::SensorModule> getSensors () const override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Create a route on  the controller
@@ -411,7 +411,6 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void releaseRouteControl (size_t id) override;
-
 
     };
 
