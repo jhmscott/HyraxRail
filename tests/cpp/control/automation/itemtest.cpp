@@ -1,5 +1,5 @@
 /**
- * @file        automation/itemtest.hpp
+ * @file        automation/itemtest.cpp
  * @brief       Test suite for the automation item class
  * @author      Justin Scott
  * @date        2026-09-25

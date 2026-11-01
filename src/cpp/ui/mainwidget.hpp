@@ -14,7 +14,7 @@
 #include <control/controllers/manager.hpp>
 
 #include <ui/actuators/actuatordelegate.hpp>
-#include <ui/common/schemeicon.hpp>
+#include <ui/common/swipetab.hpp>
 #include <ui/routes/routedelegate.hpp>
 #include <ui/sensors/sensordelegate.hpp>
 
@@ -30,7 +30,7 @@ namespace ui
 /// Main widget, which comprises the client area of the main widget
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class MainWidget : public common::SchemeTabWidget
+class MainWidget : public common::SwipeTabWidget
     {
     Q_OBJECT;
 public:
@@ -61,7 +61,7 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     void setTooltips ();
 
-    UILANG_ON_CHANGE (common::SchemeTabWidget, setTooltips ())
+    UILANG_ON_CHANGE (common::SwipeTabWidget, setTooltips ())
     };
 
 } // namespace ui

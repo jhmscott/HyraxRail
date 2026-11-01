@@ -1,5 +1,5 @@
 /**
- * @file        utils/traitstest.hpp
+ * @file        utils/traitstest.cpp
  * @brief       Test suite for the type traits library
  * @author      Justin Scott
  * @date        2026-09-13

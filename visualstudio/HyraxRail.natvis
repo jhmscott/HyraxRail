@@ -34,6 +34,13 @@
         <DisplayString>{major}.{minor}.{micro}</DisplayString>
     </Type>
 
+	<Type Name="utils::VelocityCalculator">
+		<DisplayString>Num={m_points.size()} Max={m_numPoints} Decay={m_decay,g}</DisplayString>
+		<Expand>
+			<ExpandedItem>m_points</ExpandedItem>
+		</Expand>
+	</Type>
+
 	<!-- Layout Components -->
 
 	<Type Name="layout::ComponentDerived&lt;*&gt;">

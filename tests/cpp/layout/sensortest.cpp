@@ -1,5 +1,5 @@
 /**
- * @file        layout/sensortest.hpp
+ * @file        layout/sensortest.cpp
  * @brief       Test suite for the sensor module layout component
  * @author      Justin Scott
  * @date        2026-10-17

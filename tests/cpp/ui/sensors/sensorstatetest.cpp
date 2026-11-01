@@ -1,5 +1,5 @@
 /**
- * @file        common/sensorstatetest.hpp
+ * @file        common/sensorstatetest.cpp
  * @brief       Test suite for the sensor state widget
  * @author      Justin Scott
  * @date        2026-10-17

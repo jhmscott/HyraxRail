@@ -1,5 +1,5 @@
 /**
- * @file        common/utilstest.hpp
+ * @file        common/utilstest.cpp
  * @brief       Test suite for the UI common utilities
  * @author      Justin Scott
  * @date        2026-08-14
@@ -132,6 +132,18 @@ private slots:
         }
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for clearLayoutTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void clearLayoutTest_data ()
+        {
+        QTest::addColumn<bool> ("free");
+
+        QTest::newRow ("free")  << true;
+        QTest::newRow ("don't free")  << false;
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Test removing all items from a layout using clearLayout()
     ///
     /// @see    ui::common::clearLayout()
@@ -139,27 +151,39 @@ private slots:
     ///////////////////////////////////////////////////////////////////////////////
     void clearLayoutTest ()
         {
+        QFETCH (bool, free);
+
+        QWidget         topLevel; // topLevel widget, to ensure these are cleaned up
+
         QHBoxLayout     parent;
         QVBoxLayout*    child;
         QWidget*        widget;
 
-        parent.addWidget (new QComboBox);
-        parent.addWidget (new QPushButton);
-        parent.addLayout (child = new QVBoxLayout);
-        parent.addWidget (widget = new QLabel);
+        parent.addWidget (new QComboBox{ &topLevel });
+        parent.addWidget (new QPushButton{ &topLevel });
+        parent.addLayout (child  = new QVBoxLayout);
+        parent.addWidget (widget = new QLabel{ &topLevel });
 
-        child->addWidget (new QComboBox);
-        child->addWidget (new QPushButton);
-        child->addWidget (new QLabel);
+        child->addWidget (new QComboBox{ &topLevel });
+        child->addWidget (new QPushButton{ &topLevel });
+        child->addWidget (new QLabel{ &topLevel });
 
         QSignalSpy spy1{ child,   &QObject::destroyed };
         QSignalSpy spy2{ widget,  &QObject::destroyed };
 
-        clearLayout (parent);
+        clearLayout (parent, free);
 
-        // Confirm the widget and layout were destroyed
-        QCOMPARE (spy1.count (), 1);
-        QCOMPARE (spy2.count (), 1);
+        if (free)
+            {
+            // Confirm the widget and layout were destroyed
+            QCOMPARE (spy1.count (), 1);
+            QCOMPARE (spy2.count (), 1);
+            }
+        else
+            {
+            QCOMPARE (spy1.count (), 0);
+            QCOMPARE (spy2.count (), 0);
+            }
 
         QCOMPARE (parent.count (), 0);
         }

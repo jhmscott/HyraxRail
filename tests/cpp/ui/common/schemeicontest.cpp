@@ -1,5 +1,5 @@
 /**
- * @file        common/schemeicontest.hpp
+ * @file        common/schemeicontest.cpp
  * @brief       Test suite for the colour scheme aware icon widgets
  * @author      Justin Scott
  * @date        2026-09-10
@@ -17,9 +17,28 @@
 #include <QStyleHints>
 #include <QtTest>
 
-
-
 using namespace ui::common;
+
+/// Icons used by tab bar
+static const std::map<Qt::ColorScheme, std::vector<QIcon>> EXPECTED_ICONS =
+    {
+        {
+        Qt::ColorScheme::Light,
+            {
+            QIcon{ ":/icons/light/misc/train.svg" },
+            QIcon{ ":/icons/light/misc/arrow-left.svg" },
+            QIcon{ ":/icons/light/misc/path.svg" }
+            }
+        },
+        {
+        Qt::ColorScheme::Dark,
+            {
+            QIcon{ ":/icons/dark/misc/train.svg" },
+            QIcon{ ":/icons/dark/misc/arrow-left.svg" },
+            QIcon{ ":/icons/dark/misc/path.svg" }
+            }
+        }
+    };
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Test data for changing the colour scheme
@@ -58,7 +77,7 @@ static void assertComboboxIcons (const QComboBox& cb, const std::vector<QIcon>& 
 /// @param[in]  expected    Expected icons
 ///
 ///////////////////////////////////////////////////////////////////////////////
-static void assertTabWidgetIcons (const QTabWidget& tabs, const std::vector<QIcon>& expected)
+static void assertTabWidgetIcons (const QTabBar& tabs, const std::vector<QIcon>& expected)
     {
     QCOMPARE (tabs.count (), expected.size ());
 
@@ -280,26 +299,6 @@ private slots:
     ///////////////////////////////////////////////////////////////////////////////
     void schemeIconTabWidgetTest ()
         {
-        static const std::map<Qt::ColorScheme, std::vector<QIcon>> EXPECTED_ICONS =
-            {
-                {
-                Qt::ColorScheme::Light,
-                    {
-                    QIcon{ ":/icons/light/misc/train.svg" },
-                    QIcon{ ":/icons/light/misc/arrow-left.svg" },
-                    QIcon{ ":/icons/light/misc/path.svg" }
-                    }
-                },
-                {
-                Qt::ColorScheme::Dark,
-                    {
-                    QIcon{ ":/icons/dark/misc/train.svg" },
-                    QIcon{ ":/icons/dark/misc/arrow-left.svg" },
-                    QIcon{ ":/icons/dark/misc/path.svg" }
-                    }
-                }
-            };
-
         QFETCH (Qt::ColorScheme, starting);
         QFETCH (Qt::ColorScheme, changing);
 
@@ -310,6 +309,38 @@ private slots:
         tabs.addTab (new QWidget{ &tabs }, "misc/train");
         tabs.addTab (new QWidget{ &tabs }, "misc/arrow-left");
         tabs.addTab (new QWidget{ &tabs }, "misc/path");
+
+        assertTabWidgetIcons (*tabs.tabBar (), EXPECTED_ICONS.at (starting));
+
+        qApp->styleHints ()->setColorScheme (changing);
+
+        assertTabWidgetIcons (*tabs.tabBar (), EXPECTED_ICONS.at (changing));
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for schemeIconTabBarTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void schemeIconTabBarTest_data () { colourSchemeChangeData (); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test a colour scheme dependent tab bar
+    ///
+    /// @see    ui::common::SchemeTabBar
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void schemeIconTabBarTest ()
+        {
+        QFETCH (Qt::ColorScheme, starting);
+        QFETCH (Qt::ColorScheme, changing);
+
+        qApp->styleHints ()->setColorScheme (starting);
+
+        SchemeTabBar tabs;
+
+        tabs.addTab ("misc/train");
+        tabs.addTab ("misc/arrow-left");
+        tabs.addTab ("misc/path");
 
         assertTabWidgetIcons (tabs, EXPECTED_ICONS.at (starting));
 

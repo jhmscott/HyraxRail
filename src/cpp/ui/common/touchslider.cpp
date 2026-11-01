@@ -8,38 +8,60 @@
  */
 
 #include <ui/common/touchslider.hpp>
+#include <ui/common/utils.hpp>
 
 #include <QMouseEvent>
 
 namespace ui::common
 {
-void TouchSlider::mousePressEvent (QMouseEvent* event)
-    {
-    // User on touch screens expect sliders to jump to the position selected
-    if (Qt::LeftButton                      == event->button ()         &&
-        QPointingDevice::PointerType::Finger & event->pointerType ()    &&
-        not getHandleRect ().contains (event->position ().x (),
-                                       event->position ().y ()))
-        {
-        if (Qt::Vertical == orientation ())
-            {
-            setValue (minimum () +
-                    ((maximum () - minimum ()) *
-                     (height ()  - event->position ().y ())) / height ());
-            }
-        else // (Qt::Horizontal == orientation ())
-            {
-            setValue (minimum () +
-                    ((maximum () - minimum ()) *
-                      event->position ().x ()) / width ());
-            }
 
-        event->accept ();
-        }
-    else
+TouchSlider::TouchSlider (Qt::Orientation ornt, QWidget* parent) :
+    QSlider (ornt, parent)
+    {
+    setAttribute (Qt::WA_AcceptTouchEvents);
+    }
+
+bool TouchSlider::event (QEvent* event)
+    {
+    bool rc = false;
+
+    switch (event->type ())
         {
-        QSlider::mousePressEvent (event);
+        case QTouchEvent::TouchBegin:
+        case QTouchEvent::TouchUpdate:
+        case QTouchEvent::TouchEnd:
+            {
+            if (isEnabled ()) // block touch events for disabled widgets
+                {
+                QTouchEvent* touch = static_cast<QTouchEvent*> (event);
+
+                if (Qt::Vertical == orientation ())
+                    {
+                    setValue (minimum () +
+                              ((maximum () - minimum ()) *
+                               (height ()  - touch->point (0).position ().y ())) / height ());
+                    }
+                else // (Qt::Horizontal == orientation ())
+                    {
+                    setValue (minimum () +
+                              ((maximum () - minimum ()) *
+                               touch->point (0).position ().x ()) / width ());
+                    }
+
+                event->accept ();
+                }
+
+            rc = true;
+            break;
+            }
+        default:
+            {
+            rc = QSlider::event (event);
+            break;
+            }
         }
+
+    return rc;
     }
 
 QRect TouchSlider::getHandleRect () const

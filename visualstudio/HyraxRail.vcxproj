@@ -268,6 +268,8 @@
     <ClCompile Include="..\src\cpp\ui\common\shortcutlineedit.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\stringdialog.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\schemeicon.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\swipetab.cpp" />
+    <ClCompile Include="..\src\cpp\ui\common\swipeview.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\tiereddropdown.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\toggleswitch.cpp" />
     <ClCompile Include="..\src\cpp\ui\common\touchslider.cpp" />
@@ -316,10 +318,12 @@
     <ClCompile Include="..\src\cpp\utils\resources.cpp" />
     <ClCompile Include="..\src\cpp\utils\string.cpp" />
     <ClCompile Include="..\src\cpp\utils\time.cpp" />
+    <ClCompile Include="..\src\cpp\utils\velocity.cpp" />
     <ClInclude Include="..\res\version.h" />
     <ClInclude Include="..\src\cpp\control\controllers\meta.hpp" />
     <ClInclude Include="..\src\cpp\control\controllers\utils.hpp" />
     <ClInclude Include="..\src\cpp\layout\estop.hpp" />
+    <ClInclude Include="..\src\cpp\utils\velocity.hpp" />
     <QtMoc Include="..\src\cpp\layout\sensor.hpp" />
     <ClInclude Include="..\src\cpp\layout\utils.hpp" />
     <ClInclude Include="..\src\cpp\layout\virtual\base.hpp" />
@@ -332,6 +336,8 @@
     <ClInclude Include="..\src\cpp\ui\common\layout\delegate.hpp" />
     <QtMoc Include="..\src\cpp\ui\common\layout\group.hpp" />
     <ClInclude Include="..\src\cpp\ui\common\layout\panel.hpp" />
+    <ClInclude Include="..\src\cpp\ui\common\swipetab.hpp" />
+    <QtMoc Include="..\src\cpp\ui\common\swipeview.hpp" />
     <ClInclude Include="..\src\cpp\ui\routes\routedelegate.hpp" />
     <QtMoc Include="..\src\cpp\ui\splash.hpp" />
     <QtMoc Include="..\src\cpp\ui\sensors\managestate.hpp" />

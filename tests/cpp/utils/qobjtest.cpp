@@ -1,5 +1,5 @@
 /**
- * @file        utils/pptest.hpp
+ * @file        utils/pptest.cpp
  * @brief       Test suite for the pre-processor utility library
  * @author      Justin Scott
  * @date        2026-09-08

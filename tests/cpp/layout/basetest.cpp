@@ -1,5 +1,5 @@
 /**
- * @file        layout/basetest.hpp
+ * @file        layout/basetest.cpp
  * @brief       Test suite for the component and controller base classes
  * @author      Justin Scott
  * @date        2026-09-25

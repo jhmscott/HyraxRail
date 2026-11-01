@@ -1,5 +1,5 @@
 ﻿/**
- * @file        ui/langtest.hpp
+ * @file        ui/langtest.cpp
  * @brief       Test suite for the UI language utilities
  * @author      Justin Scott
  * @date        2026-09-20

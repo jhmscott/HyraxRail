@@ -330,6 +330,12 @@
     <ClInclude Include="..\src\cpp\ui\sensors\sensordelegate.hpp">
       <Filter>Header Files\ui\sensors</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\cpp\ui\common\swipetab.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cpp\utils\velocity.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cpp\control\controllers\base.cpp">
@@ -608,6 +614,15 @@
     <ClCompile Include="..\src\cpp\layout\virtual\vroute.cpp">
       <Filter>Source Files\layout\virtual</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cpp\utils\velocity.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\swipetab.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\common\swipeview.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\control\protocols\base.hpp">
@@ -821,6 +836,9 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\sensors\managestate.hpp">
       <Filter>Header Files\ui\sensors</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\common\swipeview.hpp">
+      <Filter>Header Files\ui\common</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

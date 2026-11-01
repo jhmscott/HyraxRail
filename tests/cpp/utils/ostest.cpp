@@ -1,5 +1,5 @@
 /**
- * @file        utils/ostest.hpp
+ * @file        utils/ostest.cpp
  * @brief       Test suite for the OS functions
  * @author      Justin Scott
  * @date        2026-08-14

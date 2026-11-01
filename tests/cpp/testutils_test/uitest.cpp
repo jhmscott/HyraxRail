@@ -1,5 +1,5 @@
 /**
- * @file        testutils_test/uitest.hpp
+ * @file        testutils_test/uitest.cpp
  * @brief       Test suite for UI test utilities
  * @author      Justin Scott
  * @date        2026-08-20

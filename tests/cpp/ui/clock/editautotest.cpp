@@ -1,5 +1,5 @@
 /**
- * @file        common/editautotest.hpp
+ * @file        common/editautotest.cpp
  * @brief       Test suite for the automation add/edit dialog
  * @author      Justin Scott
  * @date        2026-09-27

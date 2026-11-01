@@ -205,9 +205,10 @@ inline void removeWidgetFromLayout (QLayout& layout, uint nn)
 /// Remove all the items from a layout
 ///
 /// @param[in,out]  layout      Layout to clear
+/// @param[in]      free        (optional) True to free the removed widgets
 ///
 ///////////////////////////////////////////////////////////////////////////////
-inline void clearLayout (QLayout& layout)
+inline void clearLayout (QLayout& layout, bool free = true)
     {
     QLayoutItem*    item;
     QLayout*        childLayout;
@@ -217,11 +218,14 @@ inline void clearLayout (QLayout& layout)
         {
         if (NULL != (widget = item->widget ()))
             {
-            delete widget;
+            if (free)
+                {
+                delete widget;
+                }
             }
         else if (NULL != (childLayout = item->layout ()))
             {
-            clearLayout (*childLayout);
+            clearLayout (*childLayout, free);
             }
 
         delete item;

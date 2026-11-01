@@ -1,5 +1,5 @@
 /**
- * @file        utils/algorithmtest.hpp
+ * @file        utils/algorithmtest.cpp
  * @brief       Test suite for the algorithm library
  * @author      Justin Scott
  * @date        2026-08-11

@@ -1,5 +1,5 @@
 /**
- * @file        common/actuatordelegatetest.hpp
+ * @file        common/actuatordelegatetest.cpp
  * @brief       Test suite for the actuator delegate
  * @author      Justin Scott
  * @date        2026-10-13

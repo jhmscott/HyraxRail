@@ -1,5 +1,5 @@
 ﻿/**
- * @file        ui/mainwindowtest.hpp
+ * @file        ui/mainwindowtest.cpp
  * @brief       Test suite for the main application window
  * @author      Justin Scott
  * @date        2026-09-21

@@ -1,5 +1,5 @@
 ﻿/**
- * @file        ui/splashtest.hpp
+ * @file        ui/splashtest.cpp
  * @brief       Test suite for the splash screen
  * @author      Justin Scott
  * @date        2026-10-11

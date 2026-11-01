@@ -48,6 +48,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "testutils", "testutils", "{
 		..\tests\cpp\testutils\lang.hpp = ..\tests\cpp\testutils\lang.hpp
 		..\tests\cpp\testutils\logspy.hpp = ..\tests\cpp\testutils\logspy.hpp
 		..\tests\cpp\testutils\mockcontroller.hpp = ..\tests\cpp\testutils\mockcontroller.hpp
+		..\tests\cpp\testutils\mousespy.hpp = ..\tests\cpp\testutils\mousespy.hpp
 		..\tests\cpp\testutils\ui.hpp = ..\tests\cpp\testutils\ui.hpp
 	EndProjectSection
 EndProject
@@ -135,6 +136,16 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sensor", "tests\sensor.vcxproj", "{2A33ACF8-6254-43BC-88B9-BF434F744029}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sensorstate", "tests\sensorstate.vcxproj", "{22A35BA7-BEF1-4EAB-979D-7F3906E1B47E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "touchslider", "tests\touchslider.vcxproj", "{70FB9CAB-794A-4D1E-B0AE-887B0BAAB9EC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "swipetab", "tests\swipetab.vcxproj", "{78F5D568-80B4-4C3E-A9D4-60E08EE097B6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "velocity", "tests\velocity.vcxproj", "{80B37135-BCE8-4ECB-9131-986B46C1E414}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "swipeview", "tests\swipeview.vcxproj", "{1829DF41-6A48-497D-BEBA-4EB371A96590}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mousespy", "tests\mousespy.vcxproj", "{FF07E1F7-7B6B-4FB6-B0F9-D77D1469262C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -317,6 +328,26 @@ Global
 		{22A35BA7-BEF1-4EAB-979D-7F3906E1B47E}.Release|x64.ActiveCfg = Release|x64
 		{22A35BA7-BEF1-4EAB-979D-7F3906E1B47E}.Test|x64.ActiveCfg = Test|x64
 		{22A35BA7-BEF1-4EAB-979D-7F3906E1B47E}.Test|x64.Build.0 = Test|x64
+		{70FB9CAB-794A-4D1E-B0AE-887B0BAAB9EC}.Debug|x64.ActiveCfg = Debug|x64
+		{70FB9CAB-794A-4D1E-B0AE-887B0BAAB9EC}.Release|x64.ActiveCfg = Release|x64
+		{70FB9CAB-794A-4D1E-B0AE-887B0BAAB9EC}.Test|x64.ActiveCfg = Test|x64
+		{70FB9CAB-794A-4D1E-B0AE-887B0BAAB9EC}.Test|x64.Build.0 = Test|x64
+		{78F5D568-80B4-4C3E-A9D4-60E08EE097B6}.Debug|x64.ActiveCfg = Debug|x64
+		{78F5D568-80B4-4C3E-A9D4-60E08EE097B6}.Release|x64.ActiveCfg = Release|x64
+		{78F5D568-80B4-4C3E-A9D4-60E08EE097B6}.Test|x64.ActiveCfg = Test|x64
+		{78F5D568-80B4-4C3E-A9D4-60E08EE097B6}.Test|x64.Build.0 = Test|x64
+		{80B37135-BCE8-4ECB-9131-986B46C1E414}.Debug|x64.ActiveCfg = Debug|x64
+		{80B37135-BCE8-4ECB-9131-986B46C1E414}.Release|x64.ActiveCfg = Release|x64
+		{80B37135-BCE8-4ECB-9131-986B46C1E414}.Test|x64.ActiveCfg = Test|x64
+		{80B37135-BCE8-4ECB-9131-986B46C1E414}.Test|x64.Build.0 = Test|x64
+		{1829DF41-6A48-497D-BEBA-4EB371A96590}.Debug|x64.ActiveCfg = Debug|x64
+		{1829DF41-6A48-497D-BEBA-4EB371A96590}.Release|x64.ActiveCfg = Release|x64
+		{1829DF41-6A48-497D-BEBA-4EB371A96590}.Test|x64.ActiveCfg = Test|x64
+		{1829DF41-6A48-497D-BEBA-4EB371A96590}.Test|x64.Build.0 = Test|x64
+		{FF07E1F7-7B6B-4FB6-B0F9-D77D1469262C}.Debug|x64.ActiveCfg = Debug|x64
+		{FF07E1F7-7B6B-4FB6-B0F9-D77D1469262C}.Release|x64.ActiveCfg = Release|x64
+		{FF07E1F7-7B6B-4FB6-B0F9-D77D1469262C}.Test|x64.ActiveCfg = Test|x64
+		{FF07E1F7-7B6B-4FB6-B0F9-D77D1469262C}.Test|x64.Build.0 = Test|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -381,6 +412,11 @@ Global
 		{9C842967-034E-428D-B273-D31C2C644ABF} = {61192E87-3570-446C-9921-71EF3085F934}
 		{2A33ACF8-6254-43BC-88B9-BF434F744029} = {C1E18B84-F9BD-432D-A9F1-A8A327A048E6}
 		{22A35BA7-BEF1-4EAB-979D-7F3906E1B47E} = {61192E87-3570-446C-9921-71EF3085F934}
+		{70FB9CAB-794A-4D1E-B0AE-887B0BAAB9EC} = {E1A3BEC1-DC5A-486C-881F-7BAF9230949F}
+		{78F5D568-80B4-4C3E-A9D4-60E08EE097B6} = {E1A3BEC1-DC5A-486C-881F-7BAF9230949F}
+		{80B37135-BCE8-4ECB-9131-986B46C1E414} = {E7603EE2-0F6A-4991-9C02-5C69E3D99F69}
+		{1829DF41-6A48-497D-BEBA-4EB371A96590} = {E1A3BEC1-DC5A-486C-881F-7BAF9230949F}
+		{FF07E1F7-7B6B-4FB6-B0F9-D77D1469262C} = {FB01A98B-D8D1-46EE-8905-19DF1FB8CC8B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4ACFF0E3-DFF5-489E-866F-8829724F0C54}

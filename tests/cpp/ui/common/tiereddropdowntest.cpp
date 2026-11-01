@@ -1,5 +1,5 @@
 /**
- * @file        common/tiereddropdowntest.hpp
+ * @file        common/tiereddropdowntest.cpp
  * @brief       Test suite for the tiered dropdown widget
  * @author      Justin Scott
  * @date        2026-09-26

@@ -1,5 +1,5 @@
 /**
- * @file        common/gesturetest.hpp
+ * @file        common/gesturetest.cpp
  * @brief       Test suite for the UI gesture utilities
  * @author      Justin Scott
  * @date        2026-08-14

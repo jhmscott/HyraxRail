@@ -1,5 +1,5 @@
 /**
- * @file        testutils_test/logspytest.hpp
+ * @file        testutils_test/logspytest.cpp
  * @brief       Test suite for the LogSpy class test utility
  * @author      Justin Scott
  * @date        2026-08-20

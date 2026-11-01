@@ -48,3 +48,8 @@ inline const QString OBJNAME_CONFIG_DIALOG_NAME         = "ConfigDialog_Controll
 inline const QString OBJNAME_CONFIG_DIALOG_CONTROLLER   = "ConfigDialog_ControllerDropdown";
 inline const QString OBJNAME_CONFIG_DIALOG_PROTOCOL     = "ConfigDialog_ControllerProtocol";
 inline const QString OBJNAME_CONFIG_DIALOG_TRANSPORT    = "ConfigDialog_TransportProtocol";
+
+// Swipe tab widget
+
+inline const QString OBJNAME_SWIPETAB_TABBAR            = "SwipeTabWidget_TabBar";
+inline const QString OBJNAME_SWIPETAB_SWIPEVIEW         = "SwipeTabWidget_SwipeView";

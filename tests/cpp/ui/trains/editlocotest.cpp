@@ -1,5 +1,5 @@
 /**
- * @file        common/editlocotest.hpp
+ * @file        common/editlocotest.cpp
  * @brief       Test suite for the Locomotive edit dialog
  * @author      Justin Scott
  * @date        2026-08-23

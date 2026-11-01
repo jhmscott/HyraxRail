@@ -1,5 +1,5 @@
 /**
- * @file        utils/logtest.hpp
+ * @file        utils/logtest.cpp
  * @brief       Test suite for the log helper functions
  * @author      Justin Scott
  * @date        2026-08-15

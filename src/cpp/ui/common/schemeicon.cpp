@@ -69,8 +69,44 @@ void SchemeTabWidget::tabRemoved (int index)
     m_icons.erase (m_icons.begin () + index);
     }
 
-
 void SchemeTabWidget::colorSchemeChanged (Qt::ColorScheme scheme)
+    {
+    for (int ii = 0; ii < m_icons.size (); ++ii)
+        {
+        setTabIcon (ii, m_icons[ii].toIcon (scheme));
+        }
+    }
+
+SchemeTabBar::SchemeTabBar (QWidget* parent) :
+    QTabBar (parent)
+    {
+    connect (qApp->styleHints (),
+            &QStyleHints::colorSchemeChanged,
+             this,
+            &SchemeTabBar::colorSchemeChanged);
+    }
+
+int SchemeTabBar::addTab (const utils::resources::Icon& icon)
+    {
+    int tabIdx = QTabBar::addTab (icon.toIcon (qApp->
+                                               styleHints ()->
+                                               colorScheme ()),
+                                   "");
+
+    m_icons.resize (tabIdx + 1);
+
+    m_icons[tabIdx] = icon;
+
+    return tabIdx;
+    }
+
+void SchemeTabBar::tabRemoved (int index)
+    {
+    m_icons.erase (m_icons.begin () + index);
+    }
+
+
+void SchemeTabBar::colorSchemeChanged (Qt::ColorScheme scheme)
     {
     for (int ii = 0; ii < m_icons.size (); ++ii)
         {
@@ -159,5 +195,6 @@ void SchemeComboBox::colorSchemeChanged (Qt::ColorScheme scheme)
         setItemIcon (ii, icon.toIcon (scheme));
         }
     }
+
 
 } // namespace ui::common

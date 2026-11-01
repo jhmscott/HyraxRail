@@ -295,6 +295,7 @@ protected:
     /// @tparam     ComponentT  Component type
     /// @tparam     RetT        Member function return type
     /// @tparam     Args        Member function argument types
+    /// @tparam     Params      Parameter types to call func with
     ///
     /// @param[in]  func        Member function pointer
     /// @param[in]  args        Arguments to call member with
@@ -387,6 +388,7 @@ private:
     /// @tparam     ComponentT  Component type
     /// @tparam     RetT        Member function return type
     /// @tparam     Args        Member function argument types
+    /// @tparam     Params      Parameter types to call func with
     ///
     /// @param[in]  id          ID of object to call function for
     /// @param[in]  func        Member function pointer

@@ -1,5 +1,5 @@
 /**
- * @file        utils/commontest.hpp
+ * @file        utils/commontest.cpp
  * @brief       Test suite for the common header functions
  * @author      Justin Scott
  * @date        2026-08-30

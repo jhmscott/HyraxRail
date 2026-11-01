@@ -1,5 +1,5 @@
 /**
- * @file        layout/locomotivetest.hpp
+ * @file        layout/locomotivetest.cpp
  * @brief       Test suite for the locomotive layout component
  * @author      Justin Scott
  * @date        2026-08-21

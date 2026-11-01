@@ -1,5 +1,5 @@
 /**
- * @file        common/actuatorbuttontest.hpp
+ * @file        common/actuatorbuttontest.cpp
  * @brief       Test suite for the actuator button
  * @author      Justin Scott
  * @date        2026-08-16

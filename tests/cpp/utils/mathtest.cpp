@@ -1,5 +1,5 @@
 /**
- * @file        utils/mathtest.hpp
+ * @file        utils/mathtest.cpp
  * @brief       Test suite for the math functions
  * @author      Justin Scott
  * @date        2026-08-08
@@ -73,9 +73,7 @@ private slots:
             QCOMPARE (utils::math::sqr (ii), std::pow (ii, 2));
             }
         }
-
-
-};
+    };
 
 QTEST_GUILESS_MAIN (MathTest)
 

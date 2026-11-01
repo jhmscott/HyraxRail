@@ -1,5 +1,5 @@
 /**
- * @file        controlllers/marklincs1test.hpp
+ * @file        controlllers/marklincs1test.cpp
  * @brief       Test suite for the MarklinCS1 Controller
  * @author      Justin Scott
  * @date        2026-08-28

@@ -1,5 +1,5 @@
 /**
- * @file        testutils_test/asserttest.hpp
+ * @file        testutils_test/asserttest.cpp
  * @brief       Test suite for the test assert library
  * @author      Justin Scott
  * @date        2026-09-12

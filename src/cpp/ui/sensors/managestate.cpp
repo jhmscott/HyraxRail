@@ -2,7 +2,7 @@
  * @file        sensors/managestate.cpp
  * @brief       Widget to display and manage the state of a sensor port
  * @author      Justin Scott
- * @date        2026-02-07
+ * @date        2026-10-17
  *
  * @copyright   Copyright (c) 2026 Justin Scott
  */

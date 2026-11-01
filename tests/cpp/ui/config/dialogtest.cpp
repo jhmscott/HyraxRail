@@ -1,5 +1,5 @@
 /**
- * @file        config/dialogtest.hpp
+ * @file        config/dialogtest.cpp
  * @brief       Test suite for the controller settings dialog
  * @author      Justin Scott
  * @date        2026-09-30

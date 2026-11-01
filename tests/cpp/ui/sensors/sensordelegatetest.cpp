@@ -1,5 +1,5 @@
 /**
- * @file        common/sensordelegatetest.hpp
+ * @file        common/sensordelegatetest.cpp
  * @brief       Test suite for the sensor delegate
  * @author      Justin Scott
  * @date        2026-10-17

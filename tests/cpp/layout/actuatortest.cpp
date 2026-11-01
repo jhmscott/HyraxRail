@@ -1,5 +1,5 @@
 /**
- * @file        layout/actuatortest.hpp
+ * @file        layout/actuatortest.cpp
  * @brief       Test suite for the actuator layout component
  * @author      Justin Scott
  * @date        2026-08-21

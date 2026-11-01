@@ -1,5 +1,5 @@
 /**
- * @file        utils/devicetest.hpp
+ * @file        utils/devicetest.cpp
  * @brief       Test suite for the device utilities
  * @author      Justin Scott
  * @date        2026-08-09

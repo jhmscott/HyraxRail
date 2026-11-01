@@ -83,7 +83,7 @@ public:
 
 
 MainWidget::MainWidget (control::ControllerManager& controllers, QWidget* parent) :
-    common::SchemeTabWidget (parent),
+    common::SwipeTabWidget (parent),
     m_controllers (controllers),
     m_automations (new control::AutomationManager{ this }),
     m_routeDel (*m_automations),
