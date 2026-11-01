@@ -587,7 +587,7 @@ private slots:
                 {
                 if (ii != jj)
                     {
-                    QTest::addRow ("DEVICES[%d] != DEVCIES[%d]", ii, jj) << DEVICES[ii] << DEVICES[jj];
+                    QTest::addRow ("DEVICES[%zu] != DEVCIES[%zu]", ii, jj) << DEVICES[ii] << DEVICES[jj];
                     }
                 }
             }
