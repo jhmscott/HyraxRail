@@ -1,0 +1,8 @@
+# Obsidian system and workspace configurations
+.obsidian/workspace.json
+.obsidian/workspaces.json
+.obsidian/cache/
+
+# Plugins and themes
+.obsidian/plugins/
+.obsidian/themes/
