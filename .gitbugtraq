@@ -1,0 +1,5 @@
+[bugtraq]
+  url = https://github.com/jhmscott/HyraxRail/issues/%BUGID%
+  logregex = "(\\s*(,|and)?\\s*#\\d+)+\n(\\d+)"
+  warnifnoissue = true
+  number = true

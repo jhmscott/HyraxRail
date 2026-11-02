@@ -1,2 +1,11 @@
+[bugtraq]
+  url = https://github.com/jhmscott/HyraxRail/issues/%BUGID%
+  logregex = "(\\s*(,|and)?\\s*#\\d+)+\n(\\d+)"
+  warnifnoissue = true
+  number = true
+  providerparams = "owner=jhmscott;repository=HyraxRail;keyword=Closes;reffullrepo=False;showprsbydefault=False"
+  provideruuid = {B2C6EC0F-8742-4792-9FDC-10635D2C118C}
+  provideruuid64 = {B2C6EC0F-8742-4792-9FDC-10635D2C118B}
+
 [tgit]
-	icon = res/icons/app/conductor-hyrax.ico
+  icon = res/icons/app/conductor-hyrax.ico
