@@ -6,12 +6,15 @@ labels: 'localization'
 assignees: ''
 ---
 
-## Locale Information
-* **Target Language:** <!-- e.g., French (fr-FR), Chinese (zh-CN) -->
-* **Component/Location:** <!-- e.g., Navigation bar, settings screen, specific string ID -->
+**Target Language:**
+e.g., French (fr-FR), Chinese (zh-CN)
+
+**Component/Location:**
+e.g., Navigation bar, settings screen, specific string ID
 
 ## Problem Description
-<!-- Choose one of the categories below and delete the others -->
+Choose one of the categories below and delete the others
+
 * [ ] **Translation Error:** An existing string is incorrect, awkward, or missing context.
 * [ ] **Missing Translation:** Text is falling back to the default language.
 * [ ] **UI Layout Issue:** Translated text causes layout breaking, overlapping, or truncation.
