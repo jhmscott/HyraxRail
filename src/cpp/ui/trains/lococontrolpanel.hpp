@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <control/automation/manager.hpp>
 #include <control/controllers/manager.hpp>
 
 #include <ui/common/addbtn.hpp>
@@ -37,17 +38,20 @@ public:
     /// Constructor
     ///
     /// @param[in]  controllers     List of controllers
+    /// @param[in]  automations     List of automations
     /// @param[in]  align           Align left or right
     /// @param[in]  parent          Parent widget
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    explicit LocoControlPanel (control::ControllerManager&  controllers,
-                               hAlignment                   align,
-                               QWidget*                     parent);
+    explicit LocoControlPanel (control::ControllerManager&          controllers,
+                               const control::AutomationManager&    automations,
+                               hAlignment                           align,
+                               QWidget*                             parent);
 
 private:
-    control::ControllerManager& m_controllers;      ///< List of controllers being managed
-    layout::Locomotive          m_currentLoco;      ///< Current loco under control
+    control::ControllerManager&         m_controllers;      ///< List of controllers being managed
+    const control::AutomationManager&   m_automations;      ///< List of automations
+    layout::Locomotive                  m_currentLoco;      ///< Current loco under control
 
     // Controller info
     ControllerInfo*             m_controllerInfo;   ///< Controller info for selected locomotive
@@ -134,8 +138,20 @@ private slots:
     ///////////////////////////////////////////////////////////////////////////////
     void controllerDeleted (const control::ControllerBase& controller);
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle a controller being disconnected
+    ///
+    /// @param[in]  controller      Controller being disconnected
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     void disconnected (const control::ControllerBase& controller);
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handles the controller's cache being rebuilt
+    ///
+    /// @param[in]  controller      Controller with a rebuilt cache
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
     void cacheRebuilt (const control::ControllerBase& controller);
     };
 

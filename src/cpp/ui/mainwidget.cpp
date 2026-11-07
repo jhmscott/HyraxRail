@@ -95,7 +95,7 @@ MainWidget::MainWidget (control::ControllerManager& controllers, QWidget* parent
 
     setUsesScrollButtons (false);
 
-    addTab (new trains::DualControlWidget{ m_controllers, this },
+    addTab (new trains::DualControlWidget{ m_controllers, *m_automations, this },
             "misc/train");
     addTab (new common::LayoutPanel{ m_controllers,
                                      m_actuatorDel,

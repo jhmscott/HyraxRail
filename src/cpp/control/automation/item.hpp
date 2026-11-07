@@ -225,6 +225,23 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     std::string name () const;
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Check if this item automates a given component
+    ///
+    /// @tparam     Component       Component type
+    ///
+    /// @param[in]  component       Component to check
+    ///
+    /// @return     True if this item is automating component
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<class Component>
+    bool isAutomating (const Component& component) const
+        {
+        return holdsComponent<Component> () &&
+               component == getComponent<Component> ();
+        }
+
 signals:
     ///////////////////////////////////////////////////////////////////////////////
     /// Signals the component this is wrapping is being destroyed
@@ -261,6 +278,50 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     bool getState () const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the component we are holding. Basically std::get<>, but also works with
+    /// locos, which are held in a member of the function struct
+    ///
+    /// @tparam     Component       Component type
+    ///
+    /// @return     Component being automated
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<class Component>
+    const Component& getComponent () const
+        {
+        if constexpr (std::is_same_v<Component, layout::Locomotive>)
+            {
+            return std::get<function> (m_item).loco;
+            }
+        else
+            {
+            return std::get<Component> (m_item);
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Checks if we are holding a component. Basically std::holds_alternative<>,
+    /// but also works with locos, which are held in a member of the function struct
+    ///
+    /// @tparam     Component       Component type
+    ///
+    /// @return     Component being automated
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<class Component>
+    bool holdsComponent () const
+        {
+        if constexpr (std::is_same_v<Component, layout::Locomotive>)
+            {
+            return std::holds_alternative<function> (m_item);
+            }
+        else
+            {
+            return std::holds_alternative<Component> (m_item);
+            }
+        }
     };
 
 
@@ -284,4 +345,4 @@ inline QString actionText (AutomationItem::action action)
 
     return ACTIONS[action];
     }
-}
+} // namespace control

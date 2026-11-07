@@ -40,6 +40,12 @@ public:
 private:
     std::vector<SensorManageState*> m_states;   ///< Sensor state indicators
     layout::SensorModule            m_module;   ///< Module this is displaying the state of
+
+    // TODO
+    virtual void editComponent () {}
+
+    // TODO
+    virtual void removeComponent () {}
     };
 
 } // namespace ui::sensors

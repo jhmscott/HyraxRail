@@ -458,6 +458,129 @@ private slots:
 
         QCOMPARE (spy.count (), 1);
         }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test isAutomating() with an actuator
+    ///
+    /// @see    control::AutomationItem::isAutomating()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void isAutomatingActuatorTest ()
+        {
+        layout::Actuator actuator1{ controller.get (),
+                                    ACTUATOR_NAME,
+                                    layout::ICON_STREET_LIGHT,
+                                    layout::actuatorMode::PULSE,
+                                    1,
+                                    100,
+                                    ID,
+                                    true };
+
+        layout::Actuator actuator2{ controller.get (),
+                                    ACTUATOR_NAME,
+                                    layout::ICON_STREET_LIGHT,
+                                    layout::actuatorMode::PULSE,
+                                    1,
+                                    100,
+                                    ID + 1,
+                                    true };
+        layout::Route route{ controller.get (), ROUTE_NAME, {}, ID };
+
+        control::AutomationItem item{ actuator1 };
+
+        // Positive test case
+        QVERIFY (item.isAutomating (actuator1));
+
+        // Negative test 1, same type, different ID
+        QVERIFY (not item.isAutomating (actuator2));
+
+        // Negative test 2, same type, different ID
+        QVERIFY (not item.isAutomating (route));
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test isAutomating() with a route
+    ///
+    /// @see    control::AutomationItem::isAutomating()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void isAutomatingRouteTest ()
+        {
+        layout::Route route1{ controller.get (), ROUTE_NAME, {}, ID };
+        layout::Route route2{ controller.get (), ROUTE_NAME, {}, ID + 1};
+
+        layout::Actuator actuator{ controller.get (),
+                                   ACTUATOR_NAME,
+                                   layout::ICON_STREET_LIGHT,
+                                   layout::actuatorMode::PULSE,
+                                   1,
+                                   100,
+                                   ID,
+                                   true };
+
+        control::AutomationItem item{ route1 };
+
+        // Positive test case
+        QVERIFY (item.isAutomating (route1));
+
+        // Negative test 1, same type, different ID
+        QVERIFY (not item.isAutomating (route2));
+
+        // Negative test 2, same type, different ID
+        QVERIFY (not item.isAutomating (actuator));
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test isAutomating() with a locomotive
+    ///
+    /// @see    control::AutomationItem::isAutomating()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void isAutomatingLocoTest ()
+        {
+        static const int FUNC_ID = 10;
+
+        layout::Locomotive loco1{ controller.get (),
+                                  LOCO_NAME,
+                                  layout::TRACK_PROTO_MFX,
+                                  1,
+                                  LOCO_FUNCS,
+                                  0,
+                                  ID };
+        layout::Locomotive loco2{ controller.get (),
+                                  LOCO_NAME,
+                                  layout::TRACK_PROTO_MFX,
+                                  1,
+                                  LOCO_FUNCS,
+                                  0,
+                                  ID + 1 };
+
+        layout::Route route{ controller.get (), ROUTE_NAME, {}, ID };
+
+        control::AutomationItem item{ loco1, FUNC_ID };
+
+        // Loco component Tests
+
+        // Positive test case for loco
+        QVERIFY (item.isAutomating (loco1));
+
+        // Negative test 1, same type, different ID
+        QVERIFY (not item.isAutomating (loco2));
+
+        // Negative test 2, same type, different ID
+        QVERIFY (not item.isAutomating (route));
+
+        // Function
+
+        // Positive test case for function
+        QVERIFY (item.isAutomating (control::AutomationItem::function{ loco1, FUNC_ID }));
+
+        // Negative test 1, same loco, different number
+        QVERIFY (not item.isAutomating (control::AutomationItem::function{ loco1, FUNC_ID - 1 }));
+
+        // Negative test 2, different loco, same number
+        QVERIFY (not item.isAutomating (control::AutomationItem::function{ loco2, FUNC_ID }));
+        }
     };
 
 QTEST_GUILESS_MAIN (AutomationItemTest)

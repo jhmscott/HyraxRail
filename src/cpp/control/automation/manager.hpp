@@ -27,6 +27,9 @@ public:
     using iterator          = std::list<AutomationTask>::iterator;      ///< Automation iterator
     using const_iterator    = std::list<AutomationTask>::const_iterator;///< Automation iterator
 
+    /// Non owning copy of automation tasks
+    using weakList          = std::vector<std::reference_wrapper<const control::AutomationTask>>;
+
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
@@ -89,6 +92,36 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     void erase (const_iterator it);
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Remove all automations from the manager
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void clear ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Find all the tasks that automate a given component
+    ///
+    /// @tparam     Component       Component type
+    ///
+    /// @param[in]  component       Component to check
+    ///
+    /// @return     List of tasks
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<class Component>
+    weakList findAutomatedComponents (const Component component) const
+        {
+        std::vector<std::reference_wrapper<const control::AutomationTask>> tasks;
+
+        std::copy_if (begin (),
+                      end (),
+                      std::back_inserter (tasks),
+                      [&] (const control::AutomationTask& task) -> bool
+                      { return task.isAutomating (component); });
+
+        return tasks;
+        }
+
 signals:
     ///////////////////////////////////////////////////////////////////////////////
     /// Signals a particular task has being destroyed
@@ -97,7 +130,7 @@ signals:
     ///
     /// @remarks    If you are connecting this to a slot on a different thread you
     ///             MUST use Qt::BlockingQueuedConnection, as the controller object
-    ///             is deleted after emiting this signal. If you are connecting this
+    ///             is deleted after emitting this signal. If you are connecting this
     ///             to a slot on the same thread, you must use Qt::DirectConnection,
     ///             or Qt::AutoConnection (default behaviour)
     ///
@@ -130,5 +163,16 @@ private slots:
     ///////////////////////////////////////////////////////////////////////////////
     void timeChange (const FastClock::time_point& newTime);
     };
+
+///////////////////////////////////////////////////////////////////////////////
+/// Given a list of automations, format the message to indicate they will be
+/// deleted
+///
+/// @param[in]  automations     List of automations
+///
+/// @return     Deletion message
+///
+///////////////////////////////////////////////////////////////////////////////
+QString formatAutomationDeletionMessage (const AutomationManager::weakList& automations);
 
 } // namespace control

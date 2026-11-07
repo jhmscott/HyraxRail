@@ -15,13 +15,15 @@
 
 namespace ui::trains
 {
-DualControlWidget::DualControlWidget (control::ControllerManager& controllers, QWidget* parent) :
+DualControlWidget::DualControlWidget (control::ControllerManager&       controllers,
+                                      const control::AutomationManager& automations,
+                                      QWidget*                          parent) :
     QWidget (parent)
     {
     QHBoxLayout* layout = new QHBoxLayout{ this };
 
-    m_left  = new LocoControlPanel{ controllers, hAlignment::LEFT, this };
-    m_right = new LocoControlPanel{ controllers, hAlignment::RIGHT, this };
+    m_left  = new LocoControlPanel{ controllers, automations, hAlignment::LEFT, this };
+    m_right = new LocoControlPanel{ controllers, automations, hAlignment::RIGHT, this };
 
     m_right->setVisible (false);
 
@@ -30,7 +32,6 @@ DualControlWidget::DualControlWidget (control::ControllerManager& controllers, Q
 
     setLayout (layout);
     }
-
 
 void DualControlWidget::resizeEvent (QResizeEvent* event)
     {
@@ -52,5 +53,4 @@ void DualControlWidget::resizeEvent (QResizeEvent* event)
     QWidget::resizeEvent (event);
     }
 
-
-}
+} // namespace ui::trains

@@ -819,9 +819,6 @@
     <QtMoc Include="..\src\cpp\ui\trains\editloco.hpp">
       <Filter>Header Files\ui\trains</Filter>
     </QtMoc>
-    <QtMoc Include="..\src\cpp\ui\common\layout\button.hpp">
-      <Filter>Header Files\ui\common\layout</Filter>
-    </QtMoc>
     <QtMoc Include="..\src\cpp\ui\common\layout\group.hpp">
       <Filter>Header Files\ui\common\layout</Filter>
     </QtMoc>
@@ -839,6 +836,9 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\common\swipeview.hpp">
       <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\common\layout\button.hpp">
+      <Filter>Header Files\ui\common\layout</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

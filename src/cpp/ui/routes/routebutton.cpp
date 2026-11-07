@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file        routes/rouetebutton.cpp
  * @brief       Button to control the state and configuration of a route
  * @author      Justin Scott
@@ -29,15 +29,13 @@ RouteButton::RouteButton (const layout::Route&          route,
                           control::ControllerBase&      controller,
                           control::AutomationManager&   automations,
                           QWidget*                      parent) :
-    LayoutButton (parent),
-    m_route (layout::Route{ route }),
-    m_controller (controller),
-    m_automations (automations)
+    ComponentButton (&automations, route, true, parent),
+    m_controller (controller)
     {
     QVBoxLayout* layout = new QVBoxLayout{ this };
     QPushButton* button = new common::PointedIconButton{ "misc/path", this };
 
-    m_route.request ();
+    m_component.request ();
 
     button->setFixedSize (utils::resources::PUSHBUTTON_SIZE);
     button->setIconSize (utils::resources::ICON_SIZE_LARGE);
@@ -46,17 +44,15 @@ RouteButton::RouteButton (const layout::Route&          route,
     common::refreshStyleSheetOnColorSchemeChange (*button);
 
     layout->addWidget (button);
-    layout->addWidget (m_name = new QLabel{ m_route.getName ().c_str (), this });
+    layout->addWidget (m_name = new QLabel{ m_component.getName ().c_str (), this });
 
     setContentsMargins (0, 20, 0, 0);
-    setContextMenuPolicy (Qt::ActionsContextMenu);
 
     connect (button,
             &QPushButton::released,
-            &m_route,
+            &m_component,
             &layout::Route::set);
 
-    createMenu ();
     updateTooltip ();
     setLayout (layout);
     }
@@ -65,7 +61,7 @@ void RouteButton::updateTooltip ()
     {
     QString text = tr ("Actuators") + ":\n";
 
-    for (const auto& [actuator, state] : m_route.getActuators ())
+    for (const auto& [actuator, state] : m_component.getActuators ())
         {
         text += QString{ "  %1 : %2\n" }.arg (actuator.getName (),
                                               utils::str::formatOnOff (state));
@@ -76,58 +72,14 @@ void RouteButton::updateTooltip ()
     setToolTip (text);
     }
 
-void RouteButton::createMenu ()
-    {
-    addAction (tr ("Delete"),this, &RouteButton::removeRoute);
-    addAction (tr ("Edit"),  this, &RouteButton::editRoute);
-    }
 
-void RouteButton::removeRoute ()
-    {
-    QString msg = tr ("Would you like to delete route \"%1\"?").arg (
-                                            m_route.getName ().c_str ());
-    std::vector<std::string> automations;
-
-    for (control::AutomationTask& task : m_automations)
-        {
-        control::AutomationItem& item = *task.getItem ();
-
-        if (control::AutomationItem::type::ROUTE == item.getType () &&
-            m_route == item.getRoute ())
-            {
-            automations.push_back (item.name ());
-            }
-        }
-
-    if (automations.size () > 0)
-        {
-        msg += "\n\n";
-        msg += tr ("The following automations will also be deleted:");
-        msg += "\n";
-
-        for (const std::string& name : automations)
-            {
-            msg += QString{ " ● %1" }.arg (name);
-            }
-        }
-
-    if (QMessageBox::Yes == QMessageBox::question (this,
-                                                   tr ("Delete Route"),
-                                                   msg))
-        {
-        m_route.remove ();
-
-        emit removeRequested ();
-        }
-    }
-
-void RouteButton::editRoute ()
+void RouteButton::editComponent ()
     {
     EditRouteDialog dlg
         {
         m_controller,
         this,
-       &m_route
+       &m_component
         };
 
     if (QDialog::Accepted == dlg.exec ())
@@ -135,15 +87,15 @@ void RouteButton::editRoute ()
         layout::routeList   newMembers  = dlg.getActuators ();
         std::string         newName     = dlg.getName ();
 
-        if (m_route.getActuators () != newMembers)
+        if (m_component.getActuators () != newMembers)
             {
-            m_route.setActuators (newMembers);
+            m_component.setActuators (newMembers);
             updateTooltip ();
             }
 
-        if (m_route.getName () != newName)
+        if (m_component.getName () != newName)
             {
-            m_route.setName (newName);
+            m_component.setName (newName);
             m_name->setText (newName.c_str ());
             }
         }

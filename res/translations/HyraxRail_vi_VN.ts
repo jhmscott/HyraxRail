@@ -42,19 +42,19 @@
         <translation>Tắt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/item.hpp" line="279"/>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="340"/>
         <source>Set</source>
         <translatorcomment>Đặt</translatorcomment>
         <translation>Đặt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/item.hpp" line="280"/>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="341"/>
         <source>Unset</source>
         <translatorcomment>Bỏ Đặt</translatorcomment>
         <translation>Bỏ Đặt</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/item.hpp" line="281"/>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="342"/>
         <source>Toggle</source>
         <translatorcomment>Chuyển</translatorcomment>
         <translation>Chuyển</translation>
@@ -153,6 +153,15 @@
         <location filename="../../src/cpp/ui/lang.cpp" line="97"/>
         <source>Hyrax Rail</source>
         <translation type="unfinished">Đường sắt Hyrax</translation>
+    </message>
+    <message>
+        <source>Delete Actuator</source>
+        <translation type="obsolete">Xóa Bộ Truyền Động</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/manager.cpp" line="91"/>
+        <source>The following automations will also be deleted:</source>
+        <translation type="unfinished">Các quy trình tự động sau đây cũng sẽ bị xóa:</translation>
     </message>
 </context>
 <context>
@@ -329,29 +338,25 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::actuators::ActuatorButton</name>
     <message>
-        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="101"/>
         <source>Delete</source>
-        <translation>Xóa</translation>
+        <translation type="vanished">Xóa</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="102"/>
         <source>Edit</source>
-        <translation>Thay Đổi</translation>
+        <translation type="vanished">Thay Đổi</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="129"/>
         <source>The following automations will also be deleted:</source>
-        <translation>Các quy trình tự động sau đây cũng sẽ bị xóa:</translation>
+        <translation type="vanished">Các quy trình tự động sau đây cũng sẽ bị xóa:</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="140"/>
+        <location filename="../../src/cpp/ui/actuators/actuatorbutton.hpp" line="98"/>
         <source>Delete Actuator</source>
         <translation>Xóa Bộ Truyền Động</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/actuators/actuatorbutton.cpp" line="108"/>
         <source>Would you like to delete actuator &quot;%1&quot;?</source>
-        <translation>Xác Nhận Xóa Bộ Truyền Động &quot;%1&quot;?</translation>
+        <translation type="vanished">Xác Nhận Xóa Bộ Truyền Động &quot;%1&quot;?</translation>
     </message>
 </context>
 <context>
@@ -595,6 +600,22 @@ Would you like to pause it or keep it running?</source>
     </message>
 </context>
 <context>
+    <name>ui::common::ComponentButton</name>
+    <message>
+        <location filename="../../src/cpp/ui/common/layout/button.hpp" line="150"/>
+        <source>Would you like to delete &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following automations will also be deleted:</source>
+        <translation type="obsolete">Các quy trình tự động sau đây cũng sẽ bị xóa:</translation>
+    </message>
+    <message>
+        <source>Delete Actuator</source>
+        <translation type="obsolete">Xóa Bộ Truyền Động</translation>
+    </message>
+</context>
+<context>
     <name>ui::common::IpField</name>
     <message>
         <location filename="../../src/cpp/ui/common/ipfield.cpp" line="226"/>
@@ -615,6 +636,27 @@ Would you like to pause it or keep it running?</source>
         <location filename="../../src/cpp/ui/common/ipfield.cpp" line="152"/>
         <source>Copy IP Address to Clipboard</source>
         <translation>Sao Chép Địa Chỉ IP Vào Clipboard</translation>
+    </message>
+</context>
+<context>
+    <name>ui::common::LayoutButton</name>
+    <message>
+        <location filename="../../src/cpp/ui/common/layout/button.hpp" line="84"/>
+        <source>Delete</source>
+        <translation type="unfinished">Xóa</translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/common/layout/button.hpp" line="85"/>
+        <source>Edit</source>
+        <translation type="unfinished">Thay Đổi</translation>
+    </message>
+    <message>
+        <source>The following automations will also be deleted:</source>
+        <translation type="obsolete">Các quy trình tự động sau đây cũng sẽ bị xóa:</translation>
+    </message>
+    <message>
+        <source>Delete Actuator</source>
+        <translation type="obsolete">Xóa Bộ Truyền Động</translation>
     </message>
 </context>
 <context>
@@ -888,33 +930,25 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::routes::RouteButton</name>
     <message>
-        <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="81"/>
         <source>Delete</source>
-        <translation>Xóa</translation>
+        <translation type="vanished">Xóa</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="82"/>
         <source>Edit</source>
-        <translation>Thay Đổi</translation>
+        <translation type="vanished">Thay Đổi</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="66"/>
+        <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="62"/>
         <source>Actuators</source>
         <translation>Bộ Truyền Động</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="105"/>
         <source>The following automations will also be deleted:</source>
-        <translation>Các quy trình tự động sau đây cũng sẽ bị xóa:</translation>
+        <translation type="vanished">Các quy trình tự động sau đây cũng sẽ bị xóa:</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="115"/>
+        <location filename="../../src/cpp/ui/routes/routebutton.hpp" line="76"/>
         <source>Delete Route</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/cpp/ui/routes/routebutton.cpp" line="87"/>
-        <source>Would you like to delete route &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -966,62 +1000,62 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::trains::EditLocoDialog</name>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="264"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="267"/>
         <source>Edit Locomotive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="264"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="267"/>
         <source>Add Locomotive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="266"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="269"/>
         <source>Function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="268"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="271"/>
         <source>Controller</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="269"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="272"/>
         <source>Name</source>
         <translation>Tên</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="271"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="274"/>
         <source>Address</source>
         <translation type="unfinished">Địa Chỉ</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="272"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="275"/>
         <source>Functions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="275"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="278"/>
         <source>Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="337"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="340"/>
         <source>Lights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="342"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="345"/>
         <source>Sounds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="347"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="350"/>
         <source>Miscellaneous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="480"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="497"/>
         <source>Delete Function</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1031,12 +1065,12 @@ Would you like to pause it or keep it running?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="270"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="273"/>
         <source>Protocol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="274"/>
+        <location filename="../../src/cpp/ui/trains/editloco.cpp" line="277"/>
         <source>Icon</source>
         <translation type="unfinished">Biểu Tượng</translation>
     </message>
@@ -1044,12 +1078,12 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::trains::LocoControlPanel</name>
     <message>
-        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="365"/>
+        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="369"/>
         <source>Would you like to delete locomotive &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="369"/>
+        <location filename="../../src/cpp/ui/trains/lococontrolpanel.cpp" line="381"/>
         <source>Delete Locomotive</source>
         <translation type="unfinished"></translation>
     </message>

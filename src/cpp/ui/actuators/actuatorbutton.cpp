@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file        actuators/actuatorbutton.cpp
  * @brief       Layout switching device toggle button
  * @author      Justin Scott
@@ -21,10 +21,8 @@ ActuatorButton::ActuatorButton (const layout::Actuator&     actuator,
                                 QWidget*                    parent,
                                 bool                        dummy,
                                 control::AutomationManager* automations) :
-    LayoutButton (parent),
-    m_actuator (actuator),
-    m_dummy (dummy),
-    m_automations (automations)
+    ComponentButton (automations, actuator, not dummy, parent),
+    m_dummy (dummy)
     {
     auto icon = resources::getIconInfo (actuator.getIcon ());
 
@@ -50,9 +48,6 @@ ActuatorButton::ActuatorButton (const layout::Actuator&     actuator,
     layout->addWidget (m_name, 0, Qt::AlignHCenter);
 
     setContentsMargins (0, 20, 0, 0);
-    setContextMenuPolicy (Qt::ActionsContextMenu);
-
-    createMenu ();
 
     connect (m_button,
             &QPushButton::toggled,
@@ -62,7 +57,7 @@ ActuatorButton::ActuatorButton (const layout::Actuator&     actuator,
     // If it's a dummy, this would be annoying to override the user's selection constantly
     if (not dummy)
         {
-        connect (&m_actuator,
+        connect (&m_component,
                  &layout::Actuator::stateChanged,
                   m_button,
                  &QPushButton::setChecked);
@@ -72,7 +67,7 @@ ActuatorButton::ActuatorButton (const layout::Actuator&     actuator,
 
     if (not dummy)
         {
-        m_actuator.request ();
+        m_component.request ();
         }
     }
 
@@ -80,7 +75,7 @@ ActuatorButton::~ActuatorButton ()
     {
     if (not m_dummy)
         {
-        m_actuator.release ();
+        m_component.release ();
         }
     }
 
@@ -90,67 +85,17 @@ void ActuatorButton::setState (bool state)
 
     if (not m_dummy)
         {
-        m_actuator.set (state);
+        m_component.set (state);
         }
     }
 
-void ActuatorButton::createMenu ()
-    {
-    if (not m_dummy)
-        {
-        addAction (tr ("Delete"), this, &ActuatorButton::removeActuator);
-        addAction (tr ("Edit"),   this, &ActuatorButton::editActuator);
-        }
-    }
 
-void ActuatorButton::removeActuator ()
-    {
-    QString msg = tr ("Would you like to delete actuator \"%1\"?").
-                                    arg (m_actuator.getName ().c_str ());
-
-    if (NULL != m_automations)
-        {
-        std::vector<std::string> automations;
-
-        for (control::AutomationTask& task : *m_automations)
-            {
-            control::AutomationItem& item = *task.getItem ();
-
-            if (control::AutomationItem::type::ACTUATOR == item.getType () &&
-                m_actuator == item.getActuator ())
-                {
-                automations.push_back (item.name ());
-                }
-            }
-
-        if (automations.size () > 0)
-            {
-            msg += "\n\n";
-            msg += tr ("The following automations will also be deleted:");
-            msg += "\n";
-
-            for (const std::string& name : automations)
-                {
-                msg += QString{ " ● %1" }.arg (name);
-                }
-            }
-        }
-
-    if (QMessageBox::Yes == QMessageBox::question (this,
-                                                   tr ("Delete Actuator"),
-                                                   msg))
-        {
-        m_actuator.remove ();
-        emit removeRequested ();
-        }
-    }
-
-void ActuatorButton::editActuator ()
+void ActuatorButton::editComponent ()
     {
     EditActuatorDialog dlg
         {
         this,
-       &m_actuator
+       &m_component
         };
 
     if (QDialog::Accepted == dlg.exec ())
@@ -161,33 +106,33 @@ void ActuatorButton::editActuator ()
         uint                    newAddr = dlg.getAddress ();
         uint                    newDur  = dlg.getDuration ();
 
-        if (newName != m_actuator.getName ())
+        if (newName != m_component.getName ())
             {
-            m_actuator.setName (newName);
+            m_component.setName (newName);
             m_name->setText (newName.c_str ());
             }
 
-        if (newMode != m_actuator.getMode ())
+        if (newMode != m_component.getMode ())
             {
-            m_actuator.setMode (newMode);
+            m_component.setMode (newMode);
             }
 
-        if (newIcon != m_actuator.getIcon ())
+        if (newIcon != m_component.getIcon ())
             {
             auto icon = resources::getIconInfo (newIcon);
 
-            m_actuator.setIcon (newIcon);
+            m_component.setIcon (newIcon);
             m_button->setIcon (icon.icon);
             }
 
-        if (newAddr != m_actuator.getAddress ())
+        if (newAddr != m_component.getAddress ())
             {
-            m_actuator.setAddress (newAddr);
+            m_component.setAddress (newAddr);
             }
 
-        if (newDur != m_actuator.getDuration ())
+        if (newDur != m_component.getDuration ())
             {
-            m_actuator.setDuration (newDur);
+            m_component.setDuration (newDur);
             }
         }
     }
@@ -196,7 +141,7 @@ void ActuatorButton::onToggle (bool state)
     {
     if (not m_dummy)
         {
-        m_actuator.set (state);
+        m_component.set (state);
         }
     }
 

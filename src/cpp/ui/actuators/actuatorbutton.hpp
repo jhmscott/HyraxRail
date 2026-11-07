@@ -30,7 +30,7 @@ namespace ui::actuators
 /// Button to set the state of an actuator
 ///
 //////////////////////////////////////////////////////////////////////////////
-class ActuatorButton : public common::LayoutButton
+class ActuatorButton : public common::ComponentButton<layout::Actuator>
     {
     Q_OBJECT
 public:
@@ -70,26 +70,11 @@ public:
     void setState (bool state);
 
 private:
-    layout::Actuator            m_actuator;     ///< Actuator under control
     QLabel*                     m_name;         ///< Actuator name label
     common::IconToggle*         m_button;       ///< Toggle button controlling actuator
     bool                        m_dummy;        ///< True if this does not control the actuator
-    control::AutomationManager* m_automations;  ///< List of automations
-
-    //////////////////////////////////////////////////////////////////////////////
-    /// Create the actions for the context menu
-    ///
-    //////////////////////////////////////////////////////////////////////////////
-    void createMenu ();
-
-    UILANG_ON_CHANGE (QWidget,
-        {
-        common::removeAllActions (*this);
-        createMenu ();
-        })
 
 private slots:
-
     //////////////////////////////////////////////////////////////////////////////
     /// Handle the user toggling this button
     ///
@@ -99,15 +84,17 @@ private slots:
     void onToggle (bool state);
 
     //////////////////////////////////////////////////////////////////////////////
-    /// Handle a request to remove this actuator
-    ///
-    //////////////////////////////////////////////////////////////////////////////
-    void removeActuator ();
-
-    //////////////////////////////////////////////////////////////////////////////
     /// Handle a request to edit this actuator
     ///
     //////////////////////////////////////////////////////////////////////////////
-    void editActuator ();
+    virtual void editComponent () override;
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Get the translated text for the delete dialog title
+    ///
+    /// @return     Delete dialog title
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual QString getDeleteText () const override { return tr ("Delete Actuator"); }
     };
 } // namespace ui::actuators

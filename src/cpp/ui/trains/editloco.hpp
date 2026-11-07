@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <control/automation//manager.hpp>
 #include <control/controllers/base.hpp>
 #include <control/controllers/manager.hpp>
 
@@ -41,29 +42,34 @@ public:
     /// Constructor, add loco dialog variant
     ///
     /// @param[in]  manager     Controller manager
+    /// @param[in]  automations List of automations
     /// @param[in]  parent      Parent widget
     /// @param[in]  controller  Controller to select from the drop down
     ///                         If NULL, the first is selected
     ///
     ///////////////////////////////////////////////////////////////////////////////
     EditLocoDialog (const control::ControllerManager&   manager,
+                    const control::AutomationManager&   automations,
                     QWidget*                            parent,
                     const control::ControllerBase*      controller) :
-        EditLocoDialog (manager, parent, controller, NULL)
+        EditLocoDialog (manager, automations, parent, controller, NULL)
         {}
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor, edit loco dialog variant
     ///
     /// @param[in]  manager     Controller manager
+    /// @param[in]  automations List of automations
     /// @param[in]  parent      Parent widget
     /// @param[in]  loco        Locomotive to edit
     ///
     ///////////////////////////////////////////////////////////////////////////////
     EditLocoDialog (const control::ControllerManager&   manager,
+                    const control::AutomationManager&   automations,
                     QWidget*                            parent,
                     const layout::Locomotive&           loco) :
         EditLocoDialog (manager,
+                        automations,
                         parent,
                         manager.fromComponent (loco),
                        &loco)
@@ -113,7 +119,9 @@ public:
 
 private:
     const control::ControllerManager&   m_manager;          ///< List of controllers
+    const control::AutomationManager&   m_automations;      ///< List of auotmations
     const control::ControllerBase*      m_controller;       ///< Controller being used
+    const layout::Locomotive*           m_loco;             ///< (Edit mode only) Locomotive being edited
 
     // Forms
     QFormLayout*                        m_form;             ///< Locomotive form
@@ -147,6 +155,7 @@ private:
     /// Constructor
     ///
     /// @param[in]  manager     Controller manager
+    /// @param[in]  automations List of automations
     /// @param[in]  parent      Parent widget
     /// @param[in]  controller  Controller to select from the drop down
     ///                         If NULL, the first is selected
@@ -155,6 +164,7 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     EditLocoDialog (const control::ControllerManager&   manager,
+                    const control::AutomationManager&   automations,
                     QWidget*                            parent,
                     const control::ControllerBase*      controller,
                     const layout::Locomotive*           loco);

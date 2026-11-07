@@ -60,6 +60,16 @@ void AutomationManager::erase (const_iterator it)
     m_tasks.erase (it);
     }
 
+void AutomationManager::clear ()
+    {
+    for (auto& task : m_tasks)
+        {
+        emit taskDestroyed (task);
+        }
+
+    m_tasks.clear ();
+    }
+
 void AutomationManager::reEvaluate (const FastClock::time_point& now)
     {
     for (auto& task : m_tasks)
@@ -73,5 +83,21 @@ void AutomationManager::timeChange (const FastClock::time_point& newTime)
     {
     // TODO: Adjust automations
     }
+
+QString formatAutomationDeletionMessage (const AutomationManager::weakList& automations)
+    {
+    QString msg;
+
+    msg  = QObject::tr ("The following automations will also be deleted:");
+    msg += "\n";
+
+    for (const auto& automation : automations)
+        {
+        msg += QString{ " ● %1" }.arg (automation.get ().name);
+        }
+
+    return msg;
+    }
+
 
 } // namespace control

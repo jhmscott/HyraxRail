@@ -30,7 +30,7 @@ namespace ui::routes
 /// Button to control a route
 ///
 //////////////////////////////////////////////////////////////////////////////
-class RouteButton : public common::LayoutButton
+class RouteButton : public common::ComponentButton<layout::Route>
     {
     Q_OBJECT
 public:
@@ -49,9 +49,7 @@ public:
                  QWidget*                       parent);
 
 private:
-    layout::Route               m_route;        ///< Route being controlled
     control::ControllerBase&    m_controller;
-    control::AutomationManager& m_automations;  ///< List of automations
     QLabel*                     m_name;         ///< Name of the route
 
     //////////////////////////////////////////////////////////////////////////////
@@ -60,32 +58,22 @@ private:
     //////////////////////////////////////////////////////////////////////////////
     void updateTooltip ();
 
-    //////////////////////////////////////////////////////////////////////////////
-    /// Create the context menu actions
-    ///
-    //////////////////////////////////////////////////////////////////////////////
-    void createMenu ();
-
-    UILANG_ON_CHANGE (QWidget,
-        {
-        common::removeAllActions (*this);
-        createMenu ();
-        updateTooltip ();
-        })
-
+    UILANG_ON_CHANGE (QWidget, updateTooltip ());
 private slots:
-    //////////////////////////////////////////////////////////////////////////////
-    /// Prompts the user if they want this route removed, and signals deletion if
-    /// accepted
-    ///
-    //////////////////////////////////////////////////////////////////////////////
-    void removeRoute ();
 
     //////////////////////////////////////////////////////////////////////////////
     /// Opens the dialog to edit this route
     ///
     //////////////////////////////////////////////////////////////////////////////
-    void editRoute ();
+    virtual void editComponent () override;
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Get the translated text for the delete dialog title
+    ///
+    /// @return     Delete dialog title
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual QString getDeleteText () const override { return tr ("Delete Route"); }
     };
 
 } // namespace ui::routes

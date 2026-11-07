@@ -13,11 +13,13 @@
 
 #include <testutils/assert.hpp>
 #include <testutils/mockcontroller.hpp>
+#include <testutils/ui.hpp>
 
 #include <ui/trains/editloco.hpp>
 #include <ui/trains/resources.hpp>
 
 #include <QLabel>
+#include <QMessageBox>
 #include <QtTest>
 
 
@@ -106,6 +108,7 @@ public:
 
 private:
     control::ControllerManager controllers;  ///< List of controllers for testing
+    control::AutomationManager automations;
 
 private slots:
 
@@ -116,7 +119,7 @@ private slots:
     void init ()
         {
         controllers.append (
-            testutils::mockedControllerInfo ("Edit Loco Controller"));
+            testutils::mockedControllerInfo ("Edit Loco Controller"), true);
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -126,6 +129,7 @@ private slots:
     void cleanup ()
         {
         controllers.clear ();
+        automations.clear ();
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -159,7 +163,7 @@ private slots:
         fakeit::When (Method (*controller.locomotiveController,
                               getLocoMetaClass)).AlwaysReturn (metaClass);
 
-        EditLocoDialog dlg{ controllers, NULL, &controller };
+        EditLocoDialog dlg{ controllers, automations, NULL, &controller };
 
 
         QCOMPARE (dlg.windowTitle (), "Add Locomotive");
@@ -198,7 +202,7 @@ private slots:
         layout::LocomotiveControllerMetaClass metaClass2{ iprotocols };
 
         controllers.append (
-            testutils::mockedControllerInfo ("Edit Loco Controller 2"));
+            testutils::mockedControllerInfo ("Edit Loco Controller 2"), true);
 
         auto& controller  = static_cast<testutils::MockController&> (controllers[0]);
         auto& controller2 = static_cast<testutils::MockController&> (controllers[1]);
@@ -209,7 +213,7 @@ private slots:
         fakeit::When (Method (*controller2.locomotiveController,
                               getLocoMetaClass)).AlwaysReturn (metaClass2);
 
-        EditLocoDialog dlg{ controllers, NULL, &controller };
+        EditLocoDialog dlg{ controllers, automations, NULL, &controller };
 
         auto* controllerWdgt = dlg.findChild<QComboBox*> (OBJNAME_EDITLOCO_CONTROLLER,
                                                           Qt::FindDirectChildrenOnly);
@@ -243,7 +247,7 @@ private slots:
         fakeit::When (Method (*controller.locomotiveController,
                               getLocoMetaClass)).AlwaysReturn (metaClass);
 
-        EditLocoDialog dlg{ controllers, NULL, &controller };
+        EditLocoDialog dlg{ controllers, automations, NULL, &controller };
 
         auto* address = dlg.findChild<QSpinBox*> (Qt::FindDirectChildrenOnly);
         auto* protoCb = getProtocolDropdown (dlg);
@@ -328,7 +332,7 @@ private slots:
         layout::LocomotiveControllerMetaClass metaClass{ layout::ALL_TRACK_PROTOCOLS };
 
         controllers.append (
-            testutils::mockedControllerInfo ("Edit Loco Controller 2"));
+            testutils::mockedControllerInfo ("Edit Loco Controller 2"), true);
 
         auto& controller = static_cast<testutils::MockController&> (controllers[0]);
         auto& controller2 = static_cast<testutils::MockController&> (controllers[1]);
@@ -339,7 +343,7 @@ private slots:
         fakeit::When (Method (*controller2.locomotiveController,
                               getLocoMetaClass)).AlwaysReturn (metaClass);
 
-        EditLocoDialog dlg{ controllers, NULL, &controller };
+        EditLocoDialog dlg{ controllers, automations, NULL, &controller };
 
         auto* controllerWdgt    = dlg.findChild<QComboBox*> (OBJNAME_EDITLOCO_CONTROLLER,
                                                              Qt::FindDirectChildrenOnly);
@@ -391,7 +395,7 @@ private slots:
                                  0,
                                  ID };
 
-        EditLocoDialog dlg{ controllers, NULL, loco };
+        EditLocoDialog dlg{ controllers, automations, NULL, loco };
 
         QCOMPARE (dlg.windowTitle (), "Edit Locomotive");
 
@@ -446,7 +450,7 @@ private slots:
                                  0,
                                  ID };
 
-        EditLocoDialog dlg{ controllers, NULL, loco };
+        EditLocoDialog dlg{ controllers, automations, NULL, loco };
 
         dlg.show ();
 
@@ -499,6 +503,124 @@ private slots:
         QCOMPARE (createdFunctions.size (), 1);
         QCOMPARE (createdFunctions[0].id,   0);
         QCOMPARE (createdFunctions[0].icon, layout::funcInfo::ICON_FUNC_LIGHT_HEADLIGHT);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for deleteFunctionTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void deleteFunctionTest_data ()
+        {
+        QTest::addColumn<size_t> ("idx");
+
+        for (size_t ii = 0; ii < FUNCS.size (); ++ii)
+            {
+            QTest::addRow ("%zu", ii) << ii;
+            }
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Tests deleting a function from the dialog
+    ///
+    /// @see    ui::trains::EditLocoDialog
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void deleteFunctionTest ()
+        {
+        static const QString TASK_NAME = "Automated Function";
+
+        QFETCH (size_t, idx);
+
+        layout::LocomotiveControllerMetaClass metaClass{ layout::ALL_TRACK_PROTOCOLS };
+
+        auto& controller = static_cast<testutils::MockController&> (controllers[0]);
+
+        fakeit::When (Method (*controller.locomotiveController,
+                              getLocoMetaClass)).AlwaysReturn (metaClass);
+
+        fakeit::When (Method (*controller.locomotiveController,
+                              getNumberOfFunctions)).AlwaysReturn (static_cast<int> (FUNCS.size ()));
+
+        layout::Locomotive loco{ &controller,
+                                 NAME,
+                                 PROTO,
+                                 ADDR,
+                                 FUNCS,
+                                 0,
+                                 ID };
+
+        auto& task = automations.emplace ();
+
+        task.setItem (new control::AutomationItem{ loco, FUNCS[idx].id });
+        task.name = TASK_NAME;
+
+        EditLocoDialog dlg{ controllers, automations, NULL, loco };
+
+
+        dlg.show ();
+
+        auto* trash = dlg.findChild<QPushButton*> (OBJNAME_EDITLOCO_DELETE_FUNC);
+        auto* functions = static_cast<ui::common::SchemeComboBox*> (
+                                dlg.findChild<QComboBox*> (OBJNAME_EDITLOCO_FUNC_DROPDOWN));
+
+        QCOMPARE_NE (trash, NULL);
+        QCOMPARE_NE (functions, NULL);
+
+        // First test, try deleting an item that is automated
+
+        if (0 == idx)
+            {
+            functions->setCurrentIndex (1);
+            }
+        else
+            {
+            functions->setCurrentIndex (static_cast<int> (idx - 1));
+            }
+
+        bool boxOpened = false;
+
+        QTimer::singleShot (10,
+            [&] () -> void
+            {
+            QMessageBox* box = dlg.findChild<QMessageBox*> ();
+
+            QCOMPARE_NE (box, NULL);
+
+            boxOpened = true;
+
+            QVERIFY (not box->text ().contains (TASK_NAME));
+
+            testutils::clickStandardButton (*box, QMessageBox::No);
+            });
+
+        QTest::mouseClick (trash, Qt::LeftButton);
+
+        QVERIFY (boxOpened);
+
+
+        // Second test, try deleting the item that IS automated
+
+        functions->setCurrentIndex (static_cast<int> (idx));
+
+        boxOpened = false;
+
+        QTimer::singleShot (10,
+            [&] () -> void
+            {
+            QMessageBox* box = dlg.findChild<QMessageBox*> ();
+
+            QCOMPARE_NE (box, NULL);
+
+            boxOpened = true;
+
+            QVERIFY (box->text ().contains (TASK_NAME));
+
+            testutils::clickStandardButton (*box, QMessageBox::No);
+            });
+
+        QTest::mouseClick (trash, Qt::LeftButton);
+
+        QVERIFY (boxOpened);
         }
     };
 

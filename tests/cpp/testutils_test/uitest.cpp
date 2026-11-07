@@ -39,6 +39,65 @@ static void validateMenu (const QMenu& menu)
     }
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Generate test data for all standard buttons
+///
+/// @tparam     Standard button parent (i.e. QMessageBox or QDialogButtonBox)
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T>
+static void generateStandardButtons ()
+    {
+    QTest::addColumn<typename T::StandardButton> ("button");
+
+    QTest::newRow ("Ok")            << T::Ok;
+    QTest::newRow ("Save")          << T::Save;
+    QTest::newRow ("Save All")      << T::SaveAll;
+    QTest::newRow ("Open")          << T::Open;
+    QTest::newRow ("Yes")           << T::Yes;
+    QTest::newRow ("Yes to All")    << T::YesToAll;
+    QTest::newRow ("No")            << T::No;
+    QTest::newRow ("No to All")     << T::NoToAll;
+    QTest::newRow ("Abort")         << T::Abort;
+    QTest::newRow ("Retry")         << T::Retry;
+    QTest::newRow ("Ignore")        << T::Ignore;
+    QTest::newRow ("Close")         << T::Close;
+    QTest::newRow ("Cancel")        << T::Cancel;
+    QTest::newRow ("Discard")       << T::Discard;
+    QTest::newRow ("Help")          << T::Help;
+    QTest::newRow ("Apply")         << T::Apply;
+    QTest::newRow ("Reset")         << T::Reset;
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Create a set of flags for all standard buttons
+///
+/// @tparam     Standard button parent (i.e. QMessageBox or QDialogButtonBox)
+///
+/// @return     Standard button flags
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T>
+static constexpr typename T::StandardButtons allStandardButtons ()
+    {
+    return  T::Ok        |
+            T::Save      |
+            T::SaveAll   |
+            T::Open      |
+            T::Yes       |
+            T::YesToAll  |
+            T::No        |
+            T::NoToAll   |
+            T::Abort     |
+            T::Retry     |
+            T::Ignore    |
+            T::Cancel    |
+            T::Discard   |
+            T::Help      |
+            T::Apply     |
+            T::Reset;
+    }
+
+///////////////////////////////////////////////////////////////////////////////
 /// Test suite for UI test utilities
 ///
 /// @ingroup    UNIT_TEST
@@ -120,28 +179,7 @@ private slots:
     /// Test data for clickStandardButtonTest()
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    void clickStandardButtonTest_data ()
-        {
-        QTest::addColumn<QDialogButtonBox::StandardButton> ("button");
-
-        QTest::newRow ("Ok")            << QDialogButtonBox::Ok;
-        QTest::newRow ("Save")          << QDialogButtonBox::Save;
-        QTest::newRow ("Save All")      << QDialogButtonBox::SaveAll;
-        QTest::newRow ("Open")          << QDialogButtonBox::Open;
-        QTest::newRow ("Yes")           << QDialogButtonBox::Yes;
-        QTest::newRow ("Yes to All")    << QDialogButtonBox::YesToAll;
-        QTest::newRow ("No")            << QDialogButtonBox::No;
-        QTest::newRow ("No to All")     << QDialogButtonBox::NoToAll;
-        QTest::newRow ("Abort")         << QDialogButtonBox::Abort;
-        QTest::newRow ("Retry")         << QDialogButtonBox::Retry;
-        QTest::newRow ("Ignore")        << QDialogButtonBox::Ignore;
-        QTest::newRow ("Close")         << QDialogButtonBox::Close;
-        QTest::newRow ("Cancel")        << QDialogButtonBox::Cancel;
-        QTest::newRow ("Discard")       << QDialogButtonBox::Discard;
-        QTest::newRow ("Help")          << QDialogButtonBox::Help;
-        QTest::newRow ("Apply")         << QDialogButtonBox::Apply;
-        QTest::newRow ("Reset")         << QDialogButtonBox::Reset;
-        }
+    void clickStandardButtonTest_data () { generateStandardButtons<QDialogButtonBox> (); }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Tests clicking a standard dialog box button
@@ -155,22 +193,7 @@ private slots:
 
         QDialog dlg;
 
-        auto* buttons   = new QDialogButtonBox{ QDialogButtonBox::Ok        |
-                                                QDialogButtonBox::Save      |
-                                                QDialogButtonBox::SaveAll   |
-                                                QDialogButtonBox::Open      |
-                                                QDialogButtonBox::Yes       |
-                                                QDialogButtonBox::YesToAll  |
-                                                QDialogButtonBox::No        |
-                                                QDialogButtonBox::NoToAll   |
-                                                QDialogButtonBox::Abort     |
-                                                QDialogButtonBox::Retry     |
-                                                QDialogButtonBox::Ignore    |
-                                                QDialogButtonBox::Cancel    |
-                                                QDialogButtonBox::Discard   |
-                                                QDialogButtonBox::Help      |
-                                                QDialogButtonBox::Apply     |
-                                                QDialogButtonBox::Reset,
+        auto* buttons   = new QDialogButtonBox{ allStandardButtons<QDialogButtonBox> (),
                                                &dlg };
         auto* btn       = buttons->button (button);
 
@@ -179,6 +202,35 @@ private slots:
         QSignalSpy spy{ btn, &QAbstractButton::released };
 
         testutils::clickStandardButton (dlg, button);
+
+        QCOMPARE (spy.count (), 1);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for clickMessageBoxButton()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void clickMessageBoxButton_data () { generateStandardButtons<QMessageBox> (); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Tests clicking a standard message box button
+    ///
+    /// @see    testutils::clickStandardButton()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void clickMessageBoxButton ()
+        {
+        QFETCH (QMessageBox::StandardButton, button);
+
+        QMessageBox mbox;
+
+        mbox.setStandardButtons (allStandardButtons<QMessageBox> ());
+
+        auto* btn = mbox.button (button);
+
+        QSignalSpy spy{ btn, &QAbstractButton::released };
+
+        testutils::clickStandardButton (mbox, button);
 
         QCOMPARE (spy.count (), 1);
         }

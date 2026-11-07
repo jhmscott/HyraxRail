@@ -71,6 +71,14 @@ public:
     AutomationItem* getItem () { return m_item; }
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Get the automated item
+    ///
+    /// @return     Automated item
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    const AutomationItem* getItem () const { return m_item; }
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Get a description of this task
     ///
     /// @return     Formatted desription text
@@ -78,6 +86,21 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     QString description () const;
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Check if this task is automating a given Component
+    ///
+    /// @tparam     Component       Component type
+    ///
+    /// @param[in]  component       Component to check
+    ///
+    /// @return     True if this item is automating component
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<class Component>
+    bool isAutomating (const Component& component) const
+        {
+        return NULL != m_item && m_item->isAutomating (component);
+        }
 signals:
     ///////////////////////////////////////////////////////////////////////////////
     /// Signals the item this is automating has been destroyed

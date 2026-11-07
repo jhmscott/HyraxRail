@@ -45,11 +45,14 @@ static void insertFunctionToCombobox (common::SchemeComboBox&   functions,
     }
 
 EditLocoDialog::EditLocoDialog (const control::ControllerManager&   manager,
+                                const control::AutomationManager&   automations,
                                 QWidget*                            parent,
                                 const control::ControllerBase*      controller,
                                 const layout::Locomotive*           loco) :
     common::FormDialog (parent),
     m_manager (manager),
+    m_automations (automations),
+    m_loco (loco),
     m_edit (NULL != loco)
     {
     QVBoxLayout*    layout         = new QVBoxLayout{ this };
@@ -474,12 +477,25 @@ void EditLocoDialog::onFunctionChange (int idx)
 
 void EditLocoDialog::deleteFunction ()
     {
-    const layout::funcInfo info = m_functions->currentData ().value<layout::funcInfo> ();
+    const layout::funcInfo  info    = m_functions->currentData ().value<layout::funcInfo> ();
+    QString                 msg     = tr ("Would you like to delete %1?").arg (info.uiName ());
+
+    if (NULL != m_loco)
+        {
+        const control::AutomationItem::function func{ *m_loco, info.id };
+
+        auto tasks = m_automations.findAutomatedComponents (func);
+
+        if (tasks.size () > 0)
+            {
+            msg += "\n\n";
+            msg += control::formatAutomationDeletionMessage (tasks);
+            }
+        }
 
     if (QMessageBox::Yes == QMessageBox::question (this,
                                                    tr ("Delete Function"),
-                                                   tr ("Would you like to delete %1?").
-                                                   arg (info.uiName ())))
+                                                   msg))
         {
         m_functions->removeItem (m_functions->currentIndex ());
         updateWidgetStates ();

@@ -60,7 +60,7 @@ private slots:
             };
 
         controllers.append (
-            testutils::mockedControllerInfo ("Edit Auto Controller"));
+            testutils::mockedControllerInfo ("Edit Auto Controller"), true);
 
         auto& controller = static_cast<testutils::MockController&> (controllers[0]);
 
@@ -81,6 +81,8 @@ private slots:
                 { &controller, "Loco 1", layout::TRACK_PROTO_DCC28, 1, FUNCS1, 0, 1 },
                 { &controller, "Loco 2", layout::TRACK_PROTO_DCC28, 2, FUNCS2, 0, 2 },
             };
+
+        controller.refresh ();
         }
 
     ///////////////////////////////////////////////////////////////////////////////

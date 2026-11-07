@@ -15,7 +15,7 @@
 namespace ui::sensors
 {
 SensorBar::SensorBar (const layout::SensorModule& module, QWidget* parent) :
-    common::LayoutButton (parent),
+    common::LayoutButton (true, parent),
     m_module (module)
     {
     QVBoxLayout* layout = new QVBoxLayout{ this };

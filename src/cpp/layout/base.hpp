@@ -379,7 +379,7 @@ public:
         }
 
 protected:
-    std::set<Component*> m_components;  ///< Components under control of this controller
+    std::list<Component*> m_components;  ///< Components under control of this controller
 
 private:
     ///////////////////////////////////////////////////////////////////////////////
@@ -398,12 +398,21 @@ private:
     template<class ComponentT, class RetT, class... Params, class... Args>
     void callAll (size_t id, RetT (ComponentT::* func)(Params...), Args... args)
         {
-        for (Component* component : m_components)
+        auto it = m_components.begin ();
+
+        // Handle iterator invalidation. In the case func() destroys the component
+        // we get the next iterator before calling func()
+        //
+        while (m_components.end () != it)
             {
-            if (component->getId () == id)
+            auto next = std::next (it);
+
+            if ((*it)->getId () == id)
                 {
-                (component->*func) (args...);
+                ((*it)->*func) (args...);
                 }
+
+            it = next;
             }
         }
 
@@ -447,7 +456,7 @@ private:
     template<class T>
     void registerComponent (T* component)
         {
-        m_components.emplace (static_cast<component_t*> (component));
+        m_components.push_back (static_cast<component_t*> (component));
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -461,7 +470,10 @@ private:
     template<class T>
     void deregisterComponent (T* component)
         {
-        m_components.erase (static_cast<component_t*> (component));
+        m_components.erase (std::remove (m_components.begin (),
+                                         m_components.end (),
+                                         static_cast<component_t*> (component)),
+                            m_components.end ());
         }
     };
 

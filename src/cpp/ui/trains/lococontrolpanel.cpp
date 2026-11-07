@@ -35,11 +35,13 @@ static bool compareLocoPtr (const layout::Locomotive* l1, const layout::Locomoti
     return *l1 == *l2;
     }
 
-LocoControlPanel::LocoControlPanel (control::ControllerManager& controllers,
-                                    hAlignment                  align,
-                                    QWidget*                    parent) :
+LocoControlPanel::LocoControlPanel (control::ControllerManager&         controllers,
+                                    const control::AutomationManager&   automations,
+                                    hAlignment                          align,
+                                    QWidget*                            parent) :
     QWidget (parent),
-    m_controllers (controllers)
+    m_controllers (controllers),
+    m_automations (automations)
     {
     QVBoxLayout* mainLayout     = new QVBoxLayout{ this };
     QHBoxLayout* controlLayout  = new QHBoxLayout;
@@ -293,6 +295,7 @@ void LocoControlPanel::addLoco ()
     EditLocoDialog dlg
         {
         m_controllers,
+        m_automations,
         this,
         m_controllers.fromComponent (m_currentLoco)
         };
@@ -316,6 +319,7 @@ void LocoControlPanel::editLoco ()
     EditLocoDialog dlg
         {
         m_controllers,
+        m_automations,
         this,
         m_currentLoco
         };
@@ -364,6 +368,14 @@ void LocoControlPanel::deleteLoco ()
     {
     QString msg = tr ("Would you like to delete locomotive \"%1\"?").
                                             arg (m_currentLoco.getName ());
+
+    auto tasks = m_automations.findAutomatedComponents (m_currentLoco);
+
+    if (tasks.size () > 0)
+        {
+        msg += "\n\n";
+        msg += control::formatAutomationDeletionMessage (tasks);
+        }
 
     if (QMessageBox::Yes == QMessageBox::question (this,
                                                    tr ("Delete Locomotive"),

@@ -17,6 +17,7 @@
 #include <QDialogButtonBox>
 #include <QtTest>
 #include <QMenu>
+#include <QMessageBox>
 #include <QWidget>
 #include <QWindow>
 
@@ -52,7 +53,7 @@ inline void testMenuItem (const QWidget&                        widget,
         // timers all the way down...
         QTimer::singleShot (10, onMenuItemSelected);
 
-        // Open the delete dialog
+        // Open the menu item
         QTest::mouseClick (menu,
                            Qt::LeftButton,
                            Qt::KeyboardModifiers{},
@@ -81,6 +82,22 @@ inline void clickStandardButton (QDialog&                           dlg,
     QCOMPARE_NE (box, NULL);
 
     auto* btn = box->button (which);
+
+    QCOMPARE_NE (btn, NULL);
+
+    QTest::mouseClick (btn, Qt::LeftButton);
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Click a standard button in a message box
+///
+/// @param[in]  mbox    Message box to click
+/// @param[in]  which   Which button to click
+///
+///////////////////////////////////////////////////////////////////////////////
+inline void clickStandardButton (QMessageBox& mbox, QMessageBox::StandardButton which)
+    {
+    auto* btn = mbox.button (which);
 
     QCOMPARE_NE (btn, NULL);
 
