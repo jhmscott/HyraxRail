@@ -56,11 +56,48 @@ protected:
     //////////////////////////////////////////////////////////////////////////////
     virtual bool event (QEvent* event) override;
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Process a mouse wheel event
+    ///
+    /// @param[in]  event       Wheel event
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual void wheelEvent (QWheelEvent* event) override;
 private:
-    utils::VelocityCalculator   m_velCalc;                  ///< Keeps track of points to calculate velocity
-    int                         m_goingToPage       = -1;   ///< Set while the snap animation is in progress
-                                                            ///  -1 when not
-    bool                        m_swipeInProgress   = false;///< True if the user is currently swiping
+    utils::VelocityCalculator   m_velCalc;                      ///< Keeps track of points to calculate velocity
+    QPointF                     m_trackpadDelta     = { 0, 0 }; ///< Current touchpad swipe distance
+    int                         m_goingToPage       = -1;       ///< Set while the snap animation is in progress
+                                                                ///  -1 when not
+    bool                        m_swipeInProgress   = false;    ///< True if the user is currently swiping
+    bool                        m_blockScroll       = false;    ///< (Touchpad only) Set when the swipe limit has been reached,
+                                                                ///  and further scroll events should be ignored
+
+    // Touchpad horizontal swipe gesture
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Start a touchpad swipe operation
+    ///
+    /// @param[in]  delta       Initial swipe distance in pixels
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void beginTouchpadSwipe (const QPointF& delta);
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Update the touchpad swipe state
+    ///
+    /// @param[in]  delta       Distance the touchpad has swiped in this update
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void updateTouchpadSwipe (const QPointF& delta);
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// End a touchpad swipe
+    ///
+    /// @param[in]  animate     True to animate the snap
+    ///                         False to jump directly to the tab
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    void endTouchpadSwipe (bool animate);
 
     // Touch screen handling
 
@@ -101,10 +138,12 @@ private:
     //////////////////////////////////////////////////////////////////////////////
     /// Call when the user has ended the swipe operation; aka released their finger
     ///
-    /// param[in]   point       Final touch point
+    /// @param[in]  point       Final touch point
+    /// @param[in]  animate     True to animate the snap
+    ///                         False to jump immediatly to the new tab
     ///
     //////////////////////////////////////////////////////////////////////////////
-    void endSwipe (const QEventPoint& point);
+    void endSwipe (qreal dist, bool animate = true);
 
     //////////////////////////////////////////////////////////////////////////////
     /// Cancel a swipe operation

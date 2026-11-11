@@ -105,7 +105,8 @@ target_precompile_headers(HyraxRailTestCore PRIVATE src/cpp/stdafx.h)
 
 # Compiler specific flags
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR
+    "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GCC")
     add_compile_options (-Wno-c++20-extensions)
 endif ()
 

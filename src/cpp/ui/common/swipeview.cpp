@@ -15,6 +15,8 @@
 #include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
 
+using namespace std::chrono_literals;
+
 namespace ui::common
 {
 /// Minimum distance, in pixels, for the touch point to move before recognizing a swipe
@@ -228,6 +230,91 @@ bool SwipeView::event (QEvent* event)
     return rc;
     }
 
+void SwipeView::wheelEvent (QWheelEvent* event)
+    {
+    if (QInputDevice::DeviceType::TouchPad == event->deviceType ()  && // Touchpad swipe gesture
+        -1 == m_goingToPage                                         && // No animation in progress
+        (0 != event->pixelDelta ().x () || m_swipeInProgress))         // Horizontal swipe, or swipe already started
+        {                                                              // Accounts for updates/end with delta X, after the ScrollBegin
+        switch (event->phase ())
+            {
+            case Qt::ScrollBegin:
+                {
+                beginTouchpadSwipe (event->pixelDelta ());
+                break;
+                }
+            case Qt::ScrollMomentum:
+            case Qt::ScrollUpdate:
+                {
+                updateTouchpadSwipe (event->pixelDelta ());
+                break;
+                }
+            case Qt::ScrollEnd:
+                {
+                endTouchpadSwipe (true);
+                break;
+                }
+            case Qt::NoScrollPhase:
+                {
+                // ¯\(ツ)/¯
+                }
+            }
+
+        event->accept ();
+        }
+    }
+
+void SwipeView::beginTouchpadSwipe (const QPointF& delta)
+    {
+    m_trackpadDelta = delta;
+    beginSwipe ();
+    }
+
+void SwipeView::updateTouchpadSwipe (const QPointF& delta)
+    {
+    if (not m_blockScroll)
+        {
+        if (m_swipeInProgress)
+            {
+            m_trackpadDelta += delta;
+            }
+        else
+            {
+            beginTouchpadSwipe (delta);
+            }
+
+        int     width   = frameRect ().width ();
+        qreal   dist    = m_trackpadDelta.x ();
+
+        if (dist <= -width || dist >= width)
+            {
+            // Hard snap, no animation
+            endTouchpadSwipe (false);
+            m_blockScroll = true;
+            }
+        else
+            {
+            doSwipe (dist);
+            }
+        }
+    }
+
+void SwipeView::endTouchpadSwipe (bool animate)
+    {
+    if (m_blockScroll)
+        {
+        m_blockScroll       = false;
+        m_swipeInProgress   = false;
+        }
+    else
+        {
+        qreal dist = m_trackpadDelta.x ();
+
+        m_velCalc.clear (); // don't use velocity, momentum built in
+        endSwipe (dist, animate);
+        }
+    }
+
 void SwipeView::touchEvent (QTouchEvent* touch)
     {
     switch (touch->type ())
@@ -250,7 +337,7 @@ void SwipeView::touchEvent (QTouchEvent* touch)
             {
             if (m_swipeInProgress)
                 {
-                endSwipe (touch->point (0));
+                endSwipe (swipeDistance (touch->point (0)));
                 }
             else
                 {
@@ -323,14 +410,14 @@ void SwipeView::doSwipe (qreal dist)
     swipeWidget (*this, idx + 1,    width + dist);
     }
 
-void SwipeView::endSwipe (const QEventPoint& point)
+void SwipeView::endSwipe (qreal dist, bool animate)
     {
     // So QEventPoint::velocity() gives unusable values
     // My relatively naive implementation behaves pretty well and I can tweak
     // the constants as needed
     qreal   vel  = m_velCalc.getVelocity ().x ();
-    qreal   dist = swipeDistance (point);
     int     idx;
+    int     width= currentWidget ()->width ();
 
     // qDebug () << "Dist: " << dist << "Vel: " << vel;
 
@@ -355,7 +442,15 @@ void SwipeView::endSwipe (const QEventPoint& point)
         idx = currentIndex ();
         }
 
-    beginAnimation (idx);
+    if (animate)
+        {
+        beginAnimation (idx);
+        }
+    else
+        {
+        m_goingToPage = idx;
+        endAnimation ();
+        }
     }
 
 void SwipeView::cancelSwipe ()

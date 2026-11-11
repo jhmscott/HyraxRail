@@ -9,6 +9,8 @@
 
 #include <utils/velocity.hpp>
 
+#include <algorithm>
+
 namespace utils
 {
 VelocityCalculator::VelocityCalculator (size_t numPoints, double decay) :
@@ -39,7 +41,7 @@ QVector2D VelocityCalculator::getVelocity () const
             auto jt = it + 1;
 
             QVector2D vec = 1000 * (QVector2D{ it->point } - QVector2D { jt->point }) /
-                            (it->time - jt->time);
+                            std::max (it->time - jt->time, 1UL);
 
             average += vec * weight;
             divisor += weight;

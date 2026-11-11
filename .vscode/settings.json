@@ -1,5 +1,17 @@
 {
     "files.associations": {
         "*.": "cpp"
-    }
+    },
+    "editor.formatOnType": true,
+    "files.trimTrailingWhitespace": true,
+    "C_Cpp.vcFormat.indent.braces": true,
+    "C_Cpp.vcFormat.indent.withinParentheses": "alignToParenthesis",
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.block": "newLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.function": "newLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.lambda": "newLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.namespace": "newLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.type": "newLine",
+    "C_Cpp.vcFormat.space.afterComma": true,
+    "C_Cpp.vcFormat.space.beforeFunctionOpenParenthesis": "insert",
+    "C_Cpp.vcFormat.indent.caseContentsWhenBlock": true
 }
