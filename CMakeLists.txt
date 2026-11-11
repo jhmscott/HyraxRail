@@ -141,6 +141,8 @@ install(SCRIPT ${deploy_script})
 
 # Unit Test Sub-projects
 
+enable_testing()
+
 # Common tests
 add_subdirectory (cmake/tests/common/)
 

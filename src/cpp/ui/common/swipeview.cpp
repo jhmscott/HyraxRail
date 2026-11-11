@@ -233,9 +233,10 @@ bool SwipeView::event (QEvent* event)
 void SwipeView::wheelEvent (QWheelEvent* event)
     {
     if (QInputDevice::DeviceType::TouchPad == event->deviceType ()  && // Touchpad swipe gesture
-        -1 == m_goingToPage                                         && // No animation in progress
-        (0 != event->pixelDelta ().x () || m_swipeInProgress))         // Horizontal swipe, or swipe already started
-        {                                                              // Accounts for updates/end with delta X, after the ScrollBegin
+        (0 != event->pixelDelta ().x ()   || // Horizontal swipe
+         m_swipeInProgress                || // account for events with no change once we've started
+         m_blockScroll))                     // We need to accept these or it breaks future updates
+        {
         switch (event->phase ())
             {
             case Qt::ScrollBegin:
@@ -288,8 +289,8 @@ void SwipeView::updateTouchpadSwipe (const QPointF& delta)
 
         if (dist <= -width || dist >= width)
             {
-            // Hard snap, no animation
-            endTouchpadSwipe (false);
+            // We sometimes get HUGE updates from the OS, only animate in this case
+            endTouchpadSwipe (abs (delta.x ()) > 10);
             m_blockScroll = true;
             }
         else
