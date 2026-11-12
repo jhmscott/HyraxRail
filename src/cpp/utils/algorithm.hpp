@@ -210,6 +210,30 @@ public:
         {}
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor for an exclusive enum range starting at 0
+    ///
+    /// @param[in]  end         End of range, not inclusive
+    ///
+    /// @remarks    Range is [0,end)
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    explicit EnumRange (Enum end) :
+        EnumRange (static_cast<Enum> (0), end)
+        {}
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor for an inclusive enum range starting at 0
+    ///
+    /// @param[in]  end         End of range, not inclusive
+    ///
+    /// @remarks    Range is [0,end)
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    EnumRange (Enum end, inclusive_t) :
+        EnumRange (static_cast<Enum> (0), end, inclusive)
+        {}
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Constructor for an inclusive enum range
     ///
     /// @param[in]  start       Start of range

@@ -20,6 +20,7 @@
 namespace control
 {
 
+
 ///////////////////////////////////////////////////////////////////////////////
 /// Wrapper for an item that can be automated
 ///
@@ -322,6 +323,20 @@ private:
             return std::holds_alternative<Component> (m_item);
             }
         }
+
+    // Don't love a second public block, but this is the cleanest solution
+public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Check if a component type can be automated
+    ///
+    /// @tparam     Component       Component type
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<class Component>
+    static constexpr bool isAutomatable = utils::traits::tupleHasType<Component,
+                                                typename utils::traits::variantToTuple<ItemContainer>::type>::value ||
+                                          // womp womp
+                                          std::is_same_v<Component, layout::Locomotive>;
     };
 
 

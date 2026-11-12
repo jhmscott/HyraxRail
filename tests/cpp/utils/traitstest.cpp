@@ -56,6 +56,21 @@ static void asserNullPointer ()
     }
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Test variant to tuple with a set of types
+///
+/// @tparam     Args    Types to test with
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class... Args>
+static void testVariantToTuple ()
+    {
+    using Variant   = std::variant<Args...>;
+    using Tuple     = std::tuple<Args...>;
+
+    QVERIFY ((std::is_same_v<Tuple, typename variantToTuple<Variant>::type>));
+    }
+
+///////////////////////////////////////////////////////////////////////////////
 /// Test suite for the type traits library
 ///
 /// @ingroup    UNIT_TEST
@@ -204,6 +219,44 @@ private slots:
 
         QCOMPARE (null<std::optional<int>>,     NULLOPT);
         QVERIFY ((std::is_same_v<std::nullopt_t, std::remove_const_t<decltype (null<std::optional<int>>)>>));
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test the variant to tuple trait
+    ///
+    /// @see    utils::traits::variantToTuple
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void variantToTupleTest ()
+        {
+        testVariantToTuple<int, int, int> ();
+        testVariantToTuple<uint8_t, uint16_t, uint32_t, uint64_t, int8_t, int16_t, int32_t, int64_t> ();
+        testVariantToTuple<int, std::string, QString> ();
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test the tupleHasType trait
+    ///
+    /// @see    utils::traits::tupleHasType
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void tupleHasTypeTest ()
+        {
+        using Tuple = std::tuple<uint8_t, uint32_t, uint64_t, int16_t, int32_t, int64_t, std::string>;
+
+        // Types we have
+        QVERIFY ((tupleHasType<uint8_t,     Tuple>::value));
+        QVERIFY ((tupleHasType<uint32_t,    Tuple>::value));
+        QVERIFY ((tupleHasType<uint64_t,    Tuple>::value));
+        QVERIFY ((tupleHasType<int16_t,     Tuple>::value));
+        QVERIFY ((tupleHasType<int32_t,     Tuple>::value));
+        QVERIFY ((tupleHasType<int64_t,     Tuple>::value));
+        QVERIFY ((tupleHasType<std::string, Tuple>::value));
+
+        // Types we don't
+        QVERIFY (not (tupleHasType<uint16_t,Tuple>::value));
+        QVERIFY (not (tupleHasType<int8_t,  Tuple>::value));
+        QVERIFY (not (tupleHasType<QString, Tuple>::value));
         }
     };
 

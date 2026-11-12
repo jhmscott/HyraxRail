@@ -240,6 +240,7 @@
     <ClCompile Include="..\src\cpp\ui\clock\digitalclock.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\editauto.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\monthly.cpp" />
+    <ClCompile Include="..\src\cpp\ui\clock\sensor.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\task.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\timer.cpp" />
     <ClCompile Include="..\src\cpp\ui\clock\weekly.cpp" />
@@ -323,6 +324,7 @@
     <ClInclude Include="..\src\cpp\control\controllers\meta.hpp" />
     <ClInclude Include="..\src\cpp\control\controllers\utils.hpp" />
     <ClInclude Include="..\src\cpp\layout\estop.hpp" />
+    <QtMoc Include="..\src\cpp\ui\clock\sensor.hpp" />
     <ClInclude Include="..\src\cpp\utils\velocity.hpp" />
     <QtMoc Include="..\src\cpp\layout\sensor.hpp" />
     <ClInclude Include="..\src\cpp\layout\utils.hpp" />
@@ -348,7 +350,7 @@
     <QtMoc Include="..\src\cpp\control\automation\clock.hpp" />
     <QtMoc Include="..\src\cpp\control\automation\item.hpp" />
     <QtMoc Include="..\src\cpp\control\automation\manager.hpp" />
-    <ClInclude Include="..\src\cpp\control\automation\condition.hpp" />
+    <QtMoc Include="..\src\cpp\control\automation\condition.hpp" />
     <QtMoc Include="..\src\cpp\control\automation\task.hpp" />
     <ClInclude Include="..\src\cpp\control\controllers\base.hpp" />
     <QtMoc Include="..\src\cpp\ui\clock\automation.hpp" />

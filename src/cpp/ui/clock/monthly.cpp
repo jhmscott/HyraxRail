@@ -41,11 +41,10 @@ MonthlyAlarmConditionForm::MonthlyAlarmConditionForm (QWidget* parent) :
     }
 
 
-std::unique_ptr<control::AutomationCondition> MonthlyAlarmConditionForm::getCondition () const
+control::AutomationCondition* MonthlyAlarmConditionForm::getCondition () const
     {
-    return std::make_unique<control::AutomationMonthlyAlarm> (m_time->time (),
-                                                              static_cast<uint8_t> (
-                                                                  m_month->value ()));
+    return new control::AutomationMonthlyAlarm{ m_time->time (),
+                                                static_cast<uint8_t> (m_month->value ()) };
     }
 
 

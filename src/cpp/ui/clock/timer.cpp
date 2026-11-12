@@ -40,9 +40,9 @@ TimerConditionForm::TimerConditionForm (QWidget* parent) :
     }
 
 
-std::unique_ptr<control::AutomationCondition> TimerConditionForm::getCondition () const
+control::AutomationCondition* TimerConditionForm::getCondition () const
     {
-    return std::make_unique<control::AutomationTimer> (m_duration->getDuration ());
+    return new control::AutomationTimer{ m_duration->getDuration () };
     }
 
 

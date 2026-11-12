@@ -213,8 +213,7 @@ private slots:
         QTest::addColumn<bool> ("initial");
         QTest::addColumn<control::AutomationItem::action> ("action");
 
-        for (auto action : utils::algorithm::EnumRange{ control::AutomationItem::action::ACTION_SET,
-                                                        control::AutomationItem::action::NUM_ACTIONS })
+        for (auto action : utils::algorithm::EnumRange{ control::AutomationItem::action::NUM_ACTIONS })
             {
             auto text = control::actionText (action).toStdString ();
 
@@ -333,8 +332,7 @@ private slots:
         QTest::addColumn<int>  ("idx");
         QTest::addColumn<control::AutomationItem::action> ("action");
 
-        for (auto action : utils::algorithm::EnumRange{ control::AutomationItem::action::ACTION_SET,
-                                                        control::AutomationItem::action::NUM_ACTIONS })
+        for (auto action : utils::algorithm::EnumRange{ control::AutomationItem::action::NUM_ACTIONS })
             {
             for (int ii = 0; ii < std::size (LOCO_FUNCS); ++ii)
                 {

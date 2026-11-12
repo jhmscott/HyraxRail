@@ -50,7 +50,7 @@ public:
     /// @return     Timer condition
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual std::unique_ptr<control::AutomationCondition> getCondition () const override;
+    virtual control::AutomationCondition* getCondition () const override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the form fields from an automation condition

@@ -39,58 +39,93 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/item.hpp" line="340"/>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="355"/>
         <source>Set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/item.hpp" line="341"/>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="356"/>
         <source>Unset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/item.hpp" line="342"/>
+        <location filename="../../src/cpp/control/automation/item.hpp" line="357"/>
         <source>Toggle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="119"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="148"/>
         <source>Every %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="188"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="217"/>
         <source>Each day at %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="259"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="288"/>
         <source>%1 at %2</source>
         <translation type="unfinished">%1 à %2</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="329"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="358"/>
         <source>Day % of every month at %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="363"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="473"/>
+        <source>Port %1 of %2 becomes occupied</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="474"/>
+        <source>Port %1 of %2 becomes unoccupied</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="475"/>
+        <source>Port %1 of %2 changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="545"/>
         <source>Timer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="364"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="546"/>
         <source>Daily Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="365"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="547"/>
         <source>Weekly Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/control/automation/condition.hpp" line="366"/>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="548"/>
         <source>Monthly Alarm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="549"/>
+        <source>Track Sensor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="566"/>
+        <source>Rising Edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="567"/>
+        <source>Falling Edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/control/automation/condition.hpp" line="568"/>
+        <source>Any Change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -482,52 +517,52 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::clock::EditAutoDialog</name>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="290"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="292"/>
         <source>Actuators</source>
         <translation type="unfinished">Actionneurs</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="291"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="293"/>
         <source>Routes</source>
         <translation type="unfinished">Chemins</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="256"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="258"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="257"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="259"/>
         <source>Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="258"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="260"/>
         <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="259"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="261"/>
         <source>Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="260"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="262"/>
         <source>Do Once</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="261"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="263"/>
         <source>Enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="283"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="285"/>
         <source>Edit Automation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="287"/>
+        <location filename="../../src/cpp/ui/clock/editauto.cpp" line="289"/>
         <source>Add Automation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -535,13 +570,36 @@ Would you like to pause it or keep it running?</source>
 <context>
     <name>ui::clock::MonthlyAlarmConditionForm</name>
     <message>
-        <location filename="../../src/cpp/ui/clock/monthly.cpp" line="63"/>
+        <location filename="../../src/cpp/ui/clock/monthly.cpp" line="62"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/clock/monthly.cpp" line="64"/>
+        <location filename="../../src/cpp/ui/clock/monthly.cpp" line="63"/>
         <source>Day</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::clock::SensorConditionForm</name>
+    <message>
+        <location filename="../../src/cpp/ui/clock/sensor.cpp" line="102"/>
+        <source>Port %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/sensor.cpp" line="130"/>
+        <source>Module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/sensor.cpp" line="131"/>
+        <source>Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/cpp/ui/clock/sensor.cpp" line="132"/>
+        <source>Condition</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -743,12 +801,12 @@ Would you like to pause it or keep it running?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/dialog.cpp" line="295"/>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="294"/>
         <source>Hardware Capabilities:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/config/dialog.cpp" line="300"/>
+        <location filename="../../src/cpp/ui/config/dialog.cpp" line="299"/>
         <source>Software Capabilities:</source>
         <translation type="unfinished"></translation>
     </message>

@@ -15,9 +15,9 @@ void AutomationTask::doTask (const FastClock::time_point& now)
     {
     if (enabled)
         {
-        if (condition->evaluate (m_lastChecked,
-                            m_lastRun,
-                            now))
+        if (m_condition->evaluate (m_lastChecked,
+                                   m_lastRun,
+                                   now))
             {
             m_item->doAction (action);
 
@@ -52,9 +52,28 @@ void AutomationTask::setItem (AutomationItem* item)
         }
     }
 
+void AutomationTask::setCondition (AutomationCondition* condition)
+    {
+    if (NULL != m_condition)
+        {
+        delete m_condition;
+        }
+
+    if (NULL != condition)
+        {
+        m_condition = condition;
+        m_condition->setParent (this);
+
+        connect (m_condition,
+                &AutomationCondition::destroyed,
+                 this,
+                &AutomationTask::destroyed);
+        }
+    }
+
 QString AutomationTask::description () const
     {
-    return QString{ "%1, %2 %3" }.arg (condition->description (),
+    return QString{ "%1, %2 %3" }.arg (m_condition->description (),
                                        actionText (action),
                                        m_item->name ());
     }

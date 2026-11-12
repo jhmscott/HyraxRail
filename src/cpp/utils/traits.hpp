@@ -131,4 +131,45 @@ inline constexpr bool always_false_v = always_false<T>::value;
 template<class T>
 inline constexpr auto null = internal::createNullPointer<T> ();
 
+///////////////////////////////////////////////////////////////////////////////
+/// Base struct for variantToTuple.
+///
+/// @tparam     Variant     variant type
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class Variant>
+struct variantToTuple {};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Variant to tuple conversion. Allows you to use variants with the many
+/// tuple traits
+///
+/// @tparam     Args        Variant types
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class... Args>
+struct variantToTuple<std::variant<Args...>>
+    {
+    using type = std::tuple<Args...>;
+    };
+
+///////////////////////////////////////////////////////////////////////////////
+/// Check if a tuple contains a given type
+///
+/// @tparam     T       Type to check
+/// @tparam     Tuple   Tuple to check if it contains T
+///
+///////////////////////////////////////////////////////////////////////////////
+template<typename T, typename Tuple>
+struct tupleHasType;
+
+template<typename T>
+struct tupleHasType<T, std::tuple<>> : std::false_type {};
+
+template<typename T, typename U, typename... Ts>
+struct tupleHasType<T, std::tuple<U, Ts...>> : tupleHasType<T, std::tuple<Ts...>> {};
+
+template<typename T, typename... Ts>
+struct tupleHasType<T, std::tuple<T, Ts...>> : std::true_type {};
+
 } // namespace utils::traits

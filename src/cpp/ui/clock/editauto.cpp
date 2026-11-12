@@ -16,6 +16,7 @@
 #include <ui/clock/alarm.hpp>
 #include <ui/clock/editauto.hpp>
 #include <ui/clock/monthly.hpp>
+#include <ui/clock/sensor.hpp>
 #include <ui/clock/timer.hpp>
 #include <ui/clock/weekly.hpp>
 
@@ -176,6 +177,7 @@ EditAutoDialog::EditAutoDialog (control::ControllerManager& controllers,
     m_conditionForms[control::AutomationCondition::TYPE_DAILY_ALARM]    = new AlarmConditionForm{ this };
     m_conditionForms[control::AutomationCondition::TYPE_WEEKLY_ALARM]   = new WeeklyAlarmConditionForm{ this };
     m_conditionForms[control::AutomationCondition::TYPE_MONTHLY_ALARM]  = new MonthlyAlarmConditionForm{ this };
+    m_conditionForms[control::AutomationCondition::TYPE_SENSOR]         = new SensorConditionForm{ controllers, this };
 
     layout->addLayout (m_layout);
 
@@ -198,10 +200,10 @@ EditAutoDialog::EditAutoDialog (control::ControllerManager& controllers,
         m_enabled->setChecked (task->enabled);
         m_actions->setIndexByUserData (task->action);
 
-        common::setComboBoxIndexByUserData (*m_conditions, task->condition->getType ());
+        common::setComboBoxIndexByUserData (*m_conditions, task->getCondition ()->getType ());
         common::setComboBoxIndexByUserData (*m_items, *task->getItem ());
 
-        activeConditionForm ()->setCondition (*task->condition);
+        activeConditionForm ()->setCondition (*task->getCondition ());
         }
 
     m_name->setValidator (new QRegularExpressionValidator{
@@ -233,13 +235,13 @@ EditAutoDialog::EditAutoDialog (control::ControllerManager& controllers,
 void EditAutoDialog::setTaskParameters (control::AutomationTask& task) const
     {
     task.action     = m_actions->currentData ().value<control::AutomationItem::action> ();
-    task.condition  = activeConditionForm ()->getCondition ();
     task.enabled    = m_enabled->isChecked ();
     task.doOnce     = m_doOnce->isChecked ();
     task.name       = m_name->text ();
 
     task.setItem (new control::AutomationItem{
                         m_items->currentData ().value<control::AutomationItem> ()});
+    task.setCondition (activeConditionForm ()->getCondition ());
     }
 
 

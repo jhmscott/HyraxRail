@@ -156,6 +156,8 @@ public:
 class SensorControllerStubs : public layout::SensorController
     {
 public:
+    using layout::SensorController::setSensorState; // make this public
+
     virtual std::vector<layout::SensorModule> getSensors () const override { return {}; }
 
     virtual layout::SensorModule createSensor (size_t num) override { return {}; }

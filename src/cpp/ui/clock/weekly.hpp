@@ -48,7 +48,7 @@ public:
     /// @return     Weekly alarm condition
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual std::unique_ptr<control::AutomationCondition> getCondition () const override;
+    virtual control::AutomationCondition* getCondition () const override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the fields from an existing condition

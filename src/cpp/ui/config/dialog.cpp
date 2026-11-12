@@ -278,8 +278,7 @@ void Dialog::setControllerTooltip ()
     QString     software;
 
     for (control::controllerCapability capability :
-            utils::algorithm::EnumRange{ control::CAPABILITY_LOCOMOTIVE,
-                                         control::NUM_CAPABILITIES })
+            utils::algorithm::EnumRange{ control::NUM_CAPABILITIES })
         {
         if (meta.hardwareCapabilities[capability])
             {

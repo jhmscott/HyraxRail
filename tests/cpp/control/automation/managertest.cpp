@@ -18,6 +18,7 @@ static const std::string    ROUTE_NAME      = "Automated Route";
 static const std::string    ACTUATOR_NAME   = "Automated Actuator";
 static const std::string    LOCO_NAME       = "Automated Locomotive";
 static const size_t         ID              = 1189998819991197253;
+static const size_t         NUM_PORTS       = 16;
 
 static const std::vector<layout::funcInfo>  LOCO_FUNCS =
     {
@@ -54,16 +55,29 @@ static void populateItems (control::AutomationManager&  manager,
                               LOCO_FUNCS,
                               0,
                               ID };
+    std::vector<bool> ports;
+
+    ports.resize (NUM_PORTS);
+
+    layout::SensorModule sensor{ &controller, ports, "Module", ID };
 
     manager.emplace ().setItem (new control::AutomationItem{ route });
     manager.emplace ().setItem (new control::AutomationItem{ route });
 
     manager.emplace ().setItem (new control::AutomationItem{ actuator });
     manager.emplace ().setItem (new control::AutomationItem{ actuator });
+
 
     for (const auto& function : LOCO_FUNCS)
         {
         manager.emplace ().setItem (new control::AutomationItem{ loco, function.id });
+        }
+
+    for (size_t ii = 0; ii < NUM_PORTS; ++ii)
+        {
+        manager.emplace ().setCondition (new control::AutomationSensor{ sensor,
+                                                control::AutomationSensor::CONDITION_CHANGE,
+                                                static_cast<uint8_t> (ii) });
         }
     }
 
@@ -482,6 +496,36 @@ private slots:
         QCOMPARE (item->getType (), control::AutomationItem::type::LOCO_FUNC);
         QCOMPARE (item->getFunction ()->loco, loco);
         QCOMPARE (item->getFunction ()->func, num);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test finding a sensor module condition
+    ///
+    /// @see    control::AutomationManager::findAutomatedComponents()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void findSensorTest ()
+        {
+        control::AutomationManager  manager;
+        testutils::MockController   controller{
+            "Automation Test Mocked Controller",
+            std::make_unique<testutils::MockControllerProtocol> (utils::device::deviceInfo{}) };
+
+        populateItems (manager, controller);
+
+        layout::SensorModule sensor{ &controller, {}, "Module", ID};
+
+        auto tasks = manager.findAutomatedComponents (sensor);
+
+        QCOMPARE (tasks.size (), NUM_PORTS);
+
+        for (const auto& task : tasks)
+            {
+            auto* condition = dynamic_cast<const control::AutomationSensor*> (task.get ().getCondition ());
+
+            QCOMPARE_NE (condition, NULL);
+            QCOMPARE (condition->getModule (), sensor);
+            }
         }
 
     ///////////////////////////////////////////////////////////////////////////////

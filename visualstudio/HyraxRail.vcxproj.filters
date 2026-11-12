@@ -240,9 +240,6 @@
     <ClInclude Include="..\src\cpp\ui\clock\analogclock.hpp">
       <Filter>Header Files\ui\clock</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\cpp\control\automation\condition.hpp">
-      <Filter>Header Files\control\automation</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\cpp\ui\clock\task.hpp">
       <Filter>Header Files\ui\clock</Filter>
     </ClInclude>
@@ -623,6 +620,9 @@
     <ClCompile Include="..\src\cpp\ui\common\swipeview.cpp">
       <Filter>Source Files\ui\common</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\cpp\ui\clock\sensor.cpp">
+      <Filter>Source Files\ui\clock</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpp\control\protocols\base.hpp">
@@ -839,6 +839,12 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\common\layout\button.hpp">
       <Filter>Header Files\ui\common\layout</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\control\automation\condition.hpp">
+      <Filter>Header Files\control\automation</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\clock\sensor.hpp">
+      <Filter>Header Files\ui\clock</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

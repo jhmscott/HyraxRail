@@ -38,10 +38,10 @@ WeeklyAlarmConditionForm::WeeklyAlarmConditionForm (QWidget* parent) :
     }
 
 
-std::unique_ptr<control::AutomationCondition> WeeklyAlarmConditionForm::getCondition () const
+control::AutomationCondition* WeeklyAlarmConditionForm::getCondition () const
     {
-    return std::make_unique<control::AutomationWeeklyAlarm> (m_time->time (),
-                                                             m_days->getDays ());
+    return new control::AutomationWeeklyAlarm{ m_time->time (),
+                                               m_days->getDays () };
     }
 
 

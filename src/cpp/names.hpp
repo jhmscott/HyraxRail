@@ -53,3 +53,9 @@ inline const QString OBJNAME_CONFIG_DIALOG_TRANSPORT    = "ConfigDialog_Transpor
 
 inline const QString OBJNAME_SWIPETAB_TABBAR            = "SwipeTabWidget_TabBar";
 inline const QString OBJNAME_SWIPETAB_SWIPEVIEW         = "SwipeTabWidget_SwipeView";
+
+// Sensor Condition Form
+
+inline const QString OBJNAME_SENSOR_CONDFORM_MODULES    = "SensorConditionForm_ModulesDropdown";
+inline const QString OBJNAME_SENSOR_CONDFORM_PORTS      = "SensorConditionForm_PortsDropdown";
+inline const QString OBJNAME_SENSOR_CONDFORM_CONDITIONS = "SensorConditionForm_ConditionsDropdown";

@@ -11,6 +11,8 @@
 
 #include <control/automation/clock.hpp>
 
+#include <layout/sensor.hpp>
+
 #include <QString>
 
 namespace control
@@ -19,8 +21,9 @@ namespace control
 /// Time dependent condition to execute an automation
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class AutomationCondition
+class AutomationCondition : public QObject
     {
+    Q_OBJECT
 public:
     /// Type of automation condition
     enum type
@@ -29,9 +32,19 @@ public:
         TYPE_DAILY_ALARM,   ///< Perform task every day at a time
         TYPE_WEEKLY_ALARM,  ///< Perform task certain days of the week at a time
         TYPE_MONTHLY_ALARM, ///< Perform task one day of the month at a certain time
+        TYPE_SENSOR,
 
         NUM_TYPES           ///< Delimiter only
         };
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Check if a component can be made into a condition
+    ///
+    /// @tparam     Component       Component type
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    template<class Component>
+    static constexpr bool isComponentCondition = std::is_same_v<Component, layout::SensorModule>;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Virtual destructor
@@ -68,6 +81,22 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual type getType () const = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Check if this condition relies on a component
+    ///
+    /// @param[in]  component       Component to check
+    ///
+    /// @return     true if it does
+    ///
+    /// @remarks    Default implementation is always false, since most don't use
+    ///             components
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual bool isAutomating (const layout::ComponentBase& component) const { return false; }
+
+signals:
+    void destroyed ();
     };
 
 
@@ -349,6 +378,159 @@ private:
     };
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Track sensor condition
+///
+///////////////////////////////////////////////////////////////////////////////
+class AutomationSensor : public AutomationCondition
+    {
+public:
+    /// What sensor change triggers this automation
+    enum condition
+        {
+        CONDITION_RISING_EDGE,  ///< Sensor goes from unoccupied to occupied
+        CONDITION_FALLING_EDGE, ///< Sensor goes from occupied to unoccupied
+        CONDITION_CHANGE,       ///< Any change to the sensor happens
+
+        NUM_CONDITIONS          ///< Delimiter only
+        };
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  mod     Sensor module
+    /// @param[in]  cond    Sensor change
+    /// @param[in]  port    Port number of module
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    AutomationSensor (layout::SensorModule  mod,
+                      condition             cond,
+                      uint8_t               port) :
+        m_module (std::move (mod)),
+        m_condition (cond),
+        m_port (port),
+        m_lastState (m_module[port])
+        {
+        connect (&m_module,
+                &layout::SensorModule::destroyed,
+                 this,
+                &AutomationCondition::destroyed);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Evaluate the sensor condition
+    ///
+    /// @param[in]  lastTimeChecked     Last time this was evaluated
+    /// @param[in]  lastTimeRun         Last time this condition executed
+    /// @param[in]  now                 Current simulated time
+    ///
+    /// @return     True if sensor condition has been met
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual bool evaluate (const FastClock::time_point& lastTimeChecked,
+                           const FastClock::time_point& lastTimeRun,
+                           const FastClock::time_point& now) const override
+        {
+        bool newState   = m_module[m_port];
+        bool triggered  = false;
+
+        switch (m_condition)
+            {
+            case CONDITION_CHANGE:
+                {
+                triggered = m_lastState != newState;
+                break;
+                }
+
+            case CONDITION_FALLING_EDGE:
+                {
+                triggered = true  == m_lastState &&
+                            false == newState;
+                break;
+                }
+            case CONDITION_RISING_EDGE:
+                {
+                triggered = false == m_lastState &&
+                            true  == newState;
+                break;
+                }
+            }
+
+        m_lastState = newState;
+
+        return triggered;
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the human readable description of this condition
+    ///
+    /// @return     Description text
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual QString description () const override
+        {
+        const QString CONDITIONS[] =
+            {
+            QObject::tr ("Port %1 of %2 becomes occupied"),
+            QObject::tr ("Port %1 of %2 becomes unoccupied"),
+            QObject::tr ("Port %1 of %2 changes")
+            };
+
+        return CONDITIONS[m_condition].arg (m_port, m_module.getName ());
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the condition type
+    ///
+    /// @return     TYPE_SENSOR
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual type getType () const override { return TYPE_SENSOR; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Check if this condition relies on a sensor module
+    ///
+    /// @param[in]  component       Sensor module to check
+    ///
+    /// @return     true if it does
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual bool isAutomating (const layout::ComponentBase& component) const override
+        {
+        const layout::SensorModule* mod = dynamic_cast<const layout::SensorModule*> (&component);
+        return NULL != mod && *mod == m_module;
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the module used in this condition
+    ///
+    /// @return     Sensor module
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    layout::SensorModule getModule () const { return m_module; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the port used to trigger this condition
+    ///
+    /// @return     Port number
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    uint8_t getPort () const { return m_port; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the sensor condition type
+    ///
+    /// @return     Condition type
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    condition getCondition () const { return m_condition; }
+private:
+    const layout::SensorModule  m_module;       ///< Sensor module we are listening for
+    const condition             m_condition;    ///< Sensor change we are waiting for
+    const uint8_t               m_port;         ///< Which port in the sensor
+    mutable bool                m_lastState;    ///< The last sensor state
+    };
+
+///////////////////////////////////////////////////////////////////////////////
 /// Get the name of an enumerate condition type
 ///
 /// @param[in]  type    Condition type
@@ -363,11 +545,32 @@ inline QString conditionText (AutomationCondition::type type)
         QObject::tr ("Timer"),
         QObject::tr ("Daily Alarm"),
         QObject::tr ("Weekly Alarm"),
-        QObject::tr ("Monthly Alarm")
+        QObject::tr ("Monthly Alarm"),
+        QObject::tr ("Track Sensor")
         };
     ASSERT_ARRAY_LENGTH (CONDITIONS, AutomationCondition::NUM_TYPES);
 
     return CONDITIONS[type];
     }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Get the sensor condition text
+///
+/// @return     Text for a sensor condition
+///
+///////////////////////////////////////////////////////////////////////////////
+inline QString sensorConditionText (AutomationSensor::condition type)
+    {
+    const QString CONDITIONS[] =
+        {
+        QObject::tr ("Rising Edge"),
+        QObject::tr ("Falling Edge"),
+        QObject::tr ("Any Change")
+        };
+    ASSERT_ARRAY_LENGTH (CONDITIONS, AutomationSensor::NUM_CONDITIONS);
+
+    return CONDITIONS[type];
+    }
+
 
 } // namespace control

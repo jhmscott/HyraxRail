@@ -49,8 +49,8 @@ public:
     /// @return     Automation alarm condition
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual std::unique_ptr<control::AutomationCondition> getCondition () const override
-        {  return std::make_unique<control::AutomationAlarm> (m_time->time ()); }
+    virtual control::AutomationCondition* getCondition () const override
+        {  return new control::AutomationAlarm{ m_time->time () }; }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the forms from an existing condition

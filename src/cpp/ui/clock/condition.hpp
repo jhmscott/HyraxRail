@@ -51,7 +51,7 @@ public:
     /// @return     Condition object
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual std::unique_ptr<control::AutomationCondition> getCondition () const = 0;
+    virtual control::AutomationCondition* getCondition () const = 0;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Populate the fields of this form from an existing condition
