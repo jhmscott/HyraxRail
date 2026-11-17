@@ -38,10 +38,11 @@ private slots:
     ///////////////////////////////////////////////////////////////////////////////
     void createBarsTest ()
         {
+        control::AutomationManager automations;
         testutils::MockController  controller{ "Test",
             std::make_unique<testutils::MockControllerProtocol> (utils::device::deviceInfo{}) };
 
-        SensorDelegate del;
+        SensorDelegate del{ automations };
 
         controller.sensors.push_back (layout::SensorModule{ &controller.sensorController->get (),
                                                             { true, false },

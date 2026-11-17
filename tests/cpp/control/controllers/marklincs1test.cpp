@@ -228,6 +228,24 @@ private slots:
         fakeit::Verify (Method (*m_protocol, makeRequest).
                         Using (ECoSProtocol::CMD_DELETE, ID, fakeit::_));
         }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test removal of a sensor
+    ///
+    /// @see    control::MarklinCS1::removeSensor()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void removeSensorTest ()
+        {
+        layout::SensorModule sensor{ m_controller.get (), {}, "", ID };
+
+        sensor.remove ();
+
+        m_controller->waitForMessages ();
+
+        fakeit::Verify (Method (*m_protocol, makeRequest).
+                        Using (ECoSProtocol::CMD_DELETE, ID, fakeit::_));
+        }
     };
 
 QTEST_GUILESS_MAIN (MarklinCS1Test)

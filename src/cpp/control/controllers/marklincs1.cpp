@@ -733,6 +733,11 @@ void MarklinCS1::releaseRouteControl (size_t id)
                          ECoSProtocol::ARG_CONTROL);
     }
 
+void MarklinCS1::removeSensor (size_t id)
+    {
+    issueDynamicCommand (ECoSProtocol::deleteId, id);
+    }
+
 std::vector<layout::funcInfo> MarklinCS1::getFunctions (size_t id) const
     {
     std::vector<layout::funcInfo>                       functions;

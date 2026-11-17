@@ -433,6 +433,38 @@ private slots:
             fakeit::Verify (Method (*mockController, setFunc).Using (ID, num, state)).Once ();
             }
         }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test removing a locomotive
+    ///
+    /// @see    layout::Locomotive::remove()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void removeLocomotiveTest ()
+        {
+        fakeit::When (Method (*mockController, removeLocomotive)).AlwaysReturn ();
+
+        layout::Locomotive loco{ &mockController->get (),
+                                  INIT_NAME,
+                                  INIT_PROTO,
+                                  INIT_ADDR,
+                                  INIT_FUNCS,
+                                  0,
+                                  ID };
+        auto loco2 = loco;
+
+        QSignalSpy spy{  &loco,  &layout::ComponentBase::destroyed };
+        QSignalSpy spy2{ &loco2, &layout::ComponentBase::destroyed };
+
+        loco2.remove ();
+
+        // Test all components recieve the signal
+        QCOMPARE (spy.count (), 1);
+        QCOMPARE (spy2.count (), 1);
+
+        // Test the controller receievs the remove request
+        fakeit::Verify (Method (*mockController, removeLocomotive).Using (ID)).Once ();
+        }
     };
 
 QTEST_GUILESS_MAIN (LocomotiveTest)

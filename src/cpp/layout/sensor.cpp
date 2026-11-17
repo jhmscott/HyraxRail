@@ -33,6 +33,13 @@ bool SensorModule::operator[] (size_t idx) const
     return m_state->m_values[idx];
     }
 
+void SensorModule::remove ()
+    {
+    m_controller->removeSensor (m_id);
+    destroyThis ();
+    deregister ();
+    }
+
 void SensorController::setSensorState (SensorModule& module, const std::vector<bool>& values)
     {
     std::vector<size_t> changed;

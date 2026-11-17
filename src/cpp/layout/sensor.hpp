@@ -38,7 +38,7 @@ struct sensorState
         {}
 
     std::vector<bool>   m_values;   ///< Sensor values
-    std::string         m_name;
+    std::string         m_name;     ///< Sensor module name
     mutable std::mutex  m_mtx;      ///< Protection for sensor values
     };
 
@@ -93,6 +93,12 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     std::string getName () const { return m_state->m_name; }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Remove this sensor module from the controller
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void remove ();
 signals:
     ///////////////////////////////////////////////////////////////////////////////
     /// Signals the state of a sensor has changed
@@ -110,11 +116,11 @@ signals:
 ///////////////////////////////////////////////////////////////////////////////
 class SensorController : public ControllerBase<SensorModule>
     {
-
 #ifdef LAYOUT_TEST_CLASS
     friend class ::LAYOUT_TEST_CLASS;
 #endif // LAYOUT_TEST_CLASS
 
+    friend class SensorModule;
 public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the sensors managed by this controller
@@ -144,6 +150,15 @@ protected:
     /// @remarks        Call from network thread when sensor state changes. Thread safe
     ///////////////////////////////////////////////////////////////////////////////
     void setSensorState (SensorModule& module, const std::vector<bool>& values);
+
+private:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Remove a sensor module
+    ///
+    /// @param[in]  id      ID of sensor to remove
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void removeSensor (size_t id) = 0;
 
     };
 

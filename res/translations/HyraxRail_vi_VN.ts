@@ -279,28 +279,28 @@
 <context>
     <name>ui::MainWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="152"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="153"/>
         <source>Trains</source>
         <translation>Tàu</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="153"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="154"/>
         <source>Actuators</source>
         <translatorcomment>actuators</translatorcomment>
         <translation>Bộ Truyền Động</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="154"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="155"/>
         <source>Sensors</source>
         <translation>Cảm Biến Điện Tử</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="155"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="156"/>
         <source>Routes</source>
         <translation>Tuyến Đường</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="156"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="157"/>
         <source>Fast Clock</source>
         <translation>Đồng Hồ Nhanh</translation>
     </message>
@@ -309,7 +309,7 @@
         <translation type="obsolete">Lập Trình</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="157"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="158"/>
         <source>Settings</source>
         <translation>Cài Đặt</translation>
     </message>
@@ -1015,6 +1015,14 @@ Would you like to pause it or keep it running?</source>
     <message>
         <source>Add Route</source>
         <translation type="vanished">Thêm Tuyến Đường</translation>
+    </message>
+</context>
+<context>
+    <name>ui::sensors::SensorBar</name>
+    <message>
+        <location filename="../../src/cpp/ui/sensors/sensorbar.hpp" line="47"/>
+        <source>Delete Sensor Module</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

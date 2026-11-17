@@ -349,6 +349,33 @@ private slots:
         }
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Test destroying a sensor condition
+    ///
+    /// @see    control::AutomationManager::taskDestroyed()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void destroySensorTest ()
+        {
+        control::AutomationManager              manager;
+        testutils::SensorControllerStubs    controller;
+        QSignalSpy                              spy{ &manager,
+                                                     &control::AutomationManager::taskDestroyed };
+
+        layout::SensorModule sensor{ &controller, { true }, "", 1 };
+
+        manager.emplace ().setCondition (
+            new control::AutomationSensor{ sensor,
+                                           control::AutomationSensor::CONDITION_RISING_EDGE,
+                                           0 });
+
+        sensor.remove ();
+
+        // This should destroy the task
+        QCOMPARE (manager.size (), 0);
+        QCOMPARE (spy.count (), 1);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Test finding an automated route
     ///
     /// @see    control::AutomationManager::findAutomatedComponents()

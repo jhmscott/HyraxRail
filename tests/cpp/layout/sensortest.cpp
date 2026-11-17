@@ -186,6 +186,39 @@ private slots:
         QCOMPARE (spy[1][0].toInt (),  bit);
         QCOMPARE (spy[1][1].toBool (), false);
         }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test removing a sensor
+    ///
+    /// @see    layout::SensorModule::remove()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void removeSensorTest ()
+        {
+        fakeit::When (Method (*mockController, removeSensor)).AlwaysReturn ();
+
+        std::vector<bool> values;
+
+        values.resize (8);
+
+        layout::SensorModule sensor{ &mockController->get (),
+                                      values,
+                                      INIT_SENSOR_NAME,
+                                      ID };
+        auto sensor2 = sensor;
+
+        QSignalSpy spy{  &sensor,  &layout::ComponentBase::destroyed };
+        QSignalSpy spy2{ &sensor2, &layout::ComponentBase::destroyed };
+
+        sensor2.remove ();
+
+        // Test all components recieve the signal
+        QCOMPARE (spy.count (), 1);
+        QCOMPARE (spy2.count (), 1);
+
+        // Test the controller receievs the remove request
+        fakeit::Verify (Method (*mockController, removeSensor).Using (ID)).Once ();
+        }
     };
 
 QTEST_GUILESS_MAIN (SensorTest)

@@ -24,6 +24,16 @@ class SensorDelegate : public common::LayoutDelegate
     {
 public:
     //////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  automations     List of automations
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    explicit SensorDelegate (const control::AutomationManager& automations) :
+        m_automations (automations)
+        {}
+
+    //////////////////////////////////////////////////////////////////////////////
     /// Open the dialog to create an sensor module
     ///
     //////////////////////////////////////////////////////////////////////////////
@@ -39,6 +49,9 @@ public:
     //////////////////////////////////////////////////////////////////////////////
     virtual void createButtons (control::ControllerBase&                    controller,
                                 std::function<void (common::LayoutButton*)> addToLayout) override;
+
+private:
+    const control::AutomationManager& m_automations;    ///< List of automations
     };
 
 } // namespace ui::sensors

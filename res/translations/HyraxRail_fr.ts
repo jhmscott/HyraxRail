@@ -273,32 +273,32 @@
 <context>
     <name>ui::MainWidget</name>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="152"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="153"/>
         <source>Trains</source>
         <translation>Trains</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="153"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="154"/>
         <source>Actuators</source>
         <translation type="unfinished">Actionneurs</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="154"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="155"/>
         <source>Sensors</source>
         <translation type="unfinished">Capteurs</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="155"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="156"/>
         <source>Routes</source>
         <translation>Chemins</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="156"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="157"/>
         <source>Fast Clock</source>
         <translation type="unfinished">Horloge Rapide</translation>
     </message>
     <message>
-        <location filename="../../src/cpp/ui/mainwidget.cpp" line="157"/>
+        <location filename="../../src/cpp/ui/mainwidget.cpp" line="158"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
@@ -962,6 +962,14 @@ Would you like to pause it or keep it running?</source>
     <message>
         <location filename="../../src/cpp/ui/routes/routebutton.hpp" line="76"/>
         <source>Delete Route</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ui::sensors::SensorBar</name>
+    <message>
+        <location filename="../../src/cpp/ui/sensors/sensorbar.hpp" line="47"/>
+        <source>Delete Sensor Module</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

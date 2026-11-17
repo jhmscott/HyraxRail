@@ -152,8 +152,8 @@ signals:
 private:
     FastClock::time_point   m_lastChecked;      ///< Last time doTask() was called
     FastClock::time_point   m_lastRun;          ///< Last time doTask() ran item
-    AutomationItem*         m_item  = NULL;     ///< Automated item
-    AutomationCondition*    m_condition;        ///< Condition to execute task
+    AutomationItem*         m_item      = NULL; ///< Automated item
+    AutomationCondition*    m_condition = NULL; ///< Condition to execute task
 
     };
 

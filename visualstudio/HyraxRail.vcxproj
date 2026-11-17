@@ -419,7 +419,7 @@
     <QtMoc Include="..\src\cpp\ui\config\cominfo.hpp" />
     <ClInclude Include="..\src\cpp\ui\dismiss.hpp" />
     <ClInclude Include="..\src\cpp\ui\lang.hpp" />
-    <ClInclude Include="..\src\cpp\ui\sensors\sensorbar.hpp" />
+    <QtMoc Include="..\src\cpp\ui\sensors\sensorbar.hpp" />
     <QtMoc Include="..\src\cpp\ui\sensors\sensorstate.hpp" />
     <ClInclude Include="..\src\cpp\ui\trains\dualcontrol.hpp" />
     <QtMoc Include="..\src\cpp\ui\trains\functionpanel.hpp" />

@@ -236,6 +236,39 @@ private slots:
 
         fakeit::Verify (Method (*mockController, setActuator).Using (ID, newState));
         }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test removing an actuator
+    ///
+    /// @see    layout::Actuator::remove()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void removeActautorTest ()
+        {
+        fakeit::When (Method (*mockController, removeActuator)).AlwaysReturn ();
+
+        layout::Actuator actuator{ &mockController->get (),
+                                    INITIAL_NAME,
+                                    INITIAL_ICON,
+                                    INITIAL_MODE,
+                                    INITIAL_ADDR,
+                                    INITIAL_DUR,
+                                    ID,
+                                    false };
+        auto actuator2 = actuator;
+
+        QSignalSpy spy{  &actuator,  &layout::ComponentBase::destroyed };
+        QSignalSpy spy2{ &actuator2, &layout::ComponentBase::destroyed };
+
+        actuator.remove ();
+
+        // Test all components recieve the signal
+        QCOMPARE (spy.count (), 1);
+        QCOMPARE (spy2.count (), 1);
+
+        // Test the controller receievs the remove request
+        fakeit::Verify (Method (*mockController, removeActuator).Using (ID)).Once ();
+        }
     };
 
 QTEST_GUILESS_MAIN (ActuatorTest)

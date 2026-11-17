@@ -25,27 +25,37 @@ namespace ui::sensors
 /// Bar containing indicators for each sensor in a module
 ///
 //////////////////////////////////////////////////////////////////////////////
-class SensorBar : public common::LayoutButton
+class SensorBar : public common::ComponentButton<layout::SensorModule>
     {
+    Q_OBJECT
 public:
     //////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
+    /// @param[in]  automations List of auomations
     /// @param[in]  module      Module to create a bar for
     /// @param[in]  parent      Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
-    SensorBar (const layout::SensorModule& module, QWidget* parent);
+    SensorBar (const control::AutomationManager&    automations,
+               const layout::SensorModule&          module,
+               QWidget*                             parent);
 
 private:
     std::vector<SensorManageState*> m_states;   ///< Sensor state indicators
     layout::SensorModule            m_module;   ///< Module this is displaying the state of
 
+    //////////////////////////////////////////////////////////////////////////////
+    /// Get the title for the delete sensor message box
+    ///
+    /// @return     Translated title
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual QString getDeleteText () const { return tr ("Delete Sensor Module"); }
+
     // TODO
     virtual void editComponent () {}
 
-    // TODO
-    virtual void removeComponent () {}
     };
 
 } // namespace ui::sensors

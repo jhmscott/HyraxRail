@@ -237,6 +237,33 @@ private slots:
         QVERIFY (not rising.isAutomating (sensor2));// Different sensor
         QVERIFY (not rising.isAutomating (route));  // Same ID, different component type
         }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test removing an automated sensor, and confirm the automation condition
+    /// emits the signal
+    ///
+    /// @see    control::AutomationCondition::destroyed()
+    /// @see    control::AutomationSensor
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void removeSensorTest ()
+        {
+        std::vector<bool> bits;
+
+        bits.resize (NUM_BITS);
+
+        testutils::SensorControllerStubs controller;
+
+        layout::SensorModule sensor{ &controller, bits, "", 1 };
+        layout::SensorModule sensorCopy = sensor;
+
+        control::AutomationSensor rising{ sensor, control::AutomationSensor::CONDITION_RISING_EDGE, 4 };
+        QSignalSpy spy{ &rising, &control::AutomationCondition::destroyed };
+
+        sensorCopy.remove ();
+
+        QCOMPARE (spy.count (), 1);
+        }
     };
 
 QTEST_GUILESS_MAIN (AutomationConditionTest)

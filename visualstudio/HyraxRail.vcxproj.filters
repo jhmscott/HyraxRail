@@ -670,9 +670,6 @@
     <ClInclude Include="..\src\cpp\ui\common\hexvalidator.hpp">
       <Filter>Header Files\ui\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\cpp\ui\sensors\sensorbar.hpp">
-      <Filter>Header Files\ui\sensors</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\cpp\layout\route.hpp">
       <Filter>Header Files\layout</Filter>
     </ClInclude>
@@ -845,6 +842,9 @@
     </QtMoc>
     <QtMoc Include="..\src\cpp\ui\clock\sensor.hpp">
       <Filter>Header Files\ui\clock</Filter>
+    </QtMoc>
+    <QtMoc Include="..\src\cpp\ui\sensors\sensorbar.hpp">
+      <Filter>Header Files\ui\sensors</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

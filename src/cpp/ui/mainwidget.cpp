@@ -87,7 +87,8 @@ MainWidget::MainWidget (control::ControllerManager& controllers, QWidget* parent
     m_controllers (controllers),
     m_automations (new control::AutomationManager{ this }),
     m_routeDel (*m_automations),
-    m_actuatorDel (*m_automations)
+    m_actuatorDel (*m_automations),
+    m_sensorDel (*m_automations)
     {
 #ifdef Q_OS_ANDROID
     setTabPosition (QTabWidget::South);

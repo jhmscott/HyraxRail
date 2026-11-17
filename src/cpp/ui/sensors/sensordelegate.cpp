@@ -24,7 +24,7 @@ void SensorDelegate::createButtons (control::ControllerBase&                    
     {
     for (const layout::SensorModule module : controller.getSensors ())
         {
-        addToLayout (new SensorBar{ module, NULL });
+        addToLayout (new SensorBar{ m_automations, module, NULL });
         }
     }
 
