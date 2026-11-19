@@ -57,7 +57,8 @@ void DebugDrawable::debugDraw (QPaintDevice& paintable)
 
     double fps = (m_frames.size () * std::chrono::system_clock::period::den) /
                   // guard against division by 0
-                  std::max ((std::chrono::system_clock::now () - time).count (), 1LL);
+                  std::max<std::chrono::system_clock::rep>
+                    ((std::chrono::system_clock::now () - time).count (), 1);
     double avgTime = 0.0;
 
     for (auto& [_, duration] : m_frames)

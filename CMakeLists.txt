@@ -20,7 +20,7 @@ endif()
 
 # QT init
 
-find_package(Qt6 6.11
+find_package(Qt6
     REQUIRED COMPONENTS
     Core
     Widgets

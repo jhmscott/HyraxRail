@@ -13,7 +13,7 @@
 
 #include <ui/common/utils.hpp>
 
-#include <QboxLayout>
+#include <QBoxLayout>
 #include <QComboBox>
 #include <QLabel>
 

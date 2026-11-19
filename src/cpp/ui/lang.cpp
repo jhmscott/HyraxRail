@@ -13,7 +13,7 @@
 
 #include <QApplication>
 #include <QLibraryInfo>
-#include <Qtimer>
+#include <QTimer>
 
 #ifdef Q_OS_WIN
 #define WIN32_LEAN_AND_MEAN

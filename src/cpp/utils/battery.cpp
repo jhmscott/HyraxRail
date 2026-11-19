@@ -368,6 +368,30 @@ private:
     };
 #endif // defined (Q_OS_ANDROID)  || defined (DOXYGEN)
 
+#if defined (NON_DROID_LINUX) || defined (DOXYGEN)
+///////////////////////////////////////////////////////////////////////////////
+/// Linux battery implementation to recieve battery notification
+///
+/// @ingroup    PIMPL
+///
+///////////////////////////////////////////////////////////////////////////////
+class BatteryImplLinux : public BatteryImpl
+    {
+public:
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Constructor
+    ///
+    /// @param[in]  battery     Battery interface object
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    explicit BatteryImplLinux (Battery* battery)
+        {}
+
+    virtual std::optional<int> getBatteryPercent () const override { return std::nullopt; }
+    };
+
+#endif // defined (NON_DROID_LINUX) || defined (DOXYGEN)
+
 // Alias the native type
 #if defined (Q_OS_WINDOWS) || defined (DOXYGEN)
 using BatteryImplNative = BatteryImplWindows;   ///< Native battery implementation (Windows)
@@ -375,6 +399,8 @@ using BatteryImplNative = BatteryImplWindows;   ///< Native battery implementati
 using BatteryImplNative = BatteryImplApple;     ///< Native battery implementation (Apple)
 #elif defined (Q_OS_ANDROID)
 using BatteryImplNative = BatteryImplAndroid;   ///< Native battery implementation (Android)
+#elif defined (NON_DROID_LINUX)
+using BatteryImplNative = BatteryImplLinux;
 #endif
 
 

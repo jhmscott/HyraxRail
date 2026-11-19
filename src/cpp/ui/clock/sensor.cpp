@@ -99,7 +99,7 @@ void SensorConditionForm::fillPorts ()
 
         for (size_t ii = 0; ii < sensor.size (); ++ii)
             {
-            m_ports->addItem (tr ("Port %1").arg (ii), ii);
+            m_ports->addItem (tr ("Port %1").arg (ii), QVariant::fromValue (ii));
             }
         }
     }

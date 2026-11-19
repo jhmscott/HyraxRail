@@ -116,7 +116,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     template<class Ratio>
-    explicit AutomationTimer (std::chrono::duration<long long, Ratio> duration) :
+    explicit AutomationTimer (std::chrono::duration<FastClock::time_point::rep, Ratio> duration) :
         m_duration (std::chrono::duration_cast<std::chrono::seconds> (duration))
         {}
 

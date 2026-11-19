@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include <Qvalidator>
+#include <QValidator>
 
 namespace ui::common
 {
