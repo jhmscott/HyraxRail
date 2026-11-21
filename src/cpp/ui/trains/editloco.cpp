@@ -313,6 +313,8 @@ void EditLocoDialog::limitAddress ()
     const layout::trackProtocol protocol =
         m_protocol->currentData ().value<layout::trackProtocol> ();
 
+    ASSERT_ARRAY_INDEX (protocol, layout::NUM_TRACK_PROTO);
+
     m_address->setMinimum (1);
     m_address->setMaximum (layout::PROTOCOLS[protocol].numAddresses);
     }
@@ -396,6 +398,8 @@ void EditLocoDialog::refreshFunctionNumbers ()
 
 void EditLocoDialog::setFunctionFields (int idx)
     {
+    ASSERT_ARRAY_INDEX (idx, m_functions->count ());
+
     const layout::funcInfo info = m_functions->itemData (idx).value<layout::funcInfo> ();
 
     // block, even tho this changes the number
@@ -448,7 +452,9 @@ uint EditLocoDialog::getMaxFunctions () const
 
 void EditLocoDialog::onControllerChange (int idx)
     {
-    const control::ControllerBase*  controller  = m_controllerCb->itemData (idx).
+    ASSERT_ARRAY_INDEX (idx, m_controllerCb->count ());
+
+    const control::ControllerBase* controller  = m_controllerCb->itemData (idx).
                                                     value<const control::ControllerBase*> ();
 
     common::refreshComboboxItems (*m_protocol,

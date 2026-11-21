@@ -57,6 +57,8 @@ protected:
     ///////////////////////////////////////////////////////////////////////////////
     virtual void paintEvent (QPaintEvent* event) override
         {
+        Q_CHECK_PTR (event);
+
         bool    darkMode = Qt::ColorScheme::Dark == qApp->styleHints ()->colorScheme ();
 
         QPushButton::paintEvent (event);
@@ -144,6 +146,8 @@ void FunctionPanel::setLocomotive (const layout::Locomotive& loco)
         {
         auto& [name, icon, idx, state] = *it;
 
+        ASSERT_ARRAY_INDEX (idx, m_btns.size ());
+
         if (layout::funcInfo::ICON_FUNC_NUMBER == icon)
             {
             m_btns[idx]->setIcon ({});
@@ -201,6 +205,8 @@ void FunctionPanel::setTooltips ()
     {
     for (const layout::funcInfo& func : m_loco.getFunctions ())
         {
+        ASSERT_ARRAY_INDEX (func.id, m_btns.size ());
+
         m_btns[func.id]->setToolTip (func.uiName ());
         }
     }

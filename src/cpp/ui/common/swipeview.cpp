@@ -173,6 +173,7 @@ static void fakeMouseEvent (const QTouchEvent& touchEvent)
             }
         default:
             {
+            Q_UNREACHABLE ();
             break;
             }
         }
@@ -205,6 +206,8 @@ bool SwipeView::event (QEvent* event)
     {
     bool rc = false;
 
+    Q_CHECK_PTR (event);
+
     switch (event->type ())
         {
         case QTouchEvent::TouchBegin:
@@ -232,6 +235,8 @@ bool SwipeView::event (QEvent* event)
 
 void SwipeView::wheelEvent (QWheelEvent* event)
     {
+    Q_CHECK_PTR (event);
+
     if (QInputDevice::DeviceType::TouchPad == event->deviceType ()  && // Touchpad swipe gesture
         (0 != event->pixelDelta ().x ()   || // Horizontal swipe
          m_swipeInProgress                || // account for events with no change once we've started
@@ -258,6 +263,8 @@ void SwipeView::wheelEvent (QWheelEvent* event)
             case Qt::NoScrollPhase:
                 {
                 // ¯\(ツ)/¯
+                Q_UNREACHABLE ();
+                break;
                 }
             }
 
@@ -318,6 +325,8 @@ void SwipeView::endTouchpadSwipe (bool animate)
 
 void SwipeView::touchEvent (QTouchEvent* touch)
     {
+    Q_CHECK_PTR (touch);
+
     switch (touch->type ())
         {
         case QTouchEvent::TouchBegin:
@@ -462,8 +471,10 @@ void SwipeView::cancelSwipe ()
 
 void SwipeView::beginAnimation (int idx)
     {
-    QParallelAnimationGroup*    group   = new QParallelAnimationGroup;
-    int                         width   = frameRect ().width ();
+    ASSERT_ARRAY_INDEX (idx, count ());
+
+    QParallelAnimationGroup* group   = new QParallelAnimationGroup;
+    int                      width   = frameRect ().width ();
 
     createAnimation (*this, idx - 1, QPoint{ -width, 0 },   group);
     createAnimation (*this, idx,     QPoint{ 0, 0 },        group);

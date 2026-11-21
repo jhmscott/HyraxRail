@@ -12,6 +12,7 @@
 
 #include <control/controllers/manager.hpp>
 
+#include <ui/common/layout/panel.hpp>
 #include <ui/trains/lococontrolpanel.hpp>
 
 #include <QWidget>
@@ -25,7 +26,7 @@ namespace ui::trains
 /// @ingroup    APP_PANEL
 ///
 ///////////////////////////////////////////////////////////////////////////////
-class DualControlWidget : public QWidget
+    class DualControlWidget : public common::LayoutPanelBase
     {
 public:
     ///////////////////////////////////////////////////////////////////////////////
@@ -38,7 +39,15 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     DualControlWidget (control::ControllerManager&          controllers,
                        const control::AutomationManager&    automations,
-                       QWidget*                             parent);
+                       QWidget* parent);
+
+    /////////////////////////////////////////////////////////////////////////////
+    /// Open a dialog to add a locomotive
+    ///
+    /// @param[in,out]  controller      Controller to add locomotive for
+    ///
+    /////////////////////////////////////////////////////////////////////////////
+    virtual void addComponent (control::ControllerBase& controller) override { m_left->addLoco (controller); }
 
 private:
     LocoControlPanel* m_left;   ///< Left control panel. Default if not enough room for two

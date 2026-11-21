@@ -14,6 +14,7 @@
 #include <utils/os.hpp>
 
 #include <QHostAddress>
+#include <QMenuBar>
 #include <QNetworkInterface>
 #include <QTimer>
 
@@ -328,12 +329,23 @@ bool isIPv6Available ()
     return hasIpv6;
     }
 
+bool isNativeMenuAvailable ()
+    {
+    QMenuBar menubar;
+
+    menubar.setNativeMenuBar (true);
+
+    // Accoriding to the documentation, this always returns false if native menu bars
+    // aren't available on this platform. Easy hack to tell if we have it without
+    // platform dependent code
+    //
+    return menubar.isNativeMenuBar ();
+    }
 
 #ifdef Q_OS_WIN
 
 namespace win32
 {
-
 
 WindowClass::WindowClass (const wchar_t* classname, WNDPROC wndProc) :
     m_classname (classname)

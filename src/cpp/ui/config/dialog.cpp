@@ -16,6 +16,7 @@
 #include <utils/string.hpp>
 
 #include <QDialogButtonBox>
+#include <QMessageBox>
 #include <QValidator>
 
 namespace ui::config
@@ -187,6 +188,63 @@ control::createControllerInfo Dialog::createController () const
                     value<const control::ProtocolMetaClassBase*> ()->
                         name,
             info };
+    }
+
+void Dialog::edit (QWidget*                     parent,
+                   control::ControllerBase&     controller,
+                   control::ControllerManager&  manager)
+    {
+    config::Dialog dlg{ parent, &controller };
+
+    if (QDialog::Accepted == dlg.exec ())
+        {
+        bool changed    = false;
+        auto info       = dlg.createController ();
+
+        if (controller.getDeviceInfo () != info.device)
+            {
+            controller.setDeviceInfo (info.device);
+            changed = true;
+            }
+
+        if (controller.getFriendlyName () != info.friendlyName)
+            {
+            controller.setFriendlyName (info.friendlyName);
+            changed = true;
+            }
+
+        if (changed)
+            {
+            control::saveControllersToUserSettings (manager);
+            }
+        }
+    }
+
+void Dialog::create (QWidget* parent, control::ControllerManager& manager)
+    {
+    Dialog dlg{ parent };
+
+    if (QDialog::Accepted == dlg.exec ())
+        {
+        manager.append (dlg.createController ());
+        control::saveControllersToUserSettings (manager);
+        }
+    }
+
+void Dialog::remove (QWidget*                       parent,
+                     control::ControllerBase&       controller,
+                     control::ControllerManager&    manager)
+    {
+    QString msg =   tr ("Are you sure you want to delete %1 ?").arg (
+                                    controller.getFriendlyName ().c_str ());
+
+    if (QMessageBox::Yes == QMessageBox::question (parent,
+                                                   tr ("Delete Controller"),
+                                                   msg))
+        {
+        manager.remove (controller);
+        control::saveControllersToUserSettings (manager);
+        }
     }
 
 void Dialog::setTransportProto (int idx)

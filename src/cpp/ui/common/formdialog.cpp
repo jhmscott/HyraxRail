@@ -34,6 +34,8 @@ FormDialog::FormDialog (QWidget* parent) :
 
 void FormDialog::enterEvent (QEnterEvent* event)
     {
+    Q_CHECK_PTR (event);
+
     QPushButton* btn = m_buttons->button (QDialogButtonBox::Ok);
 
     if (hasAcceptableInput ())

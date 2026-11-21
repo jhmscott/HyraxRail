@@ -66,11 +66,14 @@ int SchemeTabWidget::addTab (QWidget* widget, const utils::resources::Icon& icon
 
 void SchemeTabWidget::tabRemoved (int index)
     {
+    ASSERT_ARRAY_INDEX (index, m_icons.size ());
     m_icons.erase (m_icons.begin () + index);
     }
 
 void SchemeTabWidget::colorSchemeChanged (Qt::ColorScheme scheme)
     {
+    Q_ASSERT (Qt::ColorScheme::Unknown != scheme);
+
     for (int ii = 0; ii < m_icons.size (); ++ii)
         {
         setTabIcon (ii, m_icons[ii].toIcon (scheme));
@@ -102,12 +105,15 @@ int SchemeTabBar::addTab (const utils::resources::Icon& icon)
 
 void SchemeTabBar::tabRemoved (int index)
     {
+    ASSERT_ARRAY_INDEX (index, m_icons.size ());
     m_icons.erase (m_icons.begin () + index);
     }
 
 
 void SchemeTabBar::colorSchemeChanged (Qt::ColorScheme scheme)
     {
+    Q_ASSERT (Qt::ColorScheme::Unknown != scheme);
+
     for (int ii = 0; ii < m_icons.size (); ++ii)
         {
         setTabIcon (ii, m_icons[ii].toIcon (scheme));
@@ -135,6 +141,8 @@ void SchemeDialog::setWindowIcon (const utils::resources::Icon& icon)
 
 void SchemeDialog::colorSchemeChanged (Qt::ColorScheme scheme)
     {
+    Q_ASSERT (Qt::ColorScheme::Unknown != scheme);
+
     if (m_icon)
         {
         QDialog::setWindowIcon (m_icon.toIcon (scheme));
@@ -176,17 +184,23 @@ void SchemeComboBox::insertItem (int                            idx,
 
 utils::resources::Icon SchemeComboBox::itemSchemeIcon (int idx) const
     {
+    ASSERT_ARRAY_INDEX (idx, count ());
+
     return itemData (idx, schemeIcon).value<utils::resources::Icon> ();
     }
 
 void SchemeComboBox::setItemSchemeIcon (int idx, const utils::resources::Icon& icon)
     {
+    ASSERT_ARRAY_INDEX (idx, count ());
+
     setItemData (idx, QVariant::fromValue (icon), schemeIcon);
     setItemIcon (idx, icon.toIcon (qApp->styleHints ()->colorScheme ()));
     }
 
 void SchemeComboBox::colorSchemeChanged (Qt::ColorScheme scheme)
     {
+    Q_ASSERT (Qt::ColorScheme::Unknown != scheme);
+
     for (int ii = 0; ii < count (); ++ii)
         {
         utils::resources::Icon icon =

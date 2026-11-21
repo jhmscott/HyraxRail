@@ -93,6 +93,16 @@ ConfigForm::ConfigForm (QWidget* parent) :
              this,
             &ConfigForm::styleIndexChanged);
 
+    connect (&clock,
+             &control::FastClock::stopped,
+              this,
+              std::bind (&common::ToggleSwitch::setSwitch, m_running, false, true));
+
+    connect (&clock,
+             &control::FastClock::started,
+              this,
+              std::bind (&common::ToggleSwitch::setSwitch, m_running, true, true));
+
     setLabels ();
     }
 

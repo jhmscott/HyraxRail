@@ -52,6 +52,8 @@ functionInfo getFunctionInfo (layout::funcInfo::icon_t icon)
         }
     else
         {
+        ASSERT_ARRAY_INDEX (icon, layout::funcInfo::NUM_TRUE_ICONS);
+
         info = FUNCTION_ICONS[icon];
         }
 

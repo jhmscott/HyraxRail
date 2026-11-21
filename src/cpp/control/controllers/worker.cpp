@@ -24,6 +24,8 @@ ConnectionWorkerThread::ConnectionWorkerThread (std::string_view                
     {
     std::stringstream ss;
 
+    Q_CHECK_PTR (m_proto);
+
     ss << controllerName << " Network Worker Thread";
 
     utils::os::setThreadName (ss.str (), m_thread);

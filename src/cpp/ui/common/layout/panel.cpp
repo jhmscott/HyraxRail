@@ -23,7 +23,7 @@ LayoutPanel::LayoutPanel (control::ControllerManager&   controllers,
                           control::controllerCapability type,
                           LayoutGroup::layoutType       groupLayout,
                           QWidget*                      parent) :
-    QWidget (parent),
+    LayoutPanelBase (parent),
     m_controllers (controllers),
     m_delegate (delegate),
     m_type (type),
@@ -49,7 +49,8 @@ LayoutPanel::LayoutPanel (control::ControllerManager&   controllers,
     connect (&m_controllers,
              &control::ControllerManager::controllerDeleted,
               this,
-             &LayoutPanel::remove);
+             &LayoutPanel::remove,
+              Qt::DirectConnection);
 
     connect (&m_controllers,
              &control::ControllerManager::disconnected,
@@ -64,14 +65,20 @@ LayoutPanel::LayoutPanel (control::ControllerManager&   controllers,
     setLayout (layout);
     }
 
+void LayoutPanel::addComponent (control::ControllerBase& controller)
+    {
+    LayoutGroup* group = getGroupForController (controller);
+
+    Q_CHECK_PTR (group);
+
+    group->add ();
+    }
+
 void LayoutPanel::remove (const control::ControllerBase& controller)
     {
-    ptrdiff_t idx = m_controllers.indexOf (controller);
+    LayoutGroup* group = getGroupForController (controller);
 
-    if (idx >= 0)
-        {
-        common::removeWidgetFromLayout (*layout (), idx);
-        }
+    layout ()->removeWidget (group);
     }
 
 void LayoutPanel::addController (control::ControllerBase& controller)

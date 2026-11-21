@@ -137,6 +137,8 @@ static ECoSProtocol::arg argFromString (std::string_view str)
 
 std::string ECoSProtocol::arg::serialize () const
     {
+    ASSERT_ARRAY_INDEX (type, NUM_ARGS);
+
     std::string res;
 
     res = ARG_STRINGS[type];
@@ -164,6 +166,8 @@ std::string ECoSProtocol::quad::serialize () const
 
 void ECoSProtocol::issueCommand (cmd cmd, dynamicId id, std::initializer_list<arg> args)
     {
+    ASSERT_ARRAY_INDEX (cmd, ECoSProtocol::NUM_CMD);
+
     static constexpr const char* const CMD_STRINGS[] =
         {
         "queryObjects",

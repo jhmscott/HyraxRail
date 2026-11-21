@@ -18,7 +18,7 @@ namespace ui::trains
 DualControlWidget::DualControlWidget (control::ControllerManager&       controllers,
                                       const control::AutomationManager& automations,
                                       QWidget*                          parent) :
-    QWidget (parent)
+    common::LayoutPanelBase (parent)
     {
     QHBoxLayout* layout = new QHBoxLayout{ this };
 
@@ -35,6 +35,8 @@ DualControlWidget::DualControlWidget (control::ControllerManager&       controll
 
 void DualControlWidget::resizeEvent (QResizeEvent* event)
     {
+    Q_CHECK_PTR (event);
+
     int spacing = layout ()->spacing ();
     int minWidth = m_left->sizeHint ().width () +
         m_right->sizeHint ().width () +

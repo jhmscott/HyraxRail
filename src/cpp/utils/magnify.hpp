@@ -34,7 +34,9 @@ public:
     Magnifier (BasicPolygonView<floating> poly, double scale) :
         m_lens (static_cast<BasicMultiPolygon<floating>> (poly)),
         m_scale (scale)
-        {}
+        {
+        Q_ASSERT (scale > 0.0);
+        }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Magnify a polygon

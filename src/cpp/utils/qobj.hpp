@@ -146,6 +146,8 @@ public:
                   Func1                                                     signal,
                   Func2                                                     slot)
         {
+        Q_CHECK_PTR (sender);
+
         QMetaObject::Connection connection;
 
         if constexpr (std::is_member_function_pointer_v<Func2>)

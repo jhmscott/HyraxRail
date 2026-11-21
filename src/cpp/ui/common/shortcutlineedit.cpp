@@ -18,6 +18,8 @@ namespace ui::common
 
 void ShortcutLineEdit::keyPressEvent (QKeyEvent* event)
     {
+    Q_CHECK_PTR (event);
+
     if (event->key () == m_shortcut.unicode ())
         {
         event->accept ();
@@ -40,6 +42,8 @@ void ShortcutLineEdit::keyPressEvent (QKeyEvent* event)
 
 void ShortcutLineEdit::keyReleaseEvent (QKeyEvent* event)
     {
+    Q_CHECK_PTR (event);
+
     if (event->key () == m_shortcut.unicode ())
         {
         event->accept ();

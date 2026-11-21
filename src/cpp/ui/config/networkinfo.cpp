@@ -127,7 +127,7 @@ void NetworkDeviceInfoWidget::setInfo (const utils::device::deviceInfo::info_t& 
             }
         case utils::device::HostInfo::type::EMPTY:
             {
-            qWarning () << "Attempt to set empty host info";
+            Q_UNREACHABLE ();
             break;
             }
         }
@@ -215,7 +215,7 @@ void NetworkDeviceInfoWidget::networkProtoChanged (int idx)
             }
         default:
             {
-            qWarning () << "Unexpected layer protocol";
+            Q_UNREACHABLE ();
             break;
             }
         }

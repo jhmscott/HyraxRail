@@ -20,7 +20,6 @@ HexValidator::HexValidator (uint min, uint max, QObject* parent) :
     m_max (max)
     {}
 
-
 QValidator::State ui::common::HexValidator::validate (QString & input, int& pos) const
     {
     QValidator::State   state;

@@ -17,7 +17,6 @@
 namespace ui::common
 {
 
-
 IconToggle::IconToggle (const utils::resources::Icon&  icon,
                         bool            frameless,
                         QWidget*        parent) :

@@ -48,6 +48,8 @@ public:
                         const QStyleOptionViewItem& option,
                         const QModelIndex&          index) const override
         {
+        Q_CHECK_PTR (painter);
+
         tier                    type        = index.data (dropDownTier).value<tier> ();
         QStyleOptionViewItem    myOption    = option;
 

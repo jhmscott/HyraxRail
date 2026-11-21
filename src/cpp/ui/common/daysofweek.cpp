@@ -16,7 +16,6 @@
 namespace ui::common
 {
 
-
 DaysOfWeekSelector::DaysOfWeekSelector (QWidget* parent) :
     QWidget (parent)
     {

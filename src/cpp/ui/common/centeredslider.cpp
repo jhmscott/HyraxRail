@@ -59,6 +59,8 @@ public:
                           SubControl                    sc,
                           const QWidget*                widget) const override
         {
+        Q_CHECK_PTR (widget);
+
         QRect widgetRect    = widget->rect ();
         QRect rect          = QProxyStyle::subControlRect (cc, opt, sc, widget);
 
@@ -97,6 +99,7 @@ public:
                 }
             default:
                 {
+                Q_UNREACHABLE ();
                 break;
                 }
             }
@@ -116,7 +119,10 @@ CenteredSlider::CenteredSlider (Qt::Orientation ornt, QWidget* parent) :
 
 void CenteredSlider::paintEvent (QPaintEvent* event)
     {
-    QPainter painter (this);
+    Q_CHECK_PTR (event);
+
+    QPainter painter{ this };
+
     painter.setRenderHint (QPainter::Antialiasing, true);
 
     QStyleOptionSlider option;
@@ -134,7 +140,6 @@ void CenteredSlider::paintEvent (QPaintEvent* event)
 
     QPoint  handlePoint;
     int     handlePos   = 0;
-    QRect   widgetRect  = rect ();
     bool    darkMode    = Qt::ColorScheme::Dark == qApp->styleHints ()->colorScheme ();
     bool    isDisabled  = not isEnabled ();
 

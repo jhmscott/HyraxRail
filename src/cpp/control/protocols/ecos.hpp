@@ -20,7 +20,6 @@ class MarklinCS1Test;
 namespace control
 {
 
-
 /// ECoS Protocol version information
 struct ecosVersion
     {

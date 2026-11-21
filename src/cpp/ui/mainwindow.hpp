@@ -13,6 +13,7 @@
 #include <control/controllers/manager.hpp>
 
 #include <ui/dismiss.hpp>
+#include <ui/common/layout/panel.hpp>
 
 #include <QtWidgets/QMainWindow>
 #include <QSessionManager>
@@ -116,7 +117,7 @@ private:
     clockShutdownType   m_clockShutdownType = clockShutdownType::NOT_SET;   ///< Clock behaviour while shutdown
     bool                m_rememberType      = false;                        ///< True to remember the fast clock
                                                                             ///  behaviour while shutdown
-    std::unique_ptr<DismissAnimation> m_dismiss = NULL; ///< Dismiss animation
+    std::unique_ptr<DismissAnimation> m_dismiss = NULL;                     ///< Dismiss animation
 
     // Android colour scheme palettes
 #if defined (Q_OS_ANDROID) || defined (DOXYGEN)

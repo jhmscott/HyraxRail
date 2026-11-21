@@ -31,11 +31,12 @@ HoverIcon::HoverIcon (const utils::resources::Icon& icon, const QColor& hoverCol
     m_style (style)
     {
     common::makeFrameless (*this);
-
     }
 
 void HoverIcon::paintEvent (QPaintEvent* event)
     {
+    Q_CHECK_PTR (event);
+
     QStyleOptionButton styles;
 
     initStyleOption (&styles);
@@ -83,6 +84,8 @@ void HoverIcon::paintEvent (QPaintEvent* event)
 
 void HoverIcon::enterEvent (QEnterEvent* event)
     {
+    Q_CHECK_PTR (event);
+
     PointedIconButton::enterEvent (event);
 
     m_anim->setStartValue (m_opacity);
@@ -97,6 +100,8 @@ void HoverIcon::enterEvent (QEnterEvent* event)
 
 void HoverIcon::leaveEvent (QEvent* event)
     {
+    Q_CHECK_PTR (event);
+
     PointedIconButton::leaveEvent (event);
 
     m_anim->setStartValue (m_opacity);

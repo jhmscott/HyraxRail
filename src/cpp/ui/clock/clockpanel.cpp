@@ -39,7 +39,9 @@ ClockPanel::ClockPanel (control::ControllerManager& controllers,
     m_clockBox->setLayout (m_clockLayout);
 
     layout->addWidget (m_clockBox, 0, Qt::AlignTop);
-    layout->addWidget (new AutomationGroup{ controllers, automations, this }, 0, Qt::AlignTop);
+    layout->addWidget (m_automations = new AutomationGroup{ controllers, automations, this },
+                       0,
+                       Qt::AlignTop);
 
     layout->setAlignment (Qt::AlignTop);
 
@@ -54,17 +56,18 @@ ClockPanel::ClockPanel (control::ControllerManager& controllers,
     setLayout (layout);
     }
 
-
 void ClockPanel::setTitles ()
     {
     m_clockBox->setTitle (tr ("Clock Settings"));
     }
 
-
 void ClockPanel::styleChanged (clockStyle style)
     {
     ClockWidget* newClock   = NULL;
     ClockWidget* oldClock   = static_cast<ClockWidget*> (m_clockLayout->itemAt (0)->widget ());
+
+    Q_CHECK_PTR (oldClock);
+
     bool         nowAnalog  = isAnalog (style);
     bool         wasAnalog  = isAnalog (oldClock->getStyle ());
 

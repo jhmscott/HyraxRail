@@ -185,12 +185,12 @@ HelpGroup::HelpGroup (QWidget* parent) :
     new QShortcut{ QKeySequence::HelpContents,
                    this, // parent
                    this, // reciever
-                  &HelpGroup::help };
+                   QOverload<>::of (&HelpGroup::help) };
 
     connect (m_aboutBtn,
             &QPushButton::released,
              this,
-            &HelpGroup::about);
+             QOverload<>::of (&HelpGroup::about));
 
     connect (m_aboutQtBtn,
             &QPushButton::released,
@@ -200,12 +200,12 @@ HelpGroup::HelpGroup (QWidget* parent) :
     connect (m_help,
             &QPushButton::released,
              this,
-            &HelpGroup::help);
+             QOverload<>::of (&HelpGroup::help));
 
     connect (m_licBtn,
             &QPushButton::released,
              this,
-            &HelpGroup::license);
+             QOverload<>::of (&HelpGroup::license));
 
     connect (m_creditsBtn,
             &QPushButton::released,
@@ -226,7 +226,7 @@ void HelpGroup::setLabels ()
     m_creditsBtn->setText (utils::str::escape (CreditsDialog::TITLE ()));
     }
 
-void HelpGroup::about ()
+void HelpGroup::about (QWidget* parent)
     {
     const QString HELPGROUP_ABOUT_MESSAGE =
         tr (PRODUCT_DESCRIPTION)  + "<BR>"
@@ -236,7 +236,7 @@ void HelpGroup::about ()
         "Github : <a href='https://github.com/jhmscott/HyraxRail'>"
                           "https://github.com/jhmscott/HyraxRail</a>";
 
-    QMessageBox msg{ this };
+    QMessageBox msg{ parent };
 
     msg.setWindowTitle (tr ("About"));
     msg.setTextFormat (Qt::RichText);
@@ -246,7 +246,7 @@ void HelpGroup::about ()
     msg.exec ();
     }
 
-void HelpGroup::help ()
+void HelpGroup::help (QWidget* parent)
     {
     RichTextDialog dlg
         {
@@ -254,14 +254,14 @@ void HelpGroup::help ()
         ":/text/README.md",
         RichTextDialog::mode::MD,
         RichTextDialog::NO_RESIZE,
-        this
+        parent
         };
 
     dlg.setWindowIcon ("misc/question");
     dlg.exec ();
     }
 
-void HelpGroup::license ()
+void HelpGroup::license (QWidget* parent)
     {
     RichTextDialog dlg
         {
@@ -269,7 +269,7 @@ void HelpGroup::license ()
         ":/text/LICENSE",
         RichTextDialog::mode::TXT,
         RichTextDialog::AUTO_WIDTH,
-        this
+        parent
         };
 
     dlg.setWindowIcon ("misc/key");

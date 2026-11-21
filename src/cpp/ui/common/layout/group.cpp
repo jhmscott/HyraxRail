@@ -93,6 +93,7 @@ void LayoutGroup::setLabels ()
             }
         default:
             {
+            Q_UNREACHABLE ();
             break;
             }
         }

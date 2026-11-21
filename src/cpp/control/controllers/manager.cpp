@@ -216,6 +216,10 @@ loadControllersFromUserSettings (std::function<void (const std::string&)> progre
             {
             info.type = utils::device::TYPE_SERIAL;
             }
+        else
+            {
+            Q_UNREACHABLE ();
+            }
 
 
         switch(info.type)
@@ -297,7 +301,7 @@ void saveControllersToUserSettings (const ControllerManager& controllers)
                 }
             default:
                 {
-                qWarning () << "Unexpected device type";
+                Q_UNREACHABLE ();
                 break;
                 }
             }

@@ -28,7 +28,7 @@ std::vector<Route> VirtualRouteController::getRoutes () const
     }
 
 Route VirtualRouteController::createRoute (const std::string&   name,
-                                            const routeList&    actuators)
+                                           const routeList&     actuators)
     {
     auto it = std::find_if_not (m_routes.begin (),
                                 m_routes.end (),

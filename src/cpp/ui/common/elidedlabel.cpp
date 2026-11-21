@@ -19,6 +19,8 @@ ElidedLabel::ElidedLabel (const QString& text, QWidget* parent) :
 
 void ElidedLabel::paintEvent (QPaintEvent* event)
     {
+    Q_CHECK_PTR (event);
+
     QPainter     painter{ this };
     QFontMetrics metrics    = painter.fontMetrics ();
 

@@ -65,6 +65,8 @@ protected:
     ///////////////////////////////////////////////////////////////////////////////
     virtual bool event (QEvent* event) override
         {
+        Q_CHECK_PTR (event);
+
         bool rc;
 
         switch (event->type ())
@@ -104,6 +106,8 @@ protected:
     ///////////////////////////////////////////////////////////////////////////////
     bool sceneEvent (QEvent* event) // override
         {
+        Q_CHECK_PTR (event);
+
         bool rc = false;
 
         if constexpr (is_graphics_object)
@@ -141,7 +145,9 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     bool gestureEvent (QGestureEvent* event)
         {
-        QGesture*   gesture;
+        Q_CHECK_PTR (event);
+
+        QGesture* gesture;
         bool        rc = false;
 
         if (NULL != (gesture = event->gesture (Qt::TapAndHoldGesture)))

@@ -13,6 +13,8 @@ namespace utils::resources
 {
 QIcon Icon::toIcon (Qt::ColorScheme scheme) const
     {
+    Q_ASSERT (Qt::ColorScheme::Unknown != scheme);
+
     QIcon   icon;
 
     QString schemeName  = Qt::ColorScheme::Dark == scheme ? "dark" : "light";

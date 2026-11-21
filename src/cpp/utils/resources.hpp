@@ -135,7 +135,7 @@ public:
     /// @param[in]  path    Path relative to scheme folder within icon folder
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    Icon (const QString& path) :
+    implicit Icon (const QString& path) :
         m_subPath (path)
         {}
 
@@ -145,13 +145,13 @@ public:
     /// @param[in]  path    Path relative to scheme folder within icon folder
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    Icon (const char* path) :
+    implicit Icon (const char* path) :
         m_subPath (path)
         {}
 
     /// Default copy behaviour
-    Icon (const Icon&) = default;
-    Icon& operator= (const Icon&) = default;
+    implicit Icon (const Icon&) = default;
+    implicit Icon& operator= (const Icon&) = default;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Create a QIcon for a given colour scheme

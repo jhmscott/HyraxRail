@@ -29,6 +29,8 @@ common::LayoutButton* ActuatorDelegate::openCreate (control::ControllerBase&  co
                                               dlg.getMode (),
                                               dlg.getDuration ());
         btn = makeButton (actuator);
+
+        Q_CHECK_PTR (btn);
         }
 
     return btn;

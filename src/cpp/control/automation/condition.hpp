@@ -410,6 +410,8 @@ public:
         m_port (port),
         m_lastState (m_module[port])
         {
+        Q_ASSERT (cond != NUM_CONDITIONS);
+
         connect (&m_module,
                 &layout::SensorModule::destroyed,
                  this,
@@ -451,6 +453,11 @@ public:
                 {
                 triggered = false == m_lastState &&
                             true  == newState;
+                break;
+                }
+            case NUM_CONDITIONS:
+                {
+                Q_UNREACHABLE ();
                 break;
                 }
             }
@@ -540,6 +547,8 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 inline QString conditionText (AutomationCondition::type type)
     {
+    ASSERT_ARRAY_INDEX (type, AutomationCondition::NUM_TYPES);
+
     const QString CONDITIONS[] =
         {
         QObject::tr ("Timer"),
@@ -561,6 +570,8 @@ inline QString conditionText (AutomationCondition::type type)
 ///////////////////////////////////////////////////////////////////////////////
 inline QString sensorConditionText (AutomationSensor::condition type)
     {
+    ASSERT_ARRAY_INDEX (type, AutomationSensor::NUM_CONDITIONS);
+
     const QString CONDITIONS[] =
         {
         QObject::tr ("Rising Edge"),

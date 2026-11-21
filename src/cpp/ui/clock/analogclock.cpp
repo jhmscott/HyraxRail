@@ -725,6 +725,8 @@ AnalogClock::AnalogClock (QWidget* parent) :
 
 void AnalogClock::setStyle (clockStyle newStyle)
     {
+    ASSERT_ARRAY_INDEX (newStyle, std::size (FACES));
+
     const clockFace& face = FACES[newStyle];
 
     m_style = static_cast<style> (newStyle);
@@ -744,6 +746,8 @@ void AnalogClock::setStyle (clockStyle newStyle)
 
 void AnalogClock::paintEvent (QPaintEvent* event)
     {
+    Q_CHECK_PTR (event);
+
     // Use the app palette, the widget pallette isn't updated dynamically
     const QPalette  myPalette       = qApp->palette ();
     const QColor    hourColor       = myPalette.color (QPalette::Text);
@@ -819,7 +823,7 @@ void AnalogClock::paintEvent (QPaintEvent* event)
             }
         case dateWindowStyle::NONE:
             {
-            // no-op
+            Q_UNREACHABLE ();
             break;
             }
         }

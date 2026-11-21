@@ -43,6 +43,11 @@ public:
                      control::AutomationManager&    automations,
                      QWidget*                       parent);
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Open a form dialog to create an automation
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void addAutomation ();
 private:
     control::AutomationManager& m_manager;      ///< List of automations
     control::ControllerManager& m_controllers;  ///< List of controllers
@@ -66,13 +71,6 @@ private:
     UILANG_ON_CHANGE (QGroupBox, setTitles ())
 
 private slots:
-
-    ///////////////////////////////////////////////////////////////////////////////
-    /// Open a form dialog to create an automation
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    void addAutomation ();
-
     ///////////////////////////////////////////////////////////////////////////////
     /// Remove a task from the UI
     ///

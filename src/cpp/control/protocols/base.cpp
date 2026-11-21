@@ -50,7 +50,7 @@ static std::unique_ptr<QIODevice> createDevice (const utils::device::deviceInfo&
             }
         default:
             {
-            throw std::runtime_error ("Invalide device type");
+            Q_UNREACHABLE ();
             break;
             }
         }

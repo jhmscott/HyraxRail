@@ -441,6 +441,8 @@ QPolygonF roundedRect (const QRectF& rect, qreal rx, qreal ry)
 
 QPolygonF circle (const QPointF& center, qreal radius)
     {
+    Q_ASSERT (radius > 0.0);
+
     QPolygonF poly;
 
     poly.reserve (360);

@@ -87,6 +87,7 @@ public:
     ///
     //////////////////////////////////////////////////////////////////////////////
     uint getDuration () const { return m_duration->currentData ().toInt (); }
+
 private:
     QLineEdit*              m_name;     ///< Friendly name field
     QSpinBox*               m_address;  ///< Track protocol address spin box

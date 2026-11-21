@@ -62,6 +62,8 @@ inline iconInfo getIconInfo (layout::actuatorIcon icon)
         };
     ASSERT_ARRAY_LENGTH (ICONS, layout::NUM_TRUE_ICONS);
 
+    ASSERT_ARRAY_INDEX (icon, layout::NUM_TRUE_ICONS);
+
     return ICONS[icon];
     }
 

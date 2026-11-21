@@ -15,7 +15,6 @@ namespace ui::clock
 ClockWidget::ClockWidget (QWidget* parent) :
     QWidget (parent)
     {
-
     connect (&control::FastClock::instance (),
              &control::FastClock::tick,
               this,

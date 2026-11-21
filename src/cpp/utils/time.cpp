@@ -97,6 +97,8 @@ std::pair<int, unit> convertToBestUnit (const std::chrono::nanoseconds& duration
     {
     using count_t = std::chrono::nanoseconds::rep;
 
+    Q_ASSERT (units != NUM_UNITS);
+
     const count_t   count = duration.count ();
     unit            current;
     unit            last = NUM_UNITS;

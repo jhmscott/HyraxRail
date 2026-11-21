@@ -14,6 +14,8 @@
 #include <control/controllers/manager.hpp>
 
 #include <ui/actuators/actuatordelegate.hpp>
+#include <ui/clock/clockpanel.hpp>
+#include <ui/common/layout/panel.hpp>
 #include <ui/common/swipetab.hpp>
 #include <ui/routes/routedelegate.hpp>
 #include <ui/sensors/sensordelegate.hpp>
@@ -48,12 +50,32 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     ~MainWidget ();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Open a dialog to create a component
+    ///
+    /// @param[in]  capability      Type of component to add
+    /// @param[in]  controller      Controller to add component to
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void addComponent (control::controllerCapability   capability,
+                       control::ControllerBase&        controller);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Open a dialog to create an automation
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void addAutomation () { m_clockPanel->addAutomation (); }
+
 private:
     control::ControllerManager&     m_controllers;  ///< List of controllers
     control::AutomationManager*     m_automations;  ///< List of automations
     actuators::ActuatorDelegate     m_actuatorDel;  ///< Delegate for actuator panel
     routes::RouteDelegate           m_routeDel;     ///< Delegate for route panel
     sensors::SensorDelegate         m_sensorDel;    ///< Delegate for sensor panel
+    clock::ClockPanel*              m_clockPanel;   ///< Fast clock/automation panel
+
+    std::array<common::LayoutPanelBase*, control::NUM_CAPABILITIES> m_panels;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the tab tooltips

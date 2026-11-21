@@ -139,7 +139,6 @@ QLocale system ()
     locale = QLocale{ localeStr };
 #endif // Q_OS_ANDROID
 
-
     return locale;
     }
 

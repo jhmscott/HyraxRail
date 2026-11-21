@@ -53,7 +53,6 @@ ControllerGroup::ControllerGroup (control::ControllerManager&   controllers,
               this,
              &ControllerGroup::addControllerInfo);
 
-
     connect (&m_controllers,
              &control::ControllerManager::controllerDeleted,
               this,
@@ -83,13 +82,7 @@ void ControllerGroup::addControllerInfo (control::ControllerBase& controller)
 
 void ControllerGroup::addController ()
     {
-    Dialog dlg{ this };
-
-    if (QDialog::Accepted == dlg.exec ())
-        {
-        m_controllers.append (dlg.createController ());
-        control::saveControllersToUserSettings (m_controllers);
-        }
+    Dialog::create (this, m_controllers);
     }
 
 void ControllerGroup::setLabels ()
@@ -97,7 +90,6 @@ void ControllerGroup::setLabels ()
     m_plusLabel->setLabelText (tr ("New Controller"));
     setTitle (tr ("Controllers"));
     }
-
 
 void ControllerGroup::onControllerDeleted (const control::ControllerBase& controller)
     {
@@ -110,13 +102,11 @@ void ControllerGroup::onControllerDeleted (const control::ControllerBase& contro
 
     if (controllerWidgets.end () != it)
         {
-        int             idx     = layout ()->indexOf (*it);
+        int idx = layout ()->indexOf (*it);
 
         // Remove both the controller info and the spacer
         common::removeWidgetFromLayout (*layout (), idx + 1);
         common::removeWidgetFromLayout (*layout (), idx);
-
-        m_controllers.remove (controller);
         }
     }
 }

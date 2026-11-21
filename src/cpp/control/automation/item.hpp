@@ -20,7 +20,6 @@
 namespace control
 {
 
-
 ///////////////////////////////////////////////////////////////////////////////
 /// Wrapper for an item that can be automated
 ///
@@ -350,6 +349,8 @@ public:
 ///////////////////////////////////////////////////////////////////////////////
 inline QString actionText (AutomationItem::action action)
     {
+    ASSERT_ARRAY_INDEX (action, AutomationItem::NUM_ACTIONS);
+
     const QString ACTIONS[] =
         {
         QObject::tr ("Set"),

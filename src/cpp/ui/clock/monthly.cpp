@@ -16,7 +16,6 @@ namespace ui::clock
 MonthlyAlarmConditionForm::MonthlyAlarmConditionForm (QWidget* parent) :
     ConditionForm (parent)
     {
-
     m_layout = new QFormLayout{ this };
 
     m_layout->addRow (new QLabel{ this }, m_time = new QTimeEdit{ this });

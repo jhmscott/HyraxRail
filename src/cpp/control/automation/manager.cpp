@@ -30,6 +30,8 @@ void AutomationManager::taskItemDestroyed ()
     {
     QObject* task = sender ();
 
+    Q_CHECK_PTR (task);
+
     auto it = std::find_if (begin (),
                             end (),
                             [task] (const AutomationTask& other) -> bool

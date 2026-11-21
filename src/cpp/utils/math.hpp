@@ -38,6 +38,8 @@ T divCeil (const T& dividend, const identityType<T>& divider)
     {
     static_assert (std::is_arithmetic_v<T>, "Must be numeric type");
 
+    Q_ASSERT_X (divider != 0, "divide", "division by zero");
+
     if constexpr (std::is_integral_v<T>)
         {
         return (dividend + divider - 1) / divider;

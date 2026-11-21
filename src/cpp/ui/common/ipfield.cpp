@@ -213,11 +213,14 @@ void IpField::setValue (const QHostAddress& addr)
 
 void IpField::next (int idx)
     {
+    ASSERT_ARRAY_INDEX (idx + 1, m_fields.size ());
+
     m_fields[idx + 1]->setFocus ();
     }
 
 void IpField::addMenuToField (size_t idx)
     {
+    ASSERT_ARRAY_INDEX (idx, m_fields.size ());
 
     auto pasteHandler = std::bind (&IpField::paste,
                                     this,
@@ -243,12 +246,16 @@ void IpField::addMenuToField (size_t idx)
 
 void IpField::back (int idx)
     {
+    ASSERT_ARRAY_INDEX (idx - 1, m_fields.size ());
+
     m_fields[idx - 1]->setFocus ();
     }
 
 void IpField::paste (QLineEdit* field)
     {
-    const QMimeData*    mimeData        = qApp->clipboard ()->mimeData ();
+    Q_CHECK_PTR (field);
+
+    const QMimeData* mimeData        = qApp->clipboard ()->mimeData ();
     bool                defaultPaste    = true;
 
     if (NULL == mimeData)

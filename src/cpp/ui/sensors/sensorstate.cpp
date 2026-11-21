@@ -40,6 +40,8 @@ SensorDisplayState::SensorDisplayState (const layout::SensorModule& module,
 
 void SensorDisplayState::paintEvent (QPaintEvent* event)
     {
+    Q_CHECK_PTR (event);
+
     QPainter        painter{ this };
     Qt::GlobalColor color   = m_state ? Qt::green : Qt::red;
     Qt::GlobalColor outline;

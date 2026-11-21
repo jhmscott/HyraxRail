@@ -56,7 +56,7 @@ void ToggleSwitch::setSwitch (bool state, bool animate)
 
 void ToggleSwitch::paintEvent (QPaintEvent*)
     {
-    QPainter p (this);
+    QPainter p{ this };
 
     p.setPen (Qt::NoPen);
     p.setRenderHint (QPainter::Antialiasing, true);

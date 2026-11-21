@@ -70,6 +70,7 @@ static utils::resources::Icon getIcon (const control::AutomationItem& item)
         case control::AutomationItem::type::NUM_TYPES:
             {
             // Delimeter value
+            Q_UNREACHABLE ();
             break;
             }
         }
@@ -152,6 +153,7 @@ EditAutoDialog::EditAutoDialog (control::ControllerManager& controllers,
                 case control::AutomationItem::type::NUM_TYPES:
                     {
                     // Delimeter value
+                    Q_UNREACHABLE ();
                     break;
                     }
                 }

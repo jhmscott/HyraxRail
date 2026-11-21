@@ -52,6 +52,8 @@ SwipeTabWidget::SwipeTabWidget (QWidget* parent) :
 
 int SwipeTabWidget::addTab (QWidget* widget, const utils::resources::Icon& icon)
     {
+    Q_CHECK_PTR (widget);
+
     m_tabs->addTab (icon);
     m_view->addWidget (widget);
 

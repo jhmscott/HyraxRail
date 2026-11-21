@@ -109,7 +109,7 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     template<class Component>
-    weakList findAutomatedComponents (const Component component) const
+    weakList findAutomatedComponents (const Component& component) const
         {
         std::vector<std::reference_wrapper<const control::AutomationTask>> tasks;
 

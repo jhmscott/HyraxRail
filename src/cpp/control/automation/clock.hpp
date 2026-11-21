@@ -157,6 +157,14 @@ signals:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void stopped (const time_point& time);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Signals the clock has been stsarted
+    ///
+    /// @param[in]  time        Time the clock was started at
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void started (const time_point& time);
 private:
     mutable std::mutex  m_mtx;                                                  ///< Mutex protection
     std::thread         m_thread;                                               ///< Thread to signal tick()

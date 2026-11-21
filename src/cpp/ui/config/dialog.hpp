@@ -14,6 +14,7 @@
 #include <QFormLayout>
 
 #include <control/controllers/base.hpp>
+#include <control/controllers/manager.hpp>
 
 #include <ui/config/deviceinfo.hpp>
 #include <ui/common/formdialog.hpp>
@@ -50,6 +51,40 @@ public:
     ///
     //////////////////////////////////////////////////////////////////////////////
     control::createControllerInfo createController () const;
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Open a dialog to edit a controller
+    ///
+    /// @param[in]      parent      Parent widget
+    /// @param[in,out]  controller  Controller to add
+    /// @param[in,out]  manager     Controller manager
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    static void edit (QWidget*                      parent,
+                      control::ControllerBase&      controller,
+                      control::ControllerManager&   manager);
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Open a dialog to create a controller
+    ///
+    /// @param[in]      parent      Parent widget
+    /// @param[in,out]  manager     Controller manager
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    static void create (QWidget* parent, control::ControllerManager& manager);
+
+    //////////////////////////////////////////////////////////////////////////////
+    /// Open a dialog to remove a controller
+    ///
+    /// @param[in]      parent      Parent widget
+    /// @param[in,out]  controller  Controller to remove
+    /// @param[in,out]  manager     Controller manager
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    static void remove (QWidget*                    parent,
+                        control::ControllerBase&    controller,
+                        control::ControllerManager& manager);
+
 private:
     common::OptionalDropdown*   m_controller;   ///< Controller drop down
     common::OptionalDropdown*   m_protocol;     ///< Application layer protocol drop down

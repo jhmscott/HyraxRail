@@ -53,24 +53,20 @@ public:
         {
         if (CE_TabBarTabLabel == element)
             {
-            const QStyleOptionTab* tabOption;
+            const QStyleOptionTab* tabOption= qstyleoption_cast<const QStyleOptionTab*>(option);
 
-            if (NULL == (tabOption = qstyleoption_cast<const QStyleOptionTab*>(option)))
-                {
-                qDebug () << "Failed to cast style option to tab";
-                }
-            else
-                {
-                QRect   rect    = tabOption->rect;
-                QSize   size    = rect.size ();
-                int     extent  = std::min (size.width (), size.height ()) - 12;
-                QPixmap icon    = tabOption->icon.pixmap (extent);
+            Q_CHECK_PTR (tabOption);
+            Q_CHECK_PTR (painter);
 
-                rect.setSize (QSize{ extent, extent });
-                rect.moveCenter (tabOption->rect.center ());
+            QRect   rect    = tabOption->rect;
+            QSize   size    = rect.size ();
+            int     extent  = std::min (size.width (), size.height ()) - 12;
+            QPixmap icon    = tabOption->icon.pixmap (extent);
 
-                painter->drawPixmap (rect, icon);
-                }
+            rect.setSize (QSize{ extent, extent });
+            rect.moveCenter (tabOption->rect.center ());
+
+            painter->drawPixmap (rect, icon);
             }
         else
             {
@@ -90,39 +86,46 @@ MainWidget::MainWidget (control::ControllerManager& controllers, QWidget* parent
     m_actuatorDel (*m_automations),
     m_sensorDel (*m_automations)
     {
+    std::fill (m_panels.begin (),
+               m_panels.end (),
+               NULL);
+
 #ifdef Q_OS_ANDROID
     setTabPosition (QTabWidget::South);
 #endif // Q_OS_ANDROID
 
     setUsesScrollButtons (false);
 
-    addTab (new trains::DualControlWidget{ m_controllers, *m_automations, this },
+    addTab (m_panels[control::CAPABILITY_LOCOMOTIVE] =
+            new trains::DualControlWidget{ m_controllers, *m_automations, this },
             "misc/train");
-    addTab (new common::LayoutPanel{ m_controllers,
+    addTab (m_panels[control::CAPABILITY_ACTUATOR] =
+            new common::LayoutPanel{ m_controllers,
                                      m_actuatorDel,
                                      control::CAPABILITY_ACTUATOR,
                                      common::LayoutGroup::layoutType::GRID,
                                      this },
             "misc/split");
-    addTab (new common::LayoutPanel{ m_controllers,
+    addTab (m_panels[control::CAPABILITY_SENSOR] =
+            new common::LayoutPanel{ m_controllers,
                                      m_sensorDel,
                                      control::CAPABILITY_SENSOR,
                                      common::LayoutGroup::layoutType::VBOX,
                                      this },
             "misc/train-track");
-    addTab (new common::LayoutPanel{ m_controllers,
+    addTab (m_panels[control::CAPABILITY_ROUTE]=
+            new common::LayoutPanel{ m_controllers,
                                      m_routeDel,
                                      control::CAPABILITY_ROUTE,
                                      common::LayoutGroup::layoutType::GRID,
                                      this },
             "misc/path");
-    addTab (new clock::ClockPanel{ m_controllers, *m_automations, this },
+    addTab (m_clockPanel = new clock::ClockPanel{ m_controllers, *m_automations, this },
             "misc/clock");
     addTab (new config::ConfigPanel{ m_controllers, this},
             "misc/gear");
 
     setTooltips ();
-
 
 #ifdef Q_OS_ANDROID
     setIconSize ({ 36, 36 });
@@ -148,6 +151,17 @@ MainWidget::~MainWidget ()
     saveControllersToUserSettings (m_controllers);
     }
 
+void MainWidget::addComponent (control::controllerCapability    capability,
+                               control::ControllerBase&         controller)
+    {
+    common::LayoutPanelBase* panel;
+
+    ASSERT_ARRAY_INDEX (capability, control::NUM_CAPABILITIES);
+    Q_CHECK_PTR (panel = m_panels[capability]);
+
+    panel->addComponent (controller);
+    }
+
 void MainWidget::setTooltips ()
     {
     setTabToolTip (0, tr ("Trains"));
@@ -157,6 +171,4 @@ void MainWidget::setTooltips ()
     setTabToolTip (4, tr ("Fast Clock"));
     setTabToolTip (5, tr ("Settings"));
     }
-
-
 }

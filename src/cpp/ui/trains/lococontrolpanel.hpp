@@ -48,6 +48,13 @@ public:
                                hAlignment                           align,
                                QWidget*                             parent);
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Open a dialog to open a new locomotive
+    ///
+    /// @param[in,out]  controller      Controller to add locomotive to
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void addLoco (control::ControllerBase& controller);
 private:
     control::ControllerManager&         m_controllers;      ///< List of controllers being managed
     const control::AutomationManager&   m_automations;      ///< List of automations
@@ -116,7 +123,7 @@ private slots:
     /// Open a dialog to open a new locomotive
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    void addLoco ();
+    void addLoco () { addLoco (*m_controllers.fromComponent (m_currentLoco)); }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Open a dialog to edit the current locomotive

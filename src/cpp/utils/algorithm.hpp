@@ -207,7 +207,9 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     EnumRange (Enum start, Enum end) :
         m_pair (start, end)
-        {}
+        {
+        Q_ASSERT (end >= start);
+        }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor for an exclusive enum range starting at 0
@@ -219,7 +221,9 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     explicit EnumRange (Enum end) :
         EnumRange (static_cast<Enum> (0), end)
-        {}
+        {
+        Q_ASSERT (end >= 0);
+        }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor for an inclusive enum range starting at 0
@@ -231,7 +235,9 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     EnumRange (Enum end, inclusive_t) :
         EnumRange (static_cast<Enum> (0), end, inclusive)
-        {}
+        {
+        Q_ASSERT (end + 1 >= 0);
+        }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor for an inclusive enum range
@@ -244,7 +250,9 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     EnumRange (Enum start, Enum end, inclusive_t) :
         m_pair (start, static_cast<Enum> (end + 1))
-        {}
+        {
+        Q_ASSERT (end + 1 >= start);
+        }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the start of this range

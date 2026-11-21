@@ -259,6 +259,8 @@ void CreditsDialog::openLicense (swLicense lic)
         };
     ASSERT_ARRAY_LENGTH (LICENSE_FILES, NUM_SW_LICENSES);
 
+    ASSERT_ARRAY_INDEX (lic, NUM_SW_LICENSES);
+
     QFile file (LICENSE_FILES[lic]);
 
     if (file.open (QIODevice::ReadOnly))

@@ -62,6 +62,7 @@ AutomationItem::actions AutomationItem::getActions () const
         case type::NUM_TYPES:
             {
             // Delimeter value
+            Q_UNREACHABLE ();
             break;
             }
         }
@@ -96,6 +97,7 @@ void AutomationItem::doAction (action action)
             case NUM_ACTIONS:
                 {
                 // ignore delimiter
+                Q_UNREACHABLE ();
                 break;
                 }
             }
@@ -185,6 +187,7 @@ std::string AutomationItem::name () const
         case type::NUM_TYPES:
             {
             // Delimeter value
+            Q_UNREACHABLE ();
             break;
             }
         }
@@ -237,6 +240,7 @@ void AutomationItem::connectSignals ()
         case type::NUM_TYPES:
             {
             // Delimeter value
+            Q_UNREACHABLE ();
             break;
             }
         }
@@ -266,6 +270,7 @@ void AutomationItem::setState (bool state)
         case type::NUM_TYPES:
             {
             // Delimeter value
+            Q_UNREACHABLE ();
             break;
             }
         }
@@ -299,6 +304,7 @@ bool AutomationItem::getState () const
         case type::NUM_TYPES:
             {
             // Delimeter value
+            Q_UNREACHABLE ();
             break;
             }
         }

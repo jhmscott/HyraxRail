@@ -23,6 +23,8 @@ TouchSlider::TouchSlider (Qt::Orientation ornt, QWidget* parent) :
 
 bool TouchSlider::event (QEvent* event)
     {
+    Q_CHECK_PTR (event);
+
     bool rc = false;
 
     switch (event->type ())

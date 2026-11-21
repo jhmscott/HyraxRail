@@ -112,6 +112,7 @@ void HostEntryField::inputChanged ()
         //
         m_timer->stop ();
         }
+
     bool wasValid = m_validHostName;
 
     // Always reset this, we don't know if it's valid until the host name

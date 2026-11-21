@@ -52,6 +52,8 @@ void OptionalDropdown::insertItem (int idx, const QString& text, const QVariant&
 
 void OptionalDropdown::setItemText (int index, const QString& text)
     {
+    ASSERT_ARRAY_INDEX (index, m_dropdown->count ());
+
     m_dropdown->setItemText (index, text);
     refreshActiveWidget ();
     }
@@ -62,7 +64,6 @@ void OptionalDropdown::clear ()
     m_dropdown->clear ();
     refreshActiveWidget ();
     }
-
 
 void OptionalDropdown::refreshActiveWidget ()
     {
@@ -86,6 +87,5 @@ void OptionalDropdown::refreshActiveWidget ()
         m_singleItem->setVisible (false);
         }
     }
-
 
 }

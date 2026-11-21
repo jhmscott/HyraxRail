@@ -1,11 +1,11 @@
-            /**
- * @file        controllerinfo.cpp
- * @brief       Widget to display the state of a controller
- * @author      Justin Scott
- * @date        2026-03-07
- *
- * @copyright   Copyright (c) 2026 Justin Scott
- */
+/**
+* @file        controllerinfo.cpp
+* @brief       Widget to display the state of a controller
+* @author      Justin Scott
+* @date        2026-03-07
+*
+* @copyright   Copyright (c) 2026 Justin Scott
+*/
 
 #include <QApplication>
 #include <QHBoxLayout>
@@ -25,14 +25,14 @@
 namespace ui
 {
 ControllerInfo::ControllerInfo (control::ControllerManager& manager,
-                                control::ControllerBase*    controller,
-                                QWidget*                    parent,
+                                control::ControllerBase* controller,
+                                QWidget* parent,
                                 bool                        includeDelete) :
     QWidget (parent),
     m_manager (manager),
     m_controller (controller)
     {
-    QHBoxLayout*    layout = new QHBoxLayout{ this };
+    QHBoxLayout* layout = new QHBoxLayout{ this };
     QIcon           icon;
 
     icon.addFile (":/icons/common/misc/circle-play.svg",
@@ -45,13 +45,13 @@ ControllerInfo::ControllerInfo (control::ControllerManager& manager,
                   QIcon::Off);
 
     m_stop              = new common::PointedButton{ icon, "", this };
-    m_settings          = new common::PointedIconButton{ "misc/gear",        this };
-    m_refresh           = new common::PointedIconButton{ "misc/refresh-cw",  this };
+    m_settings          = new common::PointedIconButton{ "misc/gear", this };
+    m_refresh           = new common::PointedIconButton{ "misc/refresh-cw", this };
     m_connectionIcon    = new common::SchemeIconButton{ "", this };
     m_nameLabel         = new common::ElidedLabel{ NULL == controller ?
-                                                   "-" :
-                                                   controller->getFriendlyName ().c_str (),
-                                                   this };
+        "-" :
+        controller->getFriendlyName ().c_str (),
+        this };
 
     m_stop          ->setIconSize (utils::resources::ICON_SIZE_NORMAL);
     m_connectionIcon->setIconSize (utils::resources::ICON_SIZE_NORMAL);
@@ -71,11 +71,11 @@ ControllerInfo::ControllerInfo (control::ControllerManager& manager,
 
     m_nameLabel->setFont (font);
 
-    layout->addWidget (m_connectionIcon,    0, Qt::AlignLeft);
-    layout->addWidget (m_nameLabel,         1, Qt::AlignCenter);
-    layout->addWidget (m_stop,              0, Qt::AlignRight);
-    layout->addWidget (m_settings,          0, Qt::AlignRight);
-    layout->addWidget (m_refresh,           0, Qt::AlignRight);
+    layout->addWidget (m_connectionIcon, 0, Qt::AlignLeft);
+    layout->addWidget (m_nameLabel, 1, Qt::AlignCenter);
+    layout->addWidget (m_stop, 0, Qt::AlignRight);
+    layout->addWidget (m_settings, 0, Qt::AlignRight);
+    layout->addWidget (m_refresh, 0, Qt::AlignRight);
 
     if (includeDelete)
         {
@@ -263,6 +263,8 @@ void ControllerInfo::setHealth (control::ConnectionWorkerThread::health health)
         };
     ASSERT_ARRAY_LENGTH (healthIcons, control::ConnectionWorkerThread::NUM_HEALTH_VALUES);
 
+    ASSERT_ARRAY_INDEX (health.level, control::ConnectionWorkerThread::NUM_HEALTH_VALUES);
+
     m_connectionIcon->setIcon (healthIcons[health.level]);
 
     if (control::ConnectionWorkerThread::HEALTH_DEAD            == health.level ||
@@ -289,43 +291,15 @@ void ControllerInfo::setHealth (control::ConnectionWorkerThread::health health)
 
 void ControllerInfo::onConfig ()
     {
-    config::Dialog dlg{ this, m_controller };
+    Q_CHECK_PTR (m_controller);
 
-    if (QDialog::Accepted == dlg.exec ())
-        {
-        bool changed    = false;
-        auto info       = dlg.createController ();
-
-        if (m_controller->getDeviceInfo () != info.device)
-            {
-            m_controller->setDeviceInfo (info.device);
-            changed = true;
-            }
-
-        if (m_controller->getFriendlyName () != info.friendlyName)
-            {
-            m_controller->setFriendlyName (info.friendlyName);
-            changed = true;
-            }
-
-        if (changed)
-            {
-            control::saveControllersToUserSettings (m_manager);
-            }
-        }
+    config::Dialog::edit (this, *m_controller, m_manager);
     }
 
 void ControllerInfo::onDelete ()
     {
-    QString msg =   tr ("Are you sure you want to delete %1 ?").arg (
-                                    m_controller->getFriendlyName ().c_str ());
+    Q_CHECK_PTR (m_controller);
 
-    if (QMessageBox::Yes == QMessageBox::question (this,
-                                                   tr ("Delete Controller"),
-                                                   msg))
-        {
-        m_manager.remove (*m_controller);
-        control::saveControllersToUserSettings (m_manager);
-        }
+    config::Dialog::remove (this, *m_controller, m_manager);
     }
 }

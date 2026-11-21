@@ -90,6 +90,17 @@
 //////////////////////////////////////////////////////////////////////////////
 #define ASSERT_VARIANT_SIZE(variant, size)  static_assert (std::variant_size_v<variant> == size, \
                                                            "Variant size mismatch")
+
+//////////////////////////////////////////////////////////////////////////////
+/// Runtime check of an array index
+///
+/// @param[in]  idx     Array index
+/// @param[in]  num     Number of elements in the array
+///
+//////////////////////////////////////////////////////////////////////////////
+#define ASSERT_ARRAY_INDEX(idx, num)    Q_ASSERT_X ((idx) < (num) && (idx) >= 0,    \
+                                                    "index",                        \
+                                                    "Invalid array idex")
 /// Horizontal alignment
 enum class hAlignment
     {

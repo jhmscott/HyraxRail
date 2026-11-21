@@ -42,6 +42,8 @@ protected:
     //////////////////////////////////////////////////////////////////////////////
     virtual void enterEvent (QEnterEvent* event) override
         {
+        Q_CHECK_PTR (event);
+
         if (Widget::isEnabled ())
             {
             Widget::setCursor (Qt::PointingHandCursor);

@@ -13,5 +13,6 @@
     "C_Cpp.vcFormat.newLine.beforeOpenBrace.type": "newLine",
     "C_Cpp.vcFormat.space.afterComma": true,
     "C_Cpp.vcFormat.space.beforeFunctionOpenParenthesis": "insert",
-    "C_Cpp.vcFormat.indent.caseContentsWhenBlock": true
+    "C_Cpp.vcFormat.indent.caseContentsWhenBlock": true,
+    "cmake.ctest.testExplorerIntegrationEnabled": true
 }

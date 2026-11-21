@@ -32,6 +32,9 @@ namespace ui::trains
 ///////////////////////////////////////////////////////////////////////////////
 static bool compareLocoPtr (const layout::Locomotive* l1, const layout::Locomotive* l2)
     {
+    Q_CHECK_PTR (l1);
+    Q_CHECK_PTR (l2);
+
     return *l1 == *l2;
     }
 
@@ -119,7 +122,7 @@ LocoControlPanel::LocoControlPanel (control::ControllerManager&         controll
     connect (m_add,
             &common::AddButton::addPressed,
              this,
-            &LocoControlPanel::addLoco);
+             QOverload<>::of (&LocoControlPanel::addLoco));
 
     connect (m_edit,
             &common::PointedIconButton::released,
@@ -211,6 +214,8 @@ void LocoControlPanel::addLocoToCb (const layout::Locomotive& loco, int idx)
 
 void LocoControlPanel::setProtocol (layout::trackProtocol proto)
     {
+    ASSERT_ARRAY_INDEX (proto, layout::NUM_TRACK_PROTO);
+
     layout::protocolInfo info = layout::PROTOCOLS[proto];
 
     m_proto->setIcon (info.icon);
@@ -290,25 +295,22 @@ void LocoControlPanel::locoDeleted ()
     updateButtonStates ();
     }
 
-void LocoControlPanel::addLoco ()
+void LocoControlPanel::addLoco (control::ControllerBase& controller)
     {
     EditLocoDialog dlg
         {
         m_controllers,
         m_automations,
         this,
-        m_controllers.fromComponent (m_currentLoco)
+       &controller
         };
 
     if (QDialog::Accepted == dlg.exec ())
         {
-        control::ControllerBase* controller = const_cast<control::ControllerBase*>
-                                                                    (dlg.getController ());
-
-        layout::Locomotive loco = controller->createLocomotive (dlg.getName (),
-                                                                dlg.getProtocol (),
-                                                                dlg.getAddress (),
-                                                                dlg.getFunctions ());
+        layout::Locomotive loco = controller.createLocomotive (dlg.getName (),
+                                                               dlg.getProtocol (),
+                                                               dlg.getAddress (),
+                                                               dlg.getFunctions ());
 
         addLocoToCb (loco);
         }

@@ -190,15 +190,16 @@ inline void makeFrameless (QWidget& wdgt)
 ///////////////////////////////////////////////////////////////////////////////
 inline void removeWidgetFromLayout (QLayout& layout, uint nn)
     {
+    ASSERT_ARRAY_INDEX (nn, layout.count ());
+
     QLayoutItem* item = layout.takeAt (nn);
 
-    if (NULL != item)
-        {
-        QWidget* widget = item->widget ();
+    Q_CHECK_PTR (item);
 
-        delete widget;
-        delete item;
-        }
+    QWidget* widget = item->widget ();
+
+    delete widget;
+    delete item;
     }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -267,10 +268,9 @@ void setFormRowText (QFormLayout&   layout,
 
     QWidget* label = layout.labelForField (&field);
 
-    if (NULL != label)
-        {
-        static_cast<QLabel*> (label)->setText (text);
-        }
+    Q_CHECK_PTR (label);
+
+    static_cast<QLabel*> (label)->setText (text);
     }
 
 

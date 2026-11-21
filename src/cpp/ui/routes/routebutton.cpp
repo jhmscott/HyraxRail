@@ -72,7 +72,6 @@ void RouteButton::updateTooltip ()
     setToolTip (text);
     }
 
-
 void RouteButton::editComponent ()
     {
     EditRouteDialog dlg

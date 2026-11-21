@@ -36,6 +36,7 @@ void polygon (QPainter& painter, utils::PolygonViewF poly)
 
     painter.drawPath (path);
     }
+
 ScopedDebugDraw::ScopedDebugDraw (QPaintDevice& painter, DebugDrawable& drawable) :
     m_paintable (painter),
     m_drawable (drawable)

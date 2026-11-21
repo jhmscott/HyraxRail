@@ -11,6 +11,7 @@
 #include <control/automation/clock.hpp>
 
 #include <ui/lang.hpp>
+#include <ui/mainmenu.hpp>
 #include <ui/mainwidget.hpp>
 #include <ui/mainwindow.hpp>
 
@@ -48,13 +49,39 @@ namespace ui
 MainWindow::MainWindow (control::ControllerManager& controllers, QWidget *parent) :
     QMainWindow (parent)
     {
+    MainWidget* mainWidget;
+
     restoreFastClockSettings ();
 
     setTitle ();
     setAttribute (Qt::WA_SetLocale);
 
-    setCentralWidget (new ui::MainWidget{ controllers, this });
+    setCentralWidget (mainWidget = new ui::MainWidget{ controllers, this });
     setSizePolicy (QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    // I only want this feature if it's available. Everything in the menu is
+    // available elsewhere in the UI
+    if (utils::os::isNativeMenuAvailable ())
+        {
+        MainMenu* menu;
+
+        setMenuBar (menu = new MainMenu{ controllers, this });
+
+        connect (menu,
+                &MainMenu::componentAddRequested,
+                 mainWidget,
+                &MainWidget::addComponent);
+
+        connect (menu,
+                &MainMenu::addAutomation,
+                 mainWidget,
+                &MainWidget::addAutomation);
+
+        connect (menu,
+                &MainMenu::closeRequested,
+                 this,
+                &MainWindow::close);
+        }
 
 #ifdef Q_OS_ANDROID
     // Qt doesn't seem to set a palette for dark mode, keeping it the same as light mode
@@ -162,6 +189,9 @@ void MainWindow::changeEvent (QEvent* event)
 bool MainWindow::nativeEvent (const QByteArray& eventType, void* message, qintptr* result)
     {
 #ifdef Q_OS_WIN
+    Q_CHECK_PTR (message);
+    Q_CHECK_PTR (result);
+
     MSG& msg = *static_cast<MSG*> (message);
 
     switch (msg.message)
@@ -263,7 +293,7 @@ bool MainWindow::handleClose ()
                 }
             default:
                 {
-                qWarning () << "Unexpected button result";
+                Q_UNREACHABLE ();
                 break;
                 }
             }
@@ -450,7 +480,11 @@ void JNICALL Java_ca_justinlab_hyraxrail_BackAnimation_backProgressed (JNIEnv*  
                                                                        jlong    mainWindowPtr,
                                                                        jfloat   progress)
     {
-    QMetaObject::invokeMethod (reinterpret_cast<ui::MainWindow*> (mainWindowPtr),
+    auto* window = reinterpret_cast<ui::MainWindow*> (mainWindowPtr);
+
+    Q_CHECK_PTR (window);
+
+    QMetaObject::invokeMethod (window,
                               &ui::MainWindow::dismissModalAnimation,
                                progress);
     }
@@ -472,7 +506,11 @@ void JNICALL Java_ca_justinlab_hyraxrail_BackAnimation_backStarted (JNIEnv*     
                                                                     jobject     thisObj,
                                                                     jlong       mainWindowPtr)
     {
-    QMetaObject::invokeMethod (reinterpret_cast<ui::MainWindow*> (mainWindowPtr),
+    auto* window = reinterpret_cast<ui::MainWindow*> (mainWindowPtr);
+
+    Q_CHECK_PTR (window);
+
+    QMetaObject::invokeMethod (window,
                               &ui::MainWindow::dismissModalStart);
     }
 
@@ -494,7 +532,11 @@ void JNICALL Java_ca_justinlab_hyraxrail_BackAnimation_backCancelled (JNIEnv*   
                                                                       jobject   thisObj,
                                                                       jlong     mainWindowPtr)
     {
-    QMetaObject::invokeMethod (reinterpret_cast<ui::MainWindow*> (mainWindowPtr),
+    auto* window = reinterpret_cast<ui::MainWindow*> (mainWindowPtr);
+
+    Q_CHECK_PTR (window);
+
+    QMetaObject::invokeMethod (window,
                               &ui::MainWindow::dismissModalCancel);
     }
 
@@ -519,6 +561,8 @@ void JNICALL Java_ca_justinlab_hyraxrail_BackAnimation_backPressed (JNIEnv*     
     {
     ui::MainWindow*     mainWindow = reinterpret_cast<ui::MainWindow*> (mainWindowPtr);
     bool                allowClose = false;
+
+    Q_CHECK_PTR (mainWindow);
 
     QMetaObject::invokeMethod (mainWindow,
                               &ui::MainWindow::backPress,

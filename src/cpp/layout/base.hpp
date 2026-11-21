@@ -173,6 +173,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     void destroyThis ()
         {
+        Q_CHECK_PTR (m_controller);
         m_controller->destroyComponent (*this);
         }
 
@@ -398,6 +399,8 @@ private:
     template<class ComponentT, class RetT, class... Params, class... Args>
     void callAll (size_t id, RetT (ComponentT::* func)(Params...), Args... args)
         {
+        Q_CHECK_PTR (func);
+
         auto it = m_components.begin ();
 
         // Handle iterator invalidation. In the case func() destroys the component
@@ -456,6 +459,8 @@ private:
     template<class T>
     void registerComponent (T* component)
         {
+        Q_CHECK_PTR (component);
+
         m_components.push_back (static_cast<component_t*> (component));
         }
 
@@ -470,6 +475,8 @@ private:
     template<class T>
     void deregisterComponent (T* component)
         {
+        Q_CHECK_PTR (component);
+
         m_components.erase (std::remove (m_components.begin (),
                                          m_components.end (),
                                          static_cast<component_t*> (component)),

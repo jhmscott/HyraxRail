@@ -281,6 +281,9 @@ static ushort calculateChecksum (const void* b, int len)
     uint            sum = 0;
     ushort          result;
 
+    Q_CHECK_PTR (b);
+    Q_ASSERT (len > 0);
+
     for (sum = 0; len > 1; len -= 2)
         {
         sum += *buf++;
@@ -467,8 +470,8 @@ public:
     explicit IPv6PingerPosix (Q_IPV6ADDR ip)
         {
         std::copy (ip.c,
-                    ip.c + std::size (ip.c),
-                    m_ip.s6_addr);
+                   ip.c + std::size (ip.c),
+                   m_ip.s6_addr);
         }
 
 

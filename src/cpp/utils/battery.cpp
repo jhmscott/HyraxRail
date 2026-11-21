@@ -242,7 +242,9 @@ public:
     explicit BatteryImplApple (Battery* battery) :
         m_battery (battery)
         {
-        CFRunLoopRef mainRunLoop = CFRunLoopGetMain();
+        Q_CHECK_PTR (battery);
+
+        CFRunLoopRef mainRunLoop = CFRunLoopGetMain ();
 
         m_percent = getBatteryPercentage ();
         m_ref = IOPSNotificationCreateRunLoopSource (&BatteryImplApple::batteryStateChanged,

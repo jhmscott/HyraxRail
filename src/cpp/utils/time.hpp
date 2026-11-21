@@ -169,6 +169,8 @@ inline QString dayOfWeekText (dayOfTheWeek day)
     {
     using namespace internal;
 
+    Q_ASSERT (day < NUM_DAYS);
+
     const QString DAYS[] =
         {
         TimeStringConstants::tr ("Monday"),
@@ -199,6 +201,8 @@ inline QString dayOfWeekAbreviation (dayOfTheWeek day)
     {
     using namespace internal;
 
+    ASSERT_ARRAY_INDEX (day, NUM_DAYS);
+
     const QString DAYS[] =
         {
         TimeStringConstants::tr ("Mon"),
@@ -228,6 +232,8 @@ inline QString dayOfWeekAbreviation (dayOfTheWeek day)
 inline QString monthAbreviation (month mon)
     {
     using namespace internal;
+
+    ASSERT_ARRAY_INDEX (mon, NUM_MONTHS);
 
     const QString MONTHS[] =
         {
@@ -262,6 +268,8 @@ inline QString formatWithUnit (int num, unit unit)
     {
     using namespace internal;
 
+    ASSERT_ARRAY_INDEX (unit, NUM_UNITS);
+
     const QString UNITS[] =
         {
         TimeStringConstants::tr ("%n nanosecond(s)",    "", num),
@@ -290,6 +298,8 @@ inline QString unitLabel (unit unit)
     {
     using namespace internal;
 
+    ASSERT_ARRAY_INDEX (unit, NUM_UNITS);
+
     const QString UNITS[] =
         {
         TimeStringConstants::tr ("ns"),
@@ -317,6 +327,8 @@ inline QString unitLabel (unit unit)
 inline std::chrono::nanoseconds unitConversion (unit unit)
     {
     using namespace std::chrono_literals;
+
+    ASSERT_ARRAY_INDEX (unit, NUM_UNITS);
 
     static const std::chrono::nanoseconds CONVERSIONS[] =
         {

@@ -40,6 +40,8 @@ void FastClock::setTime (const time_point& time)
 
 void FastClock::setRatio (uint ratio)
     {
+    Q_ASSERT (ratio > 0);
+
     std::lock_guard lk{ m_mtx };
 
     m_startTime         = getTimeInternal ();
@@ -56,6 +58,7 @@ void FastClock::setRunning (bool running)
         {
         // starting, reset the system start time
         m_startTimeSystem = std::chrono::system_clock::now ();
+        emit started (m_startTime);
         }
 
     if (not running && m_running)

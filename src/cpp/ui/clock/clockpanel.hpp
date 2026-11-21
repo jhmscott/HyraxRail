@@ -14,6 +14,7 @@
 #include <control/controllers/manager.hpp>
 
 #include <ui/clock/clock.hpp>
+#include <ui/clock/automation.hpp>
 #include <ui/lang.hpp>
 
 #include <QBoxLayout>
@@ -41,13 +42,19 @@ public:
     /// @param[in]  parent      Parent widget
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    explicit ClockPanel (control::ControllerManager&    controllers,
-                         control::AutomationManager&    automations,
-                         QWidget*                       parent);
+    ClockPanel (control::ControllerManager& controllers,
+                control::AutomationManager& automations,
+                QWidget*                    parent);
 
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Open a dialog to create an automation
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void addAutomation () { m_automations->addAutomation (); }
 private:
-    QGroupBox*   m_clockBox;    ///< Group box containing the fast clock and it's settings
-    QHBoxLayout* m_clockLayout; ///< Layout containing fast clock
+    QGroupBox*      m_clockBox;     ///< Group box containing the fast clock and it's settings
+    QHBoxLayout*    m_clockLayout;  ///< Layout containing fast clock
+    AutomationGroup*m_automations;  ///< Automation group
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the group box titles
