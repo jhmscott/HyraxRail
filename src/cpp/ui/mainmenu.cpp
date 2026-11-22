@@ -20,30 +20,6 @@
 namespace ui
 {
 
-///////////////////////////////////////////////////////////////////////////////
-/// Set the text for a menu item
-///
-/// @param[in,out]  menu        Menu to set the text for
-/// @param[in]      text        Menu text
-///
-///////////////////////////////////////////////////////////////////////////////
-static void setMenuItemText (QMenu& menu, const QString& text)
-    {
-    menu.menuAction ()->setText (text);
-    }
-
-///////////////////////////////////////////////////////////////////////////////
-/// Set the menu item text by index
-///
-/// @param[in,out]  menu        Menu to set the item for
-/// @param[in]      item        Index of menu item
-/// @param[in]      text        Menu text
-///
-///////////////////////////////////////////////////////////////////////////////
-static void setMenuItemText (QMenu& menu, size_t item, const QString& text)
-    {
-    menu.actions ()[item]->setText (text);
-    }
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Get the controller for a menu item within a controller submenu
@@ -76,6 +52,7 @@ MainMenu::MainMenu (control::ControllerManager& controllers, QWidget* parent) :
 
     m_controllersMenu->addSeparator ();
     m_controllersMenu->addAction ("", this, &MainMenu::addController);
+    m_controllersMenu->addAction ("", QKeySequence::Refresh, this, &MainMenu::refreshAll);
 
     m_fastClock = m_clockMenu->addAction ("", this, &MainMenu::toggleFastClock);
     m_clockMenu->addSeparator ();
@@ -137,21 +114,21 @@ MainMenu::MainMenu (control::ControllerManager& controllers, QWidget* parent) :
 
 void MainMenu::setMenuText ()
     {
-    setMenuItemText (*m_controllersMenu,    tr ("Controllers"));
-    setMenuItemText (*m_clockMenu,          tr ("Clock"));
-    setMenuItemText (*m_helpMenu,           tr ("Help"));
+    common::setMenuItemText (*m_controllersMenu,    tr ("Controllers"));
+    common::setMenuItemText (*m_clockMenu,          tr ("Clock"));
+    common::setMenuItemText (*m_helpMenu,           tr ("Help"));
 
     // Automation/fast clock menu ite,s
-    setMenuItemText (*m_clockMenu, 0, tr ("Fast Clock"));
-    setMenuItemText (*m_clockMenu, 2, tr ("Add Automation"));
+    common::setMenuItemText (*m_clockMenu, 0, tr ("Fast Clock"));
+    common::setMenuItemText (*m_clockMenu, 2, tr ("Add Automation"));
 
     // Help menu items
-    setMenuItemText (*m_helpMenu, 0, tr ("Help"));
-    setMenuItemText (*m_helpMenu, 1, tr ("About"));
-    setMenuItemText (*m_helpMenu, 2, tr ("About Qt"));
-    setMenuItemText (*m_helpMenu, 3, tr ("License Info"));
-    setMenuItemText (*m_helpMenu, 4, utils::str::escape (config::CreditsDialog::TITLE ()));
-    setMenuItemText (*m_helpMenu, 5, tr ("Close"));
+    common::setMenuItemText (*m_helpMenu, 0, tr ("Help"));
+    common::setMenuItemText (*m_helpMenu, 1, tr ("About"));
+    common::setMenuItemText (*m_helpMenu, 2, tr ("About Qt"));
+    common::setMenuItemText (*m_helpMenu, 3, tr ("License Info"));
+    common::setMenuItemText (*m_helpMenu, 4, utils::str::escape (config::CreditsDialog::TITLE ()));
+    common::setMenuItemText (*m_helpMenu, 5, tr ("Close"));
 
     // Controller menu items
     size_t  idx = 0;
@@ -164,9 +141,15 @@ void MainMenu::setMenuText ()
         ++idx;
         }
 
-    setMenuItemText (*m_controllersMenu,
-                     idx + 1, // Skip separator
-                     tr ("New Controller"));
+    ++idx; // Skip separator
+
+    common::setMenuItemText (*m_controllersMenu,
+                             idx++,
+                             tr ("New Controller"));
+
+    common::setMenuItemText (*m_controllersMenu,
+                             idx++,
+                             tr ("Refresh All"));
     }
 
 void MainMenu::setControllerSubMenuText (QMenu& submenu)
@@ -184,6 +167,7 @@ void MainMenu::setControllerSubMenuText (QMenu& submenu)
     QAction*    action;
     auto        actions     = submenu.actions ();
     size_t      idx         = 0;
+    auto&       controller  = controllerFromMenuItem (actions[0]);
 
     while (not (action = actions[idx])->isSeparator ())
         {
@@ -194,13 +178,28 @@ void MainMenu::setControllerSubMenuText (QMenu& submenu)
         ++idx;
         }
 
-    setMenuItemText (submenu,
-                     idx + 1, // Skip separator
-                     tr ("Edit Controller"));
+    ++idx; // Skip Separator
 
-    setMenuItemText (submenu,
-                     idx + 2,
-                     tr ("Delete Controller"));
+    common::setMenuItemText (submenu,
+                             idx++,
+                             tr ("Refresh Components"));
+
+    if (controller.getMetaClass ().hasCapability (control::CAPABILITY_ESTOP))
+        {
+        common::setMenuItemText (submenu,
+                                 idx++,
+                                 tr ("Emergency Stop"));
+        }
+
+    ++idx; // Skip separator
+
+    common::setMenuItemText (submenu,
+                             idx++,
+                             tr ("Edit Controller"));
+
+    common::setMenuItemText (submenu,
+                             idx++,
+                             tr ("Delete Controller"));
     }
 
 void MainMenu::addControllerMenu (control::ControllerBase& controller)
@@ -227,6 +226,23 @@ void MainMenu::addControllerMenu (control::ControllerBase& controller)
         }
 
     controllerSubMenu->addSeparator ();
+
+    controllerSubMenu->addAction ("", this, &MainMenu::refresh);
+
+    if (controller.getMetaClass ().hasCapability (control::CAPABILITY_ESTOP))
+        {
+        QAction*    action      = controllerSubMenu->addAction ("", this, &MainMenu::estop);
+        auto*       estopper    = controller.getCapabilityController<layout::EmergencyStopController> ();
+
+        Q_CHECK_PTR (estopper);
+
+        action->setCheckable (true);
+        action->setChecked (estopper->isEStopped ());
+        action->setEnabled (isConnected);
+        }
+
+    controllerSubMenu->addSeparator ();
+
     controllerSubMenu->addAction ("", this, &MainMenu::editController);
     controllerSubMenu->addAction ("", this, &MainMenu::deleteController);
 
@@ -301,11 +317,32 @@ void MainMenu::updateConnectionState (const control::ControllerBase& controller)
         item->setEnabled (isConnected);
         ++idx;
         }
+
+    if (controller.getMetaClass ().hasCapability (control::CAPABILITY_ESTOP))
+        {
+        auto* estopper = controller.getCapabilityController<layout::EmergencyStopController> ();
+
+        Q_CHECK_PTR (estopper);
+
+        idx += 2; // skip separator and refresh
+
+        actions[idx]->setEnabled (isConnected);
+
+        if (isConnected)
+            {
+            actions[idx]->setChecked (estopper->isEStopped ());
+            }
+        }
     }
 
 void MainMenu::addController ()
     {
     config::Dialog::create (this, m_controllers);
+    }
+
+void MainMenu::refreshAll ()
+    {
+    m_controllers.refreshAll ();
     }
 
 void MainMenu::editController ()
@@ -335,6 +372,28 @@ void MainMenu::addComponent ()
     auto capability = action->data ().value<control::controllerCapability> ();
 
     emit componentAddRequested (capability, controllerFromMenuItem (action));
+    }
+
+void MainMenu::refresh ()
+    {
+    QAction*    action      = menuItem ();
+    auto&       controller  = controllerFromMenuItem (action);
+
+    m_controllers.refresh (controller);
+    }
+
+void MainMenu::estop ()
+    {
+    QAction*    action      = menuItem ();
+    auto&       controller  = controllerFromMenuItem (action);
+
+    Q_ASSERT (controller.getMetaClass ().hasCapability (control::CAPABILITY_ESTOP));
+
+    auto* estopper = controller.getCapabilityController<layout::EmergencyStopController> ();
+
+    Q_CHECK_PTR (estopper);
+
+    estopper->eStop (action->isChecked ());
     }
 
 void MainMenu::credits ()

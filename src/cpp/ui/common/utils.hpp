@@ -18,6 +18,7 @@
 #include <QLabel>
 #include <QLayout>
 #include <QLayoutItem>
+#include <QMenu>
 #include <QPushButton>
 #include <QStyleHints>
 
@@ -341,6 +342,32 @@ void refreshComboboxItems (QComboBox& cb, Func&& refill)
         emit cb.currentIndexChanged (cb.currentIndex ());
         }
     }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Set the text for a menu item
+///
+/// @param[in,out]  menu        Menu to set the text for
+/// @param[in]      text        Menu text
+///
+///////////////////////////////////////////////////////////////////////////////
+inline void setMenuItemText (QMenu& menu, const QString& text)
+    {
+    menu.menuAction ()->setText (text);
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Set the menu item text by index
+///
+/// @param[in,out]  menu        Menu to set the item for
+/// @param[in]      item        Index of menu item
+/// @param[in]      text        Menu text
+///
+///////////////////////////////////////////////////////////////////////////////
+inline void setMenuItemText (QMenu& menu, size_t item, const QString& text)
+    {
+    menu.actions ()[item]->setText (text);
+    }
+
 
 } // namespace ui::common
 

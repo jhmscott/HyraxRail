@@ -246,6 +246,15 @@ void LocoControlPanel::updateButtonStates ()
     m_functions->setEnabled (isConnected);
     }
 
+void LocoControlPanel::clearLoco ()
+    {
+    m_currentLoco = {};
+
+    m_controllerInfo->clear ();
+    m_speed->clear ();
+    m_functions->clear ();
+    }
+
 void LocoControlPanel::addController (control::ControllerBase& controller)
     {
     for (const layout::Locomotive& loco : controller.getLocomotives ())
@@ -263,11 +272,7 @@ void LocoControlPanel::onLocoChange (int idx)
 
     if (NULL == newLoco)
         {
-        m_currentLoco = {};
-
-        m_controllerInfo->clear ();
-        m_speed->clear ();
-        m_functions->clear ();
+        clearLoco ();
         }
     else
         {
@@ -435,14 +440,21 @@ void LocoControlPanel::cacheRebuilt (const control::ControllerBase &controller)
         ++startIndex;
         }
 
-    common::setComboBoxIndexByUserData (*m_locos,
-                                        &m_currentLoco,
-                                         false, // notify
-                                         compareLocoPtr);
-    m_currentLoco = *m_locos->currentData ().value<layout::Locomotive*> ();
+    if (m_locos->count () > 0)
+        {
+        common::setComboBoxIndexByUserData (*m_locos,
+                                            &m_currentLoco,
+                                             false, // notify
+                                             compareLocoPtr);
+        m_currentLoco = *m_locos->currentData ().value<layout::Locomotive*> ();
 
-    // Force a refresh of the function panel, even if the index didn't actually change
-    onLocoChange (m_locos->currentIndex ());
+        // Force a refresh of the function panel, even if the index didn't actually change
+        onLocoChange (m_locos->currentIndex ());
+        }
+    else
+        {
+        clearLoco ();
+        }
     }
 
 } // namespace ui::trains

@@ -10,6 +10,7 @@
 
 #include <control/automation/clock.hpp>
 
+#include <ui/dockmenu.hpp>
 #include <ui/lang.hpp>
 #include <ui/mainmenu.hpp>
 #include <ui/mainwidget.hpp>
@@ -20,6 +21,7 @@
 #include <QEvent>
 #include <QMessageBox>
 #include <QSessionManager>
+#include <QShortcut>
 #include <QTabWidget>
 
 #include <qevent.h>
@@ -82,6 +84,21 @@ MainWindow::MainWindow (control::ControllerManager& controllers, QWidget *parent
                  this,
                 &MainWindow::close);
         }
+    else
+        {
+        // Setup the shortcuts usually handled by the menu
+
+        new QShortcut{ QKeySequence::HelpContents,
+                       this,        // parent
+                      &controllers, // reciever
+                      &control::ControllerManager::refreshAll };
+        }
+
+#ifdef Q_OS_MACOS
+    DockMenu* dock = new DockMenu{ controllers, this };
+
+    dock->setAsDockMenu ();
+#endif
 
 #ifdef Q_OS_ANDROID
     // Qt doesn't seem to set a palette for dark mode, keeping it the same as light mode

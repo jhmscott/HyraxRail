@@ -19,6 +19,7 @@
 
 namespace control
 {
+
 ControllerManager::ControllerManager (QObject* parent) :
     QObject (parent),
     m_timer (new QTimer{ this })
@@ -99,6 +100,14 @@ void ControllerManager::refresh (const ControllerBase& controller)
 
         watcher->setFuture (QtConcurrent::run (
             utils::algorithm::bindMemFn (&ControllerBase::refresh, *it->controller)));
+        }
+    }
+
+void ControllerManager::refreshAll ()
+    {
+    for (ControllerBase& controller : *this)
+        {
+        refresh (controller);
         }
     }
 
