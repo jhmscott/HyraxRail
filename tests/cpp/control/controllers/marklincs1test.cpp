@@ -237,7 +237,7 @@ private slots:
     ///////////////////////////////////////////////////////////////////////////////
     void removeSensorTest ()
         {
-        layout::SensorModule sensor{ m_controller.get (), {}, "", ID };
+        layout::SensorModule sensor{ m_controller.get (), {}, "", 1, ID };
 
         sensor.remove ();
 

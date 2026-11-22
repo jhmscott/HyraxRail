@@ -27,6 +27,8 @@ DockMenu::DockMenu (control::ControllerManager& controllers, QWidget* parent) :
     action->setCheckable (true);
     action->setChecked (clock.isRunning ());
 
+    // Fast clock signals
+
     connect (&control::FastClock::instance (),
              &control::FastClock::stopped,
               this,
@@ -37,6 +39,18 @@ DockMenu::DockMenu (control::ControllerManager& controllers, QWidget* parent) :
               this,
               std::bind (&QAction::setChecked, action, true));
 
+    // Controller Manager signals
+
+    connect (&m_controllers,
+             &control::ControllerManager::refreshStarted,
+              this,
+             &DockMenu::refreshStarted);
+
+    connect (&m_controllers,
+             &control::ControllerManager::cacheRebuilt,
+              this,
+             &DockMenu::refreshComplete);
+
     setMenuText ();
     }
 
@@ -44,6 +58,16 @@ void DockMenu::setMenuText ()
     {
     common::setMenuItemText (*this, 0, tr ("Refresh Controllers"));
     common::setMenuItemText (*this, 1, tr ("Fast Clock"));
+    }
+
+void DockMenu::refreshStarted (const control::ControllerBase& controller)
+    {
+    actions ()[0]->setEnabled (false);
+    }
+
+void DockMenu::refreshComplete (const control::ControllerBase& controller)
+    {
+    actions ()[0]->setDisabled (m_controllers.anyRefreshing ());
     }
 
 void DockMenu::refreshAll ()

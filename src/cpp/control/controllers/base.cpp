@@ -229,13 +229,13 @@ layout::Locomotive ControllerBase::createLocomotive (const std::string&         
         }
     }
 
-layout::SensorModule ControllerBase::createSensor (size_t num)
+layout::SensorModule ControllerBase::createSensor (size_t num, uint pos)
     {
     auto* controller = getCapabilityController<layout::SensorController> ();
 
     if (NULL != controller)
         {
-        auto sensor = controller->createSensor (num);
+        auto sensor = controller->createSensor (num, pos);
 
         if (getMetaClass ().hardwareCapabilities[CAPABILITY_SENSOR])
             {
@@ -316,6 +316,8 @@ void ControllerBase::initSoftwareCapabilities ()
 
 void ControllerBase::refresh ()
     {
+    m_isRefreshing = true;
+
     auto actuators  = getActuatorsSync ();
     auto locos      = getLocomotivesSync ();
     auto routes     = getRoutesSync ();
@@ -326,6 +328,8 @@ void ControllerBase::refresh ()
     m_locoCache     = std::move (locos);
     m_routeCache    = std::move (routes);
     m_sensorCache   = std::move (sensors);
+
+    m_isRefreshing = false;
     }
 
 void ControllerBase::setDeviceInfo (const utils::device::deviceInfo& info)

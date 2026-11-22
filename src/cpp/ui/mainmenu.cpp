@@ -52,7 +52,7 @@ MainMenu::MainMenu (control::ControllerManager& controllers, QWidget* parent) :
 
     m_controllersMenu->addSeparator ();
     m_controllersMenu->addAction ("", this, &MainMenu::addController);
-    m_controllersMenu->addAction ("", QKeySequence::Refresh, this, &MainMenu::refreshAll);
+    m_refreshAll = m_controllersMenu->addAction ("", QKeySequence::Refresh, this, &MainMenu::refreshAll);
 
     m_fastClock = m_clockMenu->addAction ("", this, &MainMenu::toggleFastClock);
     m_clockMenu->addSeparator ();
@@ -98,6 +98,16 @@ MainMenu::MainMenu (control::ControllerManager& controllers, QWidget* parent) :
              &control::ControllerManager::reconnected,
               this,
              &MainMenu::updateConnectionState);
+
+    connect (&m_controllers,
+             &control::ControllerManager::refreshStarted,
+              this,
+             &MainMenu::refreshStarted);
+
+    connect (&m_controllers,
+             &control::ControllerManager::cacheRebuilt,
+              this,
+             &MainMenu::refreshComplete);
 
     // Fast clock signals
 
@@ -298,15 +308,43 @@ QAction* MainMenu::controllerItem (const control::ControllerBase& controller)
         }
     }
 
-void MainMenu::updateConnectionState (const control::ControllerBase& controller)
+QMenu* MainMenu::controllerMenu (const control::ControllerBase& controller)
     {
     QAction*    action = controllerItem (controller);
-    QMenu*      menu;
 
     Q_CHECK_PTR (action);
-    Q_CHECK_PTR (menu = action->menu ());
 
-    bool isConnected = controller.getConnectionHealth ().isConnected ();
+    return action->menu ();
+    }
+
+void MainMenu::setRefreshAndDeleteState (const control::ControllerBase& controller, bool enabled)
+    {
+    QMenu* menu = controllerMenu (controller);
+
+    Q_CHECK_PTR (menu);
+
+    QAction*    item;
+    int         idx = 0;
+    auto        actions = menu->actions ();
+
+    // Skip past the create component items
+    while (not (item = actions[idx])->isSeparator ())
+        {
+        ++idx;
+        }
+
+    // Skip separator
+    actions[++idx]->setEnabled (enabled);
+
+    actions.back ()->setEnabled (enabled);
+    }
+
+void MainMenu::updateConnectionState (const control::ControllerBase& controller)
+    {
+    QMenu*  menu        = controllerMenu (controller);
+    bool    isConnected = controller.getConnectionHealth ().isConnected ();
+
+    Q_CHECK_PTR (menu);
 
     QAction*    item;
     int         idx = 0;
@@ -333,6 +371,18 @@ void MainMenu::updateConnectionState (const control::ControllerBase& controller)
             actions[idx]->setChecked (estopper->isEStopped ());
             }
         }
+    }
+
+void MainMenu::refreshStarted (const control::ControllerBase& controller)
+    {
+    setRefreshAndDeleteState (controller, false);
+    m_refreshAll->setEnabled (false);
+    }
+
+void MainMenu::refreshComplete (const control::ControllerBase& controller)
+    {
+    setRefreshAndDeleteState (controller, true);
+    m_refreshAll->setDisabled (m_controllers.anyRefreshing ());
     }
 
 void MainMenu::addController ()

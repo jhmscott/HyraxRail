@@ -125,7 +125,7 @@ ControllerInfo::ControllerInfo (control::ControllerManager& manager,
 
     connect (&m_manager,
              &control::ControllerManager::refreshStarted,
-             this,
+              this,
              &ControllerInfo::refreshStarted);
 
     connect (&m_manager,

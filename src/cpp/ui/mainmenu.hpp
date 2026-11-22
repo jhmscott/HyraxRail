@@ -60,11 +60,14 @@ signals:
 private:
     control::ControllerManager& m_controllers;      ///< Controller manager
     QAction*                    m_fastClock;        ///< Fast Clock menu item
+    QAction*                    m_refreshAll;       ///< Refresh all menu item
     QMenu*                      m_controllersMenu;  ///< Controllers menu
     QMenu*                      m_helpMenu;         ///< Help menu
     QMenu*                      m_clockMenu;        ///< Automation menu
 
     UILANG_ON_CHANGE (QMenuBar, setMenuText ())
+
+    // Misc helpers
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the text labels for all menus and menu items
@@ -108,12 +111,34 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     /// Get the menu item for a controller
     ///
-    /// @param[in]  controller      Controller to get mneu item for
+    /// @param[in]  controller      Controller to get menu item for
     ///
     /// @return     Menu item action
     ///
     ///////////////////////////////////////////////////////////////////////////////
     QAction* controllerItem (const control::ControllerBase& controller);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get teh sub-menu for a controller
+    ///
+    /// @param[in]  controller      Controller to get sub-menu for
+    ///
+    /// @return     Sub-menu
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    QMenu* controllerMenu (const control::ControllerBase& controller);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Set the state of the refresh and delete button state for a controller's sub
+    /// menu
+    ///
+    /// @param[in]  controller  Controller to set the menu item states for
+    /// @param[in]  enabled     True to enable, false to disable
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void setRefreshAndDeleteState (const control::ControllerBase& controller, bool enabled);
+
+    // Controller manage slots
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Respond to a controller's connection changes
@@ -122,6 +147,22 @@ private:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void updateConnectionState (const control::ControllerBase& controller);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle the start of a refresh operation
+    ///
+    /// @param[in]  controller      Controller being refreshed
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void refreshStarted (const control::ControllerBase& controller);
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Handle the completion of a refresh, with a newly rebuilt cache
+    ///
+    /// @param[in]  controller      Controller refreshed
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void refreshComplete (const control::ControllerBase& controller);
 
 private slots:
     //  Controller menu

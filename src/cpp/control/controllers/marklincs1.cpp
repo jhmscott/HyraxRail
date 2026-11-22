@@ -408,6 +408,8 @@ std::vector<layout::Route> MarklinCS1::getRoutes () const
 
 std::vector<layout::SensorModule> MarklinCS1::getSensors () const
     {
+    static constexpr size_t SENSOR_BASE_ID = 100;
+
     std::vector<layout::SensorModule> sensors;
 
     auto future = issueStaticCommand (ECoSProtocol::queryObjects,
@@ -438,12 +440,14 @@ std::vector<layout::SensorModule> MarklinCS1::getSensors () const
     for (size_t ii = 0; ii < reply.lines.size (); ++ii)
         {
         size_t      sensorId    = static_cast<size_t> (reply.lines[ii].id);
+        uint        pos         = static_cast<uint> (sensorId - SENSOR_BASE_ID);
         auto        values      = parseSensorValues (ports[ii], states[ii]);
-        std::string name        = "Module " + std::to_string (ii + 1);
+        std::string name        = "Module " + std::to_string (pos);
 
         sensors.emplace_back (const_cast<MarklinCS1*> (this),
                               std::move (values),
                               name,
+                              pos,
                               sensorId);
         }
 
@@ -543,11 +547,10 @@ layout::Locomotive MarklinCS1::createLocomotive (const std::string&             
     return layout::Locomotive{ this, name, proto, address, functions, 0, locoId };
     }
 
-layout::SensorModule MarklinCS1::createSensor (size_t num)
+layout::SensorModule MarklinCS1::createSensor (size_t num, uint pos)
     {
     return layout::SensorModule ();
     }
-
 
 void MarklinCS1::eStop (bool stop)
     {

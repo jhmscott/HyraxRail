@@ -103,11 +103,21 @@ void ControllerManager::refresh (const ControllerBase& controller)
         }
     }
 
+bool ControllerManager::anyRefreshing () const
+    {
+    return std::any_of (begin (),
+                        end (),
+                        std::mem_fn (&ControllerBase::isRefreshing));
+    }
+
 void ControllerManager::refreshAll ()
     {
-    for (ControllerBase& controller : *this)
+    if (not anyRefreshing ()) // only allow this when none are being refreshed
         {
-        refresh (controller);
+        for (ControllerBase& controller : *this)
+            {
+            refresh (controller);
+            }
         }
     }
 

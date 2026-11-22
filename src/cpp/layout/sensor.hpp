@@ -32,14 +32,16 @@ struct sensorState
     /// @param[in]  values      Sensor values
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    explicit sensorState (std::vector<bool>&& values, std::string&& name) :
+    explicit sensorState (std::vector<bool>&& values, std::string&& name, uint pos) :
         m_values (std::move (values)),
-        m_name (std::move (name))
+        m_name (std::move (name)),
+        m_pos (pos)
         {}
 
     std::vector<bool>   m_values;   ///< Sensor values
     std::string         m_name;     ///< Sensor module name
     mutable std::mutex  m_mtx;      ///< Protection for sensor values
+    uint                m_pos;      ///< Position of module
     };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -62,12 +64,14 @@ public:
     ///
     /// @param[in]  controller  Sensor controller
     /// @param[in]  values      Sensor values
+    /// @param[in]  pos         Position of sensor module
     /// @param[in]  id          Sensor component ID
     ///
     ///////////////////////////////////////////////////////////////////////////////
     SensorModule (SensorController* controller,
                   std::vector<bool> values,
                   std::string       name,
+                  uint              pos,
                   size_t            id);
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -134,12 +138,12 @@ public:
     /// Create a sensor module
     ///
     /// @param[in]  num     Number of sensors in the module
+    /// @param[in]  pos     Position of sensor module
     ///
     /// @return     Newly created sensor
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual SensorModule createSensor (size_t num) = 0;
-
+    virtual SensorModule createSensor (size_t num, uint pos) = 0;
 protected:
     ///////////////////////////////////////////////////////////////////////////////
     /// Update the state of a sensor module

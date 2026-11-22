@@ -16,8 +16,9 @@ namespace layout
 SensorModule::SensorModule (SensorController*   controller,
                             std::vector<bool>   values,
                             std::string         name,
+                            uint                pos,
                             size_t              id) :
-    Base (controller, id, std::make_shared<sensorState> (std::move (values), std::move (name)))
+    Base (controller, id, std::make_shared<sensorState> (std::move (values), std::move (name), pos))
     {
     }
 

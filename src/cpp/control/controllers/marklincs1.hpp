@@ -137,11 +137,12 @@ public:
     /// Create a sensor module
     ///
     /// @param[in]  num     Number of sensors in the module
+    /// @param[in]  pos     Position of sensor module
     ///
     /// @return     Newly created sensor
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    virtual layout::SensorModule createSensor (size_t num) override;
+    virtual layout::SensorModule createSensor (size_t num, uint pos) override;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Trigger or leave an emergency stop state. This typically stops all locomotives

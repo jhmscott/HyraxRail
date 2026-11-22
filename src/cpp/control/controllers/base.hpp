@@ -179,11 +179,12 @@ public:
     /// Create a sensor module
     ///
     /// @param[in]  num     Number of sensors in the module
+    /// @param[in]  pos     Position of sensor in the chain
     ///
     /// @return     Newly created sensor
     ///
     ///////////////////////////////////////////////////////////////////////////////
-    layout::SensorModule createSensor (size_t num);
+    layout::SensorModule createSensor (size_t num, uint pos);
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Get a list of the items controlled by this controller than can be automated
@@ -306,6 +307,14 @@ public:
     void refresh ();
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Is this controller's cache being refreshed
+    ///
+    /// @return     true if the cache is being rebuilt
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    bool isRefreshing () const { return m_isRefreshing; }
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Set the device info for this controller
     ///
     /// @param[in]  info        New device info
@@ -330,8 +339,9 @@ private:
     std::vector<layout::Actuator>       m_actuatorCache;        ///< Cache of actuators fetched from controller
     std::vector<layout::Locomotive>     m_locoCache;            ///< Cache of locomotives fetched from controller
     std::vector<layout::Route>          m_routeCache;           ///< Cache of routes fetched from controller
-    std::vector<layout::SensorModule>   m_sensorCache;
+    std::vector<layout::SensorModule>   m_sensorCache;          ///< Cache of sensors fetched from controller
     mutable std::mutex                  m_cacheLock;            ///< Mutex protection for caches
+    std::atomic_bool                    m_isRefreshing = false; ///< Is the controller being refreshed
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Initializes the software capabilities once, thread safely. Future calls

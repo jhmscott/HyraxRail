@@ -160,7 +160,7 @@ public:
 
     virtual std::vector<layout::SensorModule> getSensors () const override { return {}; }
 
-    virtual layout::SensorModule createSensor (size_t num) override { return {}; }
+    virtual layout::SensorModule createSensor (size_t num, uint pos) override { return {}; }
 
 private:
     virtual void removeSensor (size_t id) override {}
