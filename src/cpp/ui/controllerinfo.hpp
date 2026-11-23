@@ -82,8 +82,10 @@ private:
     /// emergency stop. Otherwise this clears the emergency stop state (also called the "go" state on some
     /// controllers
     ///
+    /// @param[in]  stop    True if stop requested
+    ///
     ///////////////////////////////////////////////////////////////////////////////
-    void eStop () { m_stopper->eStop (m_stop->isChecked ()); updateStopTooltips (); }
+    void eStop (bool stop) { m_stopper->eStop (stop); updateStopTooltips (); }
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Set the controller health icon

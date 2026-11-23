@@ -35,17 +35,6 @@ public:
         {}
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Trigger or leave an emergency stop state. This typically stops all locomotives
-    /// by cutting track power
-    ///
-    /// @param[in]  stop    True to trigger an emergency stop
-    ///                     False  to exit an emergency stop state
-    ///                     (sometimes called a go command)
-    ///
-    ///////////////////////////////////////////////////////////////////////////////
-    virtual void eStop (bool stop) override;
-
-    ///////////////////////////////////////////////////////////////////////////////
     /// Check if the controller is in the emergency stop state
     ///
     /// @return     True if the emergency stop state is active
@@ -59,6 +48,17 @@ private:
     std::vector<speedPair>  m_savedSpeeds;          ///< Speeds recorded from last e-stop
     LocomotiveController&   m_locoController;       ///< Locomotive controller
     bool                    m_isEStopped = false;   ///< Emergency stop state
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Trigger or leave an emergency stop state. This typically stops all locomotives
+    /// by cutting track power
+    ///
+    /// @param[in]  stop    True to trigger an emergency stop
+    ///                     False  to exit an emergency stop state
+    ///                     (sometimes called a go command)
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual void doEStop (bool stop) override;
     };
 
 } // namespace layout

@@ -142,7 +142,7 @@ private:
 class EmergencyStopControllerStubs : public layout::EmergencyStopController
     {
 public:
-    virtual void eStop (bool stop) override {}
+    virtual void doEStop (bool stop) override {}
 
     virtual bool isEStopped () const override { return false; }
     };

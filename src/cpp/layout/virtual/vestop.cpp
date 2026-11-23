@@ -11,7 +11,7 @@
 
 namespace layout
 {
-void VirtualEmergencyStopController::eStop (bool stop)
+void VirtualEmergencyStopController::doEStop (bool stop)
     {
     if (stop == m_isEStopped)
         {

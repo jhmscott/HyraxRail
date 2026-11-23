@@ -249,6 +249,11 @@ void MainMenu::addControllerMenu (control::ControllerBase& controller)
         action->setCheckable (true);
         action->setChecked (estopper->isEStopped ());
         action->setEnabled (isConnected);
+
+        connect (estopper,
+                &layout::EmergencyStopController::eStopped,
+                 action,
+                &QAction::setChecked);
         }
 
     controllerSubMenu->addSeparator ();

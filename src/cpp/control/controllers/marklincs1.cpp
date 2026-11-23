@@ -552,7 +552,7 @@ layout::SensorModule MarklinCS1::createSensor (size_t num, uint pos)
     return layout::SensorModule ();
     }
 
-void MarklinCS1::eStop (bool stop)
+void MarklinCS1::doEStop (bool stop)
     {
     if (stop)
         {

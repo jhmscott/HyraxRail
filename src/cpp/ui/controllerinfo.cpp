@@ -32,7 +32,7 @@ ControllerInfo::ControllerInfo (control::ControllerManager& manager,
     m_manager (manager),
     m_controller (controller)
     {
-    QHBoxLayout* layout = new QHBoxLayout{ this };
+    QHBoxLayout*    layout = new QHBoxLayout{ this };
     QIcon           icon;
 
     icon.addFile (":/icons/common/misc/circle-play.svg",
@@ -152,8 +152,6 @@ void ControllerInfo::clear ()
 
 void ControllerInfo::setController (control::ControllerBase& controller)
     {
-    m_controller = &controller;
-
     m_refresh->setDisabled (false);
     m_stop->setDisabled (false);
     m_settings->setDisabled (false);
@@ -161,20 +159,39 @@ void ControllerInfo::setController (control::ControllerBase& controller)
 
     m_stopper = controller.getCapabilityController<layout::EmergencyStopController> ();
 
-    if (NULL == m_stopper ||
-        not m_controller->getConnectionHealth ().isConnected ())
+    if (NULL != m_controller)
+        {
+        auto* oldStopper = m_controller->getCapabilityController<layout::EmergencyStopController> ();
+
+        if (NULL != oldStopper)
+            {
+            disconnect (oldStopper,
+                       &layout::EmergencyStopController::eStopped,
+                        m_stop,
+                       &QPushButton::setChecked);
+            }
+        }
+
+    if (NULL == m_stopper)
         {
         m_stop->setDisabled (true);
         }
     else
         {
-        m_stop->setEnabled (true);
+        m_stop->setEnabled (controller.getConnectionHealth ().isConnected ());
         m_stop->setChecked (m_stopper->isEStopped ());
+
+        connect (m_stopper,
+                &layout::EmergencyStopController::eStopped,
+                 m_stop,
+                &QPushButton::setChecked);
         }
 
     setToolTip (tr ("Model : %1").arg (controller.getMetaClass ().friendlyName.c_str ()));
 
-    setHealth (m_controller->getConnectionHealth ());
+    setHealth (controller.getConnectionHealth ());
+
+    m_controller = &controller;
     }
 
 void ControllerInfo::refreshHealthIcon (const control::ControllerBase& controller)
