@@ -1,0 +1,7 @@
+Märklin
+Marklin
+cs1
+qobj
+wdgt
+qobject
+UILANG

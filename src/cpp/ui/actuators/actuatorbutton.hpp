@@ -43,7 +43,7 @@ public:
     ///                         state on the controller, it will only toggle locally
     /// @param[in]  automations (optional) List of automations
     ///                         If provided, this will add a warning about automations
-    ///                         That will be deleted with thit actuator
+    ///                         That will be deleted with this actuator
     ///
     //////////////////////////////////////////////////////////////////////////////
     ActuatorButton (const layout::Actuator&     actuator,

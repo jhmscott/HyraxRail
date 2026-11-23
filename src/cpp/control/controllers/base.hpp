@@ -49,7 +49,7 @@ namespace control
 namespace controllerbase_internal
 {
 ///////////////////////////////////////////////////////////////////////////////
-/// Generates a list of the protocol meta-class objects from a varidac list of
+/// Generates a list of the protocol meta-class objects from a variadic list of
 /// protocol types
 ///
 /// @tparam     Protos          Variadic list of protocol types
@@ -130,6 +130,14 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     std::vector<layout::SensorModule> getSensors () const;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the positions available to create sensor modules in
+    ///
+    /// @return     list of available sensors
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    std::vector<uint> availableSensorPositions () const;
 
     ///////////////////////////////////////////////////////////////////////////////
     /// Create a route on  the controller
@@ -262,24 +270,24 @@ public:
     /// @return     Controller instance for capability
     ///
     //////////////////////////////////////////////////////////////////////////////
-    template<class CapabiltyController>
-    CapabiltyController* getCapabilityController ()
+    template<class CapabilityController>
+    CapabilityController* getCapabilityController ()
         {
         using namespace controllerbase_internal;
 
-        constexpr controllerCapability type = traits::capability<CapabiltyController>::value;
+        constexpr controllerCapability type = traits::capability<CapabilityController>::value;
 
         const auto&             meta        = getMetaClass ();
-        CapabiltyController*    controller  = NULL;
+        CapabilityController*    controller  = NULL;
 
         if (meta.hardwareCapabilities[type])
             {
-            controller = ControllerMetaClassBase::cast<CapabiltyController> (this);
+            controller = ControllerMetaClassBase::cast<CapabilityController> (this);
             }
         else if (meta.softwareCapabilities[type])
             {
             initSoftwareCapabilitiesOnce ();
-            controller = dynamic_cast<CapabiltyController*> (m_softwareControllers[type].get ());
+            controller = dynamic_cast<CapabilityController*> (m_softwareControllers[type].get ());
             }
 
         return controller;
@@ -294,10 +302,10 @@ public:
     /// @return     Controller instance for capability
     ///
     //////////////////////////////////////////////////////////////////////////////
-    template<class CapabiltyController>
-    const CapabiltyController* getCapabilityController () const
+    template<class CapabilityController>
+    const CapabilityController* getCapabilityController () const
         {
-        return const_cast<control::ControllerBase*> (this)->getCapabilityController<CapabiltyController> ();
+        return const_cast<control::ControllerBase*> (this)->getCapabilityController<CapabilityController> ();
         }
 
     ///////////////////////////////////////////////////////////////////////////////

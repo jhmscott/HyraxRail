@@ -2,7 +2,7 @@
  * @file        controller/marklincs1.hpp
  * @brief       Controller implementation for the Märklin
  *              Central Station 1. Model number 60212
- *              This supports the oirginal fimrware,
+ *              This supports the original firmware,
  *              not the "reloaded" firmware from ESU
  * @author      Justin Scott
  * @date        2026-02-08
@@ -41,6 +41,7 @@ class MarklinCS1 :
                                   layout::TRACK_PROTO_MM14,
                                   layout::TRACK_PROTO_MM27,
                                   layout::TRACK_PROTO_MM28)
+    SENSOR_CONTROLLER_DEFINE (32, 8, 16);
 public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Create a CS1 controller
@@ -262,7 +263,7 @@ private:
     virtual void removeLocomotive (size_t id) override;
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Request control of a locomitive
+    /// Request control of a locomotive
     ///
     /// @param[in]  id      Locomotive ID
     ///
@@ -344,7 +345,7 @@ private:
     virtual void requestActuatorControl (size_t id) override;
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Relase control of an actuator
+    /// Release control of an actuator
     ///
     /// @param[in]  id          Actuator ID
     ///

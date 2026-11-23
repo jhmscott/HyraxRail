@@ -1,7 +1,7 @@
 /**
  * @file        controller/base.cpp
  * @brief       Abstract base class for all model train controllers,
- *              and metaclass utilitiess
+ *              and metaclass utilities
  * @author      Justin Scott
  * @date        2026-02-01
  *
@@ -147,6 +147,47 @@ std::vector<layout::SensorModule> ControllerBase::getSensors () const
         }
 
     return sensors;
+    }
+
+std::vector<uint> ControllerBase::availableSensorPositions () const
+    {
+    std::vector<uint> positions;
+
+    if (getMetaClass ().hasCapability (CAPABILITY_SENSOR))
+        {
+        const auto& [_, max] = getCapabilityController<layout::SensorController> ()->getSensorMetaClass ();
+
+        // Fill with [0,max]
+        std::vector<uint> temp;
+
+        temp.resize (max);
+
+        std::iota (temp.begin (),
+                   temp.end (),
+                   0);
+
+        std::vector<layout::SensorModule> sensors = getSensors ();
+
+        Q_ASSERT (temp.size () > sensors.size ());
+
+        // Copy over only ones not already configured
+        positions.reserve (temp.size () - sensors.size ());
+
+        auto positionNotConfigured = [&sensors] (uint position) -> bool
+            {
+            return sensors.end () == std::find_if (sensors.begin (),
+                                                   sensors.end (),
+                                                   [position] (const layout::SensorModule& sensor)
+                                                   { return sensor.getPosition () == position; });
+            };
+
+        std::copy_if (temp.begin (),
+                      temp.end (),
+                      std::back_inserter (positions),
+                      positionNotConfigured);
+        }
+
+    return positions;
     }
 
 layout::Route ControllerBase::createRoute (const std::string& name, const layout::routeList& actuators)

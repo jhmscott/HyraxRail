@@ -162,6 +162,10 @@ public:
 
     virtual layout::SensorModule createSensor (size_t num, uint pos) override { return {}; }
 
+    virtual const layout::sensorMetaClass& getSensorMetaClass () const override
+        {
+        static layout::sensorMetaClass meta; return meta;
+        }
 private:
     virtual void removeSensor (size_t id) override {}
     };

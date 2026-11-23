@@ -29,7 +29,7 @@ public:
     /// @param[in]  automations     List of automations
     ///
     //////////////////////////////////////////////////////////////////////////////
-    explicit SensorDelegate (const control::AutomationManager& automations) :
+    explicit SensorDelegate (control::AutomationManager& automations) :
         m_automations (automations)
         {}
 
@@ -51,7 +51,7 @@ public:
                                 std::function<void (common::LayoutButton*)> addToLayout) override;
 
 private:
-    const control::AutomationManager& m_automations;    ///< List of automations
+    control::AutomationManager& m_automations;    ///< List of automations
     };
 
 } // namespace ui::sensors

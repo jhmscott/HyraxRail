@@ -17,6 +17,23 @@
 class LAYOUT_TEST_CLASS;
 #endif // LAYOUT_TEST_CLASS
 
+///////////////////////////////////////////////////////////////////////////////
+/// Declare a sensor controller
+///
+/// @param[in]  max     Maximum allowable number of sensors for this controller
+/// @param[in]  ...     Valid numbers of ports per module
+///
+/// @ingroup    META_CLASS_MACRO
+///
+///////////////////////////////////////////////////////////////////////////////
+#define SENSOR_CONTROLLER_DEFINE(max, ...) \
+    public:\
+        static const layout::sensorMetaClass& getSensorMetaClassStatic () { return sensorMeta; } \
+        virtual const layout::sensorMetaClass& getSensorMetaClass () const override { return sensorMeta; } \
+    private:\
+        static inline const layout::sensorMetaClass sensorMeta \
+            { { __VA_ARGS__ }, (max) };
+
 namespace layout
 {
 
@@ -99,6 +116,14 @@ public:
     std::string getName () const { return m_state->m_name; }
 
     ///////////////////////////////////////////////////////////////////////////////
+    /// Get the module's name
+    ///
+    /// @return     Sensor module position
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    uint getPosition () const { return m_state->m_pos; }
+
+    ///////////////////////////////////////////////////////////////////////////////
     /// Remove this sensor module from the controller
     ///
     ///////////////////////////////////////////////////////////////////////////////
@@ -112,6 +137,18 @@ signals:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void sensorChanged (size_t idx, bool value);
+    };
+
+///////////////////////////////////////////////////////////////////////////////
+/// Information about a sensor controller type
+///
+/// @ingroup    META_CLASS
+///
+///////////////////////////////////////////////////////////////////////////////
+struct sensorMetaClass
+    {
+    std::vector<uint>   portCounts;     ///< List of the number of ports per module that are valid
+    uint                maxPositions;   ///< Maximum number of sensors configurable
     };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -144,6 +181,18 @@ public:
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual SensorModule createSensor (size_t num, uint pos) = 0;
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Get the sensor meta class for this controller type
+    ///
+    /// @return     Sensor controller meta class
+    ///
+    /// @remarks    Don't define directly, use SENSOR_CONTROLLER_DEFINE()
+    ///
+    /// @see        SENSOR_CONTROLLER_DEFINE()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    virtual const sensorMetaClass& getSensorMetaClass () const = 0;
 protected:
     ///////////////////////////////////////////////////////////////////////////////
     /// Update the state of a sensor module

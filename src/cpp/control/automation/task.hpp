@@ -100,10 +100,10 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     const AutomationCondition* getCondition () const { return m_condition; }
 
-    ///////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////;//
     /// Get a description of this task
     ///
-    /// @return     Formatted desription text
+    /// @return     Formatted description text
     ///
     ///////////////////////////////////////////////////////////////////////////////
     QString description () const;
@@ -126,7 +126,7 @@ public:
                        "Component type not usable by condition or item");
         bool automated = false;
 
-        // I may someday have a componponent type that can be a condition or item
+        // I may someday have a component type that can be a condition or item
         // So leaving this as if not else if
 
         if constexpr (AutomationItem::isAutomatable<Component>)

@@ -32,18 +32,23 @@ public:
     //////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
-    /// @param[in]  automations List of auomations
+    /// @param[in]  automations List of automations
+    /// @param[in]  controller  Controller for this sensor module
     /// @param[in]  module      Module to create a bar for
     /// @param[in]  parent      Parent widget
     ///
     //////////////////////////////////////////////////////////////////////////////
-    SensorBar (const control::AutomationManager&    automations,
-               const layout::SensorModule&          module,
-               QWidget*                             parent);
+    SensorBar (control::AutomationManager&  automations,
+               control::ControllerBase&     controller,
+               const layout::SensorModule&  module,
+               QWidget*                     parent);
 
 private:
-    std::vector<SensorManageState*> m_states;   ///< Sensor state indicators
-    layout::SensorModule            m_module;   ///< Module this is displaying the state of
+    std::vector<SensorManageState*> m_states;       ///< Sensor state indicators
+    layout::SensorModule            m_module;       ///< Module this is displaying the state of
+    control::AutomationManager&     m_automations;  ///< List of automations
+    control::ControllerBase&        m_controller;   ///< Controller for this sensor
+    QLabel*                         m_name;         ///< Module name label
 
     //////////////////////////////////////////////////////////////////////////////
     /// Get the title for the delete sensor message box
@@ -51,10 +56,13 @@ private:
     /// @return     Translated title
     ///
     //////////////////////////////////////////////////////////////////////////////
-    virtual QString getDeleteText () const { return tr ("Delete Sensor Module"); }
+    virtual QString getDeleteText () const override { return tr ("Delete Sensor Module"); }
 
-    // TODO
-    virtual void editComponent () {}
+    //////////////////////////////////////////////////////////////////////////////
+    /// Edit this sensor module
+    ///
+    //////////////////////////////////////////////////////////////////////////////
+    virtual void editComponent () override;
 
     };
 

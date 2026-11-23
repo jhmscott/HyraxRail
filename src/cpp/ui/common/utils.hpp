@@ -43,6 +43,22 @@ bool checkVariant (const QVariant& variant)
     {
     return variant.isValid () && variant.canConvert<T> ();
     }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Default string formatter
+///
+/// @tparam     T       Type to format
+///
+/// @param[in]  val     Value to format
+///
+/// @see        ui::common::fillCombobox()
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class T>
+QString formatItem (const T& val)
+    {
+    return QString{ "%1" }.arg (val);
+    }
 } // namespace utils_internal
 
 
@@ -368,6 +384,30 @@ inline void setMenuItemText (QMenu& menu, size_t item, const QString& text)
     menu.actions ()[item]->setText (text);
     }
 
+///////////////////////////////////////////////////////////////////////////////
+/// Fill a combobox from a range of value, and stores the value in the item's
+/// user data
+///
+/// @tparam         Range       Range type
+/// @tparam         Func        Format function type
+///
+/// @param[in,out]  cb          Combobox to fill
+/// @param[in]      range       Range to fill combobox from
+/// @param[in]      format      (optional) Function to format the value
+///
+///////////////////////////////////////////////////////////////////////////////
+template<class Range, class Func = decltype (utils_internal::formatItem<typename Range::value_type>)>
+void fillCombobox (QComboBox&    cb,
+                   const Range& range,
+                   Func&&       format =
+                        utils_internal::formatItem<typename Range::value_type>)
+    {
+    for (const auto& val : range)
+        {
+        cb.addItem (format (val),
+                    QVariant::fromValue (val));
+        }
+    }
 
 } // namespace ui::common
 

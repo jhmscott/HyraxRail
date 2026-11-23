@@ -17,6 +17,7 @@ A collection of developer tools I've found useful
 * [Qt Core](https://marketplace.visualstudio.com/items?itemName=TheQtCompany.qt-core) - Dependency for the Qt C++ plugin
 * [Qt C++](https://marketplace.visualstudio.com/items?itemName=TheQtCompany.qt-cpp) - Needed to build Qt projects in visual studio
 * [Trailing Whitespace Visualizer](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.TrailingWhitespace64) - Highlights and removes trailing whitespace automatically
+* [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker) - Performs spell checking on code. Allows the definitions of custom dictionaries
 
 ## Visual Studio Plugins
  * [Graphical Debugging](https://marketplace.visualstudio.com/items?itemName=AdamWulkiewicz.graphicaldebugging-vscode) - Provides visualization of geometric data types

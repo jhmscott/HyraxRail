@@ -14,5 +14,28 @@
     "C_Cpp.vcFormat.space.afterComma": true,
     "C_Cpp.vcFormat.space.beforeFunctionOpenParenthesis": "insert",
     "C_Cpp.vcFormat.indent.caseContentsWhenBlock": true,
-    "cmake.ctest.testExplorerIntegrationEnabled": true
+    "cmake.ctest.testExplorerIntegrationEnabled": true,
+    "cSpell.customDictionaries": {
+        "hyrax-rail": {
+            "name": "hyrax-rail",
+            "path": "${workspaceRoot}/.vscode/dictionary.txt",
+            "description": "Custom Dictionary for the Hyrax Rail project",
+            "addWords": true
+        },
+        "custom": true,
+        "internal-terms": false
+    },
+    "cSpell.dictionaries": [
+        "hyrax-rail"
+    ],
+    "cSpell.allowCompoundWords": true,
+    "cSpell.patterns": [
+        {
+        "name": "file-paths",
+        "pattern": "^(?:[a-zA-Z]:[\\/]|\/|\\.{1,2}[\\/])?(?:[^\\/:*?\"<>|\r\n]+[\\/])*[^\\/:*?\"<>|\r\n]+\\.(?:cpp|hpp|cc|hh|cxx|hxx|h)$"
+        }
+    ],
+    "cSpell.ignoreRegExpList": [
+        "file-path"
+    ],
 }

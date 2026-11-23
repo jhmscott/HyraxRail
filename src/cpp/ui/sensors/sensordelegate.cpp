@@ -7,6 +7,7 @@
  * @copyright   Copyright (c) 2026 Justin Scott
  */
 
+#include <ui/sensors/editsensor.hpp>
 #include <ui/sensors/sensorbar.hpp>
 #include <ui/sensors/sensordelegate.hpp>
 
@@ -16,7 +17,18 @@ namespace ui::sensors
 common::LayoutButton* SensorDelegate::openCreate (control::ControllerBase&  controller,
                                                   QWidget*                  parent)
     {
-    return NULL;
+    common::LayoutButton*   btn;
+    EditSensorDialog        dlg{ controller, parent };
+
+    if (QDialog::Accepted == dlg.exec ())
+        {
+        layout::SensorModule sensor = controller.createSensor (dlg.getPortCount (),
+                                                               dlg.getModulePosition ());
+
+        btn = new SensorBar{ m_automations, controller, sensor, parent };
+        }
+
+    return btn;
     }
 
 void SensorDelegate::createButtons (control::ControllerBase&                    controller,
@@ -24,7 +36,7 @@ void SensorDelegate::createButtons (control::ControllerBase&                    
     {
     for (const layout::SensorModule module : controller.getSensors ())
         {
-        addToLayout (new SensorBar{ m_automations, module, NULL });
+        addToLayout (new SensorBar{ m_automations, controller, module, NULL });
         }
     }
 
