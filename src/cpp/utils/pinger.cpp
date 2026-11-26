@@ -363,14 +363,14 @@ public:
             socklen_t       slen;
             struct icmp     rcv_hdr;
 
-#ifdef Q_OS_MACOS
+#ifdef Q_OS_APPLE
             int hold = 1;
             setsockopt(sock,
                        SOL_SOCKET,
                        0x1104, // SO_RECV_ANYIF,
                        (char *)&hold,
                        sizeof(hold));
-#endif // Q_OS_MACOS
+#endif // Q_OS_APPLE
 
             memcpy (data, &icmpHdr, sizeof (icmpHdr));
 
@@ -430,11 +430,11 @@ public:
                         memcpy (&rcv_hdr, data, sizeof (rcv_hdr));
 
                         if (
-#ifdef Q_OS_MACOS
+#ifdef Q_OS_APPLE
                                        'E' == rcv_hdr.icmp_type
 #else
                             ICMP_ECHOREPLY == rcv_hdr.icmp_type
-#endif
+#endif // Q_OS_APPLE
                             )
                             {
                             res.roundtrip   = std::chrono::duration_cast<std::chrono::milliseconds> (

@@ -47,18 +47,19 @@ int main (int argc, char *argv[])
     QApplication::setOrganizationDomain (COMPANY_DOMAIN);
     QApplication::setApplicationVersion (VERSION_STRING);
 
-#ifdef Q_OS_MACOS
+#ifdef Q_OS_APPLE
     QApplication::setWindowIcon         (QIcon{ ":/icons/app/conductor-hyrax.icns" });
 #else
     QApplication::setWindowIcon         (QIcon{ ":/icons/app/conductor-hyrax.ico" });
-#endif
+#endif // Q_OS_APPLE
 
 #ifdef Q_OS_ANDROID
     QFont defaultFont = app.font ();
 
     defaultFont.setPointSize (16);
     app.setFont (defaultFont);
-#endif
+#endif // Q_OS_ANDROID
+
     ui::SplashScreen  splash;
 
     splash.show ();

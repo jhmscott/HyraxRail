@@ -130,14 +130,14 @@ void setThreadName (std::string_view name, std::thread::native_handle_type handl
     truncated[numToCopy] = '\0';
 
 
-#ifdef Q_OS_MACOS
+#ifdef Q_OS_APPLE
     if (pthread_self () == handle)
         {
         pthread_setname_np (truncated);
         }
 #else
     pthread_setname_np (handle, truncated);
-#endif // Q_OS_MACOS
+#endif // Q_OS_APPLE
 #endif // Q_OS_UNIX
 
     }

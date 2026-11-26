@@ -197,7 +197,7 @@ inline QString dayOfWeekText (dayOfTheWeek day)
 ///             characters
 ///
 ///////////////////////////////////////////////////////////////////////////////
-inline QString dayOfWeekAbreviation (dayOfTheWeek day)
+inline QString dayOfWeekAbbreviation (dayOfTheWeek day)
     {
     using namespace internal;
 
@@ -229,7 +229,7 @@ inline QString dayOfWeekAbreviation (dayOfTheWeek day)
 ///             characters
 ///
 ///////////////////////////////////////////////////////////////////////////////
-inline QString monthAbreviation (month mon)
+inline QString monthAbbreviation (month mon)
     {
     using namespace internal;
 

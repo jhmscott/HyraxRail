@@ -22,6 +22,7 @@
 #include <QMessageBox>
 #include <QSessionManager>
 #include <QShortcut>
+#include <QSystemTrayIcon>
 #include <QTabWidget>
 
 #include <qevent.h>
@@ -98,7 +99,7 @@ MainWindow::MainWindow (control::ControllerManager& controllers, QWidget *parent
     DockMenu* dock = new DockMenu{ controllers, this };
 
     dock->setAsDockMenu ();
-#endif
+#endif // Q_OS_MACOS
 
 #ifdef Q_OS_ANDROID
     // Qt doesn't seem to set a palette for dark mode, keeping it the same as light mode

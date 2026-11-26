@@ -785,12 +785,12 @@ void AnalogClock::paintEvent (QPaintEvent* event)
 
             if (dateWindowStyle::MONTH_DATE == face.window.style)
                 {
-                text = utils::time::monthAbreviation (
+                text = utils::time::monthAbbreviation (
                             static_cast<utils::time::month> (date.month () - 1));
                 }
             else // (dateWindowStyle::DAY_DATE == face.window.style)
                 {
-                text = utils::time::dayOfWeekAbreviation (
+                text = utils::time::dayOfWeekAbbreviation (
                             static_cast<utils::time::dayOfTheWeek> (date.dayOfWeek () - 1));
                 }
 

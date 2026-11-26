@@ -10,9 +10,9 @@
 #pragma once
 
 
-#ifdef Q_OS_MACOS
+#ifdef Q_OS_APPLE
 #include <../objective-c/lang.hpp>
-#endif // Q_OS_MACOS
+#endif // Q_OS_APPLE
 
 #include <QEvent>
 #include <QLocale>
@@ -64,9 +64,9 @@ QLocale system ();
 ///
 ///////////////////////////////////////////////////////////////////////////////
 class Translator
-#ifdef Q_OS_MACOS
+#ifdef Q_OS_APPLE
     : private apple::LanguageClient
-#endif // Q_OS_MACOS
+#endif // Q_OS_APPLE
     {
 public:
     // Non copyable
@@ -103,13 +103,13 @@ private:
     ///////////////////////////////////////////////////////////////////////////////
     Translator () = default;
 
-#ifdef Q_OS_MACOS
+#ifdef Q_OS_APPLE
     ///////////////////////////////////////////////////////////////////////////////
     /// Handle the langauge change notification on mac
     ///
     ///////////////////////////////////////////////////////////////////////////////
     virtual void onLanguageChanged () override;
-#endif // Q_OS_MACOS
+#endif // Q_OS_APPLE
     };
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -20,9 +20,9 @@
 #include <Windows.h>
 #endif // Q_OS_WIN
 
-#ifdef Q_OS_MACOS
+#ifdef Q_OS_APPLE
 #include <../objective-c/lang.hpp>
-#endif // Q_OS_MACOS
+#endif // Q_OS_APPLE
 
 #ifdef Q_OS_ANDROID
 #include <jni.h>
@@ -99,7 +99,7 @@ void Translator::setLocale (const QLocale& locale)
     QApplication::setApplicationDisplayName (appName);
     }
 
-#ifdef Q_OS_MACOS
+#ifdef Q_OS_APPLE
 void Translator::onLanguageChanged ()
     {
     // Introduce a delay, because sometimes the locale returns the old value initially
@@ -107,7 +107,7 @@ void Translator::onLanguageChanged ()
                         [this] () -> void
                         { setLocale (); });
     }
-#endif // Q_OS_MACOS
+#endif // Q_OS_APPLE
 
 QLocale system ()
     {
@@ -127,9 +127,9 @@ QLocale system ()
         }
 #endif // Q_OS_WIN
 
-#ifdef Q_OS_MACOS
+#ifdef Q_OS_APPLE
     locale = QLocale{ apple::systemLocale ().c_str () };
-#endif // Q_OS_MACOS
+#endif // Q_OS_APPLE
 
 #ifdef Q_OS_ANDROID
     QJniObject  mainActivity = QNativeInterface::QAndroidApplication::context ();

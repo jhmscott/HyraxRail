@@ -11,10 +11,10 @@
 #include <utils/log.hpp>
 #include <utils/os.hpp>
 
-#ifdef Q_OS_MACOS
+#ifdef Q_OS_APPLE
 #include <IOKit/ps/IOPowerSources.h>
 #include <IOKit/ps/IOPSKeys.h>
-#endif // Q_OS_MACOS
+#endif // Q_OS_APPLE
 
 #ifdef Q_OS_ANDROID
 #include <jni.h>
@@ -178,7 +178,7 @@ private:
 #endif // defined (Q_OS_WIN) || defined (DOXYGEN)
 
 
-#if defined (Q_OS_MACOS) || defined (DOXYGEN)
+#if defined (Q_OS_APPLE) || defined (DOXYGEN)
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -306,7 +306,7 @@ private:
 
     };
 
-#endif // defined (Q_OS_MACOS) || defined (DOXYGEN)
+#endif // defined (Q_OS_APPLE) || defined (DOXYGEN)
 
 #if defined (Q_OS_ANDROID)  || defined (DOXYGEN)
 
@@ -397,7 +397,7 @@ public:
 // Alias the native type
 #if defined (Q_OS_WINDOWS) || defined (DOXYGEN)
 using BatteryImplNative = BatteryImplWindows;   ///< Native battery implementation (Windows)
-#elif defined (Q_OS_MACOS)
+#elif defined (Q_OS_APPLE)
 using BatteryImplNative = BatteryImplApple;     ///< Native battery implementation (Apple)
 #elif defined (Q_OS_ANDROID)
 using BatteryImplNative = BatteryImplAndroid;   ///< Native battery implementation (Android)

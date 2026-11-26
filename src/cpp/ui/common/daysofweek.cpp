@@ -71,7 +71,7 @@ void DaysOfWeekSelector::setLabels ()
     for (size_t ii = 0; ii < std::size (m_labels); ++ii)
         {
         m_labels[ii]->setText (
-            utils::time::dayOfWeekAbreviation (
+            utils::time::dayOfWeekAbbreviation (
                 static_cast<utils::time::dayOfTheWeek> (ii)));
         }
     }

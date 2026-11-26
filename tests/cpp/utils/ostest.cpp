@@ -67,7 +67,7 @@ private slots:
 
     // This isn't possible on Mac
     // Shakes fist at apple
-#if !defined (Q_OS_MACOS) || defined (DOXYGEN)
+#if !defined (Q_OS_APPLE) || defined (DOXYGEN)
     ///////////////////////////////////////////////////////////////////////////////
     /// Test setting a std::thread name
     ///
@@ -96,7 +96,7 @@ private slots:
 
         th.join ();
         }
-#endif // Q_OS_MACOS
+#endif // !defined (Q_OS_APPLE) || defined (DOXYGEN)
 
 
 #if defined (Q_OS_WIN) || defined (DOXYGEN)
