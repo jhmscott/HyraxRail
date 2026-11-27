@@ -237,22 +237,42 @@ void SwipeView::wheelEvent (QWheelEvent* event)
     {
     Q_CHECK_PTR (event);
 
-    if (QInputDevice::DeviceType::TouchPad == event->deviceType ()  && // Touchpad swipe gesture
-        (0 != event->pixelDelta ().x ()   || // Horizontal swipe
-         m_swipeInProgress                || // account for events with no change once we've started
-         m_blockScroll))                     // We need to accept these or it breaks future updates
+    if (Qt::NoScrollPhase != event->phase ()&&  // Touchpad swipe gesture
+        (0 != event->pixelDelta ().x ()     ||  // Horizontal swipe
+         m_swipeInProgress                  ||  // account for events with no change once we've started
+         m_blockScroll))                        // We need to accept these or it breaks future updates
         {
+        QPoint delta;
+
+        // Always behave like we have natural scrolling enabled
+        if (event->inverted ())
+            {
+            delta = event->pixelDelta ();
+            }
+        else
+            {
+            delta = -event->pixelDelta ();
+            }
+
         switch (event->phase ())
             {
             case Qt::ScrollBegin:
                 {
-                beginTouchpadSwipe (event->pixelDelta ());
-                break;
+                if (m_swipeInProgress)
+                    {
+                    // This is to accommodate the weird behaviour of QTest::wheelEvent()
+                    [[fallthrough]];
+                    }
+                else
+                    {
+                    beginTouchpadSwipe (delta);
+                    break;
+                    }
                 }
             case Qt::ScrollMomentum:
             case Qt::ScrollUpdate:
                 {
-                updateTouchpadSwipe (event->pixelDelta ());
+                updateTouchpadSwipe (delta);
                 break;
                 }
             case Qt::ScrollEnd:

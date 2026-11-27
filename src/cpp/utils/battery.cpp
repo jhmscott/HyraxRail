@@ -60,7 +60,7 @@ public:
 #if defined (Q_OS_WIN) || defined (DOXYGEN)
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Windows battery implementation. Uses a message only window to recieve
+/// Windows battery implementation. Uses a message only window to receive
 /// battery notifications
 ///
 /// @ingroup    PIMPL
@@ -125,7 +125,7 @@ public:
         }
 
 private:
-    Battery*        m_battery;                  ///< Battery instance to recieve notifications
+    Battery*        m_battery;                  ///< Battery instance to receive notifications
     HPOWERNOTIFY    m_handle;                   ///< Notification handle
     DWORD           m_batteryPercentage =       ///< Battery percentage [0,100]
                             BATTERY_PERCENTAGE_UNKNOWN;
@@ -225,7 +225,7 @@ static int getBatteryPercentage ()
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Apple battery implementation. Adds a run loop source to the main run loop
-/// that recieves notifications about battery changes
+/// that receives notifications about battery changes
 ///
 /// @ingroup    PIMPL
 ///
@@ -236,7 +236,7 @@ public:
     ///////////////////////////////////////////////////////////////////////////////
     /// Constructor
     ///
-    /// @param[in]  battery     Battery interface instance to recieve notifications
+    /// @param[in]  battery     Battery interface instance to receive notifications
     ///
     ///////////////////////////////////////////////////////////////////////////////
     explicit BatteryImplApple (Battery* battery) :
@@ -285,12 +285,12 @@ public:
         }
 
 private:
-    Battery*            m_battery;  ///< Battery instance to recieve notifications
+    Battery*            m_battery;  ///< Battery instance to receive notifications
     CFRunLoopSourceRef  m_ref;      ///< Reference to the run source that is registered with the main loop
     int                 m_percent;  ///< Battery percentage [0,100]
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// Callback registered to recieve power notifications
+    /// Callback registered to receive power notifications
     ///
     /// @param[in]  ud  User data passed in IOPSNotificationCreateRunLoopSource()
     ///                 Pointer to the BatteryImpl instance
@@ -312,7 +312,7 @@ private:
 
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Android battery implementation to recieve battery notification
+/// Android battery implementation to receive battery notification
 ///
 /// @ingroup    PIMPL
 ///
@@ -364,7 +364,7 @@ public:
         emit m_battery->batteryPercentageChange (pct);
         }
 private:
-    Battery*            m_battery;      ///< Battery instance to recieve notifications
+    Battery*            m_battery;      ///< Battery instance to receive notifications
     QJniObject          m_mainActivity; ///< Main application activity
     std::optional<int>  m_percent;      ///< Battery percentage [0,100]
     };
@@ -372,7 +372,7 @@ private:
 
 #if defined (NON_DROID_LINUX) || defined (DOXYGEN)
 ///////////////////////////////////////////////////////////////////////////////
-/// Linux battery implementation to recieve battery notification
+/// Linux battery implementation to receive battery notification
 ///
 /// @ingroup    PIMPL
 ///
@@ -431,12 +431,12 @@ extern "C"
 {
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Java "Native" function called by the java battery class when recieving a
-/// a battery notifification
+/// Java "Native" function called by the java battery class when receiving a
+/// a battery notification
 ///
 /// @param[in]  env         (unused) JNI environment
 /// @param[in]  thisObj     (unused) Battery java object
-/// @param[in]  instancePtr Pointer to the BatteryImpl clas
+/// @param[in]  instancePtr Pointer to the BatteryImpl class
 /// @param[in]  pct         Battery percentage [0,100]
 ///
 /// @see        ca.justinlab.hyraxrail.Battery.batteryStatusChanged()

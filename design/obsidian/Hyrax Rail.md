@@ -1,5 +1,7 @@
 Landing page for the Hyrax Rail Obsidian. This serves as the design notes for the application.
+
 ## Architecture  
+
 ```mermaid
 
 %%{ init : { "flowchart" : { "curve" : "stepAfter" }, 'block': { 'padding': 12 } }}%%

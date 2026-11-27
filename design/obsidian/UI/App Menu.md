@@ -1,7 +1,9 @@
 ## Overview
+
 This outlines the structure of the Main App Menu. This is only implemented on platforms that have a native menu bar: Mac OS and some Linux desktop experiences. Implementation details can be found here in [[Native App Menu Bar]].
 
 ## Main Menu Structure
+
 ```mermaid
 flowchart TD
 	MainMenu["Main Menu"]
@@ -41,6 +43,7 @@ flowchart TD
 ```
 
 ## Controller Menu
+
 One controller sub-menu is added to the controller menu for each controller configured. An "Add Component" menu item is added for each component capability the controller has
 ```mermaid
 flowchart TD
@@ -62,6 +65,7 @@ flowchart TD
 ```
 
 ## Dock Menu
+
 ```mermaid
 flowchart TD
 	Dock

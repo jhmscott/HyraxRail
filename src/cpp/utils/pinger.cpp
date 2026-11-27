@@ -262,7 +262,7 @@ private:
     sockaddr_in6 m_ip;  ///< IPv6 address
     };
 
-#endif // deifned (Q_OS_WIN) || defined (DOXYGEN)
+#endif // defined (Q_OS_WIN) || defined (DOXYGEN)
 
 #if defined (Q_OS_UNIX) || defined (DOXYGEN)
 

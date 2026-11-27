@@ -1,5 +1,6 @@
 # Obsidian system and workspace configurations
 .obsidian/workspace.json
+.obsidian/workspace-mobile.json
 .obsidian/workspaces.json
 .obsidian/cache/
 

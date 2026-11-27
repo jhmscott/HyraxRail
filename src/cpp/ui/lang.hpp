@@ -118,7 +118,7 @@ private:
 /// @param[in]  locale      Locale to check
 ///
 /// @return     True if locale uses a 24 hour format
-///             False if locale usea a 12 hour format
+///             False if locale uses a 12 hour format
 ///
 ///////////////////////////////////////////////////////////////////////////////
 bool uses24HourFormat (const QLocale& locale);

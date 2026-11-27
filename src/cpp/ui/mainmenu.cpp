@@ -166,7 +166,7 @@ void MainMenu::setControllerSubMenuText (QMenu& submenu)
     {
     const QString MENU_TEXTS[] =
         {
-        tr ("New Locomoitive"),
+        tr ("New Locomotive"),
         tr ("New Actuator"),
         tr ("New Route"),
             "",

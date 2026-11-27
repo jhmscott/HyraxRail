@@ -16,11 +16,16 @@
 
 using namespace ui::common;
 
+
+using doSwipeFunc   = void (SwipeView&     view,
+                            const QPoint&  start,
+                            const QPoint&  end,
+                            int            time);
+
 /// Number of tabs to test with
 static constexpr int    NUM_TEST_VIEWS  = 5;
 /// Size of SwipeView
 static constexpr QSize  VIEW_SIZE       = { 100, 100 };
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Setup a SwipeView widget
@@ -42,17 +47,19 @@ static void initView (SwipeView& view, int start)
     }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Swipe a widget
+/// Swipe a widget with a touch screen
 ///
 /// @param[in,out]  view    Widget to swipe
 /// @param[in]      start   Starting point
 /// @param[in]      end     End point
+/// @param[in]      time    (optional) Time to perform swipe in milliseconds
+///                         -1 results in an instant swipe (default)
 ///
 ///////////////////////////////////////////////////////////////////////////////
-static void doSwipe (SwipeView&     view,
-                     const QPoint&  start,
-                     const QPoint&  end,
-                     int            time = -1)
+static void doTouchScreenSwipe (SwipeView&     view,
+                                const QPoint&  start,
+                                const QPoint&  end,
+                                int            time = -1)
     {
     QPointingDevice*    dev = QTest::createTouchDevice ();
     auto                seq = QTest::touchEvent (&view, dev);
@@ -75,22 +82,66 @@ static void doSwipe (SwipeView&     view,
     }
 
 ///////////////////////////////////////////////////////////////////////////////
+/// Swipe a widget with a touchpad
+///
+/// @param[in,out]  view    Widget to swipe
+/// @param[in]      start   Starting point
+/// @param[in]      end     End point
+/// @param[in]      time    (optional) Time to perform swipe in milliseconds
+///                         -1 results in an instant swipe (default)
+///
+///////////////////////////////////////////////////////////////////////////////
+static void doTouchPadSwipe (SwipeView&     view,
+                             const QPoint&  start,
+                             const QPoint&  end,
+                             int            time = -1)
+    {
+    QWindow* window = view.windowHandle ();
+
+    if (NULL == window)
+        {
+        window = q_check_ptr (view.topLevelWidget ())->windowHandle ();
+        Q_CHECK_PTR (window);
+        }
+
+    QTest::wheelEvent (window,
+                       start,
+                       { 1, 1 },
+                       start - end, // Does not set inverted to true, so we need to invert it here
+                       Qt::NoModifier,
+                       Qt::ScrollBegin);
+
+    QTest::wheelEvent (window,
+                       end,
+                       { 1, 1 },
+                       { 1, 1 },
+                       Qt::NoModifier,
+                       Qt::ScrollEnd);
+    }
+
+///////////////////////////////////////////////////////////////////////////////
 /// Test a swipe gesture
 ///
 /// @param[in]  start       Starting point
 /// @param[in]  end         End point
 /// @param[in]  before      Widget to start on
 /// @param[in]  after       Expected widget to end on
+/// @param[in]  doSwipe     Function to actually swipe the widget
+/// @param[in]  time        Time to perform swipe in milliseconds
+///                         -1 results in an instant swipe (default)
 ///
 ///////////////////////////////////////////////////////////////////////////////
 static void testSwipe (const QPoint&    start,
                        const QPoint&    end,
                        int              before,
                        int              after,
-                       int              time = -1)
+                       doSwipeFunc*     doSwipe,
+                       int              time)
     {
     SwipeView   view{ NULL };
     QSignalSpy  spy{ &view, &SwipeView::snappedTo };
+
+    Q_ASSERT (doSwipe);
 
     initView (view, before);
     doSwipe (view, start, end, time);
@@ -98,6 +149,53 @@ static void testSwipe (const QPoint&    start,
     QVERIFY (spy.wait (200));
 
     QCOMPARE (view.currentIndex (), after);
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Test a swipe gesture
+///
+/// @param[in]  start       Starting point
+/// @param[in]  end         End point
+/// @param[in]  before      Widget to start on
+/// @param[in]  after       Expected widget to end on
+/// @param[in]  time        (optional) Time to perform swipe in milliseconds
+///                         -1 results in an instant swipe (default)
+///
+///////////////////////////////////////////////////////////////////////////////
+void testTouchScreenSwipe (const QPoint&    start,
+                           const QPoint&    end,
+                           int              before,
+                           int              after,
+                           int              time = -1)
+    {
+    testSwipe (start,
+               end,
+               before,
+               after,
+              &doTouchScreenSwipe,
+               time);
+    }
+
+///////////////////////////////////////////////////////////////////////////////
+/// Test a swipe gesture with a touch pad
+///
+/// @param[in]  start       Starting point
+/// @param[in]  end         End point
+/// @param[in]  before      Widget to start on
+/// @param[in]  after       Expected widget to end on
+///
+///////////////////////////////////////////////////////////////////////////////
+void testTouchPadSwipe (const QPoint&    start,
+                        const QPoint&    end,
+                        int              before,
+                        int              after)
+    {
+    testSwipe (start,
+               end,
+               before,
+               after,
+              &doTouchPadSwipe,
+               -1);
     }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -128,7 +226,7 @@ class SwipeViewTest : public QObject
     Q_OBJECT
 private slots:
     ///////////////////////////////////////////////////////////////////////////////
-    /// Test data for swipeNext()
+    /// Test data for swipeNextTest()
     ///
     ///////////////////////////////////////////////////////////////////////////////
     void swipeNextTest_data () { generateRange (0, NUM_TEST_VIEWS - 1); }
@@ -143,10 +241,32 @@ private slots:
         {
         QFETCH (int, start);
 
-        testSwipe (QPoint{ 81, 50 },
-                   QPoint{ 30, 50 },
-                   start,
-                   start + 1);
+        testTouchScreenSwipe (QPoint{ 81, 50 },
+                              QPoint{ 30, 50 },
+                              start,
+                              start + 1);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for swipeNextTouchPadTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void swipeNextTouchPadTest_data () { generateRange (0, NUM_TEST_VIEWS - 1); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test swiping to the next widget with a touch pad
+    ///
+    /// @see    ui::common::SwipeView
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void swipeNextTouchPadTest ()
+        {
+        QFETCH (int, start);
+
+        testTouchPadSwipe (QPoint{ 81, 50 },
+                           QPoint{ 30, 50 },
+                           start,
+                           start + 1);
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -165,10 +285,32 @@ private slots:
         {
         QFETCH (int, start);
 
-        testSwipe (QPoint{ 30, 50 },
-                   QPoint{ 81, 50 },
-                   start,
-                   start - 1);
+        testTouchScreenSwipe (QPoint{ 30, 50 },
+                              QPoint{ 81, 50 },
+                              start,
+                              start - 1);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for swipePreviousTouchPadTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void swipePreviousTouchPadTest_data () { generateRange (1, NUM_TEST_VIEWS); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test swiping to the previous widget with a touch pad
+    ///
+    /// @see    ui::common::SwipeView
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void swipePreviousTouchPadTest ()
+        {
+        QFETCH (int, start);
+
+        testTouchPadSwipe (QPoint{ 30, 50 },
+                           QPoint{ 81, 50 },
+                           start,
+                           start - 1);
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -188,10 +330,33 @@ private slots:
         {
         QFETCH (int, start);
 
-        testSwipe (QPoint{ 79, 50 },
-                   QPoint{ 30, 50 },
-                   start,
-                   start);
+        testTouchScreenSwipe (QPoint{ 79, 50 },
+                              QPoint{ 30, 50 },
+                              start,
+                              start);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for swipeNextSnapBackTouchPadTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void swipeNextSnapBackTouchPadTest_data () { generateRange (0, NUM_TEST_VIEWS); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Attempts to swipe to the next widget with a touch pad, but does not swipe
+    /// far enough,   resulting in a "snap" back to the current
+    ///
+    /// @see    ui::common::SwipeView
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void swipeNextSnapBackTouchPadTest ()
+        {
+        QFETCH (int, start);
+
+        testTouchPadSwipe (QPoint{ 79, 50 },
+                           QPoint{ 30, 50 },
+                           start,
+                           start);
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -211,10 +376,33 @@ private slots:
         {
         QFETCH (int, start);
 
-        testSwipe (QPoint{ 30, 50 },
-                   QPoint{ 79, 50 },
-                   start,
-                   start);
+        testTouchScreenSwipe (QPoint{ 30, 50 },
+                              QPoint{ 79, 50 },
+                              start,
+                              start);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Test data for swipePreviousSnapBackTouchPadTest()
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void swipePreviousSnapBackTouchPadTest_data () { generateRange (0, NUM_TEST_VIEWS); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Attempts to swipe to the previous widget with a touch pad, but does not
+    /// swipe far enough, resulting in a "snap" back to the current
+    ///
+    /// @see    ui::common::SwipeView
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void swipePreviousSnapBackTouchPadTest ()
+        {
+        QFETCH (int, start);
+
+        testTouchPadSwipe (QPoint{ 30, 50 },
+                           QPoint{ 79, 50 },
+                           start,
+                           start);
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -226,10 +414,25 @@ private slots:
     ///////////////////////////////////////////////////////////////////////////////
     void swipeNextEndTest ()
         {
-        testSwipe (QPoint{ 81, 50 },
-                   QPoint{ 30, 50 },
-                   NUM_TEST_VIEWS - 1,
-                   NUM_TEST_VIEWS - 1);
+        testTouchScreenSwipe (QPoint{ 81, 50 },
+                              QPoint{ 30, 50 },
+                              NUM_TEST_VIEWS - 1,
+                              NUM_TEST_VIEWS - 1);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Attempt to swipe to the next widget with a touch pad, when already at the
+    /// last. Should snap back to the current
+    ///
+    /// @see    ui::common::SwipeView
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void swipeNextEndTouchPadTest ()
+        {
+        testTouchPadSwipe (QPoint{ 81, 50 },
+                           QPoint{ 30, 50 },
+                           NUM_TEST_VIEWS - 1,
+                           NUM_TEST_VIEWS - 1);
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -241,10 +444,25 @@ private slots:
     ///////////////////////////////////////////////////////////////////////////////
     void swipePreviousStartTest ()
         {
-        testSwipe (QPoint{ 30, 50 },
-                   QPoint{ 81, 50 },
-                   0,
-                   0);
+        testTouchScreenSwipe (QPoint{ 30, 50 },
+                              QPoint{ 81, 50 },
+                              0,
+                              0);
+        }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    /// Attempt to swipe to the previous widget with a touch pad, when already at
+    /// the first. Should snap back to the current
+    ///
+    /// @see    ui::common::SwipeView
+    ///
+    ///////////////////////////////////////////////////////////////////////////////
+    void swipePreviousStartTouchPadTest ()
+        {
+        testTouchPadSwipe (QPoint{ 30, 50 },
+                           QPoint{ 81, 50 },
+                           0,
+                           0);
         }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -268,7 +486,7 @@ private slots:
         QPoint start{ 50, 50 };
         QPoint end{ 51, 80 };
 
-        doSwipe (view, start, end);
+        doTouchScreenSwipe (view, start, end);
 
         // Check that a snap hasn't been emitted
         QVERIFY (not spy.wait (200));
@@ -299,11 +517,54 @@ private slots:
     ///////////////////////////////////////////////////////////////////////////////
     void fastSwipeTest ()
         {
-        testSwipe (QPoint{ 30, 50 },
-                   QPoint{ 50, 50 },
+        testTouchScreenSwipe (QPoint{ 50, 50 },
+                              QPoint{ 30, 50 },
+                              0,
+                              0,
+                              50); // 50 ms
+        }
+
+    void momentumTouchPadSwipeTest ()
+        {
+        testSwipe (QPoint{ 50, 50 },
+                   QPoint{ 30, 50 },
                    0,
-                   0,
-                   50); // 50 ms
+                   1,
+            [] (SwipeView&      view,
+                const QPoint&   start,
+                const QPoint&   end,
+                int             time) -> void
+            {
+            QWindow* window = view.windowHandle ();
+
+            if (NULL == window)
+                {
+                window = q_check_ptr (view.topLevelWidget ())->windowHandle ();
+                Q_CHECK_PTR (window);
+                }
+
+            QTest::wheelEvent (window,
+                               start,
+                               { 1, 1 },
+                               start - end, // Does not set inverted to true, so we need to invert it here
+                               Qt::NoModifier,
+                               Qt::ScrollBegin);
+
+            QTest::wheelEvent (window,
+                               end,
+                               { 1, 1 },
+                               (start - end) * 2,
+                               Qt::NoModifier,
+                               Qt::ScrollMomentum);
+
+            QTest::wheelEvent (window,
+                            end,
+                            { 1, 1 },
+                            { 1, 1 },
+                            Qt::NoModifier,
+                            Qt::ScrollEnd);
+            },
+            -1);
         }
     };
 

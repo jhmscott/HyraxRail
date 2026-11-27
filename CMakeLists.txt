@@ -184,6 +184,7 @@ add_subdirectory (cmake/tests/mainwindow/)
 add_subdirectory (cmake/tests/gesture/)
 add_subdirectory (cmake/tests/optionaldropdown/)
 add_subdirectory (cmake/tests/schemeicon/)
+add_subdirectory (cmake/tests/swipeview/)
 add_subdirectory (cmake/tests/tiereddropdown/)
 add_subdirectory (cmake/tests/uiutils/)
 

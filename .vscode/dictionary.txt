@@ -1,9 +1,48 @@
+# Controller names
 Märklin
 Marklin
 cs1
+ECOS
+ESU
+
+# Java Native Interface (JNI)
+JNIEXPORT
+JNICALL
+jlong
+jobject
+jint
+
+# Win32 types and prefixes
+HPOWERNOTIFY
+HRESULT
+WNDCLASSEX
+GWLP
+wndclass
+NIIF
+winrt
+lpfn
+lpsz
+wndproc
+
+# POSIX Sockets
+PICMPV
+ANYIF
+
+# Qt
 qobj
 wdgt
 qobject
+QCOMPARE
+QTEST
+QVERIFY
+QFETCH
+
+# CMake
+AUTOUIC
+AUTOMOC
+AUTORCC
+
+# Misc
 UILANG
-ECOS
-ESU
+vestop
+Cascadia

@@ -305,7 +305,7 @@ bool isIPv6Available ()
         if (    netInterface.flags ().testFlag (QNetworkInterface::IsUp) &&
             not netInterface.flags ().testFlag (QNetworkInterface::IsLoopBack))
             {
-            // Loop through each address for that netowrk adapter
+            // Loop through each address for that network adapter
             for (const QNetworkAddressEntry& entry : netInterface.addressEntries ())
                 {
                 // If it's an IPv6 address and it's not in the link local address state,
@@ -335,7 +335,7 @@ bool isNativeMenuAvailable ()
 
     menubar.setNativeMenuBar (true);
 
-    // Accoriding to the documentation, this always returns false if native menu bars
+    // According to the documentation, this always returns false if native menu bars
     // aren't available on this platform. Easy hack to tell if we have it without
     // platform dependent code
     //
